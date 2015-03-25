@@ -1,0 +1,107 @@
+## ---------------------------------------------------------
+##   libMotion4D -- The Motion-4D-library.
+##  
+##  Copyright (c) 2009-2011  Thomas Mueller, Frank Grave
+##
+##   This file is part of the m4d-library.
+## ---------------------------------------------------------
+
+How to use the example files:
+=============================
+
+You can either run all test programs using the shell script "./testAll.sh" or you can 
+start each test indiviually with the following commands:
+
+
+
+1) testDatabase
+   ------------
+   m4dTestDatabase prints a list of all implemented metrics and integrators.
+   
+   Run:  ./m4dTestDatabase
+
+
+2) calcGeodesic
+   ------------
+   m4dCalcGeodesic calculates a single timelike or lightlike geodesic. 
+   The metric, the integrator, and all the other necessary parameters
+   must be defined in a configuration file.
+
+   Run:  ./m4dCalcGeodesic  kerr.ini  > points_kerr.dat
+         gnuplot plotGeodesic.gnu
+
+   Output: points_kerr.dat, kerr_geod.png
+
+
+3) calcParallel
+   ------------
+   m4dCalcParallel calculates the parallel transport of a local tetrad.
+   The metric, the integrator, and all the other necessary parameters
+   must be defined in a configuration file.
+
+   Run:  ./m4dCalcParallel  kerr_timelike.ini  > points_par.dat     
+
+   Output: points_par.dat
+   
+
+4) testCircular
+   ------------
+   m4dTestCircular calculates the parallel transport of a local tetrad
+   along a timelike circular orbit around a Schwarzschild black hole.
+
+   Run:  ./m4dTestCircular 6  >  points_circ.dat
+
+   Output: points_circ.dat
+
+
+
+5) testFWworldline
+   ---------------
+   m4dTestFWworldline calculates the Fermi-Walker transport of the 
+   e1-base vector of the initial tetrad along a circular orbit
+   around a Schwarzschild black hole.
+
+   Run:  ./m4dTestFWworldline  > points_fw.dat
+
+   Output: points_fw.dat
+     
+     
+6) testGeodesic
+   ------------
+   m4dTestGeodesic calculates 15 nullgeodesics in the Schwarzschild spacetime.
+   Ignore messages like: "constraint condition violated" and "outside bounding box".
+
+   Run:  ./m4dTestGeodesic
+         gnuplot plotSchwGeods.gnu
+   
+   Output: points_??.dat, schw_geods.png
+
+
+7) testJacobi
+   ----------
+   m4dTestJacobi integrates the Jacobi equation and the parallel transport of 
+   the Sachs basis to determine the shape parameters of a light bundle.
+   
+   Run:  ./m4dTestJacobi kerr_lens.ini > points_lens.dat
+	 gnuplot plotJacobi.gnu
+	 
+   Output:  kerr_lens.png
+   
+   
+
+Expected results:
+=================
+
+1) -> m4dTestDB.txt
+
+2) -> kerr_geod.png
+
+3) -> points_par.dat
+
+4) -> points_circ.dat,  m4dTestCircular.txt
+
+5) -> point_fw.dat, angle: 105.35102472
+
+6) -> schw_geods.png
+
+7) -> kerr_lens.png

@@ -1,0 +1,200 @@
+{VERSION 4 0 "IBM INTEL LINUX" "4.0" }
+{USTYLETAB {CSTYLE "Maple Input" -1 0 "Courier" 0 1 255 0 0 1 0 1 0 0 
+1 0 0 0 0 1 }{CSTYLE "2D Math" -1 2 "Times" 0 1 0 0 0 0 0 0 2 0 0 0 0 
+0 0 1 }{CSTYLE "2D Output" 2 20 "" 0 1 0 0 255 1 0 0 0 0 0 0 0 0 0 1 }
+{PSTYLE "Normal" -1 0 1 {CSTYLE "" -1 -1 "" 0 1 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 }0 0 0 -1 -1 -1 0 0 0 0 0 0 -1 0 }{PSTYLE "Text Output" -1 2 1 
+{CSTYLE "" -1 -1 "Courier" 1 10 0 0 255 1 0 0 0 0 0 1 3 0 3 0 }1 0 0 
+-1 -1 -1 0 0 0 0 0 0 -1 0 }{PSTYLE "" 2 6 1 {CSTYLE "" -1 -1 "" 0 1 0 
+0 0 0 0 0 0 0 0 0 2 0 0 0 }0 0 0 -1 -1 -1 0 0 0 0 0 0 -1 0 }{PSTYLE "W
+arning" 2 7 1 {CSTYLE "" -1 -1 "" 0 1 0 0 255 1 0 0 0 0 0 0 1 0 0 0 }
+0 0 0 -1 -1 -1 0 0 0 0 0 0 -1 0 }{PSTYLE "Error" 7 8 1 {CSTYLE "" -1 
+-1 "" 0 1 255 0 255 1 0 0 0 0 0 0 0 0 0 0 }0 0 0 -1 -1 -1 0 0 0 0 0 0 
+-1 0 }{PSTYLE "Maple Output" 0 11 1 {CSTYLE "" -1 -1 "" 0 1 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 }3 3 0 -1 -1 -1 0 0 0 0 0 0 -1 0 }}
+{SECT 0 {EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 15 "restart:grtw();" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#%=GRTensorII~Version~1.79~(R6)G" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#%06~February~2001G" }}{PARA 11 "" 1 "
+" {XPPMATH 20 "6#%ZDeveloped~by~Peter~Musgrave,~Denis~Pollney~and~Kayl
+l~LakeG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%DCopyright~1994-2001~by~th
+e~authors.G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%inLatest~version~avail
+able~from:~http://grtensor.phy.queensu.ca/G" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#%B/home/tmueller/Maple/Grii/metricsG" }}}{EXCHG {PARA 
+0 "> " 0 "" {MPLTEXT 1 0 16 "makeg(gravwave):" }}{PARA 6 "" 1 "" 
+{TEXT -1 0 "" }}{PARA 6 "" 1 "" {TEXT -1 1 " " }}{PARA 6 "" 1 "" 
+{TEXT -1 46 "Makeg 2.0: GRTensor metric/basis entry utility" }}{PARA 
+6 "" 1 "" {TEXT -1 1 " " }}{PARA 6 "" 1 "" {TEXT -1 41 "To quit makeg,
+ type 'exit' at any prompt." }}{PARA 6 "" 1 "" {TEXT -1 1 " " }}{PARA 
+6 "" 1 "" {TEXT -1 44 "Do you wish to enter a 1) metric [g(dn,dn)]," }
+}{PARA 6 "" 1 "" {TEXT -1 44 "                       2) line element [
+ds]," }}{PARA 6 "" 1 "" {TEXT -1 63 "                       3) non-hol
+onomic basis [e(1)...e(n)], or" }}{PARA 6 "" 1 "" {TEXT -1 49 "       \+
+                4) NP tetrad [l,n,m,mbar]?" }}{PARA 6 "" 1 "" {TEXT 
+-1 0 "" }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 2 "1:" }}{PARA 6 
+"" 1 "" {TEXT -1 50 "Enter coordinates as a LIST (eg. [t,r,theta,phi])
+:" }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 10 "[t,x,y,z]:" }}
+{PARA 6 "" 1 "" {TEXT -1 30 "Is the metric  1) Diagonal, or" }}{PARA 
+6 "" 1 "" {TEXT -1 28 "               2) Symmetric?" }}}{EXCHG {PARA 
+0 "makeg>" 0 "" {MPLTEXT 1 0 2 "2:" }}{PARA 6 "" 1 "" {TEXT -1 13 "Ent
+er g[t,t]:" }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 2 "1:" }}
+{PARA 6 "" 1 "" {TEXT -1 13 "Enter g[t,x]:" }}}{EXCHG {PARA 0 "makeg>
+" 0 "" {MPLTEXT 1 0 2 "0:" }}{PARA 6 "" 1 "" {TEXT -1 13 "Enter g[t,y]
+:" }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 2 "0:" }}{PARA 6 "" 1 
+"" {TEXT -1 13 "Enter g[t,z]:" }}}{EXCHG {PARA 0 "makeg>" 0 "" 
+{MPLTEXT 1 0 2 "0:" }}{PARA 6 "" 1 "" {TEXT -1 13 "Enter g[x,x]:" }}}
+{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 3 "-1:" }}{PARA 6 "" 1 "" 
+{TEXT -1 13 "Enter g[x,y]:" }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 
+1 0 2 "0:" }}{PARA 6 "" 1 "" {TEXT -1 13 "Enter g[x,z]:" }}}{EXCHG 
+{PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 2 "0:" }}{PARA 6 "" 1 "" {TEXT -1 
+13 "Enter g[y,y]:" }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 17 "-(
+1-lambda(t-x)):" }}{PARA 6 "" 1 "" {TEXT -1 13 "Enter g[y,z]:" }}}
+{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 8 "mu(t-x):" }}{PARA 6 "" 1 
+"" {TEXT -1 13 "Enter g[z,z]:" }}}{EXCHG {PARA 0 "makeg>" 0 "" 
+{MPLTEXT 1 0 17 "-(1+lambda(t-x)):" }}{PARA 6 "" 1 "" {TEXT -1 0 "" }}
+{PARA 6 "" 1 "" {TEXT -1 67 "If there are any complex valued coordinat
+es, constants or functions" }}{PARA 6 "" 1 "" {TEXT -1 66 "for this sp
+acetime, please enter them as a SET ( eg. \{ z, psi \} )." }}{PARA 6 "
+" 1 "" {TEXT -1 0 "" }}{PARA 6 "" 1 "" {TEXT -1 33 "Complex quantities
+ [default=\{\}]: " }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 3 "\{
+\}:" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%AThe~values~you~have~entered~a
+re:G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/%,CoordinatesG7&%\"tG%\"xG%\"
+yG%\"zG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%(Metric:G" }}{PARA 11 "" 
+1 "" {XPPMATH 20 "6#/*&&%\"gG6#%\"aG\"\"\"&%!G6#%\"bGF)-%'matrixG6#7&7
+&F)\"\"!F3F37&F3!\"\"F3F37&F3F3,&F5F)-%'lambdaG6#,&%\"tGF)%\"xGF5F)-%#
+muGF:7&F3F3F>,&F5F)F8F5" }}{PARA 6 "" 1 "" {TEXT -1 54 "You may choose
+ to 0) Use the metric WITHOUT saving it," }}{PARA 6 "" 1 "" {TEXT -1 
+46 "                  1) Save the metric as it is," }}{PARA 6 "" 1 "" 
+{TEXT -1 54 "                  2) Correct an element of the metric," }
+}{PARA 6 "" 1 "" {TEXT -1 41 "                  3) Re-enter the metric
+," }}{PARA 6 "" 1 "" {TEXT -1 54 "                  4) Add/change cons
+traint equations, " }}{PARA 6 "" 1 "" {TEXT -1 47 "                  5
+) Add a text description, or" }}{PARA 6 "" 1 "" {TEXT -1 61 "         \+
+         6) Abandon this metric and return to Maple." }}{PARA 6 "" 1 "
+" {TEXT -1 0 "" }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 2 "0:" }}
+{PARA 6 "" 1 "" {TEXT -1 42 "Calculated ds for gravwave (0.000000 sec.
+)" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/%2Default~spacetimeG%)gravwaveG
+" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%<For~the~gravwave~spacetime:G" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#%,CoordinatesG" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#-%\"xG6#%#upG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/)%#x~
+G%\"aG-%'vectorG6#7&%\"tG%\"xG%\"yG%\"zG" }}{PARA 11 "" 1 "" {XPPMATH 
+20 "6#%-Line~elementG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*$)%$~dsG\"
+\"#\"\"\",,*&%#~dGF()%\"tG%#2~GF(F(*&F+F()%\"xGF.F(!\"\"*(,&F2F(-%'lam
+bdaG6#,&F-F(F1F2F(F(F+F()%\"yGF.F(F(*.F'F(-%#muGF7F(F+F()F:%\"~GF(%#d~
+GF()%\"zGF?F(F(*(,&F2F(F5F2F(F+F()FBF.F(F(" }}{PARA 6 "" 1 "" {TEXT 
+-1 18 "makeg() completed." }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 
+14 "grcalcd(Chr2);" }}{PARA 6 "" 1 "" {TEXT -1 44 "Calculated detg for
+ gravwave (0.000000 sec.)" }}{PARA 6 "" 1 "" {TEXT -1 48 "Calculated g
+(up,up) for gravwave (0.000000 sec.)" }}{PARA 6 "" 1 "" {TEXT -1 51 "C
+alculated g(dn,dn,pdn) for gravwave (.010000 sec.)" }}{PARA 6 "" 1 "" 
+{TEXT -1 53 "Calculated Chr(dn,dn,dn) for gravwave (0.000000 sec.)" }}
+{PARA 6 "" 1 "" {TEXT -1 52 "Calculated Chr(dn,dn,up) for gravwave (.0
+21000 sec.)" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/%*CPU~Time~G$\"#T!\"$
+" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%<For~the~gravwave~spacetime:G" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#%aoChristoffel~symbol~of~the~second~ki
+nd~(symmetric~in~first~two~indices)G" }}{PARA 11 "" 1 "" {XPPMATH 20 "
+6#/*&&%&GammaG6#*&%\"tG\"\"\"%\"yGF*F*)%!GF+F*,$*&,(--%\"DG6#%'lambdaG
+6#,&F)F*%\"xG!\"\"F**&F1F*-F5F6F*F**&-%#muGF6F*--F36#F>F6F*F*F*,(F9F**
+$)F;\"\"#F*F**$)F=FEF*F*F9#F*FE" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&
+&%&GammaG6#*&%\"tG\"\"\"%\"yGF*F*)%!G%\"zGF*,$*&,(*&-%#muG6#,&F)F*%\"x
+G!\"\"F*--%\"DG6#%'lambdaGF5F*F8--F;6#F4F5F8*&F>F*-F=F5F*F*F*,(F8F**$)
+FB\"\"#F*F**$)F3FFF*F*F8#F8FF" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%
+&GammaG6#*&%\"tG\"\"\"%\"zGF*F*)%!G%\"yGF*,$*&,(--%\"DG6#%#muG6#,&F)F*
+%\"xG!\"\"F**&F2F*-%'lambdaGF7F*F**&-F6F7F*--F46#F=F7F*F:F*,(F:F**$)F<
+\"\"#F*F**$)F?FFF*F*F:#F*FF" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&G
+ammaG6#*&%\"tG\"\"\"%\"zGF*F*)%!GF+F*,$*&,(*&-%#muG6#,&F)F*%\"xG!\"\"F
+*--%\"DG6#F3F4F*F*--F:6#%'lambdaGF4F7*&F<F*-F?F4F*F*F*,(F7F**$)FA\"\"#
+F*F**$)F2FEF*F*F7#F*FE" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG
+6#*&%\"xG\"\"\"%\"yGF*F*)%!GF+F*,$*&,(--%\"DG6#%'lambdaG6#,&%\"tGF*F)!
+\"\"F**&F1F*-F5F6F*F**&-%#muGF6F*--F36#F>F6F*F*F*,(F9F**$)F;\"\"#F*F**
+$)F=FEF*F*F9#F9FE" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%
+\"xG\"\"\"%\"yGF*F*)%!G%\"zGF*,$*&,(*&-%#muG6#,&%\"tGF*F)!\"\"F*--%\"D
+G6#%'lambdaGF5F*F8--F;6#F4F5F8*&F>F*-F=F5F*F*F*,(F8F**$)FB\"\"#F*F**$)
+F3FFF*F*F8#F*FF" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"
+xG\"\"\"%\"zGF*F*)%!G%\"yGF*,$*&,(--%\"DG6#%#muG6#,&%\"tGF*F)!\"\"F**&
+F2F*-%'lambdaGF7F*F**&-F6F7F*--F46#F=F7F*F:F*,(F:F**$)F<\"\"#F*F**$)F?
+FFF*F*F:#F:FF" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"xG
+\"\"\"%\"zGF*F*)%!GF+F*,$*&,(*&-%#muG6#,&%\"tGF*F)!\"\"F*--%\"DG6#F3F4
+F*F*--F:6#%'lambdaGF4F7*&F<F*-F?F4F*F*F*,(F7F**$)FA\"\"#F*F**$)F2FEF*F
+*F7#F7FE" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"yG\"\"
+\"F)F*F*)%!G%\"tGF*,$--%\"DG6#%'lambdaG6#,&F-F*%\"xG!\"\"#F7\"\"#" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"yG\"\"\"F)F*F*)%!G%
+\"xGF*,$--%\"DG6#%'lambdaG6#,&%\"tGF*F-!\"\"#F7\"\"#" }}{PARA 11 "" 1 
+"" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"yG\"\"\"%\"zGF*F*)%!G%\"tGF*,$--%
+\"DG6#%#muG6#,&F.F*%\"xG!\"\"#F8\"\"#" }}{PARA 11 "" 1 "" {XPPMATH 20 
+"6#/*&&%&GammaG6#*&%\"yG\"\"\"%\"zGF*F*)%!G%\"xGF*,$--%\"DG6#%#muG6#,&
+%\"tGF*F.!\"\"#F8\"\"#" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG
+6#*&%\"zG\"\"\"F)F*F*)%!G%\"tGF*,$--%\"DG6#%'lambdaG6#,&F-F*%\"xG!\"\"
+#F*\"\"#" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"zG\"\"
+\"F)F*F*)%!G%\"xGF*,$--%\"DG6#%'lambdaG6#,&%\"tGF*F-!\"\"#F*\"\"#" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 18 "gralter(Chr2,7,1):" }}{PARA 
+6 "" 1 "" {TEXT -1 48 "Component simplification of a GRTensorII object
+:" }}{PARA 6 "" 1 "" {TEXT -1 0 "" }}{PARA 6 "" 1 "" {TEXT -1 47 "Appl
+ying routine factor to object Chr(dn,dn,up)" }}{PARA 6 "" 1 "" {TEXT 
+-1 49 "Applying routine simplify to object Chr(dn,dn,up)" }}{PARA 11 "
+" 1 "" {XPPMATH 20 "6#/%*CPU~Time~G$\"$>\"!\"$" }}}{EXCHG {PARA 0 "> \+
+" 0 "" {MPLTEXT 1 0 16 "grdisplay(Chr2):" }}{PARA 11 "" 1 "" {XPPMATH 
+20 "6#%<For~the~gravwave~spacetime:G" }}{PARA 11 "" 1 "" {XPPMATH 20 "
+6#%aoChristoffel~symbol~of~the~second~kind~(symmetric~in~first~two~ind
+ices)G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"tG\"\"\"%
+\"yGF*F*)%!GF+F*,$*&,(--%\"DG6#%'lambdaG6#,&F)F*%\"xG!\"\"F**&F1F*-F5F
+6F*F**&-%#muGF6F*--F36#F>F6F*F*F*,(F9F**$)F;\"\"#F*F**$)F=FEF*F*F9#F*F
+E" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"tG\"\"\"%\"yGF
+*F*)%!G%\"zGF*,$*&,(*&-%#muG6#,&F)F*%\"xG!\"\"F*--%\"DG6#%'lambdaGF5F*
+F*--F;6#F4F5F**&F>F*-F=F5F*F8F*,(F8F**$)FB\"\"#F*F**$)F3FFF*F*F8#F*FF
+" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"tG\"\"\"%\"zGF*
+F*)%!G%\"yGF*,$*&,(--%\"DG6#%#muG6#,&F)F*%\"xG!\"\"F:*&F2F*-%'lambdaGF
+7F*F:*&-F6F7F*--F46#F=F7F*F*F*,(F:F**$)F<\"\"#F*F**$)F?FFF*F*F:#F:FF" 
+}}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"tG\"\"\"%\"zGF*F*
+)%!GF+F*,$*&,(*&-%#muG6#,&F)F*%\"xG!\"\"F*--%\"DG6#F3F4F*F*--F:6#%'lam
+bdaGF4F7*&F<F*-F?F4F*F*F*,(F7F**$)FA\"\"#F*F**$)F2FEF*F*F7#F*FE" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"xG\"\"\"%\"yGF*F*)%
+!GF+F*,$*&,(--%\"DG6#%'lambdaG6#,&%\"tGF*F)!\"\"F**&F1F*-F5F6F*F**&-%#
+muGF6F*--F36#F>F6F*F*F*,(F9F**$)F;\"\"#F*F**$)F=FEF*F*F9#F9FE" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"xG\"\"\"%\"yGF*F*)%
+!G%\"zGF*,$*&,(*&-%#muG6#,&%\"tGF*F)!\"\"F*--%\"DG6#%'lambdaGF5F*F*--F
+;6#F4F5F**&F>F*-F=F5F*F8F*,(F8F**$)FB\"\"#F*F**$)F3FFF*F*F8#F8FF" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"xG\"\"\"%\"zGF*F*)%
+!G%\"yGF*,$*&,(--%\"DG6#%#muG6#,&%\"tGF*F)!\"\"F:*&F2F*-%'lambdaGF7F*F
+:*&-F6F7F*--F46#F=F7F*F*F*,(F:F**$)F<\"\"#F*F**$)F?FFF*F*F:#F*FF" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"xG\"\"\"%\"zGF*F*)%
+!GF+F*,$*&,(*&-%#muG6#,&%\"tGF*F)!\"\"F*--%\"DG6#F3F4F*F*--F:6#%'lambd
+aGF4F7*&F<F*-F?F4F*F*F*,(F7F**$)FA\"\"#F*F**$)F2FEF*F*F7#F7FE" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"yG\"\"\"F)F*F*)%!G%
+\"tGF*,$--%\"DG6#%'lambdaG6#,&F-F*%\"xG!\"\"#F7\"\"#" }}{PARA 11 "" 1 
+"" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"yG\"\"\"F)F*F*)%!G%\"xGF*,$--%\"D
+G6#%'lambdaG6#,&%\"tGF*F-!\"\"#F7\"\"#" }}{PARA 11 "" 1 "" {XPPMATH 
+20 "6#/*&&%&GammaG6#*&%\"yG\"\"\"%\"zGF*F*)%!G%\"tGF*,$--%\"DG6#%#muG6
+#,&F.F*%\"xG!\"\"#F8\"\"#" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&Gam
+maG6#*&%\"yG\"\"\"%\"zGF*F*)%!G%\"xGF*,$--%\"DG6#%#muG6#,&%\"tGF*F.!\"
+\"#F8\"\"#" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"zG\"
+\"\"F)F*F*)%!G%\"tGF*,$--%\"DG6#%'lambdaG6#,&F-F*%\"xG!\"\"#F*\"\"#" }
+}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"zG\"\"\"F)F*F*)%!G
+%\"xGF*,$--%\"DG6#%'lambdaG6#,&%\"tGF*F-!\"\"#F*\"\"#" }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 28 "g_compts:=grarray(g(dn,dn)):" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 31 "codegen[C](g_compts,optimize
+d);" }}{PARA 6 "" 1 "" {TEXT -1 15 "      t1 = t-x;" }}{PARA 6 "" 1 "
+" {TEXT -1 72 "codegen/C/expression:   Unknown function:   lambda   wi
+ll be left as is." }}{PARA 6 "" 1 "" {TEXT -1 22 "      t2 = lambda(t1
+);" }}{PARA 6 "" 1 "" {TEXT -1 68 "codegen/C/expression:   Unknown fun
+ction:   mu   will be left as is." }}{PARA 6 "" 1 "" {TEXT -1 18 "    \+
+  t4 = mu(t1);" }}{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[0][0] = \+
+1.0;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[0][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[0][2] = 0.0;" }}{PARA 6 "
+" 1 "" {TEXT -1 27 "      g_compts[0][3] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 27 "      g_compts[1][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 
+28 "      g_compts[1][1] = -1.0;" }}{PARA 6 "" 1 "" {TEXT -1 27 "     \+
+ g_compts[1][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[
+1][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[2][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[2][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      g_compts[2][2] = -1.0+t2;" }}{PARA 
+6 "" 1 "" {TEXT -1 26 "      g_compts[2][3] = t4;" }}{PARA 6 "" 1 "" 
+{TEXT -1 27 "      g_compts[3][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 
+27 "      g_compts[3][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 26 "      \+
+g_compts[3][2] = t4;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      g_compts[3]
+[3] = -1.0-t2;" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 36 "christoff
+el:=grarray(Chr(dn,dn,up)):" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 
+34 "codegen[C](christoffel,optimized):" }}{PARA 6 "" 1 "" {TEXT -1 15 
+"      t1 = t-x;" }}{PARA 8 "" 1 "" {TEXT -1 45 "Error, (in codegen/C)
+ lastexception[2 .. -1]\n" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 
+"" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}}{MARK "25 0 0" 0 
+}{VIEWOPTS 1 1 0 1 1 1803 1 1 1 1 }{PAGENUMBERS 0 1 2 33 1 1 }

@@ -1,0 +1,490 @@
+{VERSION 4 0 "IBM INTEL LINUX" "4.0" }
+{USTYLETAB {CSTYLE "Maple Input" -1 0 "Courier" 0 1 255 0 0 1 0 1 0 0 
+1 0 0 0 0 1 }{CSTYLE "2D Math" -1 2 "Times" 0 1 0 0 0 0 0 0 2 0 0 0 0 
+0 0 1 }{CSTYLE "2D Output" 2 20 "" 0 1 0 0 255 1 0 0 0 0 0 0 0 0 0 1 }
+{PSTYLE "Normal" -1 0 1 {CSTYLE "" -1 -1 "" 0 1 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 }0 0 0 -1 -1 -1 0 0 0 0 0 0 -1 0 }{PSTYLE "Text Output" -1 2 1 
+{CSTYLE "" -1 -1 "Courier" 1 10 0 0 255 1 0 0 0 0 0 1 3 0 3 0 }1 0 0 
+-1 -1 -1 0 0 0 0 0 0 -1 0 }{PSTYLE "" 2 6 1 {CSTYLE "" -1 -1 "" 0 1 0 
+0 0 0 0 0 0 0 0 0 2 0 0 0 }0 0 0 -1 -1 -1 0 0 0 0 0 0 -1 0 }{PSTYLE "M
+aple Output" 0 11 1 {CSTYLE "" -1 -1 "" 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 }3 3 0 -1 -1 -1 0 0 0 0 0 0 -1 0 }}
+{SECT 0 {EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 15 "restart:grtw();" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#%=GRTensorII~Version~1.79~(R6)G" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#%06~February~2001G" }}{PARA 11 "" 1 "
+" {XPPMATH 20 "6#%ZDeveloped~by~Peter~Musgrave,~Denis~Pollney~and~Kayl
+l~LakeG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%DCopyright~1994-2001~by~th
+e~authors.G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%inLatest~version~avail
+able~from:~http://grtensor.phy.queensu.ca/G" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#%B/home/tmueller/Maple/Grii/metricsG" }}}{EXCHG {PARA 
+0 "> " 0 "" {MPLTEXT 1 0 24 "makeg(BarriolaVilenkin);" }}{PARA 6 "" 1 
+"" {TEXT -1 0 "" }}{PARA 6 "" 1 "" {TEXT -1 1 " " }}{PARA 6 "" 1 "" 
+{TEXT -1 46 "Makeg 2.0: GRTensor metric/basis entry utility" }}{PARA 
+6 "" 1 "" {TEXT -1 1 " " }}{PARA 6 "" 1 "" {TEXT -1 41 "To quit makeg,
+ type 'exit' at any prompt." }}{PARA 6 "" 1 "" {TEXT -1 1 " " }}{PARA 
+6 "" 1 "" {TEXT -1 44 "Do you wish to enter a 1) metric [g(dn,dn)]," }
+}{PARA 6 "" 1 "" {TEXT -1 44 "                       2) line element [
+ds]," }}{PARA 6 "" 1 "" {TEXT -1 63 "                       3) non-hol
+onomic basis [e(1)...e(n)], or" }}{PARA 6 "" 1 "" {TEXT -1 49 "       \+
+                4) NP tetrad [l,n,m,mbar]?" }}{PARA 6 "" 1 "" {TEXT 
+-1 0 "" }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 2 "2:" }}{PARA 6 
+"" 1 "" {TEXT -1 50 "Enter coordinates as a LIST (eg. [t,r,theta,phi])
+:" }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 16 "[t,r,theta,phi]:" 
+}}{PARA 6 "" 1 "" {TEXT -1 64 "Enter the line element using d[coord] t
+o indicate differentials." }}{PARA 6 "" 1 "" {TEXT -1 55 "(for example
+,  r^2*(d[theta]^2 + sin(theta)^2*d[phi]^2)" }}{PARA 6 "" 1 "" {TEXT 
+-1 27 "[Type 'exit' to quit makeg]" }}{PARA 6 "" 1 "" {TEXT -1 8 " ds^
+2 = " }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 62 "-c^2*d[t]^2+d[r
+]^2+k^2*r^2*(d[theta]^2+sin(theta)^2*d[phi]^2);" }}{PARA 6 "" 1 "" 
+{TEXT -1 0 "" }}{PARA 6 "" 1 "" {TEXT -1 67 "If there are any complex \+
+valued coordinates, constants or functions" }}{PARA 6 "" 1 "" {TEXT 
+-1 66 "for this spacetime, please enter them as a SET ( eg. \{ z, psi \+
+\} )." }}{PARA 6 "" 1 "" {TEXT -1 0 "" }}{PARA 6 "" 1 "" {TEXT -1 33 "
+Complex quantities [default=\{\}]: " }}}{EXCHG {PARA 0 "makeg>" 0 "" 
+{MPLTEXT 1 0 3 "\{\}:" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%AThe~values~
+you~have~entered~are:G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/%,Coordinat
+esG7&%\"tG%\"rG%&thetaG%$phiG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%(Met
+ric:G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%\"aG\"\"\"&%!G6#%
+\"bGF)-%'matrixG6#7&7&,$*$)%\"cG\"\"#F)!\"\"\"\"!F9F97&F9F)F9F97&F9F9*
+&)%\"kGF7F))%\"rGF7F)F97&F9F9F9*(F=F)F?F))-%$sinG6#%&thetaGF7F)" }}
+{PARA 6 "" 1 "" {TEXT -1 54 "You may choose to 0) Use the metric WITHO
+UT saving it," }}{PARA 6 "" 1 "" {TEXT -1 46 "                  1) Sav
+e the metric as it is," }}{PARA 6 "" 1 "" {TEXT -1 54 "               \+
+   2) Correct an element of the metric," }}{PARA 6 "" 1 "" {TEXT -1 
+41 "                  3) Re-enter the metric," }}{PARA 6 "" 1 "" 
+{TEXT -1 54 "                  4) Add/change constraint equations, " }
+}{PARA 6 "" 1 "" {TEXT -1 47 "                  5) Add a text descript
+ion, or" }}{PARA 6 "" 1 "" {TEXT -1 61 "                  6) Abandon t
+his metric and return to Maple." }}{PARA 6 "" 1 "" {TEXT -1 0 "" }}}
+{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 2 "0:" }}{PARA 6 "" 1 "" 
+{TEXT -1 49 "Calculated ds for BarriolaVilenkin (.010000 sec.)" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#/%2Default~spacetimeG%1BarriolaVilenki
+nG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%DFor~the~BarriolaVilenkin~space
+time:G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%,CoordinatesG" }}{PARA 11 "
+" 1 "" {XPPMATH 20 "6#-%\"xG6#%#upG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6
+#/)%#x~G%\"aG-%'vectorG6#7&%\"tG%\"rG%&thetaG%$phiG" }}{PARA 11 "" 1 "
+" {XPPMATH 20 "6#%-Line~elementG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*
+$)%$~dsG\"\"#\"\"\",**()%\"cGF'F(%#~dGF()%\"tG%#2~GF(!\"\"*&F-F()%\"rG
+F0F(F(**)%\"kGF'F()F4F'F(F-F()%&thetaGF0F(F(*,F6F(F8F()-%$sinG6#F:F'F(
+F-F()%$phiGF0F(F(" }}{PARA 6 "" 1 "" {TEXT -1 18 "makeg() completed." 
+}}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 14 "grcalcd(Chr2);" }}{PARA 
+6 "" 1 "" {TEXT -1 52 "Calculated detg for BarriolaVilenkin (0.000000 \+
+sec.)" }}{PARA 6 "" 1 "" {TEXT -1 56 "Calculated g(up,up) for Barriola
+Vilenkin (0.000000 sec.)" }}{PARA 6 "" 1 "" {TEXT -1 60 "Calculated g(
+dn,dn,pdn) for BarriolaVilenkin (0.000000 sec.)" }}{PARA 6 "" 1 "" 
+{TEXT -1 61 "Calculated Chr(dn,dn,dn) for BarriolaVilenkin (0.000000 s
+ec.)" }}{PARA 6 "" 1 "" {TEXT -1 61 "Calculated Chr(dn,dn,up) for Barr
+iolaVilenkin (0.000000 sec.)" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/%*CPU
+~Time~G$\"\"!F&" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%DFor~the~BarriolaV
+ilenkin~spacetime:G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%aoChristoffel~
+symbol~of~the~second~kind~(symmetric~in~first~two~indices)G" }}{PARA 
+11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"rG\"\"\"%&thetaGF*F*)%!GF
++F**&F*F*F)!\"\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%
+\"rG\"\"\"%$phiGF*F*)%!GF+F**&F*F*F)!\"\"" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#/*&&%&GammaG6#*&%&thetaG\"\"\"F)F*F*)%!G%\"rGF*,$*&)%\"
+kG\"\"#F*F-F*!\"\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&
+%&thetaG\"\"\"%$phiGF*F*)%!GF+F**&-%$cosG6#F)F*-%$sinGF1!\"\"" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%$phiG\"\"\"F)F*F*)%!G
+%\"rGF*,$*()%\"kG\"\"#F*F-F*)-%$sinG6#%&thetaGF2F*!\"\"" }}{PARA 11 "
+" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%$phiG\"\"\"F)F*F*)%!G%&thetaGF*
+,$*&-%$sinG6#F-F*-%$cosGF2F*!\"\"" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 24 "grcalcd(R(dn,dn,dn,dn));" }}{PARA 6 "" 1 "" {TEXT -1 
+61 "Calculated R(dn,dn,dn,dn) for BarriolaVilenkin (.011000 sec.)" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#/%*CPU~Time~G$\"#6!\"$" }}{PARA 11 "" 
+1 "" {XPPMATH 20 "6#%DFor~the~BarriolaVilenkin~spacetime:G" }}{PARA 
+11 "" 1 "" {XPPMATH 20 "6#%2Covariant~RiemannG" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#/&%#R~G6#**%&thetaG\"\"\"%$phiGF)F(F)F*F),&*()%\"kG\"\"
+#F))%\"rGF/F))-%$sinG6#F(F/F)F)*()F.\"\"%F)F0F)F2F)!\"\"" }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 117 "gl:=array(1..4):\nfor i from 1 to \+
+4 do:\n  gl[i]:=-add(add(grcomponent(Chr2,[j,k,i])*y[4+j]*y[4+k],j=1..
+4),k=1..4):\nod:" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 6 "gl[1];" 
+}}{PARA 11 "" 1 "" {XPPMATH 20 "6#\"\"!" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 6 "gl[2];" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#,&*&%\"rG\"
+\"\")&%\"yG6#\"\"(\"\"#F&\"\"***\"#;F&F%F&)-%$sinG6#%&thetaGF,F&)&F)6#
+\"\")F,F&F&" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 6 "gl[3];" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#,&*&*&&%\"yG6#\"\"(\"\"\"&F'6#\"\"'F*F
+*%\"rG!\"\"!\"#*(-%$sinG6#%&thetaGF*-%$cosGF4F*)&F'6#\"\")\"\"#F*F*" }
+}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 6 "gl[4];" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#,&*&*&&%\"yG6#\"\")\"\"\"&F'6#\"\"'F*F*%\"rG!\"\"!\"#*&
+**\"\"#F*-%$cosG6#%&thetaGF*F&F*&F'6#\"\"(F*F*-%$sinGF6F/F/" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 15 "grcalcd(Ricci);" }}{PARA 6 "
+" 1 "" {TEXT -1 56 "Calculated R(dn,dn) for BarriolaVilenkin (0.000000
+ sec.)" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/%*CPU~Time~G$\"\"!F&" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#%DFor~the~BarriolaVilenkin~spacetime:G
+" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%0Covariant~RicciG" }}{PARA 11 "" 
+1 "" {XPPMATH 20 "6#-%\"RG6$%#dnGF&" }}{PARA 11 "" 1 "" {XPPMATH 20 "6
+#/*&&%#R~G6#%\"aG\"\"\"&%!G6#%\"bGF)-%'matrixG6#7&7&\"\"!F3F3F3F27&F3F
+3,&F)F)*$)%\"kG\"\"#F)!\"\"F37&F3F3F3,&*$)-%$sinG6#%&thetaGF9F)F)*&F7F
+)F>F)F:" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 21 "grcalcd(Riccisca
+lar);" }}{PARA 6 "" 1 "" {TEXT -1 59 "Calculated Ricciscalar for Barri
+olaVilenkin (0.000000 sec.)" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/%*CPU~
+Time~G$\"\"!F&" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%DFor~the~BarriolaVi
+lenkin~spacetime:G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%-Ricci~scalarG
+" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/%#R~G,$*&,&!\"\"\"\"\"*$)%\"kG\"
+\"#F)F)F)*&F+F))%\"rGF-F)F(!\"#" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 
+1 0 16 "grcalcd(RiemSq);" }}{PARA 6 "" 1 "" {TEXT -1 38 "Created defin
+ition for R(dn,dn,up,up) " }}{PARA 6 "" 1 "" {TEXT -1 61 "Calculated R
+(dn,dn,up,up) for BarriolaVilenkin (.010000 sec.)" }}{PARA 6 "" 1 "" 
+{TEXT -1 54 "Calculated RiemSq for BarriolaVilenkin (0.000000 sec.)" }
+}{PARA 11 "" 1 "" {XPPMATH 20 "6#/%*CPU~Time~G$\"#]!\"$" }}{PARA 11 "
+" 1 "" {XPPMATH 20 "6#%DFor~the~BarriolaVilenkin~spacetime:G" }}{PARA 
+11 "" 1 "" {XPPMATH 20 "6#%<Full~Contraction~of~RiemannG" }}{PARA 11 "
+" 1 "" {XPPMATH 20 "6#/%#K~G,$*&*$),&!\"\"\"\"\"*$)%\"kG\"\"#F+F+F/F+F
++*&)F.\"\"%F+)%\"rGF2F+F*F2" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 
+28 "g_compts:=grarray(g(dn,dn)):" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 31 "codegen[C](g_compts,optimized);" }}{PARA 6 "" 1 "" 
+{TEXT -1 15 "      t1 = c*c;" }}{PARA 6 "" 1 "" {TEXT -1 15 "      t2 \+
+= k*k;" }}{PARA 6 "" 1 "" {TEXT -1 15 "      t3 = r*r;" }}{PARA 6 "" 
+1 "" {TEXT -1 17 "      t4 = t2*t3;" }}{PARA 6 "" 1 "" {TEXT -1 22 "  \+
+    t5 = sin(theta);" }}{PARA 6 "" 1 "" {TEXT -1 17 "      t6 = t5*t5;
+" }}{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[0][0] = -t1;" }}{PARA 
+6 "" 1 "" {TEXT -1 27 "      g_compts[0][1] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 27 "      g_compts[0][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 
+27 "      g_compts[0][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      \+
+g_compts[1][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[1
+][1] = 1.0;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[1][2] = 0.0
+;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[1][3] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[2][0] = 0.0;" }}{PARA 6 "
+" 1 "" {TEXT -1 27 "      g_compts[2][1] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 26 "      g_compts[2][2] = t4;" }}{PARA 6 "" 1 "" {TEXT -1 
+27 "      g_compts[2][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      \+
+g_compts[3][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[3
+][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[3][2] = 0.0
+;" }}{PARA 6 "" 1 "" {TEXT -1 29 "      g_compts[3][3] = t4*t6;" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 27 "christoffel:=grarray(Chr2):
+" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 34 "codegen[C](christoffel,
+optimized);" }}{PARA 6 "" 1 "" {TEXT -1 15 "      t1 = 1/r;" }}{PARA 
+6 "" 1 "" {TEXT -1 15 "      t2 = k*k;" }}{PARA 6 "" 1 "" {TEXT -1 16 
+"      t3 = t2*r;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t4 = sin(theta
+);" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t6 = cos(theta);" }}{PARA 6 "
+" 1 "" {TEXT -1 19 "      t7 = 1/t4*t6;" }}{PARA 6 "" 1 "" {TEXT -1 
+17 "      t8 = t4*t4;" }}{PARA 6 "" 1 "" {TEXT -1 33 "      christoffe
+l[0][0][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[0]
+[0][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[0][0][
+2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[0][0][3] =
+ 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[0][1][0] = 0.0
+;" }}{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[0][1][1] = 0.0;" }
+}{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[0][1][2] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[0][1][3] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[0][2][0] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[0][2][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[0][2][2] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[0][2][3] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[0][3][0] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[0][3][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[0][3][2] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[0][3][3] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[1][0][0] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[1][0][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[1][0][2] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[1][0][3] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[1][1][0] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[1][1][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[1][1][2] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[1][1][3] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[1][2][0] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[1][2][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 32 "      christoffel[1][2][2] = t1;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[1][2][3] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[1][3][0] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[1][3][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[1][3][2] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 32 "      christoffel[1][3][3] = t1;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][0][0] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][0][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][0][2] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][0][3] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][1][0] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][1][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 32 "      christoffel[2][1][2] = t1;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][1][3] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][2][0] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][2][1] = -t3;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][2][2] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][2][3] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][3][0] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][3][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][3][2] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 32 "      christoffel[2][3][3] = t7;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[3][0][0] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[3][0][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[3][0][2] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[3][0][3] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[3][1][0] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[3][1][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[3][1][2] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 32 "      christoffel[3][1][3] = t1;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[3][2][0] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[3][2][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[3][2][2] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 32 "      christoffel[3][2][3] = t7;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[3][3][0] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 36 "      christoffel[3][3][1] = -t3*t8;" }}
+{PARA 6 "" 1 "" {TEXT -1 36 "      christoffel[3][3][2] = -t4*t6;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[3][3][3] = 0.0;" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 27 "grcalcd(Chr(dn,dn,up,pdn)):
+" }}{PARA 6 "" 1 "" {TEXT -1 42 "Created a definition for Chr(dn,dn,up
+,pdn)" }}{PARA 6 "" 1 "" {TEXT -1 64 "Calculated Chr(dn,dn,up,pdn) for
+ BarriolaVilenkin (.009000 sec.)" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/%
+*CPU~Time~G$\"#>!\"$" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%DFor~the~Barr
+iolaVilenkin~spacetime:G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%2Chr(dn,d
+n,up,pdn)G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*(&%&GammaG6#*&%\"rG\"
+\"\"%&thetaGF*F*)%!GF+F*&F-6#*&%\",GF*F)F*F*,$*&F*F**$)F)\"\"#F*!\"\"F
+7" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*(&%&GammaG6#*&%\"rG\"\"\"%$phiG
+F*F*)%!GF+F*&F-6#*&%\",GF*F)F*F*,$*&F*F**$)F)\"\"#F*!\"\"F7" }}{PARA 
+11 "" 1 "" {XPPMATH 20 "6#/*(&%&GammaG6#*&%&thetaG\"\"\"F)F*F*)%!G%\"r
+GF*&F,6#*&%\",GF*F-F*F*,$*$)%\"kG\"\"#F*!\"\"" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#/*(&%&GammaG6#*&%&thetaG\"\"\"%$phiGF*F*)%!GF+F*&F-6#*&
+%\",GF*F)F*F*,$*&,&*$)-%$cosG6#F)\"\"#F*F**$)-%$sinGF9F:F*F*F**$F<F*!
+\"\"F@" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*(&%&GammaG6#*&%$phiG\"\"\"
+F)F*F*)%!G%\"rGF*&F,6#*&%\",GF*F-F*F*,$*&)%\"kG\"\"#F*)-%$sinG6#%&thet
+aGF6F*!\"\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*(&%&GammaG6#*&%$phiG
+\"\"\"F)F*F*)%!G%\"rGF*&F,6#*&%\",GF*%&thetaGF*F*,$**)%\"kG\"\"#F*F-F*
+-%$sinG6#F2F*-%$cosGF:F*!\"#" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*(&%&
+GammaG6#*&%$phiG\"\"\"F)F*F*)%!G%&thetaGF*&F,6#*&%\",GF*F-F*F*,&*$)-%$
+cosG6#F-\"\"#F*!\"\"*$)-%$sinGF7F8F*F*" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 35 "chrisD:=grarray(Chr(dn,dn,up,pdn)):" }}}{EXCHG {PARA 
+0 "> " 0 "" {MPLTEXT 1 0 29 "codegen[C](chrisD,optimized);" }}{PARA 6 
+"" 1 "" {TEXT -1 15 "      t1 = r*r;" }}{PARA 6 "" 1 "" {TEXT -1 16 " \+
+     t2 = 1/t1;" }}{PARA 6 "" 1 "" {TEXT -1 15 "      t3 = k*k;" }}
+{PARA 6 "" 1 "" {TEXT -1 22 "      t4 = cos(theta);" }}{PARA 6 "" 1 "
+" {TEXT -1 17 "      t5 = t4*t4;" }}{PARA 6 "" 1 "" {TEXT -1 22 "     \+
+ t6 = sin(theta);" }}{PARA 6 "" 1 "" {TEXT -1 17 "      t7 = t6*t6;" }
+}{PARA 6 "" 1 "" {TEXT -1 23 "      t10 = (t5+t7)/t7;" }}{PARA 6 "" 1 
+"" {TEXT -1 31 "      chrisD[0][0][0][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[0][0][0][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[0][0][0][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[0][0][0][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[0][0][1][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[0][0][1][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][0
+][1][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][0][1][3
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][0][2][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][0][2][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][0][2][2] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[0][0][2][3] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[0][0][3][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[0][0][3][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[0][0][3][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[0][0][3][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[0][1][0][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[0][1][0][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][1
+][0][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][1][0][3
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][1][1][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][1][1][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][1][1][2] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[0][1][1][3] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[0][1][2][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[0][1][2][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[0][1][2][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[0][1][2][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[0][1][3][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[0][1][3][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][1
+][3][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][1][3][3
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][2][0][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][2][0][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][2][0][2] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[0][2][0][3] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[0][2][1][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[0][2][1][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[0][2][1][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[0][2][1][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[0][2][2][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[0][2][2][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][2
+][2][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][2][2][3
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][2][3][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][2][3][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][2][3][2] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[0][2][3][3] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[0][3][0][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[0][3][0][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[0][3][0][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[0][3][0][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[0][3][1][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[0][3][1][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][3
+][1][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][3][1][3
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][3][2][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][3][2][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[0][3][2][2] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[0][3][2][3] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[0][3][3][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[0][3][3][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[0][3][3][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[0][3][3][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[1][0][0][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[1][0][0][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][0
+][0][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][0][0][3
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][0][1][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][0][1][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][0][1][2] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[1][0][1][3] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[1][0][2][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[1][0][2][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[1][0][2][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[1][0][2][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[1][0][3][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[1][0][3][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][0
+][3][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][0][3][3
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][1][0][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][1][0][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][1][0][2] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[1][1][0][3] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[1][1][1][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[1][1][1][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[1][1][1][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[1][1][1][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[1][1][2][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[1][1][2][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][1
+][2][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][1][2][3
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][1][3][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][1][3][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][1][3][2] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[1][1][3][3] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[1][2][0][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[1][2][0][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[1][2][0][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[1][2][0][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[1][2][1][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[1][2][1][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][2
+][1][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][2][1][3
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][2][2][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][2][2][1] = -t2;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][2][2][2] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[1][2][2][3] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[1][2][3][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[1][2][3][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[1][2][3][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[1][2][3][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[1][3][0][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[1][3][0][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][3
+][0][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][3][0][3
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][3][1][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][3][1][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][3][1][2] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[1][3][1][3] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[1][3][2][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[1][3][2][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[1][3][2][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[1][3][2][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[1][3][3][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[1][3][3][1] = -t2;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][3
+][3][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[1][3][3][3
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][0][0][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][0][0][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][0][0][2] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[2][0][0][3] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[2][0][1][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[2][0][1][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[2][0][1][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[2][0][1][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[2][0][2][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[2][0][2][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][0
+][2][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][0][2][3
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][0][3][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][0][3][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][0][3][2] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[2][0][3][3] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[2][1][0][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[2][1][0][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[2][1][0][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[2][1][0][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[2][1][1][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[2][1][1][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][1
+][1][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][1][1][3
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][1][2][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][1][2][1] = -t2;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][1][2][2] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[2][1][2][3] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[2][1][3][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[2][1][3][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[2][1][3][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[2][1][3][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[2][2][0][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[2][2][0][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][2
+][0][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][2][0][3
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][2][1][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][2][1][1] = -t3;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][2][1][2] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[2][2][1][3] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[2][2][2][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[2][2][2][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[2][2][2][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[2][2][2][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[2][2][3][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[2][2][3][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][2
+][3][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][2][3][3
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][3][0][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][3][0][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][3][0][2] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[2][3][0][3] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[2][3][1][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[2][3][1][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[2][3][1][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[2][3][1][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[2][3][2][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[2][3][2][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][3
+][2][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][3][2][3
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][3][3][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][3][3][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 32 "      chrisD[2][3][3][2] = -t10;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[2][3][3][3] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[3][0][0][0] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[3][0][0][1] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[3][0][0][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[3][0][0][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[3][0][1][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[3][0][1][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[3][0][1][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][0
+][1][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][0][2][0
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][0][2][1] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][0][2][2] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][0][2][3] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[3][0][3][0] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[3][0][3][1] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[3][0][3][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[3][0][3][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[3][1][0][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[3][1][0][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[3][1][0][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][1
+][0][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][1][1][0
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][1][1][1] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][1][1][2] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][1][1][3] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[3][1][2][0] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[3][1][2][1] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[3][1][2][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[3][1][2][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[3][1][3][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[3][1][3][1] = -t2;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[3][1][3][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][1
+][3][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][2][0][0
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][2][0][1] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][2][0][2] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][2][0][3] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[3][2][1][0] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[3][2][1][1] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[3][2][1][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[3][2][1][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"      chrisD[3][2][2][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ chrisD[3][2][2][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chris
+D[3][2][2][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][2
+][2][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][2][3][0
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][2][3][1] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 32 "      chrisD[3][2][3][2] = -t10;" }
+}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][2][3][3] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][3][0][0] = 0.0;" }}{PARA 
+6 "" 1 "" {TEXT -1 31 "      chrisD[3][3][0][1] = 0.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 31 "      chrisD[3][3][0][2] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      chrisD[3][3][0][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      chrisD[3][3][1][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 34 
+"      chrisD[3][3][1][1] = -t3*t7;" }}{PARA 6 "" 1 "" {TEXT -1 43 "  \+
+    chrisD[3][3][1][2] = -2.0*t3*r*t6*t4;" }}{PARA 6 "" 1 "" {TEXT -1 
+31 "      chrisD[3][3][1][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "  \+
+    chrisD[3][3][2][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      ch
+risD[3][3][2][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 34 "      chrisD[3
+][3][2][2] = -t5+t7;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][3
+][2][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][3][3][0
+] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][3][3][1] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][3][3][2] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "      chrisD[3][3][3][3] = 0.0;" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}}{MARK "14 0 0" 0 }
+{VIEWOPTS 1 1 0 1 1 1803 1 1 1 1 }{PAGENUMBERS 0 1 2 33 1 1 }

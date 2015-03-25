@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6F279CDD-5D37-4022-9720-B7CAEBD2D50E}</ProjectGuid>
+    <RootNamespace>libMotion4D</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="m4d.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="m4d.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.61030.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\compiled\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\compiled\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;LIBMOTION4D_EXPORTS;MATH_EXPORTS;METRIC_EXPORTS;MOTION_EXPORTS;EXTRA_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LIBMOTION4D_EXPORTS;MATH_EXPORTS;METRIC_EXPORTS;MOTION_EXPORTS;EXTRA_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\metric\m4dMetricAlcubierreSimple.h" />
+    <ClInclude Include="src\metric\m4dMetricChazyCurzonRot.h" />
+    <ClInclude Include="src\metric\m4dMetricCurzon.h" />
+    <ClInclude Include="src\metric\m4dMetricEinsteinRosenWaveWWB.h" />
+    <ClInclude Include="src\metric\m4dMetricErezRosenVar.h" />
+    <ClInclude Include="src\metric\m4dMetricKastorTraschen.h" />
+    <ClInclude Include="src\metric\m4dMetricRotDihole.h" />
+    <ClInclude Include="src\motion\m4dFermiWalker.h" />
+    <ClInclude Include="src\motion\m4dGeodesic.h" />
+    <ClInclude Include="src\motion\m4dGeodesicBS.h" />
+    <ClInclude Include="src\motion\m4dGeodesicGSL.h" />
+    <ClInclude Include="src\motion\m4dGeodesicRK4.h" />
+    <ClInclude Include="src\m4dGlobalDefs.h" />
+    <ClInclude Include="src\metric\m4dMetric.h" />
+    <ClInclude Include="src\metric\m4dMetricAlcubierre.h" />
+    <ClInclude Include="src\metric\m4dMetricBarriolaVilenkin.h" />
+    <ClInclude Include="src\metric\m4dMetricBertottiKasner.h" />
+    <ClInclude Include="src\metric\m4dMetricBesselGravWaveCart.h" />
+    <ClInclude Include="src\metric\m4dMetricCosmicStringSchwarzschild.h" />
+    <ClInclude Include="src\metric\m4dMetricDatabase.h" />
+    <ClInclude Include="src\metric\m4dMetricDeSitterUniv.h" />
+    <ClInclude Include="src\metric\m4dMetricDeSitterUnivConf.h" />
+    <ClInclude Include="src\metric\m4dMetricEddFinkIn.h" />
+    <ClInclude Include="src\metric\m4dMetricErnst.h" />
+    <ClInclude Include="src\metric\m4dMetricExtremeReissnerNordstromDihole.h" />
+    <ClInclude Include="src\metric\m4dMetricFriedmanNonEmptyNull.h" />
+    <ClInclude Include="src\metric\m4dMetricGoedel.h" />
+    <ClInclude Include="src\metric\m4dMetricGoedelCart.h" />
+    <ClInclude Include="src\metric\m4dMetricGoedelScaled.h" />
+    <ClInclude Include="src\metric\m4dMetricGoedelScaledCart.h" />
+    <ClInclude Include="src\metric\m4dMetricHalilsoyWave.h" />
+    <ClInclude Include="src\metric\m4dMetricJaNeWi.h" />
+    <ClInclude Include="src\metric\m4dMetricKasner.h" />
+    <ClInclude Include="src\metric\m4dMetricKerrBL.h" />
+    <ClInclude Include="src\metric\m4dMetricKottler.h" />
+    <ClInclude Include="src\metric\m4dMetricList.h" />
+    <ClInclude Include="src\metric\m4dMetricMinkowski.h" />
+    <ClInclude Include="src\metric\m4dMetricMinkowskiConformal.h" />
+    <ClInclude Include="src\metric\m4dMetricMinkRotLattice.h" />
+    <ClInclude Include="src\metric\m4dMetricMorrisThorne.h" />
+    <ClInclude Include="src\metric\m4dMetricPainleveGullstrand.h" />
+    <ClInclude Include="src\metric\m4dMetricPlaneGravWave.h" />
+    <ClInclude Include="src\metric\m4dMetricPravda_C.h" />
+    <ClInclude Include="src\metric\m4dMetricPravda_C_Can.h" />
+    <ClInclude Include="src\metric\m4dMetricPTD_AI.h" />
+    <ClInclude Include="src\metric\m4dMetricPTD_AII.h" />
+    <ClInclude Include="src\metric\m4dMetricPTD_AIII.h" />
+    <ClInclude Include="src\metric\m4dMetricPTD_BI.h" />
+    <ClInclude Include="src\metric\m4dMetricPTD_BII.h" />
+    <ClInclude Include="src\metric\m4dMetricPTD_BIII.h" />
+    <ClInclude Include="src\metric\m4dMetricPTD_C.h" />
+    <ClInclude Include="src\metric\m4dMetricReissnerNordstrom.h" />
+    <ClInclude Include="src\metric\m4dMetricSchwarzschild.h" />
+    <ClInclude Include="src\metric\m4dMetricSchwarzschildCart.h" />
+    <ClInclude Include="src\metric\m4dMetricSchwarzschildIsotropic.h" />
+    <ClInclude Include="src\metric\m4dMetricSchwarzschildTortoise.h" />
+    <ClInclude Include="src\metric\m4dMetricStraightSpinningString.h" />
+    <ClInclude Include="src\metric\m4dMetricSultanaDyer.h" />
+    <ClInclude Include="src\metric\m4dMetricTaubNUT.h" />
+    <ClInclude Include="src\metric\m4dMetricTeoWHl.h" />
+    <ClInclude Include="src\motion\m4dMotion.h" />
+    <ClInclude Include="src\motion\m4dMotionDatabase.h" />
+    <ClInclude Include="src\motion\m4dMotionList.h" />
+    <ClInclude Include="src\extra\m4dObject.h" />
+    <ClInclude Include="src\extra\m4dPlatform.h" />
+    <ClInclude Include="src\extra\m4dUtilities.h" />
+    <ClInclude Include="src\math\Mat.h" />
+    <ClInclude Include="src\stdafx.h" />
+    <ClInclude Include="src\targetver.h" />
+    <ClInclude Include="src\math\TransCoordinates.h" />
+    <ClInclude Include="src\math\TransfMat.h" />
+    <ClInclude Include="src\math\VnD.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\metric\m4dMetricAlcubierreSimple.cpp" />
+    <ClCompile Include="src\metric\m4dMetricChazyCurzonRot.cpp" />
+    <ClCompile Include="src\metric\m4dMetricCurzon.cpp" />
+    <ClCompile Include="src\metric\m4dMetricEinsteinRosenWaveWWB.cpp" />
+    <ClCompile Include="src\metric\m4dMetricErezRosenVar.cpp" />
+    <ClCompile Include="src\metric\m4dMetricKastorTraschen.cpp" />
+    <ClCompile Include="src\metric\m4dMetricRotDihole.cpp" />
+    <ClCompile Include="src\motion\m4dFermiWalker.cpp" />
+    <ClCompile Include="src\motion\m4dGeodesic.cpp" />
+    <ClCompile Include="src\motion\m4dGeodesicBS.cpp" />
+    <ClCompile Include="src\motion\m4dGeodesicGSL.cpp" />
+    <ClCompile Include="src\motion\m4dGeodesicRK4.cpp" />
+    <ClCompile Include="src\metric\m4dMetric.cpp" />
+    <ClCompile Include="src\metric\m4dMetricAlcubierre.cpp" />
+    <ClCompile Include="src\metric\m4dMetricBarriolaVilenkin.cpp" />
+    <ClCompile Include="src\metric\m4dMetricBertottiKasner.cpp" />
+    <ClCompile Include="src\metric\m4dMetricBesselGravWaveCart.cpp" />
+    <ClCompile Include="src\metric\m4dMetricCosmicStringSchwarzschild.cpp" />
+    <ClCompile Include="src\metric\m4dMetricDatabase.cpp" />
+    <ClCompile Include="src\metric\m4dMetricDeSitterUniv.cpp" />
+    <ClCompile Include="src\metric\m4dMetricDeSitterUnivConf.cpp" />
+    <ClCompile Include="src\metric\m4dMetricEddFinkIn.cpp" />
+    <ClCompile Include="src\metric\m4dMetricErnst.cpp" />
+    <ClCompile Include="src\metric\m4dMetricExtremeReissnerNordstromDihole.cpp" />
+    <ClCompile Include="src\metric\m4dMetricFriedmanNonEmptyNull.cpp" />
+    <ClCompile Include="src\metric\m4dMetricGoedel.cpp" />
+    <ClCompile Include="src\metric\m4dMetricGoedelCart.cpp" />
+    <ClCompile Include="src\metric\m4dMetricGoedelScaled.cpp" />
+    <ClCompile Include="src\metric\m4dMetricGoedelScaledCart.cpp" />
+    <ClCompile Include="src\metric\m4dMetricHalilsoyWave.cpp" />
+    <ClCompile Include="src\metric\m4dMetricJaNeWi.cpp" />
+    <ClCompile Include="src\metric\m4dMetricKasner.cpp" />
+    <ClCompile Include="src\metric\m4dMetricKerrBL.cpp" />
+    <ClCompile Include="src\metric\m4dMetricKottler.cpp" />
+    <ClCompile Include="src\metric\m4dMetricMinkowski.cpp" />
+    <ClCompile Include="src\metric\m4dMetricMinkowskiConformal.cpp" />
+    <ClCompile Include="src\metric\m4dMetricMinkRotLattice.cpp" />
+    <ClCompile Include="src\metric\m4dMetricMorrisThorne.cpp" />
+    <ClCompile Include="src\metric\m4dMetricPainleveGullstrand.cpp" />
+    <ClCompile Include="src\metric\m4dMetricPlaneGravWave.cpp" />
+    <ClCompile Include="src\metric\m4dMetricPravda_C.cpp" />
+    <ClCompile Include="src\metric\m4dMetricPravda_C_Can.cpp" />
+    <ClCompile Include="src\metric\m4dMetricPTD_AI.cpp" />
+    <ClCompile Include="src\metric\m4dMetricPTD_AII.cpp" />
+    <ClCompile Include="src\metric\m4dMetricPTD_AIII.cpp" />
+    <ClCompile Include="src\metric\m4dMetricPTD_BI.cpp" />
+    <ClCompile Include="src\metric\m4dMetricPTD_BII.cpp" />
+    <ClCompile Include="src\metric\m4dMetricPTD_BIII.cpp" />
+    <ClCompile Include="src\metric\m4dMetricPTD_C.cpp" />
+    <ClCompile Include="src\metric\m4dMetricReissnerNordstrom.cpp" />
+    <ClCompile Include="src\metric\m4dMetricSchwarzschild.cpp" />
+    <ClCompile Include="src\metric\m4dMetricSchwarzschildCart.cpp" />
+    <ClCompile Include="src\metric\m4dMetricSchwarzschildIsotropic.cpp" />
+    <ClCompile Include="src\metric\m4dMetricSchwarzschildTortoise.cpp" />
+    <ClCompile Include="src\metric\m4dMetricStraightSpinningString.cpp" />
+    <ClCompile Include="src\metric\m4dMetricSultanaDyer.cpp" />
+    <ClCompile Include="src\metric\m4dMetricTaubNUT.cpp" />
+    <ClCompile Include="src\metric\m4dMetricTeoWHl.cpp" />
+    <ClCompile Include="src\motion\m4dMotion.cpp" />
+    <ClCompile Include="src\motion\m4dMotionDatabase.cpp" />
+    <ClCompile Include="src\extra\m4dObject.cpp" />
+    <ClCompile Include="src\extra\m4dPlatform.cpp" />
+    <ClCompile Include="src\extra\m4dUtilities.cpp" />
+    <ClCompile Include="src\math\Mat.cpp" />
+    <ClCompile Include="src\math\TransCoordinates.cpp" />
+    <ClCompile Include="src\math\TransfMat.cpp" />
+    <ClCompile Include="src\math\VnD.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

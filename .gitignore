@@ -1,0 +1,31 @@
+
+# directories
+.svn
+build
+config
+doc
+lib
+.deps
+
+src/metric/kickedout
+
+# files
+*.dat
+*.png
+
+m4dLua
+m4dLua_debug
+
+test/calcGeodesic/m4dCalcGeodesic
+test/calcParallel/m4dCalcParallel
+test/testCircular/m4dTestCircular
+test/testDatabase/m4dTestDatabase
+test/testGeodesic/m4dTestGeodesic
+test/testJacobi/m4dTestJacobi
+
+test/calcGeodesic/m4dCalcGeodesic_debug
+test/calcParallel/m4dCalcParallel_debug
+test/testCircular/m4dTestCircular_debug
+test/testDatabase/m4dTestDatabase_debug
+test/testGeodesic/m4dTestGeodesic_debug
+test/testJacobi/m4dTestJacobi_debug

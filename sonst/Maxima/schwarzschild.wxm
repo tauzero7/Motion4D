@@ -1,0 +1,48 @@
+/* ------------------------------------------
+    Motion4D-library
+    
+    Schwarzschild metric 
+    
+    
+    Thomas Mueller, Frank Grave
+    Visualization Research Center (VISUS)
+    University of Stuttgart  
+    
+    Use with wxmaxima:
+       batchload("schwarzschild.wmx")
+   ------------------------------------------ */
+
+/* load ctensor package */
+load(ctensor);
+
+/* define coordinates to use */
+ct_coords:[t,r,theta,phi];
+
+/* start with the identity metric */
+lg:ident(4);
+
+lg[1,1]:-c^2*(1-rs/r);
+lg[2,2]:1/(1-rs/r);
+lg[3,3]:r^2;
+lg[4,4]:r^2*sin(theta)^2;
+
+cmetric();
+
+/* calculate the christoffel symbols of the second kind */
+christof(mcs);
+
+/* Calculate the right hand side of the geodesic equation.
+   Note that the indices have to be shift by i->i-1
+   before they can be used in 'C'. */
+for k from 1 thru 4 do  dydx[k+4]:sum(sum(-mcs[i,j,k]*yn[i+4]*yn[j+4],i,1,4),j,1,4);
+dydx[5];
+dydx[6];
+dydx[7];
+dydx[8];
+
+/* Calculate the right hand side of the parallel transport equation.
+   Note that the indices have to be shift by i->i-1 before they can 
+   be used in 'C'. b is the tetrad index. */
+for k from 1 thru 4 do  f[k]:sum(sum(-mcs[i,j,k]*yn[i+4]*yn[j+b],i,1,4),j,1,4);
+
+

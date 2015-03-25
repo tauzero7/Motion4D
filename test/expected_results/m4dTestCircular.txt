@@ -1,0 +1,21 @@
+=================== Test parallel transport on circular orbit ===================
+
+
+local velocity:            beta =   0.500000
+proper time for one orbit:  tau =  65.296777
+coord. time for one orbit:   ct =  92.343588
+
+
+MetricName : Schwarzschild
+--------------------------
+   sign(g) : +2
+
+   #params : 1
+         mass :  1.0000
+(  1.15470054   0.00000000   0.00000000   0.57735027 )
+(  0.00000000   1.00000000   0.00000000   0.00000000 )
+(  0.00000000   0.00000000   1.00000000   0.00000000 )
+(  0.57735027   0.00000000   0.00000000   1.15470054 )
+gamma: 1.154701    beta/gamma: 0.577350
+tau =   65.296
+Geodesic precession of e_1 after one orbit: 105.444588 deg.

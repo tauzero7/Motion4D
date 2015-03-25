@@ -1,0 +1,83 @@
+/* ------------------------------------------
+    Motion4D-library
+    
+    Warp metric with vs = vs(t)
+    
+    
+    Thomas Mueller
+    Visualization Research Center (VISUS)
+    University of Stuttgart  
+    
+    Use with maxima (5.20.1 or higher):
+       batch("warp2.mac")
+   ------------------------------------------ */
+
+load(ctensor);
+
+ct_coords:[t,x,y,z]$
+
+lg:ident(4)$
+lg[1,1]:vs(t)^2*f(t,x,y,z)^2-c^2$
+lg[1,2]:-vs(t)*f(t,x,y,z)$
+lg[2,1]:-vs(t)*f(t,x,y,z)$
+lg[2,2]:1$
+lg[3,3]:1$
+lg[4,4]:1$
+cmetric();
+
+christof(mcs);
+
+e0:[1/c,vs(t)*f(t,x,y,z)/c,0,0]$
+e1:[0,1,0,0]$
+e2:[0,0,1,0]$
+e3:[0,0,0,1]$
+
+ratsimp(sum(sum(lg[i,j]*e0[i]*e0[j],i,1,4),j,1,4));
+ratsimp(sum(sum(lg[i,j]*e1[i]*e1[j],i,1,4),j,1,4));
+ratsimp(sum(sum(lg[i,j]*e2[i]*e2[j],i,1,4),j,1,4));
+ratsimp(sum(sum(lg[i,j]*e3[i]*e3[j],i,1,4),j,1,4));
+ratsimp(sum(sum(lg[i,j]*e0[i]*e1[j],i,1,4),j,1,4));
+
+
+b0:[1/sqrt(c^2-vs(t)^2*f(t,x,y,z)^2),0,0,0]$
+b1:[vs(t)*f(t,x,y,z)/c/sqrt(c^2-vs(t)^2*f(t,x,y,z)^2),-sqrt(c^2-vs(t)^2*f(t,x,y,z)^2)/c,0,0]$
+
+ratsimp(sum(sum(lg[i,j]*b0[i]*b0[j],i,1,4),j,1,4));
+ratsimp(sum(sum(lg[i,j]*b0[i]*b1[j],i,1,4),j,1,4));
+ratsimp(sum(sum(lg[i,j]*b1[i]*b1[j],i,1,4),j,1,4));
+
+
+/*
+F(rs):=(tanh(sigma*(rs+R))-tanh(sigma*(rs-R)))/(2*tanh(sigma*R));
+diff(F(rs),rs);
+
+RS(t,x,y,z):=sqrt((x-xs(t))^2+y^2+z^2);
+diff(RS(t,x,y,z),t);
+diff(RS(t,x,y,z),x);
+diff(RS(t,x,y,z),y);
+diff(RS(t,x,y,z),z);
+*/
+
+Chr(nu,lambda,mu):=1/2*sum(ug[mu,rho]*(
+  diff(lg[rho,nu],ct_coords[lambda])+
+  diff(lg[rho,lambda],ct_coords[nu])-
+  diff(lg[nu,lambda],ct_coords[rho])),rho,1,4)$
+  
+for nu: 1 thru 4 do
+  for lambda: nu  thru 4 do
+    for mu: 1 thru 4 do 
+     (chr:ratsimp(Chr(nu,lambda,mu)),
+     print(ct_coords[nu],ct_coords[lambda],ct_coords[mu]," ... ",chr));
+
+
+U:[1,vs(t),0,0];
+subst(1,f(t,x,y,z),(sum(sum(lg[i,j]*U[i]*U[j],i,1,4),j,1,4)));
+
+(a:[0,0,0,0],
+for i: 1 thru 4 do
+  a[i]:ratsimp(diff(U[i],t)+sum(sum(mcs[j,k,i]*U[j]*U[k],j,1,4),k,1,4) ))$
+  
+subst(1,f(t,x,y,z),a[1]);
+subst(1,f(t,x,y,z),a[2]);
+subst(1,f(t,x,y,z),a[3]);
+subst(1,f(t,x,y,z),a[4]);

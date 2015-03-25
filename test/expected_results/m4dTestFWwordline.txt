@@ -1,0 +1,13 @@
+=================== Test Fermi-Walker worldline ===================
+
+local velocity: 0.500000
+
+MetricName : Schwarzschild
+--------------------------
+   sign(g) : +2
+
+   #params : 1
+         mass :  1.0000
+ 6531   65.3100
+
+angle: 105.35102472

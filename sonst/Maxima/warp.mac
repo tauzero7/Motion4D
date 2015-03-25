@@ -1,0 +1,59 @@
+/* ------------------------------------------
+    Motion4D-library
+    
+    Warp metric with constant velocity vs.
+    
+    
+    Thomas Mueller
+    Visualization Research Center (VISUS)
+    University of Stuttgart  
+    
+    Use with maxima (5.20.1 or higher):
+       batch("warp.mac")
+   ------------------------------------------ */
+
+load(ctensor);
+
+ct_coords:[t,x,y,z];
+
+lg:ident(4);
+lg[1,1]:vs^2*f(t,x,y,z)^2-c^2;
+lg[1,2]:-vs*f(t,x,y,z);
+lg[2,1]:-vs*f(t,x,y,z);
+lg[2,2]:1;
+lg[3,3]:1;
+lg[4,4]:1;
+cmetric();
+
+christof(mcs);
+
+e0:[1/c,vs*f(t,x,y,z)/c,0,0];
+e1:[0,1,0,0];
+e2:[0,0,1,0];
+e3:[0,0,0,1];
+
+ratsimp(sum(sum(lg[i,j]*e0[i]*e0[j],i,1,4),j,1,4));
+ratsimp(sum(sum(lg[i,j]*e1[i]*e1[j],i,1,4),j,1,4));
+ratsimp(sum(sum(lg[i,j]*e2[i]*e2[j],i,1,4),j,1,4));
+ratsimp(sum(sum(lg[i,j]*e3[i]*e3[j],i,1,4),j,1,4));
+ratsimp(sum(sum(lg[i,j]*e0[i]*e1[j],i,1,4),j,1,4));
+
+
+b0:[1/sqrt(c^2-vs^2*f(t,x,y,z)^2),0,0,0];
+b1:[-vs*f(t,x,y,z)/c/sqrt(c^2-vs^2*f(t,x,y,z)^2),sqrt(c^2-vs^2*f(t,x,y,z)^2)/c,0,0];
+
+ratsimp(sum(sum(lg[i,j]*b0[i]*b0[j],i,1,4),j,1,4));
+ratsimp(sum(sum(lg[i,j]*b0[i]*b1[j],i,1,4),j,1,4));
+ratsimp(sum(sum(lg[i,j]*b1[i]*b1[j],i,1,4),j,1,4));
+
+
+/*
+F(rs):=(tanh(sigma*(rs+R))-tanh(sigma*(rs-R)))/(2*tanh(sigma*R));
+diff(F(rs),rs);
+
+RS(t,x,y,z):=sqrt((x-xs(t))^2+y^2+z^2);
+diff(RS(t,x,y,z),t);
+diff(RS(t,x,y,z),x);
+diff(RS(t,x,y,z),y);
+diff(RS(t,x,y,z),z);
+*/

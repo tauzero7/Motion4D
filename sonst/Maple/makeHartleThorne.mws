@@ -1,0 +1,1600 @@
+{VERSION 4 0 "IBM INTEL LINUX" "4.0" }
+{USTYLETAB {CSTYLE "Maple Input" -1 0 "Courier" 0 1 255 0 0 1 0 1 0 0 
+1 0 0 0 0 1 }{CSTYLE "2D Math" -1 2 "Times" 0 1 0 0 0 0 0 0 2 0 0 0 0 
+0 0 1 }{CSTYLE "2D Output" 2 20 "" 0 1 0 0 255 1 0 0 0 0 0 0 0 0 0 1 }
+{PSTYLE "Normal" -1 0 1 {CSTYLE "" -1 -1 "" 0 1 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 }0 0 0 -1 -1 -1 0 0 0 0 0 0 -1 0 }{PSTYLE "Text Output" -1 2 1 
+{CSTYLE "" -1 -1 "Courier" 1 10 0 0 255 1 0 0 0 0 0 1 3 0 3 0 }1 0 0 
+-1 -1 -1 0 0 0 0 0 0 -1 0 }{PSTYLE "" 2 6 1 {CSTYLE "" -1 -1 "" 0 1 0 
+0 0 0 0 0 0 0 0 0 2 0 0 0 }0 0 0 -1 -1 -1 0 0 0 0 0 0 -1 0 }{PSTYLE "M
+aple Output" 0 11 1 {CSTYLE "" -1 -1 "" 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 }3 3 0 -1 -1 -1 0 0 0 0 0 0 -1 0 }{PSTYLE "" 11 12 1 {CSTYLE "" -1 
+-1 "" 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }1 0 0 -1 -1 -1 0 0 0 0 0 0 -1 
+0 }}
+{SECT 0 {EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 15 "restart:grtw();" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#%=GRTensorII~Version~1.79~(R6)G" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#%06~February~2001G" }}{PARA 11 "" 1 "
+" {XPPMATH 20 "6#%ZDeveloped~by~Peter~Musgrave,~Denis~Pollney~and~Kayl
+l~LakeG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%DCopyright~1994-2001~by~th
+e~authors.G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%inLatest~version~avail
+able~from:~http://grtensor.phy.queensu.ca/G" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#%B/home/tmueller/Maple/Grii/metricsG" }}}{EXCHG {PARA 
+0 "> " 0 "" {MPLTEXT 1 0 14 "makeg(KerrBL);" }}{PARA 6 "" 1 "" {TEXT 
+-1 0 "" }}{PARA 6 "" 1 "" {TEXT -1 1 " " }}{PARA 6 "" 1 "" {TEXT -1 
+46 "Makeg 2.0: GRTensor metric/basis entry utility" }}{PARA 6 "" 1 "" 
+{TEXT -1 1 " " }}{PARA 6 "" 1 "" {TEXT -1 41 "To quit makeg, type 'exi
+t' at any prompt." }}{PARA 6 "" 1 "" {TEXT -1 1 " " }}{PARA 6 "" 1 "" 
+{TEXT -1 44 "Do you wish to enter a 1) metric [g(dn,dn)]," }}{PARA 6 "
+" 1 "" {TEXT -1 44 "                       2) line element [ds]," }}
+{PARA 6 "" 1 "" {TEXT -1 63 "                       3) non-holonomic b
+asis [e(1)...e(n)], or" }}{PARA 6 "" 1 "" {TEXT -1 49 "               \+
+        4) NP tetrad [l,n,m,mbar]?" }}{PARA 6 "" 1 "" {TEXT -1 0 "" }}
+}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 2 "2:" }}{PARA 6 "" 1 "" 
+{TEXT -1 50 "Enter coordinates as a LIST (eg. [t,r,theta,phi]):" }}}
+{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 16 "[t,r,theta,phi]:" }}
+{PARA 6 "" 1 "" {TEXT -1 64 "Enter the line element using d[coord] to \+
+indicate differentials." }}{PARA 6 "" 1 "" {TEXT -1 55 "(for example, \+
+ r^2*(d[theta]^2 + sin(theta)^2*d[phi]^2)" }}{PARA 6 "" 1 "" {TEXT -1 
+27 "[Type 'exit' to quit makeg]" }}{PARA 6 "" 1 "" {TEXT -1 8 " ds^2 =
+ " }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 210 "-(1-2*M*r/Sigma(r
+,theta))*d[t]^2-(4*M*a*r*sin(theta)^2)/Sigma(r,theta)*d[t]*d[phi]+Sigm
+a(r,theta)/Delta(r)*d[r]^2+Sigma(r,theta)*d[theta]^2+(r^2+a^2+2*M*a^2*
+r*sin(theta)^2/Sigma(r,theta))*sin(theta)^2*d[phi]^2:" }}{PARA 6 "" 1 
+"" {TEXT -1 0 "" }}{PARA 6 "" 1 "" {TEXT -1 67 "If there are any compl
+ex valued coordinates, constants or functions" }}{PARA 6 "" 1 "" 
+{TEXT -1 66 "for this spacetime, please enter them as a SET ( eg. \{ z
+, psi \} )." }}{PARA 6 "" 1 "" {TEXT -1 0 "" }}{PARA 6 "" 1 "" {TEXT 
+-1 33 "Complex quantities [default=\{\}]: " }}}{EXCHG {PARA 0 "makeg>
+" 0 "" {MPLTEXT 1 0 3 "\{\}:" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%AThe~
+values~you~have~entered~are:G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/%,Co
+ordinatesG7&%\"tG%\"rG%&thetaG%$phiG" }}{PARA 11 "" 1 "" {XPPMATH 20 "
+6#%(Metric:G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%\"tG\"\"\"
+&%!GF'F),&!\"\"F)*&*(\"\"#F)%\"MGF)%\"rGF)F)-%&SigmaG6$F2%&thetaGF-F)
+" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%\"tG\"\"\"&%!G6#%\"rGF
+)\"\"!" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%\"tG\"\"\"&%!G6#
+%&thetaGF)\"\"!" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%\"tG\"
+\"\"&%!G6#%$phiGF),$*&**%\"MGF)%\"aGF)%\"rGF))-%$sinG6#%&thetaG\"\"#F)
+F)-%&SigmaG6$F3F8!\"\"!\"#" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"g
+G6#%\"rG\"\"\"&%!G6#%\"tGF)\"\"!" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*
+&&%\"gG6#%\"rG\"\"\"&%!GF'F)*&-%&SigmaG6$F(%&thetaGF)-%&DeltaGF'!\"\"
+" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%\"rG\"\"\"&%!G6#%&thet
+aGF)\"\"!" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%\"rG\"\"\"&%!
+G6#%$phiGF)\"\"!" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%&theta
+G\"\"\"&%!G6#%\"tGF)\"\"!" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG
+6#%&thetaG\"\"\"&%!G6#%\"rGF)\"\"!" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#
+/*&&%\"gG6#%&thetaG\"\"\"&%!GF'F)-%&SigmaG6$%\"rGF(" }}{PARA 11 "" 1 "
+" {XPPMATH 20 "6#/*&&%\"gG6#%&thetaG\"\"\"&%!G6#%$phiGF)\"\"!" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%$phiG\"\"\"&%!G6#%\"tGF),$
+*&**%\"MGF)%\"aGF)%\"rGF))-%$sinG6#%&thetaG\"\"#F)F)-%&SigmaG6$F3F8!\"
+\"!\"#" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%$phiG\"\"\"&%!G6
+#%\"rGF)\"\"!" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%$phiG\"\"
+\"&%!G6#%&thetaGF)\"\"!" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#
+%$phiG\"\"\"&%!GF'F),(*&)-%$sinG6#%&thetaG\"\"#F))%\"rGF3F)F)*&F.F))%
+\"aGF3F)F)*&*,F3F))F/\"\"%F)%\"MGF)F7F)F5F)F)-%&SigmaG6$F5F2!\"\"F)" }
+}{PARA 6 "" 1 "" {TEXT -1 54 "You may choose to 0) Use the metric WITH
+OUT saving it," }}{PARA 6 "" 1 "" {TEXT -1 46 "                  1) Sa
+ve the metric as it is," }}{PARA 6 "" 1 "" {TEXT -1 54 "              \+
+    2) Correct an element of the metric," }}{PARA 6 "" 1 "" {TEXT -1 
+41 "                  3) Re-enter the metric," }}{PARA 6 "" 1 "" 
+{TEXT -1 54 "                  4) Add/change constraint equations, " }
+}{PARA 6 "" 1 "" {TEXT -1 47 "                  5) Add a text descript
+ion, or" }}{PARA 6 "" 1 "" {TEXT -1 61 "                  6) Abandon t
+his metric and return to Maple." }}{PARA 6 "" 1 "" {TEXT -1 0 "" }}}
+{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 2 "1:" }}{PARA 6 "" 1 "" 
+{TEXT -1 70 "Information written to: `/home/tmueller/Maple/Grii/metric
+s/KerrBL.mpl`" }}{PARA 6 "" 1 "" {TEXT -1 57 "Do you wish to use this \+
+spacetime in the current session?" }}{PARA 6 "" 1 "" {TEXT -1 29 "(1=y
+es [default], other=no): " }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 
+0 2 "1:" }}{PARA 6 "" 1 "" {TEXT -1 20 "Initializing: KerrBL" }}{PARA 
+6 "" 1 "" {TEXT -1 40 "Calculated ds for KerrBL (0.000000 sec.)" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#/%2Default~spacetimeG%'KerrBLG" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#%:For~the~KerrBL~spacetime:G" }}{PARA 
+11 "" 1 "" {XPPMATH 20 "6#%,CoordinatesG" }}{PARA 11 "" 1 "" {XPPMATH 
+20 "6#-%\"xG6#%#upG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/)%#x~G%\"aG-%'
+vectorG6#7&%\"tG%\"rG%&thetaG%$phiG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6
+#%-Line~elementG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*$)%$~dsG\"\"#\"
+\"\",,*(,&!\"\"F(*&*(F'F(%\"MGF(%\"rGF(F(-%&SigmaG6$F0%&thetaGF,F(F(%#
+~dGF()%\"tG%#2~GF(F(*&*4\"\"%F(F/F(%\"aGF(F0F()-%$sinG6#F4F'F(F5F()F7%
+\"~GF(%#d~GF()%$phiGFBF(F(F1F,F,*&*(F1F(F5F()F0F8F(F(-%&DeltaG6#F0F,F(
+*(F1F(F5F()F4F8F(F(*(,(*&F=F()F0F'F(F(*&F=F()F<F'F(F(*&*,F'F()F>F;F(F/
+F(FSF(F0F(F(F1F,F(F(F5F()FEF8F(F(" }}{PARA 6 "" 1 "" {TEXT -1 18 "make
+g() completed." }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 18 "grcalcd(g
+(up,up));" }}{PARA 6 "" 1 "" {TEXT -1 42 "Calculated detg for KerrBL (
+0.000000 sec.)" }}{PARA 6 "" 1 "" {TEXT -1 46 "Calculated g(up,up) for
+ KerrBL (0.000000 sec.)" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/%*CPU~Time
+~G$\"\"!F&" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%:For~the~KerrBL~spaceti
+me:G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%<Contravariant~metric~tensorG
+" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#-%\"gG6$%#upGF&" }}{PARA 11 "" 1 "
+" {XPPMATH 20 "6#/*&)%#g~G%\"aG\"\"\")%!G%\"bGF(-%'matrixG6#7&7&,$*&,(
+*&)%\"rG\"\"#F(-%&SigmaG6$F6%&thetaGF(F(*&)F'F7F(F8F(F(*,F7F()-%$sinG6
+#F;F7F(%\"MGF(F=F(F6F(F(F(,,F4F(F<F(*,F7F(F?F(FCF(F=F(F6F(F(*(F7F(FCF(
+)F6\"\"$F(!\"\"**F7F(FCF(F6F(F=F(FIFIFI\"\"!FK,$*&*(FCF(F'F(F6F(F(FDFI
+!\"#7&FK*&-%&DeltaG6#F6F(F8FIFKFK7&FKFK*&F(F(F8FIFK7&FLFKFK*&,&F8F(*(F
+7F(FCF(F6F(FIF(*&F?F(FDF(FI" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 
+30 "grdef(`W\{^c ^d\}`,sym=\{[1,2]\});" }}{PARA 6 "" 1 "" {TEXT -1 31 
+"Created definition for W(up,up)" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 40 "grdef(`q\{a b\}:=g\{a c\}*g\{b d\}*W\{^c ^d\}`);" }}
+{PARA 6 "" 1 "" {TEXT -1 31 "Created definition for q(dn,dn)" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 18 "grcalcd(q(dn,dn));" }}{PARA 
+6 "" 1 "" {TEXT -1 0 "" }}{PARA 6 "" 1 "" {TEXT -1 36 "Enter component
+s for object W(up,up)" }}{PARA 6 "" 1 "" {TEXT -1 56 "  If you wish to
+ quit at any point and leave this object" }}{PARA 6 "" 1 "" {TEXT -1 
+39 "  uninitialized, enter the string exit." }}{PARA 6 "" 1 "" {TEXT 
+-1 51 "  REMEMBER to complete each entry with a semicolon." }}{PARA 
+11 "" 1 "" {XPPMATH 20 "6#*&)%\"WG%\"tG\"\"\")%!GF&F'" }}{PARA 6 "" 1 
+"" {TEXT -1 0 "" }}}{EXCHG {PARA 0 "grcalc>" 0 "" {MPLTEXT 1 0 13 "htt
+(r,theta);" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#*&)%\"WG%\"tG\"\"\")%!G%
+\"rGF'" }}{PARA 6 "" 1 "" {TEXT -1 0 "" }}}{EXCHG {PARA 0 "grcalc>" 0 
+"" {MPLTEXT 1 0 2 "0:" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#*&)%\"WG%\"tG
+\"\"\")%!G%&thetaGF'" }}{PARA 6 "" 1 "" {TEXT -1 0 "" }}}{EXCHG {PARA 
+0 "grcalc>" 0 "" {MPLTEXT 1 0 2 "0:" }}{PARA 11 "" 1 "" {XPPMATH 20 "6
+#*&)%\"WG%\"tG\"\"\")%!G%$phiGF'" }}{PARA 6 "" 1 "" {TEXT -1 0 "" }}}
+{EXCHG {PARA 0 "grcalc>" 0 "" {MPLTEXT 1 0 2 "0:" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#*&)%\"WG%\"rG\"\"\")%!GF&F'" }}{PARA 6 "" 1 "" {TEXT 
+-1 0 "" }}}{EXCHG {PARA 0 "grcalc>" 0 "" {MPLTEXT 1 0 13 "hrr(r,theta)
+;" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#*&)%\"WG%\"rG\"\"\")%!G%&thetaGF'
+" }}{PARA 6 "" 1 "" {TEXT -1 0 "" }}}{EXCHG {PARA 0 "grcalc>" 0 "" 
+{MPLTEXT 1 0 2 "0;" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#*&)%\"WG%\"rG\"
+\"\")%!G%$phiGF'" }}{PARA 6 "" 1 "" {TEXT -1 0 "" }}}{EXCHG {PARA 0 "g
+rcalc>" 0 "" {MPLTEXT 1 0 2 "0;" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#*&)
+%\"WG%&thetaG\"\"\")%!GF&F'" }}{PARA 6 "" 1 "" {TEXT -1 0 "" }}}
+{EXCHG {PARA 0 "grcalc>" 0 "" {MPLTEXT 1 0 13 "haa(r,theta);" }}{PARA 
+11 "" 1 "" {XPPMATH 20 "6#*&)%\"WG%&thetaG\"\"\")%!G%$phiGF'" }}{PARA 
+6 "" 1 "" {TEXT -1 0 "" }}}{EXCHG {PARA 0 "grcalc>" 0 "" {MPLTEXT 1 0 
+2 "0:" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#*&)%\"WG%$phiG\"\"\")%!GF&F'
+" }}{PARA 6 "" 1 "" {TEXT -1 0 "" }}}{EXCHG {PARA 0 "grcalc>" 0 "" 
+{MPLTEXT 1 0 13 "hpp(r,theta);" }}{PARA 6 "" 1 "" {TEXT -1 45 "Calcula
+ted W(up,up) for KerrBL (.010000 sec.)" }}{PARA 6 "" 1 "" {TEXT -1 46 
+"Calculated q(dn,dn) for KerrBL (0.000000 sec.)" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#/%*CPU~Time~G$\"#5!\"$" }}{PARA 11 "" 1 "" {XPPMATH 20 
+"6#%:For~the~KerrBL~spacetime:G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%)q
+(dn,dn)G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#-%\"qG6$%#dnGF&" }}{PARA 
+11 "" 1 "" {XPPMATH 20 "6#/&%\"qG6#*&%\"tG\"\"\"F(F)*&,**&-%$httG6$%\"
+rG%&thetaGF))-%&SigmaGF/\"\"#F)F)*,\"\"%F)F-F)F3F)%\"MGF)F0F)!\"\"**F7
+F)F-F))F8F5F))F0F5F)F)*.F7F)F;F))%\"aGF5F)F<F))-%$sinG6#F1F7F)-%$hppGF
+/F)F)F)*$F2F)F9" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/&%\"qG6#*&%$phiG\"
+\"\"%\"tGF),$*&*,%\"MGF)%\"aGF)%\"rGF))-%$sinG6#%&thetaG\"\"#F),,*&-%$
+httG6$F0F5F)-%&SigmaGF;F)F)**F6F)F9F)F.F)F0F)!\"\"**F1F)-%$hppGF;F))F0
+F6F)F<F)F?**F1F)FAF))F/F6F)F<F)F?*.F6F))F2\"\"%F)FAF)F.F)FEF)F0F)F?F)F
+)*$)F<F6F)F?F6" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/&%\"qG6#*&%\"rG\"\"
+\"F(F)*&*&)-%&SigmaG6$F(%&thetaG\"\"#F)-%$hrrGF/F)F)*$)-%&DeltaG6#F(F1
+F)!\"\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/&%\"qG6#*&%&thetaG\"\"\"F(
+F)*&)-%&SigmaG6$%\"rGF(\"\"#F)-%$haaGF.F)" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#/&%\"qG6#*&%\"tG\"\"\"%$phiGF),$*&*,%\"MGF)%\"aGF)%\"rG
+F))-%$sinG6#%&thetaG\"\"#F),,*&-%$httG6$F0F5F)-%&SigmaGF;F)F)**F6F)F9F
+)F.F)F0F)!\"\"**F1F)-%$hppGF;F))F0F6F)F<F)F?**F1F)FAF))F/F6F)F<F)F?*.F
+6F))F2\"\"%F)FAF)F.F)FEF)F0F)F?F)F)*$)F<F6F)F?F6" }}{PARA 12 "" 1 "" 
+{XPPMATH 20 "6#/&%\"qG6#*&%$phiG\"\"\"F(F)*&*&)-%$sinG6#%&thetaG\"\"%F
+),0**)%\"MG\"\"#F))%\"aGF6F))%\"rGF6F)-%$httG6$F:F0F)F1*(-%$hppGF=F))F
+:F1F))-%&SigmaGF=F6F)F)*,F6F)F?F)F9F)FBF)F7F)F)*0F1F)F?F))F:\"\"$F)FCF
+))F-F6F)F5F)F7F)F)*(F?F))F8F1F)FBF)F)*0F1F)F?F)FKF)FCF)FIF)F5F)F:F)F)*
+.F1F)F?F)F,F)F4F)FKF)F9F)F)F)F)*$FBF)!\"\"" }}}{EXCHG {PARA 0 "> " 0 "
+" {MPLTEXT 1 0 22 "makeg(HartleThorneGB);" }}{PARA 6 "" 1 "" {TEXT -1 
+0 "" }}{PARA 6 "" 1 "" {TEXT -1 1 " " }}{PARA 6 "" 1 "" {TEXT -1 46 "M
+akeg 2.0: GRTensor metric/basis entry utility" }}{PARA 6 "" 1 "" 
+{TEXT -1 1 " " }}{PARA 6 "" 1 "" {TEXT -1 41 "To quit makeg, type 'exi
+t' at any prompt." }}{PARA 6 "" 1 "" {TEXT -1 1 " " }}{PARA 6 "" 1 "" 
+{TEXT -1 44 "Do you wish to enter a 1) metric [g(dn,dn)]," }}{PARA 6 "
+" 1 "" {TEXT -1 44 "                       2) line element [ds]," }}
+{PARA 6 "" 1 "" {TEXT -1 63 "                       3) non-holonomic b
+asis [e(1)...e(n)], or" }}{PARA 6 "" 1 "" {TEXT -1 49 "               \+
+        4) NP tetrad [l,n,m,mbar]?" }}{PARA 6 "" 1 "" {TEXT -1 0 "" }}
+}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 2 "1:" }}{PARA 6 "" 1 "" 
+{TEXT -1 50 "Enter coordinates as a LIST (eg. [t,r,theta,phi]):" }}}
+{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 16 "[t,r,theta,phi]:" }}
+{PARA 6 "" 1 "" {TEXT -1 30 "Is the metric  1) Diagonal, or" }}{PARA 
+6 "" 1 "" {TEXT -1 28 "               2) Symmetric?" }}}{EXCHG {PARA 
+0 "makeg>" 0 "" {MPLTEXT 1 0 2 "2:" }}{PARA 6 "" 1 "" {TEXT -1 13 "Ent
+er g[t,t]:" }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 64 "grcompone
+nt(g(dn,dn),[1,1])+eta*a^2*grcomponent(q(dn,dn),[1,1]);" }}{PARA 6 "" 
+1 "" {TEXT -1 13 "Enter g[t,r]:" }}}{EXCHG {PARA 0 "makeg>" 0 "" 
+{MPLTEXT 1 0 2 "0;" }}{PARA 6 "" 1 "" {TEXT -1 17 "Enter g[t,theta]:" 
+}}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 2 "0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 15 "Enter g[t,phi]:" }}}{EXCHG {PARA 0 "makeg>" 0 "" 
+{MPLTEXT 1 0 64 "grcomponent(g(dn,dn),[1,4])+eta*a^2*grcomponent(q(dn,
+dn),[1,4]);" }}{PARA 6 "" 1 "" {TEXT -1 13 "Enter g[r,r]:" }}}{EXCHG 
+{PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 64 "grcomponent(g(dn,dn),[2,2])+eta
+*a^2*grcomponent(q(dn,dn),[2,2]);" }}{PARA 6 "" 1 "" {TEXT -1 17 "Ente
+r g[r,theta]:" }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 2 "0;" }}
+{PARA 6 "" 1 "" {TEXT -1 15 "Enter g[r,phi]:" }}}{EXCHG {PARA 0 "makeg
+>" 0 "" {MPLTEXT 1 0 2 "0;" }}{PARA 6 "" 1 "" {TEXT -1 21 "Enter g[the
+ta,theta]:" }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 64 "grcompone
+nt(g(dn,dn),[3,3])+eta*a^2*grcomponent(q(dn,dn),[3,3]);" }}{PARA 6 "" 
+1 "" {TEXT -1 19 "Enter g[theta,phi]:" }}}{EXCHG {PARA 0 "makeg>" 0 "
+" {MPLTEXT 1 0 2 "0;" }}{PARA 6 "" 1 "" {TEXT -1 17 "Enter g[phi,phi]:
+" }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 64 "grcomponent(g(dn,dn
+),[4,4])+eta*a^2*grcomponent(q(dn,dn),[4,4]);" }}{PARA 6 "" 1 "" 
+{TEXT -1 0 "" }}{PARA 6 "" 1 "" {TEXT -1 67 "If there are any complex \+
+valued coordinates, constants or functions" }}{PARA 6 "" 1 "" {TEXT 
+-1 66 "for this spacetime, please enter them as a SET ( eg. \{ z, psi \+
+\} )." }}{PARA 6 "" 1 "" {TEXT -1 0 "" }}{PARA 6 "" 1 "" {TEXT -1 33 "
+Complex quantities [default=\{\}]: " }}}{EXCHG {PARA 0 "makeg>" 0 "" 
+{MPLTEXT 1 0 3 "\{\}:" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%AThe~values~
+you~have~entered~are:G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/%,Coordinat
+esG7&%\"tG%\"rG%&thetaG%$phiG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%(Met
+ric:G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%\"tG\"\"\"&%!GF'F
+),(!\"\"F)*&*(\"\"#F)%\"MGF)%\"rGF)F)-%&SigmaG6$F2%&thetaGF-F)*&*(%$et
+aGF))%\"aGF0F),**&-%$httGF5F))F3F0F)F)*,\"\"%F)F>F)F3F)F1F)F2F)F-**FBF
+)F>F))F1F0F))F2F0F)F)*.FBF)FDF)F:F)FEF))-%$sinG6#F6FBF)-%$hppGF5F)F)F)
+F)*$F@F)F-F)" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%\"tG\"\"\"
+&%!G6#%\"rGF)\"\"!" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%\"tG
+\"\"\"&%!G6#%&thetaGF)\"\"!" }}{PARA 12 "" 1 "" {XPPMATH 20 "6#/*&&%\"
+gG6#%\"tG\"\"\"&%!G6#%$phiGF),&*&**%\"MGF)%\"aGF)%\"rGF))-%$sinG6#%&th
+etaG\"\"#F)F)-%&SigmaG6$F3F8!\"\"!\"#*&*0F9F)%$etaGF))F2\"\"$F)F1F)F3F
+)F4F),,*&-%$httGF<F)F:F)F)**F9F)FFF)F1F)F3F)F=**F4F)-%$hppGF<F))F3F9F)
+F:F)F=**F4F)FJF))F2F9F)F:F)F=*.F9F))F5\"\"%F)FJF)F1F)FNF)F3F)F=F)F)*$)
+F:F9F)F=F)" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%\"rG\"\"\"&%
+!G6#%\"tGF)\"\"!" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%\"rG\"
+\"\"&%!GF'F),&*&-%&SigmaG6$F(%&thetaGF)-%&DeltaGF'!\"\"F)*&**%$etaGF))
+%\"aG\"\"#F))F.F:F)-%$hrrGF0F)F)*$)F2F:F)F4F)" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#/*&&%\"gG6#%\"rG\"\"\"&%!G6#%&thetaGF)\"\"!" }}{PARA 
+11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%\"rG\"\"\"&%!G6#%$phiGF)\"\"!" }
+}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%&thetaG\"\"\"&%!G6#%\"tGF
+)\"\"!" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%&thetaG\"\"\"&%!
+G6#%\"rGF)\"\"!" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%&thetaG
+\"\"\"&%!GF'F),&-%&SigmaG6$%\"rGF(F)**%$etaGF))%\"aG\"\"#F))F-F5F)-%$h
+aaGF/F)F)" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%&thetaG\"\"\"
+&%!G6#%$phiGF)\"\"!" }}{PARA 12 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%$ph
+iG\"\"\"&%!G6#%\"tGF),&*&**%\"MGF)%\"aGF)%\"rGF))-%$sinG6#%&thetaG\"\"
+#F)F)-%&SigmaG6$F3F8!\"\"!\"#*&*0F9F)%$etaGF))F2\"\"$F)F1F)F3F)F4F),,*
+&-%$httGF<F)F:F)F)**F9F)FFF)F1F)F3F)F=**F4F)-%$hppGF<F))F3F9F)F:F)F=**
+F4F)FJF))F2F9F)F:F)F=*.F9F))F5\"\"%F)FJF)F1F)FNF)F3F)F=F)F)*$)F:F9F)F=
+F)" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%$phiG\"\"\"&%!G6#%\"
+rGF)\"\"!" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%$phiG\"\"\"&%
+!G6#%&thetaGF)\"\"!" }}{PARA 12 "" 1 "" {XPPMATH 20 "6#/*&&%\"gG6#%$ph
+iG\"\"\"&%!GF'F),**&)-%$sinG6#%&thetaG\"\"#F))%\"rGF3F)F)*&F.F))%\"aGF
+3F)F)*&*,F3F))F/\"\"%F)%\"MGF)F7F)F5F)F)-%&SigmaG6$F5F2!\"\"F)*&**%$et
+aGF)F7F)F;F),0**)F=F3F)F7F)F4F)-%$httGF@F)F<*(-%$hppGF@F))F5F<F))F>F3F
+)F)*,F3F)FKF)F4F)FNF)F7F)F)*0F<F)FKF))F5\"\"$F)F>F)F.F)F=F)F7F)F)*(FKF
+))F8F<F)FNF)F)*0F<F)FKF)FTF)F>F)F.F)F=F)F5F)F)*.F<F)FKF)F;F)FGF)FTF)F4
+F)F)F)F)*$FNF)FAF)" }}{PARA 6 "" 1 "" {TEXT -1 54 "You may choose to 0
+) Use the metric WITHOUT saving it," }}{PARA 6 "" 1 "" {TEXT -1 46 "  \+
+                1) Save the metric as it is," }}{PARA 6 "" 1 "" {TEXT 
+-1 54 "                  2) Correct an element of the metric," }}
+{PARA 6 "" 1 "" {TEXT -1 41 "                  3) Re-enter the metric,
+" }}{PARA 6 "" 1 "" {TEXT -1 54 "                  4) Add/change const
+raint equations, " }}{PARA 6 "" 1 "" {TEXT -1 47 "                  5)
+ Add a text description, or" }}{PARA 6 "" 1 "" {TEXT -1 61 "          \+
+        6) Abandon this metric and return to Maple." }}{PARA 6 "" 1 "
+" {TEXT -1 0 "" }}}{EXCHG {PARA 0 "makeg>" 0 "" {MPLTEXT 1 0 2 "1:" }}
+{PARA 6 "" 1 "" {TEXT -1 78 "Information written to: `/home/tmueller/M
+aple/Grii/metrics/HartleThorneGB.mpl`" }}{PARA 6 "" 1 "" {TEXT -1 57 "
+Do you wish to use this spacetime in the current session?" }}{PARA 6 "
+" 1 "" {TEXT -1 29 "(1=yes [default], other=no): " }}}{EXCHG {PARA 0 "
+makeg>" 0 "" {MPLTEXT 1 0 2 "1:" }}{PARA 6 "" 1 "" {TEXT -1 28 "Initia
+lizing: HartleThorneGB" }}{PARA 6 "" 1 "" {TEXT -1 48 "Calculated ds f
+or HartleThorneGB (0.000000 sec.)" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/
+%2Default~spacetimeG%/HartleThorneGBG" }}{PARA 11 "" 1 "" {XPPMATH 20 
+"6#%BFor~the~HartleThorneGB~spacetime:G" }}{PARA 11 "" 1 "" {XPPMATH 
+20 "6#%,CoordinatesG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#-%\"xG6#%#upG
+" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/)%#x~G%\"aG-%'vectorG6#7&%\"tG%\"
+rG%&thetaG%$phiG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%-Line~elementG" }
+}{PARA 12 "" 1 "" {XPPMATH 20 "6#/*$)%$~dsG\"\"#\"\"\",,*(,(!\"\"F(*&*
+(F'F(%\"MGF(%\"rGF(F(-%&SigmaG6$F0%&thetaGF,F(*&*(%$etaGF()%\"aGF'F(,*
+*&-%$httGF3F()F1F'F(F(*,\"\"%F(F<F(F1F(F/F(F0F(F,**F@F(F<F()F/F'F()F0F
+'F(F(*.F@F(FBF(F8F(FCF()-%$sinG6#F4F@F(-%$hppGF3F(F(F(F(*$F>F(F,F(F(%#
+~dGF()%\"tG%#2~GF(F(*.F'F(,&*&**F/F(F9F(F0F()FFF'F(F(F1F,!\"#*&*0F'F(F
+7F()F9\"\"$F(F/F(F0F(FTF(,,*&F<F(F1F(F(**F'F(F<F(F/F(F0F(F,**FTF(FIF(F
+CF(F1F(F,**FTF(FIF(F8F(F1F(F,*.F'F(FEF(FIF(F/F(F8F(F0F(F,F(F(*$F>F(F,F
+(F(FLF()FN%\"~GF(%#d~GF()%$phiGF\\oF(F(*(,&*&F1F(-%&DeltaG6#F0F,F(*&**
+F7F(F8F(F>F(-%$hrrGF3F(F(*$)FcoF'F(F,F(F(FLF()F0FOF(F(*(,&F1F(**F7F(F8
+F(F>F(-%$haaGF3F(F(F(FLF()F4FOF(F(*(,**&FTF(FCF(F(*&FTF(F8F(F(*&*,F'F(
+FEF(F/F(F8F(F0F(F(F1F,F(*&**F7F(F8F(FEF(,0**FBF(F8F(FCF(F<F(F@*(FIF()F
+0F@F(F>F(F(*,F'F(FIF(FCF(F>F(F8F(F(*0F@F(FIF()F0FYF(F1F(FTF(F/F(F8F(F(
+*(FIF()F9F@F(F>F(F(*0F@F(FIF(FcqF(F1F(FTF(F/F(F0F(F(*.F@F(FIF(FEF(FBF(
+FcqF(FCF(F(F(F(*$F>F(F,F(F(FLF()F_oFOF(F(" }}{PARA 6 "" 1 "" {TEXT -1 
+18 "makeg() completed." }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 14 "g
+rcalcd(Chr2);" }}{PARA 6 "" 1 "" {TEXT -1 50 "Calculated detg for Hart
+leThorneGB (0.000000 sec.)" }}{PARA 6 "" 1 "" {TEXT -1 53 "Calculated \+
+g(up,up) for HartleThorneGB (.021000 sec.)" }}{PARA 6 "" 1 "" {TEXT 
+-1 57 "Calculated g(dn,dn,pdn) for HartleThorneGB (.010000 sec.)" }}
+{PARA 6 "" 1 "" {TEXT -1 58 "Calculated Chr(dn,dn,dn) for HartleThorne
+GB (.029000 sec.)" }}{PARA 6 "" 1 "" {TEXT -1 58 "Calculated Chr(dn,dn
+,up) for HartleThorneGB (.760000 sec.)" }}{PARA 11 "" 1 "" {XPPMATH 
+20 "6#/%*CPU~Time~G$\"$?)!\"$" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%BFor
+~the~HartleThorneGB~spacetime:G" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#%ao
+Christoffel~symbol~of~the~second~kind~(symmetric~in~first~two~indices)
+G" }}{PARA 12 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"tG\"\"\"F)F*F*
+)%!G%\"rGF*,$*&*&)-%&DeltaG6#F-\"\"#F*,:*&%\"MGF*)-%&SigmaG6$F-%&theta
+GF5F*F5*,F5F*F8F*F-F*-%%diffG6$F:F-F*F:F*!\"\"**%$etaGF*)%\"aGF5F*)F:
+\"\"$F*-F@6$-%$httGF<F-F*F**0\"\"%F*FDF*FEF*F9F*FIF*F8F*F-F*FB*2FNF*FD
+F*FEF*F:F*FKF*F?F*F8F*F-F*F**.FNF*FDF*FEF*F9F*FKF*F8F*FB*0FNF*FDF*FEF*
+F:F*FIF*)F8F5F*)F-F5F*F**0\"\")F*FDF*FEF*F:F*FKF*FRF*F-F*F**2FUF*FDF*)
+FFFNF*F:F*FRF*F-F*)-%$sinG6#F=FNF*-%$hppGF<F*F**2FNF*FDF*FWF*F:F*FRF*F
+SF*FXF*-F@6$FfnF-F*F**0FUF*FDF*FEF*F?F*FKF*FRF*FSF*FB*2FUF*FDF*FWF*F?F
+*FRF*FSF*FXF*FfnF*FBF*F**&)F:FNF*,&F2F***FDF*FEF*F:F*-%$hrrGF<F*F*F*FB
+#FBF5" }}{PARA 12 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"tG\"\"\"F)
+F*F*)%!G%&thetaGF*,$*&,4**%\"MGF*%\"rGF*-%%diffG6$-%&SigmaG6$F3F-F-F*F
+7F*!\"#**%$etaGF*)%\"aG\"\"#F*)F7\"\"$F*-F56$-%$httGF9F-F*F**0\"\"%F*F
+<F*F=F*)F7F?F*FBF*F2F*F3F*!\"\"*2FGF*F<F*F=F*F7F*FDF*F4F*F2F*F3F*F**0F
+GF*F<F*F=F*F7F*FBF*)F2F?F*)F3F?F*F**4\"#;F*F<F*)F>FGF*F7F*FLF*FMF*)-%$
+sinG6#F-FAF*-%$hppGF9F*-%$cosGFTF*F**2FGF*F<F*FPF*F7F*FLF*FMF*)FRFGF*-
+F56$FUF-F*F**0\"\")F*F<F*F=F*F4F*FDF*FLF*FMF*FI*2FhnF*F<F*FPF*F4F*FLF*
+FMF*FZF*FUF*FIF**&)F7FGF*,&F*F***F<F*F=F*F7F*-%$haaGF9F*F*F*FI#FIF?" }
+}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"tG\"\"\"%\"rGF*F*)
+%!GF)F*%K~10508~words.~Exceeds~grOptionDisplayLimitG" }}{PARA 11 "" 1 
+"" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"tG\"\"\"%\"rGF*F*)%!G%$phiGF*%J~7
+737~words.~Exceeds~grOptionDisplayLimitG" }}{PARA 11 "" 1 "" {XPPMATH 
+20 "6#/*&&%&GammaG6#*&%\"tG\"\"\"%&thetaGF*F*)%!GF)F*%K~10445~words.~E
+xceeds~grOptionDisplayLimitG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&
+GammaG6#*&%\"tG\"\"\"%&thetaGF*F*)%!G%$phiGF*%J~8744~words.~Exceeds~gr
+OptionDisplayLimitG" }}{PARA 12 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*
+&%\"tG\"\"\"%$phiGF*F*)%!G%\"rGF*,$*&*,)-%&DeltaG6#F.\"\"#F*%\"MGF*%\"
+aGF*)-%$sinG6#%&thetaGF6F*,D*$)-%&SigmaG6$F.F=F6F*!\"\"*(F.F*-%%diffG6
+$FAF.F*FAF*F***%$etaGF*)F8F6F*-%$httGFCF*F@F*F**0\"\"%F*FJF*FKF*FLF*FA
+F*F7F*F.F*FD*0\"\"$F*FJF*FKF*F9F*-%$hppGFCF*)F.F6F*F@F*FD*,FJF*)F8FOF*
+F9F*FRF*F@F*FD*2FOF*FAF*FJF*FVF*)F:FOF*FRF*F7F*F.F*FD*,FJF*FKF*F.F*F@F
+*-FG6$FLF.F*F**.FJF*FKF*F.F*FAF*FLF*FFF*FD*0F6F*FJF*FKF*FTF*FAF*FZF*F7
+F*FD*.FJF*FKF*)F.FQF*F@F*F9F*-FG6$FRF.F*FD*0FJF*FKF*FinF*FAF*F9F*FRF*F
+FF*F**.FJF*FVF*F.F*F@F*F9F*FjnF*FD*0FJF*FVF*F.F*FAF*F9F*FRF*FFF*F**2F6
+F*FJF*FVF*FTF*FAF*FXF*FjnF*F7F*FD*0FOF*FJF*FKF*FTF*FFF*FLF*F7F*F**2FOF
+*FJF*FVF*FTF*FFF*FXF*FRF*F7F*F*F*F**&)FAFOF*,&F3F***FJF*FKF*FAF*-%$hrr
+GFCF*F*F*FDFD" }}{PARA 12 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"tG
+\"\"\"%$phiGF*F*)%!G%&thetaGF*,$*&*,%\"MGF*%\"aGF*%\"rGF*-%$sinG6#F.F*
+,D*&-%$cosGF7F*)-%&SigmaG6$F4F.\"\"#F*!\"#*(F5F*-%%diffG6$F=F.F*F=F*F*
+*.F@F*%$etaGF*)F3F@F*F:F*F<F*-%$httGF?F*F**2\"\"%F*FGF*FHF*F:F*F=F*FIF
+*F2F*F4F*!\"\"*2FLF*FGF*FHF*F:F*F<F*)F5F@F*-%$hppGF?F*)F4F@F*FM*0FLF*F
+GF*)F3FLF*F:F*F<F*FOF*FPF*FM*4\"#7F*FGF*FTF*F:F*F=F*)F5FLF*FPF*F2F*F4F
+*FM*,FGF*FHF*F5F*F<F*-FD6$FIF.F*F**.FGF*FHF*F5F*F=F*FIF*FCF*FM*2F@F*FG
+F*FHF*F5F*F=F*FYF*F2F*F4F*FM*.FGF*FHF*)F5\"\"$F*F<F*-FD6$FPF.F*FRF*FM*
+0FGF*FHF*FhnF*F=F*FPF*FRF*FCF*F**,FGF*FTF*FhnF*F<F*FjnF*FM*.FGF*FTF*Fh
+nF*F=F*FPF*FCF*F**2F@F*FGF*FTF*)F5\"\"&F*F=F*FjnF*F2F*F4F*FM*2FLF*FGF*
+FHF*F5F*FCF*FIF*F2F*F4F*F**2FLF*FGF*FTF*F`oF*FCF*FPF*F2F*F4F*F*F*F**&)
+F=FLF*,&F*F***FGF*FHF*F=F*-%$haaGF?F*F*F*FMFM" }}{PARA 12 "" 1 "" 
+{XPPMATH 20 "6#/*&&%&GammaG6#*&%\"rG\"\"\"F)F*F*)%!GF)F*,$*&,,*&-%%dif
+fG6$-%&SigmaG6$F)%&thetaGF)F*)-%&DeltaG6#F)\"\"#F*F**(F4F*-F26$F9F)F*F
+9F*!\"\"*0F<F*%$etaGF*)%\"aGF<F*F4F*-%$hrrGF6F*F1F*F9F*F**.F<F*FBF*FCF
+*)F4F<F*FEF*F>F*F@*,FBF*FCF*FHF*-F26$FEF)F*F9F*F*F**(F4F*F9F*,&F9F***F
+BF*FCF*F4F*FEF*F*F*F@#F*F<" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&Ga
+mmaG6#*&%\"rG\"\"\"F)F*F*)%!G%&thetaGF*,$*&,(*&-%%diffG6$-%&SigmaG6$F)
+F-F-F*-%&DeltaG6#F)F*F**.\"\"#F*%$etaGF*)%\"aGF<F*F5F*-%$hrrGF7F*F2F*F
+***F=F*F>F*)F5F<F*-F36$F@F-F*F*F**(F5F*,&F*F***F=F*F>F*F5F*-%$haaGF7F*
+F*F*)F8F<F*!\"\"#FLF<" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6
+#*&%\"rG\"\"\"%&thetaGF*F*)%!GF)F*,$*&,(*&-%%diffG6$-%&SigmaG6$F)F+F+F
+*-%&DeltaG6#F)F*F**.\"\"#F*%$etaGF*)%\"aGF<F*F5F*-%$hrrGF7F*F2F*F***F=
+F*F>F*)F5F<F*-F36$F@F+F*F*F**&F5F*,&F8F***F=F*F>F*F5F*F@F*F*F*!\"\"#F*
+F<" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%\"rG\"\"\"%&the
+taGF*F*)%!GF+F*,$*&,(-%%diffG6$-%&SigmaG6$F)F+F)F**.\"\"#F*%$etaGF*)%
+\"aGF8F*F4F*-%$haaGF6F*F1F*F***F9F*F:F*)F4F8F*-F26$F<F)F*F*F**&,&F*F**
+*F9F*F:F*F4F*F<F*F*F*F4F*!\"\"#F*F8" }}{PARA 11 "" 1 "" {XPPMATH 20 "6
+#/*&&%&GammaG6#*&%\"rG\"\"\"%$phiGF*F*)%!G%\"tGF*%K~10322~words.~Excee
+ds~grOptionDisplayLimitG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&Gamm
+aG6#*&%\"rG\"\"\"%$phiGF*F*)%!GF+F*%K~10877~words.~Exceeds~grOptionDis
+playLimitG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%&thetaG
+\"\"\"F)F*F*)%!G%\"rGF*,$*&*&)-%&DeltaG6#F-\"\"#F*,(-%%diffG6$-%&Sigma
+G6$F-F)F-F**.F5F*%$etaGF*)%\"aGF5F*F:F*-%$haaGF<F*F7F*F***F>F*F?F*)F:F
+5F*-F86$FAF-F*F*F*F**&F:F*,&F2F***F>F*F?F*F:F*-%$hrrGF<F*F*F*!\"\"#FLF
+5" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%&thetaG\"\"\"F)F
+*F*)%!GF)F*,$*&,(-%%diffG6$-%&SigmaG6$%\"rGF)F)F**.\"\"#F*%$etaGF*)%\"
+aGF8F*F3F*-%$haaGF5F*F0F*F***F9F*F:F*)F3F8F*-F16$F<F)F*F*F**&F3F*,&F*F
+***F9F*F:F*F3F*F<F*F*F*!\"\"#F*F8" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/
+*&&%&GammaG6#*&%&thetaG\"\"\"%$phiGF*F*)%!G%\"tGF*%K~11036~words.~Exce
+eds~grOptionDisplayLimitG" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/*&&%&Gam
+maG6#*&%&thetaG\"\"\"%$phiGF*F*)%!GF+F*%K~12931~words.~Exceeds~grOptio
+nDisplayLimitG" }}{PARA 12 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%$ph
+iG\"\"\"F)F*F*)%!G%\"rGF*,$*&*()-%&DeltaG6#F-\"\"#F*)-%$sinG6#%&thetaG
+F5F*,J*&F-F*)-%&SigmaG6$F-F:\"\"$F*F5*,F5F*F6F*%\"MGF*)%\"aGF5F*)F>F5F
+*F**0F5F*F6F*FCF*FDF*F-F*-%%diffG6$F>F-F*F>F*!\"\"*2\"\")F*%$etaGF*)FE
+\"\"%F*F6F*F>F*)FCF5F*F-F*-%$httGF@F*F**2FPF*FNF*FOF*F6F*F>F*FQF*)F-F5
+F*-FI6$FRF-F*F**.FNF*FDF*F6F*F=F*-FI6$-%$hppGF@F-F*)F-FPF*F**0FPF*FNF*
+FDF*F6F*F=F*FenF*)F-FAF*F**0F5F*FNF*FOF*F6F*F=F*FYF*FUF*F**0FPF*FNF*FO
+F*F6F*F=F*FenF*F-F*F**2FPF*FNF*FOF*)F7FPF*FFF*FYF*FinF*FCF*F**2\"#7F*F
+NF*FOF*F]oF*FFF*FenF*FUF*FCF*F**4FPF*FNF*FOF*F]oF*F>F*FenF*FinF*FHF*FC
+F*FK*,FNF*)FE\"\"'F*F6F*F=F*FYF*F**2FPF*FNF*FboF*F]oF*FFF*FYF*FCF*F-F*
+F**4FPF*FNF*FboF*F]oF*F>F*FenF*FHF*FCF*F-F*FK*0FPF*FNF*FboF*F]oF*FFF*F
+enF*FCF*F**2FPF*FNF*FboF*)F7FcoF*F>F*FYF*FQF*FUF*F**2FMF*FNF*FboF*FhoF
+*F>F*FenF*FQF*F-F*F**2FMF*FNF*FOF*F6F*FHF*FQF*FUF*FRF*FK*2FMF*FNF*FboF
+*FhoF*FHF*FenF*FQF*FUF*FKF*F**&)F>FPF*,&F2F***FNF*FDF*F>F*-%$hrrGF@F*F
+*F*FK#FKF5" }}{PARA 12 "" 1 "" {XPPMATH 20 "6#/*&&%&GammaG6#*&%$phiG\"
+\"\"F)F*F*)%!G%&thetaGF*,$*&*&-%$sinG6#F-F*,N*()%\"rG\"\"#F*-%$cosGF3F
+*)-%&SigmaG6$F7F-\"\"$F*F8**F8F*)%\"aGF8F*F9F*F;F*F**0\"\")F*)F1F8F*%
+\"MGF*FAF*F7F*F9F*)F<F8F*F**0F8F*)F1F?F*FFF*FAF*F7F*-%%diffG6$F<F-F*F<
+F*!\"\"*4\"#;F*%$etaGF*)FB\"\"%F*FEF*F9F*F<F*)FFF8F*F6F*-%$httGF>F*F**
+2FRF*FPF*FAF*FEF*F9F*F;F*-%$hppGF>F*)F7FRF*F**2FDF*FPF*FQF*FEF*F9F*F;F
+*FWF*F6F*F**4\"#CF*FPF*FQF*)F1FRF*F9F*FGF*FWF*)F7F?F*FFF*F**0FRF*FPF*)
+FB\"\"'F*FEF*F9F*F;F*FWF*F**4FfnF*FPF*FjnF*FgnF*F9F*FGF*FWF*FFF*F7F*F*
+*4\"#KF*FPF*FjnF*)F1F[oF*F9F*F<F*FWF*FSF*F6F*F**2FRF*FPF*FQF*FIF*F<F*F
+SF*F6F*-FK6$FTF-F*F**.FPF*FAF*FIF*F;F*-FK6$FWF-F*FYF*F**0F8F*FPF*FQF*F
+IF*F;F*FdoF*F6F*F**2FRF*FPF*FQF*)F1\"\"&F*FGF*FdoF*FhnF*FFF*F**4FRF*FP
+F*FQF*FhoF*F<F*FWF*FhnF*FJF*FFF*FM*,FPF*FjnF*FIF*F;F*FdoF*F**2FRF*FPF*
+FjnF*FhoF*FGF*FdoF*FFF*F7F*F**4FRF*FPF*FjnF*FhoF*F<F*FWF*FJF*FFF*F7F*F
+M*2FRF*FPF*FjnF*)F1\"\"(F*F<F*FdoF*FSF*F6F*F**2FDF*FPF*FQF*FIF*FJF*FSF
+*F6F*FTF*FM*2FDF*FPF*FjnF*F_pF*FJF*FWF*FSF*F6F*FMF*F**&)F<FRF*,&F*F***
+FPF*FAF*F<F*-%$haaGF>F*F*F*FM#FMF8" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 28 "g_compts:=grarray(g(dn,dn)):" }}}{EXCHG {PARA 0 "> " 
+0 "" {MPLTEXT 1 0 31 "codegen[C](g_compts,optimized);" }}{PARA 6 "" 1 
+"" {TEXT -1 15 "      t1 = M*r;" }}{PARA 6 "" 1 "" {TEXT -1 71 "codege
+n/C/expression:   Unknown function:   Sigma   will be left as is." }}
+{PARA 6 "" 1 "" {TEXT -1 26 "      t2 = Sigma(r,theta);" }}{PARA 6 "" 
+1 "" {TEXT -1 16 "      t3 = 1/t2;" }}{PARA 6 "" 1 "" {TEXT -1 15 "   \+
+   t6 = a*a;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t7 = eta*t6;" }}
+{PARA 6 "" 1 "" {TEXT -1 69 "codegen/C/expression:   Unknown function:
+   htt   will be left as is." }}{PARA 6 "" 1 "" {TEXT -1 24 "      t8 \+
+= htt(r,theta);" }}{PARA 6 "" 1 "" {TEXT -1 17 "      t9 = t2*t2;" }}
+{PARA 6 "" 1 "" {TEXT -1 18 "      t11 = t8*t2;" }}{PARA 6 "" 1 "" 
+{TEXT -1 16 "      t14 = M*M;" }}{PARA 6 "" 1 "" {TEXT -1 16 "      t1
+6 = r*r;" }}{PARA 6 "" 1 "" {TEXT -1 19 "      t19 = t14*t6;" }}{PARA 
+6 "" 1 "" {TEXT -1 23 "      t20 = sin(theta);" }}{PARA 6 "" 1 "" 
+{TEXT -1 20 "      t21 = t20*t20;" }}{PARA 6 "" 1 "" {TEXT -1 20 "    \+
+  t22 = t21*t21;" }}{PARA 6 "" 1 "" {TEXT -1 69 "codegen/C/expression:
+   Unknown function:   hpp   will be left as is." }}{PARA 6 "" 1 "" 
+{TEXT -1 25 "      t24 = hpp(r,theta);" }}{PARA 6 "" 1 "" {TEXT -1 17 
+"      t29 = 1/t9;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t34 = r*t21;
+" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t43 = t21*t24;" }}{PARA 6 "" 1 
+"" {TEXT -1 20 "      t48 = t22*t24;" }}{PARA 6 "" 1 "" {TEXT -1 79 " \+
+     t57 = -M*a*t34*t3+eta*t6*a*M*t34*(t11-2.0*t8*M*r-t43*t16*t2-t43*t
+6*t2-2.0" }}{PARA 6 "" 1 "" {TEXT -1 17 "*t48*M*t6*r)*t29;" }}{PARA 6 
+"" 1 "" {TEXT -1 71 "codegen/C/expression:   Unknown function:   Delta
+   will be left as is." }}{PARA 6 "" 1 "" {TEXT -1 21 "      t58 = Del
+ta(r);" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t61 = t58*t58;" }}{PARA 
+6 "" 1 "" {TEXT -1 69 "codegen/C/expression:   Unknown function:   hrr
+   will be left as is." }}{PARA 6 "" 1 "" {TEXT -1 25 "      t64 = hrr
+(r,theta);" }}{PARA 6 "" 1 "" {TEXT -1 69 "codegen/C/expression:   Unk
+nown function:   haa   will be left as is." }}{PARA 6 "" 1 "" {TEXT 
+-1 25 "      t68 = haa(r,theta);" }}{PARA 6 "" 1 "" {TEXT -1 20 "     \+
+ t82 = t16*t16;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t92 = t21*M;" }}
+{PARA 6 "" 1 "" {TEXT -1 18 "      t96 = t6*t6;" }}{PARA 6 "" 1 "" 
+{TEXT -1 20 "      t97 = t24*t96;" }}{PARA 6 "" 1 "" {TEXT -1 78 "    \+
+  g_compts[0][0] = -1.0+2.0*t1*t3+t7*(t8*t9-4.0*t11*t1+4.0*t8*t14*t16+
+4.0*" }}{PARA 6 "" 1 "" {TEXT -1 21 "t19*t16*t22*t24)*t29;" }}{PARA 6 
+"" 1 "" {TEXT -1 27 "      g_compts[0][1] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 27 "      g_compts[0][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 
+31 "      g_compts[0][3] = 2.0*t57;" }}{PARA 6 "" 1 "" {TEXT -1 27 "  \+
+    g_compts[1][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 44 "      g_comp
+ts[1][1] = t2/t58+t7*t9/t61*t64;" }}{PARA 6 "" 1 "" {TEXT -1 27 "     \+
+ g_compts[1][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[
+1][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[2][0] = 0.
+0;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[2][1] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 36 "      g_compts[2][2] = t2+t7*t9*t68;" }}
+{PARA 6 "" 1 "" {TEXT -1 27 "      g_compts[2][3] = 0.0;" }}{PARA 6 "
+" 1 "" {TEXT -1 31 "      g_compts[3][0] = 2.0*t57;" }}{PARA 6 "" 1 "
+" {TEXT -1 27 "      g_compts[3][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 27 "      g_compts[3][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 79 "   \+
+   g_compts[3][3] = t21*t16+t21*t6+2.0*t22*M*t6*r*t3+t7*t22*(4.0*t19*t
+16*t8+" }}{PARA 6 "" 1 "" {TEXT -1 77 "t24*t82*t9+2.0*t24*t16*t9*t6+4.
+0*t24*t16*r*t2*t92*t6+t97*t9+4.0*t97*t2*t92*r+" }}{PARA 6 "" 1 "" 
+{TEXT -1 25 "4.0*t48*t14*t96*t16)*t29;" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 27 "christoffel:=grarray(Chr2):" }}}{EXCHG {PARA 0 "> " 
+0 "" {MPLTEXT 1 0 34 "codegen[C](christoffel,optimized);" }}{PARA 6 "
+" 1 "" {TEXT -1 26 "      t1 = Sigma(r,theta);" }}{PARA 6 "" 1 "" 
+{TEXT -1 17 "      t2 = t1*t1;" }}{PARA 6 "" 1 "" {TEXT -1 17 "      t
+3 = t2*t2;" }}{PARA 6 "" 1 "" {TEXT -1 16 "      t4 = 1/t3;" }}{PARA 
+6 "" 1 "" {TEXT -1 20 "      t5 = Delta(r);" }}{PARA 6 "" 1 "" {TEXT 
+-1 17 "      t6 = t5*t5;" }}{PARA 6 "" 1 "" {TEXT -1 17 "      t7 = t4
+*t6;" }}{PARA 6 "" 1 "" {TEXT -1 15 "      t8 = a*a;" }}{PARA 6 "" 1 "
+" {TEXT -1 18 "      t9 = eta*t8;" }}{PARA 6 "" 1 "" {TEXT -1 25 "    \+
+  t10 = hrr(r,theta);" }}{PARA 6 "" 1 "" {TEXT -1 19 "      t11 = t1*t
+10;" }}{PARA 6 "" 1 "" {TEXT -1 26 "      t14 = 1/(t5+t9*t11);" }}
+{PARA 6 "" 1 "" {TEXT -1 17 "      t15 = M*t2;" }}{PARA 6 "" 1 "" 
+{TEXT -1 16 "      t17 = M*r;" }}{PARA 6 "" 1 "" {TEXT -1 70 "codegen/
+C/expression:   Unknown function:   diff   will be left as is." }}
+{PARA 6 "" 1 "" {TEXT -1 35 "      t18 = diff(Sigma(r,theta),r);" }}
+{PARA 6 "" 1 "" {TEXT -1 19 "      t19 = t18*t1;" }}{PARA 6 "" 1 "" 
+{TEXT -1 18 "      t22 = t2*t1;" }}{PARA 6 "" 1 "" {TEXT -1 33 "      \+
+t23 = diff(htt(r,theta),r);" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t24 \+
+= t22*t23;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t26 = t9*t2;" }}
+{PARA 6 "" 1 "" {TEXT -1 18 "      t27 = t23*M;" }}{PARA 6 "" 1 "" 
+{TEXT -1 18 "      t28 = t27*r;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      \+
+t31 = t9*t1;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t32 = htt(r,theta);
+" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t33 = t32*t18;" }}{PARA 6 "" 1 
+"" {TEXT -1 20 "      t34 = t33*t17;" }}{PARA 6 "" 1 "" {TEXT -1 19 " \+
+     t37 = t2*t32;" }}{PARA 6 "" 1 "" {TEXT -1 16 "      t41 = M*M;" }
+}{PARA 6 "" 1 "" {TEXT -1 20 "      t42 = t23*t41;" }}{PARA 6 "" 1 "" 
+{TEXT -1 16 "      t43 = r*r;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t4
+4 = t42*t43;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t47 = t32*t41;" }}
+{PARA 6 "" 1 "" {TEXT -1 18 "      t48 = t47*r;" }}{PARA 6 "" 1 "" 
+{TEXT -1 18 "      t51 = t8*t8;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      \+
+t52 = eta*t51;" }}{PARA 6 "" 1 "" {TEXT -1 19 "      t53 = t52*t1;" }}
+{PARA 6 "" 1 "" {TEXT -1 18 "      t54 = t41*r;" }}{PARA 6 "" 1 "" 
+{TEXT -1 23 "      t55 = sin(theta);" }}{PARA 6 "" 1 "" {TEXT -1 20 " \+
+     t56 = t55*t55;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t57 = t56*t5
+6;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t58 = hpp(r,theta);" }}{PARA 
+6 "" 1 "" {TEXT -1 20 "      t59 = t57*t58;" }}{PARA 6 "" 1 "" {TEXT 
+-1 20 "      t60 = t54*t59;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t63 \+
+= t41*t43;" }}{PARA 6 "" 1 "" {TEXT -1 33 "      t64 = diff(hpp(r,thet
+a),r);" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t65 = t57*t64;" }}{PARA 
+6 "" 1 "" {TEXT -1 20 "      t70 = t47*t43;" }}{PARA 6 "" 1 "" {TEXT 
+-1 20 "      t74 = t63*t59;" }}{PARA 6 "" 1 "" {TEXT -1 79 "      t77 \+
+= 2.0*t15-2.0*t17*t19+t9*t24-4.0*t26*t28+4.0*t31*t34-4.0*t9*t37*M+4.0
+" }}{PARA 6 "" 1 "" {TEXT -1 79 "*t31*t44+8.0*t31*t48+8.0*t53*t60+4.0*
+t53*t63*t65-8.0*t9*t18*t70-8.0*t52*t18*t74" }}{PARA 6 "" 1 "" {TEXT 
+-1 1 ";" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t81 = haa(r,theta);" }}
+{PARA 6 "" 1 "" {TEXT -1 19 "      t82 = t1*t81;" }}{PARA 6 "" 1 "" 
+{TEXT -1 27 "      t85 = 1/(1.0+t9*t82);" }}{PARA 6 "" 1 "" {TEXT -1 
+19 "      t86 = t4*t85;" }}{PARA 6 "" 1 "" {TEXT -1 39 "      t87 = di
+ff(Sigma(r,theta),theta);" }}{PARA 6 "" 1 "" {TEXT -1 19 "      t88 = \+
+t87*t1;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t89 = t17*t88;" }}{PARA 
+6 "" 1 "" {TEXT -1 37 "      t91 = diff(htt(r,theta),theta);" }}{PARA 
+6 "" 1 "" {TEXT -1 20 "      t92 = t22*t91;" }}{PARA 6 "" 1 "" {TEXT 
+-1 18 "      t94 = t91*M;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t95 = \+
+t94*r;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t98 = t32*t87;" }}{PARA 
+6 "" 1 "" {TEXT -1 20 "      t99 = t98*t17;" }}{PARA 6 "" 1 "" {TEXT 
+-1 21 "      t102 = t91*t41;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t10
+3 = t102*t43;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t106 = t1*t41;" }}
+{PARA 6 "" 1 "" {TEXT -1 22 "      t107 = t52*t106;" }}{PARA 6 "" 1 "
+" {TEXT -1 21 "      t108 = t56*t55;" }}{PARA 6 "" 1 "" {TEXT -1 22 " \+
+     t109 = t43*t108;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t110 = cos
+(theta);" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t111 = t58*t110;" }}
+{PARA 6 "" 1 "" {TEXT -1 23 "      t112 = t109*t111;" }}{PARA 6 "" 1 "
+" {TEXT -1 38 "      t115 = diff(hpp(r,theta),theta);" }}{PARA 6 "" 1 
+"" {TEXT -1 22 "      t116 = t57*t115;" }}{PARA 6 "" 1 "" {TEXT -1 18 
+"      t129 = 1/t2;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t130 = t8*t2
+2;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t133 = t43*t22;" }}{PARA 6 "
+" 1 "" {TEXT -1 20 "      t134 = t133*M;" }}{PARA 6 "" 1 "" {TEXT -1 
+21 "      t136 = t56*t58;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t137 =
+ t52*t136;" }}{PARA 6 "" 1 "" {TEXT -1 19 "      t138 = t43*r;" }}
+{PARA 6 "" 1 "" {TEXT -1 21 "      t139 = t138*t2;" }}{PARA 6 "" 1 "" 
+{TEXT -1 19 "      t140 = M*t18;" }}{PARA 6 "" 1 "" {TEXT -1 23 "     \+
+ t141 = t139*t140;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t144 = eta*et
+a;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t145 = t51*t8;" }}{PARA 6 "" 
+1 "" {TEXT -1 23 "      t146 = t144*t145;" }}{PARA 6 "" 1 "" {TEXT -1 
+23 "      t147 = t146*t136;" }}{PARA 6 "" 1 "" {TEXT -1 19 "      t148
+ = t33*M;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t152 = t138*t22;" }}
+{PARA 6 "" 1 "" {TEXT -1 22 "      t153 = t152*t27;" }}{PARA 6 "" 1 "
+" {TEXT -1 32 "      t158 = 16.0*t147*t139*t47;" }}{PARA 6 "" 1 "" 
+{TEXT -1 19 "      t159 = t8*t2;" }}{PARA 6 "" 1 "" {TEXT -1 21 "     \+
+ t160 = t17*t18;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t163 = t146*t56
+;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t164 = t58*t43;" }}{PARA 6 "" 
+1 "" {TEXT -1 20 "      t165 = t3*t23;" }}{PARA 6 "" 1 "" {TEXT -1 20 
+"      t170 = t8*t32;" }}{PARA 6 "" 1 "" {TEXT -1 29 "      t172 = t13
+3*eta*t170*M;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t174 = t51*t22;" }
+}{PARA 6 "" 1 "" {TEXT -1 22 "      t175 = t174*eta;" }}{PARA 6 "" 1 "
+" {TEXT -1 21 "      t179 = t51*t51;" }}{PARA 6 "" 1 "" {TEXT -1 23 " \+
+     t180 = t144*t179;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t181 = t1
+80*t56;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t182 = t58*t22;" }}
+{PARA 6 "" 1 "" {TEXT -1 19 "      t183 = t32*M;" }}{PARA 6 "" 1 "" 
+{TEXT -1 20 "      t187 = t51*t2;" }}{PARA 6 "" 1 "" {TEXT -1 22 "    \+
+  t188 = t187*eta;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t191 = eta*t3
+2;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t195 = eta*t145;" }}{PARA 6 "
+" 1 "" {TEXT -1 23 "      t196 = t195*t136;" }}{PARA 6 "" 1 "" {TEXT 
+-1 19 "      t197 = r*t18;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t201 \+
+= t58*t3;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t204 = t57*t56;" }}
+{PARA 6 "" 1 "" {TEXT -1 21 "      t205 = t58*t58;" }}{PARA 6 "" 1 "" 
+{TEXT -1 23 "      t206 = t204*t205;" }}{PARA 6 "" 1 "" {TEXT -1 23 " \+
+     t207 = t180*t206;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t208 = t4
+3*t43;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t209 = t208*t1;" }}{PARA 
+6 "" 1 "" {TEXT -1 21 "      t210 = t18*t41;" }}{PARA 6 "" 1 "" {TEXT 
+-1 32 "      t213 = 8.0*t207*t209*t210;" }}{PARA 6 "" 1 "" {TEXT -1 
+23 "      t214 = t180*t136;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t218
+ = t146*t59;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t219 = t208*t2;" }}
+{PARA 6 "" 1 "" {TEXT -1 22 "      t220 = t219*t42;" }}{PARA 6 "" 1 "
+" {TEXT -1 23 "      t221 = t218*t220;" }}{PARA 6 "" 1 "" {TEXT -1 21 
+"      t223 = t47*t18;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t224 = t2
+09*t223;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      t226 = 8.0*t218*t224;" 
+}}{PARA 6 "" 1 "" {TEXT -1 20 "      t228 = t51*t3;" }}{PARA 6 "" 1 "
+" {TEXT -1 21 "      t229 = eta*t23;" }}{PARA 6 "" 1 "" {TEXT -1 79 " \+
+     t231 = -4.0*t181*t182*t183+8.0*t188*t48-4.0*t174*t191*M-2.0*t196*
+t15*t197" }}{PARA 6 "" 1 "" {TEXT -1 72 "+t181*t201*t23-t213+4.0*t214*
+t37*t160-12.0*t221+t226-2.0*t141+t228*t229;" }}{PARA 6 "" 1 "" {TEXT 
+-1 20 "      t233 = t208*r;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t234
+ = t233*t145;" }}{PARA 6 "" 1 "" {TEXT -1 19 "      t235 = t41*M;" }}
+{PARA 6 "" 1 "" {TEXT -1 22 "      t236 = t235*t57;" }}{PARA 6 "" 1 "
+" {TEXT -1 23 "      t237 = t234*t236;" }}{PARA 6 "" 1 "" {TEXT -1 22 
+"      t238 = t144*t32;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t239 = t
+1*t64;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t240 = t238*t239;" }}
+{PARA 6 "" 1 "" {TEXT -1 27 "      t242 = 8.0*t237*t240;" }}{PARA 6 "
+" 1 "" {TEXT -1 22 "      t245 = t235*t32;" }}{PARA 6 "" 1 "" {TEXT 
+-1 32 "      t248 = 8.0*t218*t209*t245;" }}{PARA 6 "" 1 "" {TEXT -1 
+22 "      t249 = t144*t51;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t250 \+
+= t249*t136;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t251 = t208*t43;" }
+}{PARA 6 "" 1 "" {TEXT -1 21 "      t252 = t251*t1;" }}{PARA 6 "" 1 "
+" {TEXT -1 22 "      t256 = t152*eta;" }}{PARA 6 "" 1 "" {TEXT -1 20 "
+      t257 = t8*t23;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t258 = t257
+*M;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t261 = t219*eta;" }}{PARA 6 
+"" 1 "" {TEXT -1 22 "      t265 = t139*eta;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      t268 = 8.0*t265*t170*t41;" }}{PARA 6 "" 1 "" {TEXT -1 23 
+"      t273 = t146*t204;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t274 = \+
+t205*t233;" }}{PARA 6 "" 1 "" {TEXT -1 34 "      t278 = 4.0*t273*t274*
+t2*t41;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t280 = t233*t2;" }}
+{PARA 6 "" 1 "" {TEXT -1 27 "      t282 = t250*t280*t47;" }}{PARA 6 "
+" 1 "" {TEXT -1 23 "      t284 = t146*t206;" }}{PARA 6 "" 1 "" {TEXT 
+-1 32 "      t287 = 4.0*t284*t252*t210;" }}{PARA 6 "" 1 "" {TEXT -1 
+22 "      t288 = t204*t58;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t289 \+
+= t180*t288;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t290 = t235*t138;" 
+}}{PARA 6 "" 1 "" {TEXT -1 22 "      t291 = t290*t33;" }}{PARA 6 "" 1 
+"" {TEXT -1 27 "      t293 = 8.0*t289*t291;" }}{PARA 6 "" 1 "" {TEXT 
+-1 21 "      t294 = t9*t136;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t29
+8 = t249*t56;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t299 = t58*t208;" 
+}}{PARA 6 "" 1 "" {TEXT -1 22 "      t302 = t209*eta;" }}{PARA 6 "" 1 
+"" {TEXT -1 21 "      t307 = t33*t63;" }}{PARA 6 "" 1 "" {TEXT -1 22 "
+      t310 = t233*t22;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t314 = t1
+45*t1;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t319 = t56*t41;" }}{PARA 
+6 "" 1 "" {TEXT -1 22 "      t320 = t319*t51;" }}{PARA 6 "" 1 "" 
+{TEXT -1 20 "      t321 = t43*t2;" }}{PARA 6 "" 1 "" {TEXT -1 23 "    \+
+  t322 = t321*t229;" }}{PARA 6 "" 1 "" {TEXT -1 19 "      t325 = t56*M
+;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t326 = t325*t51;" }}{PARA 6 "
+" 1 "" {TEXT -1 19 "      t327 = r*t22;" }}{PARA 6 "" 1 "" {TEXT -1 
+78 "      t331 = 8.0*t282-t287-t293-2.0*t294*t280*t140+t298*t299*t165-
+8.0*t302*t8*" }}{PARA 6 "" 1 "" {TEXT -1 78 "t18*t47-8.0*t53*t307-4.0*
+t250*t310*t27-8.0*t314*eta*t18*t74-4.0*t320*t322+2.0*" }}{PARA 6 "" 1 
+"" {TEXT -1 15 "t326*t327*t229;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      \+
+t334 = t43*t145;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t335 = t334*t31
+9;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t336 = t32*t32;" }}{PARA 6 "
+" 1 "" {TEXT -1 23 "      t337 = t144*t336;" }}{PARA 6 "" 1 "" {TEXT 
+-1 31 "      t340 = 4.0*t335*t337*t19;" }}{PARA 6 "" 1 "" {TEXT -1 21 
+"      t341 = t52*t56;" }}{PARA 6 "" 1 "" {TEXT -1 19 "      t342 = t2
+2*M;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t343 = t164*t342;" }}{PARA 
+6 "" 1 "" {TEXT -1 23 "      t344 = t341*t343;" }}{PARA 6 "" 1 "" 
+{TEXT -1 23 "      t346 = t138*t179;" }}{PARA 6 "" 1 "" {TEXT -1 23 " \+
+     t347 = t235*t204;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t348 = t3
+46*t347;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      t350 = 8.0*t348*t240;" 
+}}{PARA 6 "" 1 "" {TEXT -1 23 "      t351 = t208*t145;" }}{PARA 6 "" 
+1 "" {TEXT -1 21 "      t352 = t41*t57;" }}{PARA 6 "" 1 "" {TEXT -1 
+23 "      t353 = t351*t352;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t354
+ = t2*t64;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t355 = t238*t354;" }}
+{PARA 6 "" 1 "" {TEXT -1 23 "      t356 = t353*t355;" }}{PARA 6 "" 1 "
+" {TEXT -1 22 "      t358 = t195*t56;" }}{PARA 6 "" 1 "" {TEXT -1 20 "
+      t359 = t182*M;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t362 = t43*
+t179;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t363 = t362*t352;" }}
+{PARA 6 "" 1 "" {TEXT -1 23 "      t364 = t363*t355;" }}{PARA 6 "" 1 "
+" {TEXT -1 23 "      t366 = t346*t236;" }}{PARA 6 "" 1 "" {TEXT -1 27 
+"      t368 = 8.0*t366*t240;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t36
+9 = t179*t8;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t370 = t144*t369;" 
+}}{PARA 6 "" 1 "" {TEXT -1 21 "      t371 = t57*t57;" }}{PARA 6 "" 1 "
+" {TEXT -1 23 "      t372 = t370*t371;" }}{PARA 6 "" 1 "" {TEXT -1 23 
+"      t373 = t205*t235;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t374 = \+
+t138*t18;" }}{PARA 6 "" 1 "" {TEXT -1 32 "      t377 = 8.0*t372*t373*t
+374;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t380 = t56*t144;" }}{PARA 
+6 "" 1 "" {TEXT -1 41 "      t384 = 4.0*r*t145*t41*t380*t336*t2;" }}
+{PARA 6 "" 1 "" {TEXT -1 20 "      t385 = t43*t3;" }}{PARA 6 "" 1 "" 
+{TEXT -1 20 "      t386 = t9*t23;" }}{PARA 6 "" 1 "" {TEXT -1 22 "    \+
+  t389 = t208*t22;" }}{PARA 6 "" 1 "" {TEXT -1 28 "      t391 = t250*t
+389*t183;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t393 = t251*t2;" }}
+{PARA 6 "" 1 "" {TEXT -1 21 "      t397 = t205*t1;" }}{PARA 6 "" 1 "" 
+{TEXT -1 22 "      t398 = t235*t43;" }}{PARA 6 "" 1 "" {TEXT -1 32 "  \+
+    t401 = 8.0*t372*t397*t398;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t
+402 = t180*t59;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t403 = t1*t235;
+" }}{PARA 6 "" 1 "" {TEXT -1 27 "      t405 = t403*t138*t23;" }}{PARA 
+6 "" 1 "" {TEXT -1 27 "      t407 = 8.0*t402*t405;" }}{PARA 6 "" 1 "" 
+{TEXT -1 21 "      t408 = t19*t70;" }}{PARA 6 "" 1 "" {TEXT -1 23 "   \+
+   t411 = t370*t204;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t412 = t205
+*t2;" }}{PARA 6 "" 1 "" {TEXT -1 31 "      t415 = 4.0*t411*t412*t54;" 
+}}{PARA 6 "" 1 "" {TEXT -1 21 "      t416 = t37*t54;" }}{PARA 6 "" 1 "
+" {TEXT -1 23 "      t421 = t170*t140;" }}{PARA 6 "" 1 "" {TEXT -1 27 
+"      t425 = 8.0*t289*t405;" }}{PARA 6 "" 1 "" {TEXT -1 27 "      t42
+7 = 8.0*t402*t291;" }}{PARA 6 "" 1 "" {TEXT -1 79 "      t428 = -4.0*t
+391+4.0*t250*t393*t42+t401+t407-8.0*t214*t408+t415+8.0*t214*" }}{PARA 
+6 "" 1 "" {TEXT -1 44 "t416-16.0*t147*t224+4.0*t265*t421-t425-t427;" }
+}{PARA 6 "" 1 "" {TEXT -1 27 "      t431 = 8.0*t402*t408;" }}{PARA 6 "
+" 1 "" {TEXT -1 24 "      t433 = t2*t23*t63;" }}{PARA 6 "" 1 "" {TEXT 
+-1 27 "      t437 = 8.0*t402*t416;" }}{PARA 6 "" 1 "" {TEXT -1 22 "   \+
+   t438 = t209*t52;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t442 = t1*t3
+2;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t443 = t398*t442;" }}{PARA 6 
+"" 1 "" {TEXT -1 27 "      t445 = 8.0*t289*t443;" }}{PARA 6 "" 1 "" 
+{TEXT -1 23 "      t446 = t402*t433;" }}{PARA 6 "" 1 "" {TEXT -1 27 " \+
+     t451 = 8.0*t402*t443;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t452 \+
+= t370*t206;" }}{PARA 6 "" 1 "" {TEXT -1 30 "      t455 = 4.0*t452*t19
+*t63;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t456 = t233*t1;" }}{PARA 
+6 "" 1 "" {TEXT -1 36 "      t460 = 8.0*t218*t456*t235*t23;" }}{PARA 
+6 "" 1 "" {TEXT -1 23 "      t461 = t233*t235;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      t464 = 8.0*t218*t461*t33;" }}{PARA 6 "" 1 "" {TEXT 
+-1 79 "      t465 = t431+4.0*t214*t433-t437-8.0*t438*t210*t59+t445-12.
+0*t446+4.0*t289*" }}{PARA 6 "" 1 "" {TEXT -1 25 "t433+t451-t455+t460-t
+464;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t466 = t180*t371;" }}{PARA 
+6 "" 1 "" {TEXT -1 23 "      t467 = t205*t208;" }}{PARA 6 "" 1 "" 
+{TEXT -1 32 "      t470 = 8.0*t466*t467*t403;" }}{PARA 6 "" 1 "" 
+{TEXT -1 36 "      t474 = 8.0*t466*t274*t235*t18;" }}{PARA 6 "" 1 "" 
+{TEXT -1 21 "      t475 = t24*t17;" }}{PARA 6 "" 1 "" {TEXT -1 28 "   \+
+   t481 = t147*t133*t183;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t488 =
+ t145*t2;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t489 = t488*eta;" }}
+{PARA 6 "" 1 "" {TEXT -1 20 "      t492 = t9*t56;" }}{PARA 6 "" 1 "" 
+{TEXT -1 28 "      t494 = t492*t299*t342;" }}{PARA 6 "" 1 "" {TEXT -1 
+21 "      t496 = t336*t1;" }}{PARA 6 "" 1 "" {TEXT -1 32 "      t499 =
+ 8.0*t163*t398*t496;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t500 = t336
+*t18;" }}{PARA 6 "" 1 "" {TEXT -1 32 "      t503 = 8.0*t163*t290*t500;
+" }}{PARA 6 "" 1 "" {TEXT -1 79 "      t504 = -t470-t474-4.0*t214*t475
++4.0*t402*t475-8.0*t481+4.0*t218*t153+4.0*" }}{PARA 6 "" 1 "" {TEXT 
+-1 47 "t250*t280*t148+8.0*t489*t60+2.0*t494+t499-t503;" }}{PARA 6 "" 
+1 "" {TEXT -1 20 "      t509 = M*t138;" }}{PARA 6 "" 1 "" {TEXT -1 21 
+"      t510 = t509*t1;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t514 = t5
+2*t57;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t515 = t58*t138;" }}
+{PARA 6 "" 1 "" {TEXT -1 18 "      t516 = t1*M;" }}{PARA 6 "" 1 "" 
+{TEXT -1 22 "      t520 = t146*t32;" }}{PARA 6 "" 1 "" {TEXT -1 22 "  \+
+    t521 = t41*t208;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t525 = t180
+*t32;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t529 = M*t233;" }}{PARA 6 
+"" 1 "" {TEXT -1 22 "      t538 = t249*t32;" }}{PARA 6 "" 1 "" {TEXT 
+-1 21 "      t546 = t51*t57;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t55
+7 = t52*t32;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t558 = t1*t56;" }}
+{PARA 6 "" 1 "" {TEXT -1 23 "      t562 = t146*t442;" }}{PARA 6 "" 1 "
+" {TEXT -1 78 "      t573 = 2.0*t510-t159-4.0*t341*t70-4.0*t514*t515*t
+516-t321+8.0*t520*t521*" }}{PARA 6 "" 1 "" {TEXT -1 77 "t136+4.0*t525*
+t63*t136+2.0*t529*t1*t294+4.0*t9*t47*t208+4.0*t52*t70+4.0*t538*" }}
+{PARA 6 "" 1 "" {TEXT -1 78 "t41*t251*t136+4.0*t510*t137+4.0*t521*eta*
+t546*t58+4.0*t63*eta*t145*t57*t58+t9*" }}{PARA 6 "" 1 "" {TEXT -1 78 "
+t37*t43+2.0*t557*t558*t17-8.0*t562*t509*t136-4.0*t249*t442*t529*t136-8
+.0*t520*" }}{PARA 6 "" 1 "" {TEXT -1 9 "t521*t59;" }}{PARA 6 "" 1 "" 
+{TEXT -1 23 "      t574 = t180*t442;" }}{PARA 6 "" 1 "" {TEXT -1 20 " \+
+     t583 = t9*t32;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t586 = t516*
+r;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t589 = t136*t2;" }}{PARA 6 "
+" 1 "" {TEXT -1 22 "      t591 = t195*t57;" }}{PARA 6 "" 1 "" {TEXT 
+-1 20 "      t592 = t58*t1;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t596
+ = t195*t204;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t598 = t58*t41*t43
+;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t604 = t59*t17;" }}{PARA 6 "" 
+1 "" {TEXT -1 21 "      t609 = t164*t2;" }}{PARA 6 "" 1 "" {TEXT -1 
+20 "      t616 = t2*t56;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t617 = \+
+t616*t164;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t625 = t52*t37;" }}
+{PARA 6 "" 1 "" {TEXT -1 76 "      t629 = -4.0*t574*t17*t136-8.0*t525*
+t74+4.0*t525*t288*t63-4.0*t583*t510" }}{PARA 6 "" 1 "" {TEXT -1 79 "-4
+.0*t557*t586-t195*t589-4.0*t591*t592*t17-4.0*t596*t598+4.0*t562*t59*t5
+09+4.0*" }}{PARA 6 "" 1 "" {TEXT -1 78 "t574*t604-t492*t299*t2-2.0*t34
+1*t609-2.0*t325*t8*r*t1+2.0*t520*t617+t538*t616*" }}{PARA 6 "" 1 "" 
+{TEXT -1 48 "t299+t525*t589+2.0*t586*t196+t625+2.0*t17*t1*t8;" }}
+{PARA 6 "" 1 "" {TEXT -1 27 "      t631 = 1/(t573+t629);" }}{PARA 6 "
+" 1 "" {TEXT -1 76 "      t633 = t129*(4.0*t261*t257*t41+2.0*t130*M-8.
+0*t250*t252*t223-t242-4.0*" }}{PARA 6 "" 1 "" {TEXT -1 79 "t172-4.0*t1
+75*t28+8.0*t147*t139*t148+2.0*t163*t164*t165-4.0*t256*t258-t248-t278" 
+}}{PARA 6 "" 1 "" {TEXT -1 76 "+t331+t158-2.0*t159*t160+2.0*t358*t359-
+8.0*t147*t153+t350+4.0*t356+t340+4.0*" }}{PARA 6 "" 1 "" {TEXT -1 77 "
+t344+8.0*t147*t220-t384+t385*t386-t368+t428-4.0*t137*t141+t465+t504+t2
+68+4.0*" }}{PARA 6 "" 1 "" {TEXT -1 60 "t188*t44+4.0*t188*t34+2.0*t134
++4.0*t364-t377+t231)*t631/2.0;" }}{PARA 6 "" 1 "" {TEXT -1 17 "      t
+634 = a*M;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t635 = t515*t24;" }}
+{PARA 6 "" 1 "" {TEXT -1 19 "      t637 = M*t43;" }}{PARA 6 "" 1 "" 
+{TEXT -1 21 "      t639 = t56*t64;" }}{PARA 6 "" 1 "" {TEXT -1 22 "   \+
+   t640 = t52*t639;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t643 = t456*
+t42;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t646 = t249*t47;" }}{PARA 
+6 "" 1 "" {TEXT -1 20 "      t650 = M*t208;" }}{PARA 6 "" 1 "" {TEXT 
+-1 21 "      t652 = t9*t639;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t65
+8 = t467*t106;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t665 = t274*t210;
+" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t668 = t180*t204;" }}{PARA 6 "
+" 1 "" {TEXT -1 22 "      t670 = t41*t138;" }}{PARA 6 "" 1 "" {TEXT 
+-1 27 "      t671 = t205*t18*t670;" }}{PARA 6 "" 1 "" {TEXT -1 22 "   \+
+   t674 = t515*t15;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t677 = t146*
+t47;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t678 = t138*t1;" }}{PARA 6 
+"" 1 "" {TEXT -1 22 "      t682 = t136*t22;" }}{PARA 6 "" 1 "" {TEXT 
+-1 20 "      t684 = t1*t23;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t685
+ = t670*t684;" }}{PARA 6 "" 1 "" {TEXT -1 77 "      t688 = t298*t635-2
+.0*t637*t2*t640+4.0*t250*t643-4.0*t646*t456*t639-2.0*" }}{PARA 6 "" 1 
+"" {TEXT -1 76 "t650*t2*t652-4.0*t250*t209*t47-4.0*t273*t658-4.0*t250*
+t233*t18*t47-4.0*t273*" }}{PARA 6 "" 1 "" {TEXT -1 75 "t665-4.0*t668*t
+671-4.0*t492*t674-4.0*t677*t678*t639+t52*t682-4.0*t218*t685;" }}{PARA 
+6 "" 1 "" {TEXT -1 22 "      t689 = t321*t27;" }}{PARA 6 "" 1 "" 
+{TEXT -1 21 "      t692 = t43*t18;" }}{PARA 6 "" 1 "" {TEXT -1 22 "   \+
+   t697 = t146*t37;" }}{PARA 6 "" 1 "" {TEXT -1 19 "      t698 = r*t56
+;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t699 = t58*t18;" }}{PARA 6 "" 
+1 "" {TEXT -1 23 "      t700 = t698*t699;" }}{PARA 6 "" 1 "" {TEXT -1 
+21 "      t702 = t43*t57;" }}{PARA 6 "" 1 "" {TEXT -1 19 "      t703 =
+ t64*M;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t704 = t702*t703;" }}
+{PARA 6 "" 1 "" {TEXT -1 23 "      t707 = t249*t336;" }}{PARA 6 "" 1 "
+" {TEXT -1 20 "      t708 = t1*t43;" }}{PARA 6 "" 1 "" {TEXT -1 23 "  \+
+    t709 = t708*t140;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t715 = t32
+7*t639;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t720 = t146*t183;" }}
+{PARA 6 "" 1 "" {TEXT -1 23 "      t721 = t321*t639;" }}{PARA 6 "" 1 "
+" {TEXT -1 23 "      t724 = t249*t183;" }}{PARA 6 "" 1 "" {TEXT -1 22 
+"      t725 = t138*t56;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t726 = t
+58*t2;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t732 = t219*t27;" }}
+{PARA 6 "" 1 "" {TEXT -1 22 "      t737 = t33*t670;" }}{PARA 6 "" 1 "
+" {TEXT -1 76 "      t740 = -4.0*t147*t689+4.0*t562*t692*t59*M+t697*t7
+00-2.0*t697*t704+4.0*" }}{PARA 6 "" 1 "" {TEXT -1 79 "t707*t709-4.0*t6
+77*t374*t59-t520*t715+4.0*t677*t708*t59+4.0*t720*t721+8.0*t724*" }}
+{PARA 6 "" 1 "" {TEXT -1 66 "t725*t726+2.0*t218*t689-4.0*t250*t732-4.0
+*t697*t604-4.0*t147*t737;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t742 =
+ t183*r;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t745 = t32*t22;" }}
+{PARA 6 "" 1 "" {TEXT -1 23 "      t748 = t219*t639;" }}{PARA 6 "" 1 "
+" {TEXT -1 20 "      t751 = t63*t1;" }}{PARA 6 "" 1 "" {TEXT -1 21 "  \+
+    t760 = t9*t138;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t761 = t22*t
+56;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t762 = t761*t64;" }}{PARA 6 
+"" 1 "" {TEXT -1 23 "      t769 = t761*t164;" }}{PARA 6 "" 1 "" {TEXT 
+-1 19 "      t772 = t52*r;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t774 \+
+= t152*t639;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t776 = t249*t37;" }
+}{PARA 6 "" 1 "" {TEXT -1 21 "      t779 = t52*t43;" }}{PARA 6 "" 1 "
+" {TEXT -1 20 "      t780 = t2*t57;" }}{PARA 6 "" 1 "" {TEXT -1 79 "  \+
+    t784 = 4.0*t26*t742-2.0*t9*t745+4.0*t724*t748+4.0*t707*t751-4.0*t7
+07*t670" }}{PARA 6 "" 1 "" {TEXT -1 79 "*t18+4.0*t677*t678*t65+t760*t7
+62+4.0*t188*t604+3.0*t492*t164*t22-3.0*t538*t769+" }}{PARA 6 "" 1 "" 
+{TEXT -1 54 "t772*t762-t538*t774+t776*t725*t699+2.0*t779*t780*t703;" }
+}{PARA 6 "" 1 "" {TEXT -1 21 "      t785 = t197*t2;" }}{PARA 6 "" 1 "
+" {TEXT -1 22 "      t788 = t397*t63;" }}{PARA 6 "" 1 "" {TEXT -1 19 "
+      t791 = t15*r;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t794 = t616*
+t699;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t796 = t9*r;" }}{PARA 6 "
+" 1 "" {TEXT -1 24 "      t802 = t182*r*t23;" }}{PARA 6 "" 1 "" {TEXT 
+-1 22 "      t806 = t442*t63;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t8
+09 = t1*eta;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t810 = t51*t43;" }}
+{PARA 6 "" 1 "" {TEXT -1 19 "      t813 = t58*M;" }}{PARA 6 "" 1 "" 
+{TEXT -1 26 "      t814 = t18*t57*t813;" }}{PARA 6 "" 1 "" {TEXT -1 
+23 "      t817 = t692*t183;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t820
+ = t336*t22;" }}{PARA 6 "" 1 "" {TEXT -1 76 "      t822 = -t707*t785-t
+520*t682+4.0*t668*t788-4.0*t707*t791-t772*t794+2.0*" }}{PARA 6 "" 1 "
+" {TEXT -1 79 "t796*t37*t18-t760*t794+t163*t802+4.0*t147*t685+4.0*t147
+*t806-4.0*t809*t810*t814" }}{PARA 6 "" 1 "" {TEXT -1 33 "-4.0*t31*t817
++t22+t249*t820-t785;" }}{PARA 6 "" 1 "" {TEXT -1 50 "      t827 = t634
+*t129*(t688+t740+t784+t822)*t631;" }}{PARA 6 "" 1 "" {TEXT -1 22 "    \+
+  t828 = t41*t108;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t830 = t2*t11
+0;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t831 = t830*t58;" }}{PARA 6 "
+" 1 "" {TEXT -1 23 "      t832 = t238*t831;" }}{PARA 6 "" 1 "" {TEXT 
+-1 22 "      t835 = t57*t108;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t8
+36 = t835*t205;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t837 = t370*t836
+;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t838 = t138*t110;" }}{PARA 6 "
+" 1 "" {TEXT -1 20 "      t846 = t1*t91;" }}{PARA 6 "" 1 "" {TEXT -1 
+23 "      t847 = t290*t846;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t850
+ = t2*t91;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t851 = t63*t850;" }}
+{PARA 6 "" 1 "" {TEXT -1 22 "      t854 = t371*t55;" }}{PARA 6 "" 1 "
+" {TEXT -1 23 "      t855 = t370*t854;" }}{PARA 6 "" 1 "" {TEXT -1 21 
+"      t856 = t41*t41;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t858 = t2
+08*t110;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t864 = t98*t63;" }}
+{PARA 6 "" 1 "" {TEXT -1 20 "      t871 = t9*t91;" }}{PARA 6 "" 1 "" 
+{TEXT -1 19 "      t873 = M*t87;" }}{PARA 6 "" 1 "" {TEXT -1 23 "     \+
+ t874 = t139*t873;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t876 = t290*t
+98;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t879 = t98*t41;" }}{PARA 6 "
+" 1 "" {TEXT -1 19 "      t888 = t98*M;" }}{PARA 6 "" 1 "" {TEXT -1 
+23 "      t889 = t139*t888;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t892
+ = t152*t94;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t896 = t43*t8*t41;
+" }}{PARA 6 "" 1 "" {TEXT -1 79 "      t904 = 24.0*t351*t828*t832-16.0
+*t837*t403*t838-8.0*t372*t373*t138*t87-8.0" }}{PARA 6 "" 1 "" {TEXT 
+-1 76 "*t289*t847+4.0*t289*t851-32.0*t855*t205*t856*t858+8.0*t402*t847
+-8.0*t53*t864" }}{PARA 6 "" 1 "" {TEXT -1 79 "-8.0*t314*eta*t87*t74+t3
+85*t871-2.0*t874-8.0*t402*t876-8.0*t250*t252*t879+t181*" }}{PARA 6 "" 
+1 "" {TEXT -1 77 "t201*t91+4.0*t250*t393*t102+8.0*t147*t889-8.0*t147*t
+892-8.0*t896*t55*t110*t2+" }}{PARA 6 "" 1 "" {TEXT -1 19 "4.0*t250*t28
+0*t888;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t905 = t219*t102;" }}
+{PARA 6 "" 1 "" {TEXT -1 21 "      t912 = t17*t87;" }}{PARA 6 "" 1 "" 
+{TEXT -1 21 "      t921 = t87*t41;" }}{PARA 6 "" 1 "" {TEXT -1 23 "   \+
+   t929 = t209*t879;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t937 = t1*t
+115;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t938 = t238*t937;" }}{PARA 
+6 "" 1 "" {TEXT -1 21 "      t941 = t2*t115;" }}{PARA 6 "" 1 "" {TEXT 
+-1 23 "      t942 = t238*t941;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t
+945 = t41*t55;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t954 = t351*t856;
+" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t956 = t336*t110;" }}{PARA 6 "
+" 1 "" {TEXT -1 79 "      t963 = -12.0*t218*t905+8.0*t218*t456*t235*t9
+1-2.0*t159*t912+4.0*t188*t99+" }}{PARA 6 "" 1 "" {TEXT -1 79 "4.0*t188
+*t103-8.0*t289*t876-8.0*t207*t209*t921+4.0*t218*t892+8.0*t147*t905-16.
+0" }}{PARA 6 "" 1 "" {TEXT -1 76 "*t147*t929-4.0*t284*t252*t921-4.0*t1
+37*t874+8.0*t348*t938+4.0*t353*t942-8.0*" }}{PARA 6 "" 1 "" {TEXT -1 
+76 "t334*t945*t337*t830-8.0*t366*t938+4.0*t363*t942-32.0*t954*t55*t144
+*t956-8.0*" }}{PARA 6 "" 1 "" {TEXT -1 14 "t438*t921*t59;" }}{PARA 6 "
+" 1 "" {TEXT -1 21 "      t972 = eta*t91;" }}{PARA 6 "" 1 "" {TEXT -1 
+21 "      t976 = t57*t55;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t979 =
+ t208*t32;" }}{PARA 6 "" 1 "" {TEXT -1 19 "      t984 = r*t87;" }}
+{PARA 6 "" 1 "" {TEXT -1 21 "      t988 = t92*t17;" }}{PARA 6 "" 1 "" 
+{TEXT -1 21 "      t1009 = t3*t91;" }}{PARA 6 "" 1 "" {TEXT -1 24 "   \+
+   t1013 = t170*t873;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t1020 = t8
+*t91;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t1024 = t43*t32;" }}{PARA 
+6 "" 1 "" {TEXT -1 29 "      t1026 = t106*t1024*t87;" }}{PARA 6 "" 1 "
+" {TEXT -1 79 "      t1029 = -8.0*t237*t938-4.0*t250*t310*t94+8.0*t218
+*t929+2.0*t326*t327*t972" }}{PARA 6 "" 1 "" {TEXT -1 77 "-64.0*t180*t9
+76*t856*t979*t111+t228*t972-2.0*t196*t15*t984-4.0*t214*t988-4.0*" }}
+{PARA 6 "" 1 "" {TEXT -1 79 "t320*t321*t972-4.0*t452*t88*t63+4.0*t402*
+t988-12.0*t402*t851-8.0*t219*t52*t828*" }}{PARA 6 "" 1 "" {TEXT -1 79 
+"t111-8.0*t302*t8*t87*t47+2.0*t163*t164*t1009+4.0*t265*t1013-8.0*t466*
+t274*t235*" }}{PARA 6 "" 1 "" {TEXT -1 38 "t87+4.0*t261*t1020*t41+8.0*
+t402*t1026;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t1030 = t976*t235;" 
+}}{PARA 6 "" 1 "" {TEXT -1 24 "      t1031 = t145*t138;" }}{PARA 6 "" 
+1 "" {TEXT -1 24 "      t1033 = t809*t111;" }}{PARA 6 "" 1 "" {TEXT 
+-1 23 "      t1036 = t336*t87;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t
+1037 = t290*t1036;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t1045 = t235*
+t108;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t1047 = t110*t1;" }}{PARA 
+6 "" 1 "" {TEXT -1 24 "      t1048 = t1047*t58;" }}{PARA 6 "" 1 "" 
+{TEXT -1 25 "      t1049 = t238*t1048;" }}{PARA 6 "" 1 "" {TEXT -1 24 
+"      t1052 = t810*t945;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1053 \+
+= eta*t110;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t1054 = t1053*t37;" 
+}}{PARA 6 "" 1 "" {TEXT -1 23 "      t1057 = t138*t51;" }}{PARA 6 "" 
+1 "" {TEXT -1 23 "      t1058 = t235*t55;" }}{PARA 6 "" 1 "" {TEXT -1 
+25 "      t1060 = t1053*t442;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t1
+063 = t180*t836;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t1071 = t346*t1
+030;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t1077 = t1020*M;" }}{PARA 
+6 "" 1 "" {TEXT -1 23 "      t1094 = t37*t912;" }}{PARA 6 "" 1 "" 
+{TEXT -1 77 "      t1103 = -32.0*t1030*t1031*t1033-8.0*t163*t1037-2.0*
+t294*t280*t873+t298*" }}{PARA 6 "" 1 "" {TEXT -1 78 "t299*t1009-48.0*t
+346*t1045*t1049+16.0*t1052*t1054-32.0*t1057*t1058*t1060-16.0*" }}
+{PARA 6 "" 1 "" {TEXT -1 79 "t1063*t456*t235*t110+4.0*t335*t337*t88+64
+.0*t1071*t1049+24.0*t362*t828*t832-4.0" }}{PARA 6 "" 1 "" {TEXT -1 79 
+"*t256*t1077-8.0*t214*t1026-8.0*t488*eta*t41*t112+4.0*t214*t851-48.0*t
+234*t1045*" }}{PARA 6 "" 1 "" {TEXT -1 79 "t1049-8.0*t218*t461*t98+4.0
+*t214*t1094+32.0*t1031*t1058*t337*t1047-4.0*t175*t95" }}{PARA 6 "" 1 "
+" {TEXT -1 1 ";" }}{PARA 6 "" 1 "" {TEXT -1 52 "      t1108 = t129*(t9
+04+t963+t1029+t1103)*t631/2.0;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t
+1110 = t55*t87;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1111 = t1110*t2
+;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t1112 = r*t110;" }}{PARA 6 "" 
+1 "" {TEXT -1 24 "      t1116 = t63*t1047;" }}{PARA 6 "" 1 "" {TEXT 
+-1 23 "      t1122 = t110*t22;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t
+1126 = t110*t57;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t1127 = t813*r;
+" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t1131 = t976*t115;" }}{PARA 6 "
+" 1 "" {TEXT -1 24 "      t1132 = t1131*t17;" }}{PARA 6 "" 1 "" {TEXT 
+-1 23 "      t1139 = t976*t87;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t
+1143 = t2*t108;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t1144 = t58*t87;
+" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1147 = t22*t108;" }}{PARA 6 "
+" 1 "" {TEXT -1 23 "      t1148 = t115*t43;" }}{PARA 6 "" 1 "" {TEXT 
+-1 23 "      t1151 = t108*t58;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t
+1152 = t43*t87;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1158 = t52*t110
+;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t1161 = t249*t1151;" }}{PARA 
+6 "" 1 "" {TEXT -1 23 "      t1162 = t139*t94;" }}{PARA 6 "" 1 "" 
+{TEXT -1 77 "      t1165 = -t1111+16.0*t720*t1112*t589+24.0*t707*t1116
++16.0*t724*t838*t589" }}{PARA 6 "" 1 "" {TEXT -1 79 "-4.0*t9*t1122*t32
+-12.0*t697*t1126*t1127-2.0*t697*t1132+4.0*t249*t496*t1110*t17+" }}
+{PARA 6 "" 1 "" {TEXT -1 76 "4.0*t562*t1139*t1127+t520*t1143*t1144-t53
+8*t1147*t1148+t776*t1151*t1152-4.0*" }}{PARA 6 "" 1 "" {TEXT -1 46 "t6
+77*t109*t937+4.0*t1158*t682-4.0*t1161*t1162;" }}{PARA 6 "" 1 "" {TEXT 
+-1 25 "      t1166 = t1147*t115;" }}{PARA 6 "" 1 "" {TEXT -1 22 "     \+
+ t1168 = t9*t110;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1172 = t138*t
+57;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t1176 = t146*t1151;" }}
+{PARA 6 "" 1 "" {TEXT -1 23 "      t1177 = t846*t63;" }}{PARA 6 "" 1 "
+" {TEXT -1 24 "      t1180 = t108*t115;" }}{PARA 6 "" 1 "" {TEXT -1 
+24 "      t1181 = t52*t1180;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t11
+84 = t110*t32;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1189 = t9*t1180;
+" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t1192 = t2*eta;" }}{PARA 6 "" 
+1 "" {TEXT -1 28 "      t1195 = t51*t110*t136;" }}{PARA 6 "" 1 "" 
+{TEXT -1 24 "      t1198 = t209*t102;" }}{PARA 6 "" 1 "" {TEXT -1 23 "
+      t1201 = t43*t110;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1202 = \+
+t558*t58;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t1213 = t8*t110;" }}
+{PARA 6 "" 1 "" {TEXT -1 25 "      t1214 = t1213*t136;" }}{PARA 6 "" 
+1 "" {TEXT -1 23 "      t1217 = t850*t17;" }}{PARA 6 "" 1 "" {TEXT -1 
+21 "      t1220 = t1*t57;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t1225 \+
+= t146*t108;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1226 = t182*t91;" 
+}}{PARA 6 "" 1 "" {TEXT -1 77 "      t1228 = -t520*t1166+4.0*t1168*t76
+9-32.0*t146*t245*t1172*t111+4.0*t1176*" }}{PARA 6 "" 1 "" {TEXT -1 78 
+"t1177-2.0*t791*t1181-16.0*t751*t9*t1184-2.0*t509*t2*t1189-8.0*t17*t11
+92*t1195+" }}{PARA 6 "" 1 "" {TEXT -1 78 "4.0*t1161*t1198-16.0*t677*t1
+201*t1202-16.0*t646*t858*t1202-16.0*t707*t290*t110" }}{PARA 6 "" 1 "" 
+{TEXT -1 76 "-8.0*t509*t1192*t1214-4.0*t1176*t1217+40.0*t677*t1201*t12
+20*t58+t1225*t1226;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1237 = t976
+*t58;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t1238 = t146*t1237;" }}
+{PARA 6 "" 1 "" {TEXT -1 23 "      t1242 = t205*t87;" }}{PARA 6 "" 1 "
+" {TEXT -1 24 "      t1243 = t1242*t63;" }}{PARA 6 "" 1 "" {TEXT -1 
+22 "      t1246 = t37*t17;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t1251
+ = t373*t838;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1258 = t51*t976;
+" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t1259 = t809*t1258;" }}{PARA 6 
+"" 1 "" {TEXT -1 24 "      t1260 = t1144*t17;" }}{PARA 6 "" 1 "" 
+{TEXT -1 24 "      t1263 = t138*t108;" }}{PARA 6 "" 1 "" {TEXT -1 23 "
+      t1272 = t43*t976;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t1276 = \+
+r*t108;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1283 = t17*t830;" }}
+{PARA 6 "" 1 "" {TEXT -1 78 "      t1285 = -16.0*t107*t702*t111-4.0*t1
+161*t208*t87*t47+2.0*t1238*t1217-4.0*" }}{PARA 6 "" 1 "" {TEXT -1 79 "
+t180*t835*t1243+16.0*t1168*t1246-4.0*t1176*t864-16.0*t466*t1251-4.0*t8
+09*t8*t55" }}{PARA 6 "" 1 "" {TEXT -1 79 "*t99-4.0*t1259*t1260+4.0*t72
+4*t1263*t941-4.0*t1238*t1177-4.0*t707*t63*t1110-4.0" }}{PARA 6 "" 1 "
+" {TEXT -1 68 "*t677*t1272*t1144+4.0*t720*t1276*t941+4.0*t677*t1272*t9
+37-4.0*t1283;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t1287 = t467*t921;
+" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t1290 = t208*t108;" }}{PARA 6 "
+" 1 "" {TEXT -1 23 "      t1298 = t110*t56;" }}{PARA 6 "" 1 "" {TEXT 
+-1 21 "      t1305 = t9*t55;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t13
+09 = t9*t108;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1310 = t22*t115;
+" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t1311 = t1310*t43;" }}{PARA 6 "
+" 1 "" {TEXT -1 23 "      t1315 = t52*t108;" }}{PARA 6 "" 1 "" {TEXT 
+-1 23 "      t1318 = t52*t976;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t
+1319 = t941*t17;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1331 = t164*t9
+2;" }}{PARA 6 "" 1 "" {TEXT -1 79 "      t1333 = -4.0*t146*t835*t1287-
+4.0*t646*t1290*t937-4.0*t520*t1122*t136-4.0*" }}{PARA 6 "" 1 "" {TEXT 
+-1 76 "t249*t745*t1298*t164+2.0*t249*t820*t110+2.0*t1305*t37*t87+t1309
+*t1311-t1309*" }}{PARA 6 "" 1 "" {TEXT -1 76 "t726*t1152-t1315*t726*t8
+7+2.0*t1318*t1319+2.0*t1122+12.0*t52*t830*t604-12.0*" }}{PARA 6 "" 1 "
+" {TEXT -1 48 "t707*t1283-t707*t1111+t52*t1166+t249*t108*t1331;" }}
+{PARA 6 "" 1 "" {TEXT -1 23 "      t1338 = t631/t55;" }}{PARA 6 "" 1 "
+" {TEXT -1 57 "      t1340 = t17*a*t129*(t1165+t1228+t1285+t1333)*t133
+8;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t1342 = t197*t1;" }}{PARA 6 "
+" 1 "" {TEXT -1 19 "      t1351 = r*t2;" }}{PARA 6 "" 1 "" {TEXT -1 
+21 "      t1356 = t9*t43;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1360 \+
+= t616*t64;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t1362 = t558*t699;" 
+}}{PARA 6 "" 1 "" {TEXT -1 76 "      t1373 = -t2+t1342+t9*t37-4.0*t583
+*t586-3.0*t492*t609-t52*t589-4.0*t53*" }}{PARA 6 "" 1 "" {TEXT -1 76 "
+t604+t9*t1351*t23-t796*t442*t18-2.0*t1356*t684*M-t760*t1360+t760*t1362
+-t772*" }}{PARA 6 "" 1 "" {TEXT -1 66 "t1360+t772*t1362-2.0*t779*t1220
+*t703+4.0*t1356*t148+4.0*t779*t814;" }}{PARA 6 "" 1 "" {TEXT -1 36 "  \+
+    t1376 = t7*t14*t634*t56*t1373;" }}{PARA 6 "" 1 "" {TEXT -1 23 "   \+
+   t1381 = t830*t32;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1408 = t59
+2*t87;" }}{PARA 6 "" 1 "" {TEXT -1 79 "      t1417 = -2.0*t830+t1110*t
+1+2.0*t9*t1381-4.0*t1168*t442*t17-4.0*t1168*t617" }}{PARA 6 "" 1 "" 
+{TEXT -1 79 "-4.0*t1158*t589-12.0*t52*t1047*t604+t9*t55*t2*t91-t1305*t
+442*t87-2.0*t1305*t846" }}{PARA 6 "" 1 "" {TEXT -1 79 "*t17-t1309*t941
+*t43+t1309*t592*t1152-t52*t1143*t115+t1315*t1408-2.0*t1318*t937*" }}
+{PARA 6 "" 1 "" {TEXT -1 34 "t17+4.0*t1305*t99+4.0*t1318*t1260;" }}
+{PARA 6 "" 1 "" {TEXT -1 34 "      t1420 = t86*M*a*r*t55*t1417;" }}
+{PARA 6 "" 1 "" {TEXT -1 19 "      t1421 = 1/t1;" }}{PARA 6 "" 1 "" 
+{TEXT -1 31 "      t1425 = diff(Delta(r),r);" }}{PARA 6 "" 1 "" {TEXT 
+-1 35 "      t1436 = diff(hrr(r,theta),r);" }}{PARA 6 "" 1 "" {TEXT 
+-1 39 "      t1449 = diff(hrr(r,theta),theta);" }}{PARA 6 "" 1 "" 
+{TEXT -1 48 "      t1452 = t87*t5+2.0*t9*t11*t87+t9*t2*t1449;" }}
+{PARA 6 "" 1 "" {TEXT -1 24 "      t1457 = t1421*t14;" }}{PARA 6 "" 1 
+"" {TEXT -1 30 "      t1459 = t1457*t1452/2.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 35 "      t1463 = diff(haa(r,theta),r);" }}{PARA 6 "" 1 "" 
+{TEXT -1 45 "      t1466 = t18+2.0*t9*t82*t18+t9*t2*t1463;" }}{PARA 6 
+"" 1 "" {TEXT -1 34 "      t1469 = t1466*t85*t1421/2.0;" }}{PARA 6 "" 
+1 "" {TEXT -1 23 "      t1470 = t634*t56;" }}{PARA 6 "" 1 "" {TEXT -1 
+24 "      t1472 = t146*t352;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t14
+73 = t233*t32;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1492 = t370*t57;
+" }}{PARA 6 "" 1 "" {TEXT -1 78 "      t1513 = t1492*t412*t197+4.0*t21
+4*t708*t148-t214*t1351*t33+t181*t802-4.0*" }}{PARA 6 "" 1 "" {TEXT -1 
+76 "t411*t412*t17+4.0*t466*t665+t181*t182*t32-4.0*t214*t1246+4.0*t218*
+t732+t174*" }}{PARA 6 "" 1 "" {TEXT -1 10 "t191-t130;" }}{PARA 6 "" 1 
+"" {TEXT -1 24 "      t1515 = t180*t352;" }}{PARA 6 "" 1 "" {TEXT -1 
+23 "      t1522 = t138*t32;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t153
+0 = t8*t56;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t1559 = r*t32;" }}
+{PARA 6 "" 1 "" {TEXT -1 22 "      t1567 = t43*t23;" }}{PARA 6 "" 1 "
+" {TEXT -1 77 "      t1575 = -t370*t57*t205*t22-t133*t583+4.0*t265*t54
+6*t813+t152*t386-t265*" }}{PARA 6 "" 1 "" {TEXT -1 79 "t170*t18-t188*t
+1559*t18+t174*eta*r*t23-4.0*t489*t604-2.0*t188*t1567*M+4.0*t438*" }}
+{PARA 6 "" 1 "" {TEXT -1 19 "t814+4.0*t302*t421;" }}{PARA 6 "" 1 "" 
+{TEXT -1 23 "      t1580 = t145*t22;" }}{PARA 6 "" 1 "" {TEXT -1 24 " \+
+     t1585 = t180*t183;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1590 = \+
+t204*t64;" }}{PARA 6 "" 1 "" {TEXT -1 28 "      t1603 = t761*t64*t233;
+" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1609 = t180*t37;" }}{PARA 6 "
+" 1 "" {TEXT -1 23 "      t1612 = t251*t56;" }}{PARA 6 "" 1 "" {TEXT 
+-1 25 "      t1613 = t1612*t354;" }}{PARA 6 "" 1 "" {TEXT -1 22 "     \+
+ t1626 = t51*t56;" }}{PARA 6 "" 1 "" {TEXT -1 79 "      t1641 = -4.0*t
+697*t65*t650-4.0*t1609*t704+2.0*t724*t1613-r*t144*t179*t745" }}{PARA 
+6 "" 1 "" {TEXT -1 78 "*t639-2.0*t261*t258+2.0*t280*eta*t1530*t699+4.0
+*t265*t1626*t699+4.0*t466*t658+" }}{PARA 6 "" 1 "" {TEXT -1 56 "8.0*t1
+47*t209*t148+8.0*t207*t209*t140-2.0*t147*t139*t33;" }}{PARA 6 "" 1 "" 
+{TEXT -1 23 "      t1651 = t180*t57;" }}{PARA 6 "" 1 "" {TEXT -1 23 " \+
+     t1652 = t205*t43;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t1661 = t
+2*t18;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1668 = t249*t57;" }}
+{PARA 6 "" 1 "" {TEXT -1 23 "      t1685 = t146*t57;" }}{PARA 6 "" 1 "
+" {TEXT -1 24 "      t1695 = t205*t251;" }}{PARA 6 "" 1 "" {TEXT -1 
+79 "      t1706 = t298*t58*t233*t24-t250*t280*t33-2.0*t250*t393*t27+3.
+0*t1685*t274*" }}{PARA 6 "" 1 "" {TEXT -1 79 "t1661-3.0*t298*t299*t745
++4.0*t250*t280*t183+t1668*t1695*t22+t1685*t467*t22+4.0*" }}{PARA 6 "" 
+1 "" {TEXT -1 39 "t163*t670*t500+t159*t197+2.0*t489*t700;" }}{PARA 6 "
+" 1 "" {TEXT -1 77 "      t1712 = t1470*t129*(-8.0*t218*t139*t183+4.0*
+t250*t252*t148-t1651*t1652*" }}{PARA 6 "" 1 "" {TEXT -1 79 "t22+t133-2
+.0*t163*t164*t745+t1668*t205*t208*t138*t1661+4.0*t1472*t1473*t699+4.0
+" }}{PARA 6 "" 1 "" {TEXT -1 79 "*t1515*t1522*t239+4.0*t1515*t1522*t69
+9-4.0*t574*t1590*t670+3.0*t1651*t205*t138*" }}{PARA 6 "" 1 "" {TEXT 
+-1 77 "t1661-4.0*t1515*t1024*t592+4.0*t1472*t979*t592+4.0*t1472*t1473*
+t239+4.0*t284*" }}{PARA 6 "" 1 "" {TEXT -1 79 "t252*t140+t1706+4.0*t27
+3*t274*t15-4.0*t163*t63*t496-4.0*t147*t732+4.0*t402*t689" }}{PARA 6 "
+" 1 "" {TEXT -1 79 "-4.0*t188*t742+4.0*t720*t748+4.0*t372*t671-4.0*t37
+2*t788+2.0*t326*t322+2.0*t389" }}{PARA 6 "" 1 "" {TEXT -1 77 "*eta*t15
+30*t58+4.0*t314*eta*t43*t814-2.0*t1580*eta*t56*t58+4.0*t452*t709-4.0*
+" }}{PARA 6 "" 1 "" {TEXT -1 77 "t402*t685+4.0*t289*t685-2.0*t214*t689
++4.0*t289*t737-4.0*t289*t806-t538*t1603+" }}{PARA 6 "" 1 "" {TEXT -1 
+77 "t1641+2.0*t163*t635+4.0*t53*t817-4.0*t218*t643+t1575-2.0*t520*t774
++t1513+2.0*" }}{PARA 6 "" 1 "" {TEXT -1 26 "t1585*t721+t139*t18)*t631;
+" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t1718 = t146*t745;" }}{PARA 6 "
+" 1 "" {TEXT -1 21 "      t1723 = t3*t56;" }}{PARA 6 "" 1 "" {TEXT -1 
+24 "      t1724 = t1723*t64;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t17
+27 = t509*t22;" }}{PARA 6 "" 1 "" {TEXT -1 79 "      t1731 = -4.0*t596
+*t354*t63-2.0*r*t3+4.0*t1718*t65*t509+4.0*t134+t158+t525" }}{PARA 6 "
+" 1 "" {TEXT -1 50 "*t1724-8.0*t172+4.0*t1727*t640+t213+4.0*t221+t226;
+" }}{PARA 6 "" 1 "" {TEXT -1 79 "      t1736 = -12.0*t514*t343+t242+t2
+48+t268+t278+16.0*t282+t287+t293-t340+8.0*" }}{PARA 6 "" 1 "" {TEXT 
+-1 10 "t344-t350;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t1748 = t180*t
+745;" }}{PARA 6 "" 1 "" {TEXT -1 77 "      t1752 = -12.0*t356-12.0*t36
+4+t368+t377+t384-16.0*t391+4.0*t525*t22*t57*" }}{PARA 6 "" 1 "" {TEXT 
+-1 53 "t813+t538*t1723*t64*t208-t401+4.0*t1748*t65*t17-t407;" }}{PARA 
+6 "" 1 "" {TEXT -1 23 "      t1778 = t208*t51;" }}{PARA 6 "" 1 "" 
+{TEXT -1 24 "      t1779 = t1778*t41;" }}{PARA 6 "" 1 "" {TEXT -1 22 "
+      t1780 = t57*eta;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t1781 = t
+1780*t354;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1784 = t334*t41;" }}
+{PARA 6 "" 1 "" {TEXT -1 78 "      t1791 = -8.0*t720*t774-32.0*t677*t1
+172*t726-4.0*t1609*t59*t160+4.0*t538*" }}{PARA 6 "" 1 "" {TEXT -1 78 "
+t1723*t515+2.0*t520*t1723*t64*t43+2.0*t557*t761*M+8.0*t1609*t288*t54-8
+.0*t574*" }}{PARA 6 "" 1 "" {TEXT -1 75 "t204*t18*t598+4.0*t1779*t1781
++4.0*t1784*t1781-4.0*t1585*t715+8.0*t677*t748;" }}{PARA 6 "" 1 "" 
+{TEXT -1 22 "      t1797 = t325*t8;" }}{PARA 6 "" 1 "" {TEXT -1 23 "  \+
+    t1800 = t180*t47;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1805 = t6
+99*t63;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t1808 = t17*t22;" }}
+{PARA 6 "" 1 "" {TEXT -1 23 "      t1814 = t529*t22;" }}{PARA 6 "" 1 "
+" {TEXT -1 79 "      t1821 = -t415+8.0*t809*t1626*t307+2.0*t1797*t785+
+4.0*t1800*t721+t425+t427" }}{PARA 6 "" 1 "" {TEXT -1 76 "+8.0*t809*t14
+5*t204*t1805+2.0*t1808*t195*t639+4.0*t646*t1613+2.0*t1814*t652+" }}
+{PARA 6 "" 1 "" {TEXT -1 26 "16.0*t1057*t41*t1780*t726;" }}{PARA 6 "" 
+1 "" {TEXT -1 21 "      t1840 = t3*t64;" }}{PARA 6 "" 1 "" {TEXT -1 
+22 "      t1843 = t22*t64;" }}{PARA 6 "" 1 "" {TEXT -1 75 "      t1853
+ = 4.0*t1609*t1590*t63-4.0*t724*t1603+2.0*t9*t32*t3*r+t431+12.0*" }}
+{PARA 6 "" 1 "" {TEXT -1 79 "t1718*t59*t637-4.0*t697*t59*t374*M-8.0*t3
+41*t416-t492*t1840*t208-4.0*t591*t1843" }}{PARA 6 "" 1 "" {TEXT -1 43 
+"*t17-8.0*t596*t726*t54-4.0*t514*t1843*t509;" }}{PARA 6 "" 1 "" {TEXT 
+-1 24 "      t1856 = t515*t140;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      \+
+t1879 = t699*t17;" }}{PARA 6 "" 1 "" {TEXT -1 78 "      t1882 = 4.0*t5
+2*t780*t1856-t195*t1724-4.0*t492*t201*t138-2.0*t341*t1840*" }}{PARA 6 
+"" 1 "" {TEXT -1 78 "t43-4.0*t591*t359-4.0*t341*t201*r+4.0*t520*t1723*
+t58*r-2.0*t625*t325*t197+4.0*" }}{PARA 6 "" 1 "" {TEXT -1 26 "t195*t78
+0*t1879-t437-t445;" }}{PARA 6 "" 1 "" {TEXT -1 77 "      t1888 = 4.0*t
+446-t451+t455-t460+t464+t470+t474-2.0*t325*t130-16.0*t481+" }}{PARA 6 
+"" 1 "" {TEXT -1 19 "8.0*t494-t499+t503;" }}{PARA 6 "" 1 "" {TEXT -1 
+78 "      t1894 = t129*(t1731+t1736+t1752+t1791+t1821+t1853+t1882+t188
+8)*t631/2.0;" }}{PARA 6 "" 1 "" {TEXT -1 39 "      t1901 = diff(haa(r,
+theta),theta);" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t1917 = t43*t336;
+" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t1942 = t146*t828;" }}{PARA 6 "
+" 1 "" {TEXT -1 21 "      t1946 = M*t110;" }}{PARA 6 "" 1 "" {TEXT -1 
+24 "      t1947 = t1946*t32;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t19
+48 = t139*t1947;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t1955 = t180*t1
+237;" }}{PARA 6 "" 1 "" {TEXT -1 78 "      t1968 = -t321*t87-t159*t87-
+t181*t1226+t525*t761*t115+4.0*t147*t1162+8.0*" }}{PARA 6 "" 1 "" 
+{TEXT -1 79 "t146*t945*t1917*t1047+4.0*t697*t116*t509-2.0*t1585*t698*t
+941-4.0*t720*t725*t941" }}{PARA 6 "" 1 "" {TEXT -1 77 "-4.0*t163*t63*t
+1036-4.0*t289*t1177-4.0*t289*t864-4.0*t372*t1243-4.0*t678*eta*" }}
+{PARA 6 "" 1 "" {TEXT -1 77 "t1013-32.0*t1942*t979*t1048+16.0*t1176*t1
+948-32.0*t180*t828*t1024*t1048+24.0*" }}{PARA 6 "" 1 "" {TEXT -1 66 "t
+1955*t63*t1047*t32+4.0*t574*t204*t115*t63-2.0*t724*t233*t56*t941;" }}
+{PARA 6 "" 1 "" {TEXT -1 23 "      t1971 = t139*t52;" }}{PARA 6 "" 1 "
+" {TEXT -1 23 "      t1977 = t321*eta;" }}{PARA 6 "" 1 "" {TEXT -1 23 
+"      t1980 = t976*t41;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t2003 =
+ t55*t58;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t2005 = t830*t742;" }}
+{PARA 6 "" 1 "" {TEXT -1 24 "      t2008 = t976*t205;" }}{PARA 6 "" 1 
+"" {TEXT -1 20 "      t2015 = t55*M;" }}{PARA 6 "" 1 "" {TEXT -1 25 " \+
+     t2017 = t1351*t110;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t2022 =
+ t314*t1780;" }}{PARA 6 "" 1 "" {TEXT -1 79 "      t2034 = -4.0*t466*t
+1287+2.0*t180*t55*t182*t1184-4.0*t180*t2003*t2005-4.0*" }}{PARA 6 "" 
+1 "" {TEXT -1 78 "t370*t2008*t1283+2.0*t520*t761*t1148-4.0*t2015*t8*t2
+017-4.0*t53*t99-4.0*t2022*" }}{PARA 6 "" 1 "" {TEXT -1 63 "t1260-2.0*t
+489*t136*t87-8.0*t488*t1053*t1151*t17+t187*t191*t87;" }}{PARA 6 "" 1 "
+" {TEXT -1 20 "      t2046 = t51*r;" }}{PARA 6 "" 1 "" {TEXT -1 25 "  \+
+    t2069 = t146*t2003;" }}{PARA 6 "" 1 "" {TEXT -1 21 "      t2089 = \+
+t2*t87;" }}{PARA 6 "" 1 "" {TEXT -1 76 "      t2102 = -4.0*t1977*t1626
+*t1144+2.0*t188*t95-16.0*t855*t1251-4.0*t1472*" }}{PARA 6 "" 1 "" 
+{TEXT -1 75 "t979*t937+t250*t219*t98+2.0*t250*t280*t94-t1668*t1695*t20
+89-3.0*t1685*t467*" }}{PARA 6 "" 1 "" {TEXT -1 53 "t2089-t298*t299*t92
+-2.0*t163*t1331+2.0*t147*t321*t98;" }}{PARA 6 "" 1 "" {TEXT -1 24 "   \+
+   t2117 = t115*t208;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t2133 = t2
+49*t2003;" }}{PARA 6 "" 1 "" {TEXT -1 76 "      t2162 = 2.0*t2133*t389
+*t1184-4.0*t214*t88*t742-4.0*t452*t89+16.0*t180*" }}{PARA 6 "" 1 "" 
+{TEXT -1 76 "t1151*t2005+t181*t726*t98+2.0*t214*t1217-2.0*t326*t1351*t
+972-4.0*t2133*t280*" }}{PARA 6 "" 1 "" {TEXT -1 57 "t1947-4.0*t146*t20
+08*t280*t1946+2.0*t265*t1077-t174*t972;" }}{PARA 6 "" 1 "" {TEXT -1 
+79 "      t2168 = t1470*r*t129*(-8.0*t1971*t110*t108*t813+t1977*t170*t
+87-16.0*t1980" }}{PARA 6 "" 1 "" {TEXT -1 78 "*t334*t1033-4.0*t250*t45
+6*t888-3.0*t1651*t1652*t2089-8.0*t180*t2008*t139*t1946" }}{PARA 6 "" 
+1 "" {TEXT -1 79 "-32.0*t180*t1030*t1522*t111-16.0*t146*t55*t290*t956-
+16.0*t837*t1116-16.0*t1063*" }}{PARA 6 "" 1 "" {TEXT -1 78 "t209*t41*t
+110+t538*t761*t2117-8.0*t207*t678*t873-8.0*t147*t678*t888+4.0*t2069*" 
+}}{PARA 6 "" 1 "" {TEXT -1 79 "t133*t1184-4.0*t284*t456*t873-t1492*t41
+2*t87+4.0*t1609*t116*t17+4.0*t2015*t2046" }}{PARA 6 "" 1 "" {TEXT -1 
+79 "*t1054-4.0*t1515*t1024*t1144-4.0*t1515*t1024*t937-4.0*t1472*t979*t
+1144-2.0*t261" }}{PARA 6 "" 1 "" {TEXT -1 77 "*t1530*t1144+4.0*t218*t1
+198+t2034+t1968-8.0*t2069*t1948-16.0*t1052*t1060-4.0*" }}{PARA 6 "" 1 
+"" {TEXT -1 78 "t678*t52*t57*t87*t813+t2102-t133*t871+t2162-4.0*t402*t
+1217-4.0*t218*t1162+4.0*" }}{PARA 6 "" 1 "" {TEXT -1 17 "t402*t1177)*t
+631;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t2169 = t3*t108;" }}{PARA 
+6 "" 1 "" {TEXT -1 21 "      t2180 = t108*M;" }}{PARA 6 "" 1 "" {TEXT 
+-1 23 "      t2181 = t2180*t8;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t
+2190 = t835*t41;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t2199 = t385*et
+a;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t2203 = t976*eta;" }}{PARA 6 
+"" 1 "" {TEXT -1 25 "      t2204 = t2203*t941;" }}{PARA 6 "" 1 "" 
+{TEXT -1 79 "      t2212 = 2.0*t520*t2169*t1148+4.0*t181*t201*t1184-2.
+0*t385*t110+t538*t2169" }}{PARA 6 "" 1 "" {TEXT -1 78 "*t2117+2.0*t218
+1*t1351*t87-4.0*t1580*eta*t1132+8.0*t1225*t1037-4.0*t2190*t145*" }}
+{PARA 6 "" 1 "" {TEXT -1 79 "t321*eta*t115-8.0*t175*t1184*t17+2.0*t219
+9*t1213*t32+4.0*t1779*t2204+2.0*t1808*" }}{PARA 6 "" 1 "" {TEXT -1 27 
+"t195*t1180+4.0*t1727*t1181;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t22
+26 = t208*t3;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t2227 = t2226*eta;
+" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t2238 = t138*t369;" }}{PARA 6 "
+" 1 "" {TEXT -1 30 "      t2241 = t854*t144*t1242;" }}{PARA 6 "" 1 "" 
+{TEXT -1 78 "      t2258 = 32.0*t954*t380*t956+32.0*t208*t369*t856*t37
+1*t56*t144*t205*t110+" }}{PARA 6 "" 1 "" {TEXT -1 79 "4.0*t509*t1122-4
+.0*t2227*t1214-8.0*t2199*t1195-4.0*t256*t1258*t115*M+2.0*t1814*" }}
+{PARA 6 "" 1 "" {TEXT -1 76 "t1189+8.0*t2238*t235*t2241-2.0*t8*t3*t110
+-8.0*t256*t1213*t183+8.0*t583*t521*" }}{PARA 6 "" 1 "" {TEXT -1 39 "t8
+30+8.0*t557*t63*t830+4.0*t1784*t2204;" }}{PARA 6 "" 1 "" {TEXT -1 24 "
+      t2260 = t233*t179;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t2274 =
+ t208*t179;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t2284 = t1053*t726;
+" }}{PARA 6 "" 1 "" {TEXT -1 29 "      t2299 = t342*t1112*t32;" }}
+{PARA 6 "" 1 "" {TEXT -1 77 "      t2304 = 8.0*t2260*t235*t2241-2.0*t2
+199*t51*t108*t115+8.0*t896*t1298*t2-" }}{PARA 6 "" 1 "" {TEXT -1 75 "t
+2227*t8*t108*t115+64.0*t2274*t856*t204*t238*t111-4.0*t1942*t1917*t88+3
+2.0*" }}{PARA 6 "" 1 "" {TEXT -1 77 "t1778*t352*t2284+4.0*t1238*t905-8
+.0*t720*t1263*t1310+4.0*t1800*t109*t941-4.0*" }}{PARA 6 "" 1 "" {TEXT 
+-1 50 "t1585*t1276*t1310+24.0*t402*t2299+4.0*t1748*t1132;" }}{PARA 6 "
+" 1 "" {TEXT -1 28 "      t2314 = t180*t835*t58;" }}{PARA 6 "" 1 "" 
+{TEXT -1 25 "      t2322 = t152*t1947;" }}{PARA 6 "" 1 "" {TEXT -1 78 
+"      t2346 = 4.0*t1609*t835*t115*t63-4.0*t724*t233*t108*t1310-8.0*t2
+314*t1026" }}{PARA 6 "" 1 "" {TEXT -1 79 "-72.0*t1515*t1024*t831+8.0*t
+2314*t847+24.0*t218*t2322-16.0*t214*t2299-4.0*t1238" }}{PARA 6 "" 1 "
+" {TEXT -1 75 "*t889+8.0*t146*t319*t1917*t830+32.0*t677*t208*t56*t831+
+8.0*t2190*t334*t809*" }}{PARA 6 "" 1 "" {TEXT -1 43 "t1144+4.0*t1718*t
+1131*t509+t525*t2169*t115;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t2366
+ = t234*t1030;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t2367 = t238*t114
+4;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t2378 = t22*eta;" }}{PARA 6 "
+" 1 "" {TEXT -1 77 "      t2391 = -72.0*t1472*t979*t831-4.0*t1955*t109
+4+32.0*t289*t63*t1381+16.0*" }}{PARA 6 "" 1 "" {TEXT -1 79 "t646*t1612
+*t831+32.0*t1031*t347*t1033+8.0*t677*t1290*t941+8.0*t2366*t2367-24.0*
+" }}{PARA 6 "" 1 "" {TEXT -1 77 "t152*t52*t1126*t813-32.0*t319*t810*t1
+054+8.0*t325*t2046*t2378*t1184+4.0*t488*" }}{PARA 6 "" 1 "" {TEXT -1 
+55 "t2203*t1260-24.0*t1580*t1053*t604+4.0*t1971*t1139*t813;" }}{PARA 
+6 "" 1 "" {TEXT -1 23 "      t2392 = t56*t235;" }}{PARA 6 "" 1 "" 
+{TEXT -1 22 "      t2398 = t145*t3;" }}{PARA 6 "" 1 "" {TEXT -1 24 "  \+
+    t2409 = t1213*t22;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t2432 = t
+235*t371;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t2434 = t144*t205;" }}
+{PARA 6 "" 1 "" {TEXT -1 26 "      t2435 = t2434*t1047;" }}{PARA 6 "" 
+1 "" {TEXT -1 77 "      t2442 = -32.0*t146*t2392*t138*t336*t1047-t2398
+*eta*t108*t115-8.0*t1797*" }}{PARA 6 "" 1 "" {TEXT -1 77 "t327*t110-4.
+0*t2398*eta*t1298*t58+4.0*t17*t2409+2.0*t228*t1053*t32+8.0*t2366*" }}
+{PARA 6 "" 1 "" {TEXT -1 76 "t938+8.0*t17*t2378*t145*t56*t111+16.0*t50
+9*t2378*t1195+8.0*t529*t2378*t1214+" }}{PARA 6 "" 1 "" {TEXT -1 71 "16
+.0*t1800*t43*t56*t831+16.0*t2238*t2432*t2435+4.0*t646*t251*t108*t941;
+" }}{PARA 6 "" 1 "" {TEXT -1 28 "      t2448 = t144*t58*t846;" }}
+{PARA 6 "" 1 "" {TEXT -1 24 "      t2463 = t2434*t88;" }}{PARA 6 "" 1 
+"" {TEXT -1 79 "      t2485 = 32.0*t1057*t2392*t1060-8.0*t2366*t2448+1
+6.0*t2260*t2432*t2435+8.0" }}{PARA 6 "" 1 "" {TEXT -1 78 "*t1071*t2367
++8.0*t1071*t938+32.0*t334*t352*t2284+4.0*t43*t369*t2190*t2463-8.0*" }}
+{PARA 6 "" 1 "" {TEXT -1 79 "t1071*t2448+8.0*t2274*t2190*t2463+4.0*t25
+1*t145*t2190*t2463+4.0*t1955*t851+8.0*" }}{PARA 6 "" 1 "" {TEXT -1 45 
+"t828*t810*t809*t98-2.0*t2180*t2046*t1192*t98;" }}{PARA 6 "" 1 "" 
+{TEXT -1 29 "      t2506 = t180*t835*t235;" }}{PARA 6 "" 1 "" {TEXT 
+-1 25 "      t2513 = t180*t1980;" }}{PARA 6 "" 1 "" {TEXT -1 25 "     \+
+ t2520 = t146*t1980;" }}{PARA 6 "" 1 "" {TEXT -1 77 "      t2531 = -32
+.0*t204*t41*t334*t2284+48.0*t366*t1049+48.0*t237*t1049-32.0*" }}{PARA 
+6 "" 1 "" {TEXT -1 77 "t147*t2322-16.0*t250*t310*t1947+8.0*t147*t385*t
+1184+4.0*t250*t2226*t1184+8.0*" }}{PARA 6 "" 1 "" {TEXT -1 78 "t2506*t
+1522*t1144-8.0*t2506*t1522*t937+8.0*t2513*t1024*t1408-12.0*t2513*t1024
+*" }}{PARA 6 "" 1 "" {TEXT -1 74 "t941+8.0*t2520*t979*t1408-12.0*t2520
+*t979*t941-64.0*t180*t347*t1522*t1048;" }}{PARA 6 "" 1 "" {TEXT -1 79 
+"      t2537 = t129*(t2212+t2258+t2304+t2346+t2391+t2442+t2485+t2531)*
+t1338/2.0;" }}{PARA 6 "" 1 "" {TEXT -1 77 "      t2589 = 2.0*t327+2.0*
+t325*t159-2.0*t1797*t1342+8.0*t341*t106*t1559+4.0*" }}{PARA 6 "" 1 "" 
+{TEXT -1 79 "t341*t106*t1567+t492*t1843*t208+4.0*t492*t182*t138+2.0*t3
+41*t1843*t43+4.0*t341*" }}{PARA 6 "" 1 "" {TEXT -1 79 "t182*r+4.0*t514
+*t354*t509+12.0*t514*t726*t637-4.0*t52*t1220*t1856+t195*t762+4.0" }}
+{PARA 6 "" 1 "" {TEXT -1 79 "*t591*t354*t17-4.0*t2022*t1879+4.0*t591*t
+726*M+4.0*t596*t239*t63+8.0*t596*t592*" }}{PARA 6 "" 1 "" {TEXT -1 33 
+"t54-8.0*t341*t307-8.0*t596*t1805;" }}{PARA 6 "" 1 "" {TEXT -1 77 "   \+
+   t2625 = 2.0*t1201*t22+2.0*t2409+8.0*t1797*t2017-2.0*t2181*t984*t1+1
+6.0*" }}{PARA 6 "" 1 "" {TEXT -1 79 "t52*t1298*t806+4.0*t492*t1122*t29
+9+8.0*t341*t1122*t164+24.0*t52*t1126*t674+4.0*" }}{PARA 6 "" 1 "" 
+{TEXT -1 69 "t358*t1122*t58+24.0*t195*t1126*t726*t17+32.0*t195*t204*t1
+10*t592*t63;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t2646 = t195*t835;
+" }}{PARA 6 "" 1 "" {TEXT -1 78 "      t2655 = 4.0*t1315*t1177+t1309*t
+1310*t208+2.0*t1315*t1311+4.0*t1318*t941*" }}{PARA 6 "" 1 "" {TEXT -1 
+79 "t509-4.0*t1259*t515*t873+t195*t1166+4.0*t195*t976*t1319-4.0*t195*t
+976*t1*t1260+" }}{PARA 6 "" 1 "" {TEXT -1 54 "4.0*t2646*t937*t63-8.0*t
+1315*t864-8.0*t2646*t1144*t63;" }}{PARA 6 "" 1 "" {TEXT -1 33 "      c
+hristoffel[0][0][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 45 "      chris
+toffel[0][0][1] = -t7*t14*t77/2.0;" }}{PARA 6 "" 1 "" {TEXT -1 79 "   \+
+   christoffel[0][0][2] = -t86*(-2.0*t89+t9*t92-4.0*t26*t95+4.0*t31*t9
+9+4.0*" }}{PARA 6 "" 1 "" {TEXT -1 77 "t31*t103+16.0*t107*t112+4.0*t53
+*t63*t116-8.0*t9*t87*t70-8.0*t52*t87*t74)/2.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[0][0][3] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 34 "      christoffel[0][1][0] = t633;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[0][1][1] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[0][1][2] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 34 "      christoffel[0][1][3] = t827;" }}{PARA 6 "" 1 "" 
+{TEXT -1 35 "      christoffel[0][2][0] = t1108;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[0][2][1] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[0][2][2] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 35 "      christoffel[0][2][3] = t1340;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[0][3][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 36 "      christoffel[0][3][1] = -t1376;" }}{PARA 6 "" 1 "" 
+{TEXT -1 36 "      christoffel[0][3][2] = -t1420;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[0][3][3] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 34 "      christoffel[1][0][0] = t633;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[1][0][1] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[1][0][2] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 34 "      christoffel[1][0][3] = t827;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[1][1][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 78 "      christoffel[1][1][1] = t1421/t5*t14*(t18*t6-t1*t142
+5*t5+2.0*t31*t10*t18*" }}{PARA 6 "" 1 "" {TEXT -1 43 "t5-2.0*t9*t2*t10
+*t1425+t9*t2*t1436*t5)/2.0;" }}{PARA 6 "" 1 "" {TEXT -1 53 "      chri
+stoffel[1][1][2] = -t1421*t85*t1452/t6/2.0;" }}{PARA 6 "" 1 "" {TEXT 
+-1 33 "      christoffel[1][1][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 
+33 "      christoffel[1][2][0] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 35 "
+      christoffel[1][2][1] = t1459;" }}{PARA 6 "" 1 "" {TEXT -1 35 "  \+
+    christoffel[1][2][2] = t1469;" }}{PARA 6 "" 1 "" {TEXT -1 33 "    \+
+  christoffel[1][2][3] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 35 "      ch
+ristoffel[1][3][0] = t1712;" }}{PARA 6 "" 1 "" {TEXT -1 33 "      chri
+stoffel[1][3][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 33 "      christof
+fel[1][3][2] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 35 "      christoffel[
+1][3][3] = t1894;" }}{PARA 6 "" 1 "" {TEXT -1 35 "      christoffel[2]
+[0][0] = t1108;" }}{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][0
+][1] = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][0][2]
+ = 0.0;" }}{PARA 6 "" 1 "" {TEXT -1 35 "      christoffel[2][0][3] = t
+1340;" }}{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][1][0] = 0.0
+;" }}{PARA 6 "" 1 "" {TEXT -1 35 "      christoffel[2][1][1] = t1459;
+" }}{PARA 6 "" 1 "" {TEXT -1 35 "      christoffel[2][1][2] = t1469;" 
+}}{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][1][3] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[2][2][0] = 0.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 49 "      christoffel[2][2][1] = -t6*t1466*t1
+457/2.0;" }}{PARA 6 "" 1 "" {TEXT -1 76 "      christoffel[2][2][2] = \+
+(t87+2.0*t9*t82*t87+t9*t2*t1901)*t1421*t85/2.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[2][2][3] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 36 "      christoffel[2][3][0] = -t2168;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[2][3][1] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[2][3][2] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 35 "      christoffel[2][3][3] = t2537;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[3][0][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 36 "      christoffel[3][0][1] = -t1376;" }}{PARA 6 "" 1 "" 
+{TEXT -1 36 "      christoffel[3][0][2] = -t1420;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[3][0][3] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 35 "      christoffel[3][1][0] = t1712;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[3][1][1] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[3][1][2] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 35 "      christoffel[3][1][3] = t1894;" }}{PARA 6 "" 1 "" 
+{TEXT -1 36 "      christoffel[3][2][0] = -t2168;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[3][2][1] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[3][2][2] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 35 "      christoffel[3][2][3] = t2537;" }}{PARA 6 "" 1 "" 
+{TEXT -1 33 "      christoffel[3][3][0] = 0.0;" }}{PARA 6 "" 1 "" 
+{TEXT -1 51 "      christoffel[3][3][1] = -t7*t14*t56*t2589/2.0;" }}
+{PARA 6 "" 1 "" {TEXT -1 56 "      christoffel[3][3][2] = -t86*t55*(t2
+625+t2655)/2.0;" }}{PARA 6 "" 1 "" {TEXT -1 33 "      christoffel[3][3
+][3] = 0.0;" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 89 "F1:=r->-5*(r
+-M)/(8*M*r*(r-2*M))*(2*M^2+6*M*r-3*r^2)-15*r*(r-2*M)/(16*M^2)*log(r/(r
+-2*M));" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%#F1GR6#%\"rG6\"6$%)operat
+orG%&arrowGF(,&*&*&,&9$\"\"\"%\"MG!\"\"F1,(*$)F2\"\"#F1F7*(\"\"'F1F2F1
+F0F1F1*&\"\"$F1)F0F7F1F3F1F1*(F2F1F0F1,&F0F1*&F7F1F2F1F3F1F3#!\"&\"\")
+*&#\"#:\"#;F1*&*(F0F1F>F1-%$logG6#*&F0F1F>F3F1F1*$F6F1F3F1F3F(F(F(" }}
+}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 76 "F2:=r->5/(8*M*r)*(2*M^2-3*M
+*r-3*r^2)+15/(16*M^2)*(r^2-2*M^2)*log(r/(r-2*M));" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#>%#F2GR6#%\"rG6\"6$%)operatorG%&arrowGF(,&*&,(*$)%\"MG
+\"\"#\"\"\"F2*(\"\"$F3F1F39$F3!\"\"*&F5F3)F6F2F3F7F3*&F1F3F6F3F7#\"\"&
+\"\")*&*(#\"#:\"#;F3,&*$F9F3F3*&F2F3F0F3F7F3-%$logG6#*&F6F3,&F6F3*&F2F
+3F1F3F7F7F3F3*$F0F3F7F3F(F(F(" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 
+0 51 "h11:=(r,theta)->(1-3*cos(theta)^2)*F1(r)/(1-2*M/r);" }}{PARA 11 
+"" 1 "" {XPPMATH 20 "6#>%$h11GR6$%\"rG%&thetaG6\"6$%)operatorG%&arrowG
+F)*&*&,&\"\"\"F0*&\"\"$F0)-%$cosG6#9%\"\"#F0!\"\"F0-%#F1G6#9$F0F0,&F0F
+0*&*&F8F0%\"MGF0F0F=F9F9F9F)F)F)" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 51 "h22:=(r,theta)->(1-2*M/r)*(1-3*cos(theta)^2)*F1(r);" 
+}}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%$h22GR6$%\"rG%&thetaG6\"6$%)operat
+orG%&arrowGF)*(,&\"\"\"F/*&*&\"\"#F/%\"MGF/F/9$!\"\"F5F/,&F/F/*&\"\"$F
+/)-%$cosG6#9%F2F/F5F/-%#F1G6#F4F/F)F)F)" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 48 "h33:=(r,theta)->-1/r^2*(1-3*cos(theta)^2)*F2(r);" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#>%$h33GR6$%\"rG%&thetaG6\"6$%)operator
+G%&arrowGF),$*&*&,&\"\"\"F1*&\"\"$F1)-%$cosG6#9%\"\"#F1!\"\"F1-%#F2G6#
+9$F1F1*$)F>F9F1F:F:F)F)F)" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 
+62 "h44:=(rtheta)->-1/(r^2*sin(theta)^2)*(1-3*cos(theta)^2)*F2(r);" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#>%$h44GR6#%'rthetaG6\"6$%)operatorG%&a
+rrowGF(,$*&*&,&\"\"\"F0*&\"\"$F0)-%$cosG6#%&thetaG\"\"#F0!\"\"F0-%#F2G
+6#%\"rGF0F0*&)-%$sinGF6F8F0)F=F8F0F9F9F(F(F(" }}}{EXCHG {PARA 0 "> " 
+0 "" {MPLTEXT 1 0 39 "dh11dr:=simplify(diff(h11(r,theta),r));" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#>%'dh11drG,$*&*&,&!\"\"\"\"\"*&\"\"$F*
+)-%$cosG6#%&thetaG\"\"#F*F*F*,2*&)%\"MGF,F*%\"rGF*!#W*&\"#7F*)F6\"\"%F
+*F***\"#CF*-%#lnG6#*&F7F*,&F7F**&F2F*F6F*F)F)F*F7F*F5F*F)**\"#OF*F?F*)
+F7F2F*)F6F2F*F***\"#=F*F?F*)F7F,F*F6F*F)*(\"\"'F*F6F*FKF*F)*(\"#IF*FHF
+*FGF*F**(F,F*F?F*)F7F<F*F*F*F**&FHF*)FCF,F*F)#\"\"&\"\")" }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 29 "codegen[C](dh11dr,optimized);" }}
+{PARA 6 "" 1 "" {TEXT -1 22 "      t1 = cos(theta);" }}{PARA 6 "" 1 "
+" {TEXT -1 17 "      t2 = t1*t1;" }}{PARA 6 "" 1 "" {TEXT -1 15 "     \+
+ t5 = M*M;" }}{PARA 6 "" 1 "" {TEXT -1 16 "      t6 = t5*M;" }}{PARA 
+6 "" 1 "" {TEXT -1 17 "      t9 = t5*t5;" }}{PARA 6 "" 1 "" {TEXT -1 
+20 "      t12 = r-2.0*M;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t15 = l
+og(r/t12);" }}{PARA 6 "" 1 "" {TEXT -1 16 "      t19 = r*r;" }}{PARA 
+6 "" 1 "" {TEXT -1 18 "      t23 = t19*r;" }}{PARA 6 "" 1 "" {TEXT -1 
+20 "      t31 = t19*t19;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t37 = t
+12*t12;" }}{PARA 6 "" 1 "" {TEXT -1 77 "      t42 = 5.0/8.0*(-1.0+3.0*
+t2)*(-44.0*t6*r+12.0*t9-24.0*t15*r*t6+36.0*t15*" }}{PARA 6 "" 1 "" 
+{TEXT -1 68 "t19*t5-18.0*t15*t23*M-6.0*M*t23+30.0*t5*t19+3.0*t15*t31)/
+t5/t37/t12;" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 47 "dh11dtheta:=
+simplify(diff(h11(r,theta),theta));" }}{PARA 11 "" 1 "" {XPPMATH 20 "6
+#>%+dh11dthetaG,$*&*(-%$cosG6#%&thetaG\"\"\"-%$sinGF*F,,0*&)%\"MG\"\"$
+F,%\"rGF,!\")*(\"#=F,)F2\"\"#F,)F4F9F,F,*(\"\"'F,F2F,)F4F3F,!\"\"*&\"
+\"%F,)F2F@F,F>*(F3F,-%#lnG6#*&F4F,,&F4F,*&F9F,F2F,F>F>F,)F4F@F,F,**\"#
+7F,FCF,F=F,F2F,F>**FKF,FCF,F:F,F8F,F,F,F,*&F8F,)FGF9F,F>#!#:\"\")" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 33 "codegen[C](dh11dtheta,optimi
+zed);" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t1 = cos(theta);" }}{PARA 
+6 "" 1 "" {TEXT -1 22 "      t2 = sin(theta);" }}{PARA 6 "" 1 "" 
+{TEXT -1 15 "      t4 = M*M;" }}{PARA 6 "" 1 "" {TEXT -1 15 "      t8 \+
+= r*r;" }}{PARA 6 "" 1 "" {TEXT -1 17 "      t11 = t8*r;" }}{PARA 6 "
+" 1 "" {TEXT -1 18 "      t14 = t4*t4;" }}{PARA 6 "" 1 "" {TEXT -1 20 
+"      t17 = r-2.0*M;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t20 = log(
+r/t17);" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t21 = t8*t8;" }}{PARA 6 
+"" 1 "" {TEXT -1 20 "      t33 = t17*t17;" }}{PARA 6 "" 1 "" {TEXT -1 
+78 "      t38 = -15.0/8.0*t1*t2*(-8.0*t4*M*r+18.0*t4*t8-6.0*M*t11-4.0*
+t14+3.0*t20*" }}{PARA 6 "" 1 "" {TEXT -1 42 "t21-12.0*t20*t11*M+12.0*t
+20*t8*t4)/t4/t33;" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 39 "dh22dr
+:=simplify(diff(h22(r,theta),r));" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>
+%'dh22drG,$*&*&,.*&-%#lnG6#*&%\"rG\"\"\",&F.F/*&\"\"#F/%\"MGF/!\"\"F4F
+/)F.\"\"%F/\"\"$**\"\"'F/F*F/)F.F7F/F3F/F4*(F9F/F3F/F:F/F4*(F9F/)F3F2F
+/)F.F2F/F/*(F6F/)F3F7F/F.F/F/*&F6F/)F3F6F/F/F/,&F4F/*&F7F/)-%$cosG6#%&
+thetaGF2F/F/F/F/*&F=F/F:F/F4#\"\"&\"\")" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 29 "codegen[C](dh22dr,optimized);" }}{PARA 6 "" 1 "" 
+{TEXT -1 28 "      t5 = log(r/(r-2.0*M));" }}{PARA 6 "" 1 "" {TEXT -1 
+15 "      t6 = r*r;" }}{PARA 6 "" 1 "" {TEXT -1 17 "      t7 = t6*t6;
+" }}{PARA 6 "" 1 "" {TEXT -1 17 "      t10 = t6*r;" }}{PARA 6 "" 1 "" 
+{TEXT -1 16 "      t16 = M*M;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t2
+2 = t16*t16;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t25 = cos(theta);" 
+}}{PARA 6 "" 1 "" {TEXT -1 20 "      t26 = t25*t25;" }}{PARA 6 "" 1 "
+" {TEXT -1 77 "      t34 = 5.0/8.0*(3.0*t5*t7-6.0*t5*t10*M-6.0*M*t10+6
+.0*t16*t6+4.0*t16*M*r+" }}{PARA 6 "" 1 "" {TEXT -1 32 "4.0*t22)*(-1.0+
+3.0*t26)/t16/t10;" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 47 "dh22dt
+heta:=simplify(diff(h22(r,theta),theta));" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#>%+dh22dthetaG,$*&*(,0*&)%\"MG\"\"$\"\"\"%\"rGF-!\")*(
+\"#=F-)F+\"\"#F-)F.F3F-F-*(\"\"'F-F+F-)F.F,F-!\"\"*&\"\"%F-)F+F:F-F8*(
+F,F--%#lnG6#*&F.F-,&F.F-*&F3F-F+F-F8F8F-)F.F:F-F-**\"#7F-F=F-F7F-F+F-F
+8**FEF-F=F-F4F-F2F-F-F--%$sinG6#%&thetaGF--%$cosGFIF-F-*&F2F-F4F-F8#!#
+:\"\")" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 33 "codegen[C](dh22dt
+heta,optimized);" }}{PARA 6 "" 1 "" {TEXT -1 15 "      t1 = M*M;" }}
+{PARA 6 "" 1 "" {TEXT -1 15 "      t5 = r*r;" }}{PARA 6 "" 1 "" {TEXT 
+-1 16 "      t8 = t5*r;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t11 = t1
+*t1;" }}{PARA 6 "" 1 "" {TEXT -1 29 "      t17 = log(r/(r-2.0*M));" }}
+{PARA 6 "" 1 "" {TEXT -1 18 "      t18 = t5*t5;" }}{PARA 6 "" 1 "" 
+{TEXT -1 23 "      t28 = sin(theta);" }}{PARA 6 "" 1 "" {TEXT -1 23 " \+
+     t30 = cos(theta);" }}{PARA 6 "" 1 "" {TEXT -1 79 "      t37 = -15
+.0/8.0*(-8.0*t1*M*r+18.0*t1*t5-6.0*M*t8-4.0*t11+3.0*t17*t18-12.0" }}
+{PARA 6 "" 1 "" {TEXT -1 40 "*t17*t8*M+12.0*t17*t5*t1)*t28*t30/t1/t5;
+" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 39 "dh33dr:=simplify(diff(h
+33(r,theta),r));" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%'dh33drG,$*&*&,&
+!\"\"\"\"\"*&\"\"$F*)-%$cosG6#%&thetaG\"\"#F*F*F*,**&%\"MGF*%\"rGF*!\"
+#*&F2F*)F5F2F*F**&)F6F2F*-%#lnG6#*&F6F*,&F6F**&F2F*F5F*F)F)F*F***F2F*F
+6F*F<F*F5F*F)F*F**&)F6\"\"%F*F@F*F)#\"#:FE" }}}{EXCHG {PARA 0 "> " 0 "
+" {MPLTEXT 1 0 29 "codegen[C](dh33dr,optimized);" }}{PARA 6 "" 1 "" 
+{TEXT -1 22 "      t1 = cos(theta);" }}{PARA 6 "" 1 "" {TEXT -1 17 "  \+
+    t2 = t1*t1;" }}{PARA 6 "" 1 "" {TEXT -1 15 "      t7 = M*M;" }}
+{PARA 6 "" 1 "" {TEXT -1 15 "      t9 = r*r;" }}{PARA 6 "" 1 "" {TEXT 
+-1 24 "      t12 = 1/(r-2.0*M);" }}{PARA 6 "" 1 "" {TEXT -1 23 "      \+
+t14 = log(r*t12);" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t21 = t9*t9;" 
+}}{PARA 6 "" 1 "" {TEXT -1 79 "      t25 = 15.0/4.0*(-1.0+3.0*t2)*(-2.
+0*M*r+2.0*t7+t9*t14-2.0*r*t14*M)/t21*t12" }}{PARA 6 "" 1 "" {TEXT -1 
+1 ";" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 47 "dh33dtheta:=simplif
+y(diff(h33(r,theta),theta));" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%+dh3
+3dthetaG,$*&*(-%$cosG6#%&thetaG\"\"\"-%$sinGF*F,,,*$)%\"MG\"\"$F,\"\"%
+*(\"\"'F,)F2\"\"#F,%\"rGF,!\"\"*(F6F,F2F,)F9F8F,F:*(F3F,-%#lnG6#*&F9F,
+,&F9F,*&F8F,F2F,F:F:F,)F9F3F,F,**F6F,F>F,F9F,F7F,F:F,F,*&FDF,F7F,F:#!#
+:\"\")" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 33 "codegen[C](dh33dt
+heta,optimized);" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t1 = cos(theta)
+;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t2 = sin(theta);" }}{PARA 6 "
+" 1 "" {TEXT -1 15 "      t4 = M*M;" }}{PARA 6 "" 1 "" {TEXT -1 15 "  \+
+    t9 = r*r;" }}{PARA 6 "" 1 "" {TEXT -1 29 "      t16 = log(r/(r-2.0
+*M));" }}{PARA 6 "" 1 "" {TEXT -1 17 "      t17 = t9*r;" }}{PARA 6 "" 
+1 "" {TEXT -1 78 "      t30 = -15.0/8.0*t1*t2*(4.0*t4*M-6.0*t4*r-6.0*M
+*t9+3.0*t16*t17-6.0*t16*r*" }}{PARA 6 "" 1 "" {TEXT -1 11 "t4)/t17/t4;
+" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 39 "dh44dr:=simplify(diff(h
+44(r,theta),r));" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%'dh44drG,$*&*&,&
+!\"\"\"\"\"*&\"\"$F*)-%$cosG6#%&thetaG\"\"#F*F*F*,**&%\"MGF*%\"rGF*!\"
+#*&F2F*)F5F2F*F**&)F6F2F*-%#lnG6#*&F6F*,&F6F**&F2F*F5F*F)F)F*F***F2F*F
+6F*F<F*F5F*F)F*F**(,&F)F**$F-F*F*F*)F6\"\"%F*F@F*F)#!#:FG" }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 29 "codegen[C](dh44dr,optimized);" }}
+{PARA 6 "" 1 "" {TEXT -1 22 "      t1 = cos(theta);" }}{PARA 6 "" 1 "
+" {TEXT -1 17 "      t2 = t1*t1;" }}{PARA 6 "" 1 "" {TEXT -1 15 "     \+
+ t7 = M*M;" }}{PARA 6 "" 1 "" {TEXT -1 15 "      t9 = r*r;" }}{PARA 6 
+"" 1 "" {TEXT -1 24 "      t12 = 1/(r-2.0*M);" }}{PARA 6 "" 1 "" 
+{TEXT -1 23 "      t14 = log(r*t12);" }}{PARA 6 "" 1 "" {TEXT -1 18 " \+
+     t23 = t9*t9;" }}{PARA 6 "" 1 "" {TEXT -1 79 "      t29 = -15.0/4.
+0*(-1.0+3.0*t2)*(-2.0*M*r+2.0*t7+t9*t14-2.0*r*t14*M)/(-1.0+" }}{PARA 
+6 "" 1 "" {TEXT -1 12 "t2)/t23*t12;" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 47 "dh44dtheta:=simplify(diff(h44(r,theta),theta));" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#>%+dh44dthetaG,$*&*&-%$cosG6#%&thetaG
+\"\"\",,*$)%\"MG\"\"$F,\"\"%*(\"\"'F,)F0\"\"#F,%\"rGF,!\"\"*(F4F,F0F,)
+F7F6F,F8*(F1F,-%#lnG6#*&F7F,,&F7F,*&F6F,F0F,F8F8F,)F7F1F,F,**F4F,F<F,F
+7F,F5F,F8F,F,**,&F8F,*$)F(F6F,F,F,-%$sinGF*F,FBF,F5F,F8#\"\"&F2" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 33 "codegen[C](dh44dtheta,optimi
+zed);" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t1 = cos(theta);" }}{PARA 
+6 "" 1 "" {TEXT -1 15 "      t2 = M*M;" }}{PARA 6 "" 1 "" {TEXT -1 15 
+"      t7 = r*r;" }}{PARA 6 "" 1 "" {TEXT -1 29 "      t14 = log(r/(r-
+2.0*M));" }}{PARA 6 "" 1 "" {TEXT -1 17 "      t15 = t7*r;" }}{PARA 6 
+"" 1 "" {TEXT -1 18 "      t23 = t1*t1;" }}{PARA 6 "" 1 "" {TEXT -1 
+23 "      t27 = sin(theta);" }}{PARA 6 "" 1 "" {TEXT -1 78 "      t34 \+
+= 5.0/4.0*t1*(4.0*t2*M-6.0*t2*r-6.0*M*t7+3.0*t14*t15-6.0*t14*r*t2)/(" 
+}}{PARA 6 "" 1 "" {TEXT -1 21 "-1.0+t23)/t27/t15/t2;" }}}{EXCHG {PARA 
+0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 
+0 35 "codegen[C](h11(r,theta),optimized);" }}{PARA 6 "" 1 "" {TEXT -1 
+22 "      t1 = cos(theta);" }}{PARA 6 "" 1 "" {TEXT -1 17 "      t2 = \+
+t1*t1;" }}{PARA 6 "" 1 "" {TEXT -1 15 "      t8 = 1/r;" }}{PARA 6 "" 
+1 "" {TEXT -1 20 "      t10 = r-2.0*M;" }}{PARA 6 "" 1 "" {TEXT -1 18 
+"      t11 = 1/t10;" }}{PARA 6 "" 1 "" {TEXT -1 16 "      t13 = M*M;" 
+}}{PARA 6 "" 1 "" {TEXT -1 16 "      t17 = r*r;" }}{PARA 6 "" 1 "" 
+{TEXT -1 23 "      t26 = log(r*t11);" }}{PARA 6 "" 1 "" {TEXT -1 75 " \+
+     t36 = (1.0-3.0*t2)*(-5.0/8.0*(r-M)/M*t8*t11*(2.0*t13+6.0*M*r-3.0*
+t17)" }}{PARA 6 "" 1 "" {TEXT -1 41 "-15.0/16.0*r*t10/t13*t26)/(1.0-2.
+0*M*t8);" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 35 "codegen[C](h22(
+r,theta),optimized);" }}{PARA 6 "" 1 "" {TEXT -1 15 "      t1 = 1/r;" 
+}}{PARA 6 "" 1 "" {TEXT -1 22 "      t5 = cos(theta);" }}{PARA 6 "" 1 
+"" {TEXT -1 17 "      t6 = t5*t5;" }}{PARA 6 "" 1 "" {TEXT -1 20 "    \+
+  t14 = r-2.0*M;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t15 = 1/t14;" }
+}{PARA 6 "" 1 "" {TEXT -1 16 "      t17 = M*M;" }}{PARA 6 "" 1 "" 
+{TEXT -1 16 "      t21 = r*r;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t3
+0 = log(r*t15);" }}{PARA 6 "" 1 "" {TEXT -1 79 "      t35 = (1.0-2.0*M
+*t1)*(1.0-3.0*t6)*(-5.0/8.0*(r-M)/M*t1*t15*(2.0*t17+6.0*M" }}{PARA 6 "
+" 1 "" {TEXT -1 37 "*r-3.0*t21)-15.0/16.0*r*t14/t17*t30);" }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 35 "codegen[C](h33(r,theta),optimized);
+" }}{PARA 6 "" 1 "" {TEXT -1 15 "      t1 = r*r;" }}{PARA 6 "" 1 "" 
+{TEXT -1 22 "      t3 = cos(theta);" }}{PARA 6 "" 1 "" {TEXT -1 17 "  \+
+    t4 = t3*t3;" }}{PARA 6 "" 1 "" {TEXT -1 16 "      t11 = M*M;" }}
+{PARA 6 "" 1 "" {TEXT -1 20 "      t12 = 2.0*t11;" }}{PARA 6 "" 1 "" 
+{TEXT -1 29 "      t26 = log(r/(r-2.0*M));" }}{PARA 6 "" 1 "" {TEXT 
+-1 79 "      t31 = -1/t1*(1.0-3.0*t4)*(5.0/8.0/M/r*(t12-3.0*M*r-3.0*t1
+)+15.0/16.0/t11*" }}{PARA 6 "" 1 "" {TEXT -1 14 "(t1-t12)*t26);" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 35 "codegen[C](h44(r,theta),opti
+mized);" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t1 = sin(theta);" }}
+{PARA 6 "" 1 "" {TEXT -1 17 "      t2 = t1*t1;" }}{PARA 6 "" 1 "" 
+{TEXT -1 15 "      t4 = r*r;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t7 \+
+= cos(theta);" }}{PARA 6 "" 1 "" {TEXT -1 17 "      t8 = t7*t7;" }}
+{PARA 6 "" 1 "" {TEXT -1 16 "      t14 = M*M;" }}{PARA 6 "" 1 "" 
+{TEXT -1 20 "      t15 = 2.0*t14;" }}{PARA 6 "" 1 "" {TEXT -1 29 "    \+
+  t29 = log(r/(r-2.0*M));" }}{PARA 6 "" 1 "" {TEXT -1 78 "      t35 = \+
+-1/t2/t4*(1.0-3.0*t8)*(5.0/8.0/M/r*(t15-3.0*M*r-3.0*t4)+15.0/16.0/" }}
+{PARA 6 "" 1 "" {TEXT -1 18 "t14*(t4-t15)*t29);" }}}{EXCHG {PARA 0 "> \+
+" 0 "" {MPLTEXT 1 0 65 "H:=vector([h11(r,theta),h22(r,theta),h33(r,the
+ta),h44(r,theta)]):" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 24 "code
+gen[C](H,optimized);" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t1 = cos(th
+eta);" }}{PARA 6 "" 1 "" {TEXT -1 17 "      t2 = t1*t1;" }}{PARA 6 "" 
+1 "" {TEXT -1 22 "      t4 = 1.0-3.0*t2;" }}{PARA 6 "" 1 "" {TEXT -1 
+15 "      t6 = 1/M;" }}{PARA 6 "" 1 "" {TEXT -1 15 "      t8 = 1/r;" }
+}{PARA 6 "" 1 "" {TEXT -1 20 "      t10 = r-2.0*M;" }}{PARA 6 "" 1 "" 
+{TEXT -1 18 "      t11 = 1/t10;" }}{PARA 6 "" 1 "" {TEXT -1 16 "      \+
+t13 = M*M;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t14 = 2.0*t13;" }}
+{PARA 6 "" 1 "" {TEXT -1 16 "      t15 = M*r;" }}{PARA 6 "" 1 "" 
+{TEXT -1 16 "      t17 = r*r;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t1
+8 = 3.0*t17;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t24 = 1/t13;" }}
+{PARA 6 "" 1 "" {TEXT -1 23 "      t26 = log(r*t11);" }}{PARA 6 "" 1 "
+" {TEXT -1 79 "      t30 = -5.0/8.0*(r-M)*t6*t8*t11*(t14+6.0*t15-t18)-
+15.0/16.0*r*t10*t24*t26;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t34 = 1
+.0-2.0*M*t8;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t39 = 1/t17;" }}
+{PARA 6 "" 1 "" {TEXT -1 72 "      t50 = 5.0/8.0*t6*t8*(t14-3.0*t15-t1
+8)+15.0/16.0*t24*(t17-t14)*t26;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      \+
+t52 = sin(theta);" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t53 = t52*t52;
+" }}{PARA 6 "" 1 "" {TEXT -1 24 "      H[0] = t4*t30/t34;" }}{PARA 6 "
+" 1 "" {TEXT -1 24 "      H[1] = t34*t4*t30;" }}{PARA 6 "" 1 "" {TEXT 
+-1 25 "      H[2] = -t39*t4*t50;" }}{PARA 6 "" 1 "" {TEXT -1 31 "     \+
+ H[3] = -1/t53*t39*t4*t50;" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 
+86 "dH:=vector([dh11dr,dh11dtheta,dh22dr,dh22dtheta,dh33dr,dh33dtheta,
+dh44dr,dh44dtheta]):" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 25 "cod
+egen[C](dH,optimized);" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t1 = cos(
+theta);" }}{PARA 6 "" 1 "" {TEXT -1 17 "      t2 = t1*t1;" }}{PARA 6 "
+" 1 "" {TEXT -1 23 "      t4 = -1.0+3.0*t2;" }}{PARA 6 "" 1 "" {TEXT 
+-1 15 "      t5 = M*M;" }}{PARA 6 "" 1 "" {TEXT -1 16 "      t6 = t5*M
+;" }}{PARA 6 "" 1 "" {TEXT -1 16 "      t7 = t6*r;" }}{PARA 6 "" 1 "" 
+{TEXT -1 17 "      t9 = t5*t5;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t
+12 = r-2.0*M;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t13 = 1/t12;" }}
+{PARA 6 "" 1 "" {TEXT -1 23 "      t15 = log(r*t13);" }}{PARA 6 "" 1 "
+" {TEXT -1 18 "      t16 = t15*r;" }}{PARA 6 "" 1 "" {TEXT -1 16 "    \+
+  t19 = r*r;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t20 = t15*t19;" }}
+{PARA 6 "" 1 "" {TEXT -1 19 "      t21 = t20*t5;" }}{PARA 6 "" 1 "" 
+{TEXT -1 18 "      t23 = t19*r;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      \+
+t24 = t15*t23;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t25 = t24*M;" }}
+{PARA 6 "" 1 "" {TEXT -1 22 "      t28 = 6.0*M*t23;" }}{PARA 6 "" 1 "
+" {TEXT -1 19 "      t29 = t5*t19;" }}{PARA 6 "" 1 "" {TEXT -1 20 "   \+
+   t31 = t19*t19;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t33 = 3.0*t15*
+t31;" }}{PARA 6 "" 1 "" {TEXT -1 17 "      t36 = 1/t5;" }}{PARA 6 "" 
+1 "" {TEXT -1 20 "      t37 = t12*t12;" }}{PARA 6 "" 1 "" {TEXT -1 23 
+"      t43 = sin(theta);" }}{PARA 6 "" 1 "" {TEXT -1 19 "      t44 = t
+1*t43;" }}{PARA 6 "" 1 "" {TEXT -1 19 "      t47 = 4.0*t9;" }}{PARA 6 
+"" 1 "" {TEXT -1 59 "      t50 = -8.0*t7+18.0*t29-t28-t47+t33-12.0*t25
++12.0*t21;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t61 = 1/t23;" }}
+{PARA 6 "" 1 "" {TEXT -1 47 "      t77 = t4*(-2.0*M*r+2.0*t5+t20-2.0*t
+16*M);" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t78 = 1/t31;" }}{PARA 6 "
+" 1 "" {TEXT -1 57 "      t90 = 4.0*t6-6.0*t5*r-6.0*M*t19+3.0*t24-6.0*
+t16*t5;" }}{PARA 6 "" 1 "" {TEXT -1 24 "      t96 = 1/(-1.0+t2);" }}
+{PARA 6 "" 1 "" {TEXT -1 79 "      dH[0] = 5.0/8.0*(-44.0*t7+12.0*t9-2
+4.0*t16*t6+36.0*t21-18.0*t25-t28+30.0*" }}{PARA 6 "" 1 "" {TEXT -1 24 
+"t29+t33)*t4*t36/t37/t12;" }}{PARA 6 "" 1 "" {TEXT -1 40 "      dH[1] \+
+= -15.0/8.0*t44*t50*t36/t37;" }}{PARA 6 "" 1 "" {TEXT -1 70 "      dH[
+2] = 5.0/8.0*(t33-6.0*t25-t28+6.0*t29+4.0*t7+t47)*t4*t36*t61;" }}
+{PARA 6 "" 1 "" {TEXT -1 43 "      dH[3] = -15.0/8.0*t50*t43*t1*t36/t1
+9;" }}{PARA 6 "" 1 "" {TEXT -1 35 "      dH[4] = 15.0/4.0*t77*t78*t13;
+" }}{PARA 6 "" 1 "" {TEXT -1 40 "      dH[5] = -15.0/8.0*t44*t90*t61*t
+36;" }}{PARA 6 "" 1 "" {TEXT -1 40 "      dH[6] = -15.0/4.0*t77*t96*t7
+8*t13;" }}{PARA 6 "" 1 "" {TEXT -1 45 "      dH[7] = 5.0/4.0*t1*t90*t9
+6/t43*t61*t36;" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 139 "HdH:=vec
+tor([h11(r,theta),h22(r,theta),h33(r,theta),h44(r,theta),dh11dr,dh11dt
+heta,dh22dr,dh22dtheta,dh33dr,dh33dtheta,dh44dr,dh44dtheta]):" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 26 "codegen[C](HdH,optimized);" 
+}}{PARA 6 "" 1 "" {TEXT -1 22 "      t1 = cos(theta);" }}{PARA 6 "" 1 
+"" {TEXT -1 17 "      t2 = t1*t1;" }}{PARA 6 "" 1 "" {TEXT -1 22 "    \+
+  t4 = 1.0-3.0*t2;" }}{PARA 6 "" 1 "" {TEXT -1 15 "      t6 = 1/M;" }}
+{PARA 6 "" 1 "" {TEXT -1 15 "      t8 = 1/r;" }}{PARA 6 "" 1 "" {TEXT 
+-1 20 "      t10 = r-2.0*M;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t11 \+
+= 1/t10;" }}{PARA 6 "" 1 "" {TEXT -1 16 "      t13 = M*M;" }}{PARA 6 "
+" 1 "" {TEXT -1 20 "      t14 = 2.0*t13;" }}{PARA 6 "" 1 "" {TEXT -1 
+16 "      t15 = M*r;" }}{PARA 6 "" 1 "" {TEXT -1 16 "      t17 = r*r;
+" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t18 = 3.0*t17;" }}{PARA 6 "" 1 
+"" {TEXT -1 18 "      t24 = 1/t13;" }}{PARA 6 "" 1 "" {TEXT -1 23 "   \+
+   t26 = log(r*t11);" }}{PARA 6 "" 1 "" {TEXT -1 79 "      t30 = -5.0/
+8.0*(r-M)*t6*t8*t11*(t14+6.0*t15-t18)-15.0/16.0*r*t10*t24*t26;" }}
+{PARA 6 "" 1 "" {TEXT -1 25 "      t34 = 1.0-2.0*M*t8;" }}{PARA 6 "" 
+1 "" {TEXT -1 18 "      t39 = 1/t17;" }}{PARA 6 "" 1 "" {TEXT -1 72 " \+
+     t50 = 5.0/8.0*t6*t8*(t14-3.0*t15-t18)+15.0/16.0*t24*(t17-t14)*t26
+;" }}{PARA 6 "" 1 "" {TEXT -1 23 "      t52 = sin(theta);" }}{PARA 6 "
+" 1 "" {TEXT -1 20 "      t53 = t52*t52;" }}{PARA 6 "" 1 "" {TEXT -1 
+18 "      t58 = t13*M;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t59 = t58
+*r;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t61 = t13*t13;" }}{PARA 6 "
+" 1 "" {TEXT -1 18 "      t63 = t26*r;" }}{PARA 6 "" 1 "" {TEXT -1 20 
+"      t66 = t26*t17;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t67 = t66*
+t13;" }}{PARA 6 "" 1 "" {TEXT -1 18 "      t69 = t17*r;" }}{PARA 6 "" 
+1 "" {TEXT -1 20 "      t70 = t26*t69;" }}{PARA 6 "" 1 "" {TEXT -1 18 
+"      t71 = t70*M;" }}{PARA 6 "" 1 "" {TEXT -1 22 "      t74 = 6.0*M*
+t69;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t75 = t13*t17;" }}{PARA 6 "
+" 1 "" {TEXT -1 20 "      t77 = t17*t17;" }}{PARA 6 "" 1 "" {TEXT -1 
+24 "      t79 = 3.0*t26*t77;" }}{PARA 6 "" 1 "" {TEXT -1 20 "      t82
+ = t10*t10;" }}{PARA 6 "" 1 "" {TEXT -1 19 "      t88 = t1*t52;" }}
+{PARA 6 "" 1 "" {TEXT -1 20 "      t91 = 4.0*t61;" }}{PARA 6 "" 1 "" 
+{TEXT -1 60 "      t94 = -8.0*t59+18.0*t75-t74-t91+t79-12.0*t71+12.0*t
+67;" }}{PARA 6 "" 1 "" {TEXT -1 19 "      t105 = 1/t69;" }}{PARA 6 "" 
+1 "" {TEXT -1 46 "      t118 = -t4*(-2.0*t15+t14+t66-2.0*t63*M);" }}
+{PARA 6 "" 1 "" {TEXT -1 19 "      t119 = 1/t77;" }}{PARA 6 "" 1 "" 
+{TEXT -1 61 "      t131 = 4.0*t58-6.0*r*t13-6.0*M*t17+3.0*t70-6.0*t63*
+t13;" }}{PARA 6 "" 1 "" {TEXT -1 25 "      t137 = 1/(-1.0+t2);" }}
+{PARA 6 "" 1 "" {TEXT -1 26 "      HdH[0] = t4*t30/t34;" }}{PARA 6 "" 
+1 "" {TEXT -1 26 "      HdH[1] = t34*t4*t30;" }}{PARA 6 "" 1 "" {TEXT 
+-1 27 "      HdH[2] = -t39*t4*t50;" }}{PARA 6 "" 1 "" {TEXT -1 33 "   \+
+   HdH[3] = -1/t53*t39*t4*t50;" }}{PARA 6 "" 1 "" {TEXT -1 78 "      H
+dH[4] = -5.0/8.0*t4*(-44.0*t59+12.0*t61-24.0*t63*t58+36.0*t67-18.0*t71
+-" }}{PARA 6 "" 1 "" {TEXT -1 30 "t74+30.0*t75+t79)*t24/t82/t10;" }}
+{PARA 6 "" 1 "" {TEXT -1 41 "      HdH[5] = -15.0/8.0*t88*t94*t24/t82;
+" }}{PARA 6 "" 1 "" {TEXT -1 74 "      HdH[6] = -5.0/8.0*(t79-6.0*t71-
+t74+6.0*t75+4.0*t59+t91)*t4*t24*t105;" }}{PARA 6 "" 1 "" {TEXT -1 44 "
+      HdH[7] = -15.0/8.0*t94*t52*t1*t24*t39;" }}{PARA 6 "" 1 "" {TEXT 
+-1 38 "      HdH[8] = 15.0/4.0*t118*t119*t11;" }}{PARA 6 "" 1 "" 
+{TEXT -1 43 "      HdH[9] = -15.0/8.0*t88*t131*t105*t24;" }}{PARA 6 "
+" 1 "" {TEXT -1 45 "      HdH[10] = -15.0/4.0*t118*t137*t119*t11;" }}
+{PARA 6 "" 1 "" {TEXT -1 50 "      HdH[11] = 5.0/4.0*t1*t131*t137/t52*
+t105*t24;" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}}{MARK "77
+ 0 0" 0 }{VIEWOPTS 1 1 0 1 1 1803 1 1 1 1 }{PAGENUMBERS 0 1 2 33 1 1 }
+

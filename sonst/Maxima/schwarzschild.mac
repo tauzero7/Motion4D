@@ -1,0 +1,54 @@
+/* ------------------------------------------
+    Motion4D-library
+    
+    Schwarzschild metric 
+    
+    
+    Thomas Mueller, Frank Grave
+    Visualization Research Center (VISUS)
+    University of Stuttgart  
+    
+    Use with maxima (5.20.1 or higher):
+       batch("schwarzschild.mac")
+   ------------------------------------------ */
+
+/* load ctensor package */
+load(ctensor);
+
+/* define coordinates to use */
+ct_coords:[t,r,theta,phi];
+
+/* start with the identity metric */
+lg:ident(4);
+lg[1,1]:-c^2*(1-rs/r);
+lg[2,2]:1/(1-rs/r);
+lg[3,3]:r^2;
+lg[4,4]:r^2*sin(theta)^2;
+
+/* computes the metric inverse and sets up the package for further calculations. */
+cmetric();
+
+/* calculate the christoffel symbols of the second kind */
+christof(mcs);
+
+/* calculate the riemann tensor 
+   Note the different ordering of the indices:
+   R[mu,nu,rho,sigma]=lriem[nu,sigma,rho,mu]
+*/
+lriemann(true);
+RM(mu,nu,rho,sigma):=lriem[nu,sigma,rho,mu];
+
+/* calculate the ricci tensor */
+ricci(true);
+
+/* simplify the ricci tensor */
+ratsimp(ric[1,1]);
+ratsimp(ric[2,2]);
+
+/* calculate the ricci scalar */
+scurvature();
+
+/* calculate the Kretschmann scalar */
+uriemann(false);
+rinvariant();
+ratsimp(%);

@@ -1,0 +1,462 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Metrics">
+      <UniqueIdentifier>{726230dd-abcf-421d-9908-7067059df15a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Motion">
+      <UniqueIdentifier>{9ede3ae6-4f6f-43c9-8e2a-c81e795b2929}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Extras">
+      <UniqueIdentifier>{818cde9e-906c-42d9-aaab-db0631d10a27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Math">
+      <UniqueIdentifier>{64d75efb-e77e-4c7e-9679-2ea4fd97ddbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Metrics">
+      <UniqueIdentifier>{de0745ce-3fd6-4293-8397-8e33bfc1d818}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Motion">
+      <UniqueIdentifier>{c8dd3f70-4dfb-4da3-9d9c-da0428461447}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Extras">
+      <UniqueIdentifier>{bfa96e3e-fab4-48bc-b3c0-9d8ee84aabbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math">
+      <UniqueIdentifier>{98f4ff50-1259-4c2d-bc02-af66824f47ac}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\m4dGlobalDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\motion\m4dFermiWalker.h">
+      <Filter>Header Files\Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="src\motion\m4dGeodesic.h">
+      <Filter>Header Files\Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="src\motion\m4dGeodesicBS.h">
+      <Filter>Header Files\Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="src\motion\m4dGeodesicGSL.h">
+      <Filter>Header Files\Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="src\motion\m4dGeodesicRK4.h">
+      <Filter>Header Files\Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetric.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricAlcubierre.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricBarriolaVilenkin.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricBertottiKasner.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricBesselGravWaveCart.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricCosmicStringSchwarzschild.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricDatabase.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricDeSitterUniv.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricDeSitterUnivConf.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricEddFinkIn.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricErnst.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricExtremeReissnerNordstromDihole.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricFriedmanNonEmptyNull.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricGoedel.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricGoedelCart.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricGoedelScaled.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricGoedelScaledCart.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricHalilsoyWave.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricJaNeWi.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricKasner.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricKerrBL.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricKottler.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricList.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricMinkowski.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricMinkowskiConformal.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricMinkRotLattice.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricMorrisThorne.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricPainleveGullstrand.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricPlaneGravWave.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricPravda_C.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricPravda_C_Can.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricPTD_AI.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricPTD_AII.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricPTD_AIII.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricPTD_BI.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricPTD_BII.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricPTD_BIII.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricPTD_C.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricReissnerNordstrom.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricSchwarzschild.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricSchwarzschildCart.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricSchwarzschildIsotropic.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricSchwarzschildTortoise.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricStraightSpinningString.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricSultanaDyer.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricTaubNUT.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricTeoWHl.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\motion\m4dMotion.h">
+      <Filter>Header Files\Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="src\motion\m4dMotionList.h">
+      <Filter>Header Files\Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="src\motion\m4dMotionDatabase.h">
+      <Filter>Header Files\Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\m4dObject.h">
+      <Filter>Header Files\Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\m4dPlatform.h">
+      <Filter>Header Files\Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\m4dUtilities.h">
+      <Filter>Header Files\Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\Mat.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\TransCoordinates.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\TransfMat.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\VnD.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricAlcubierreSimple.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricChazyCurzonRot.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricRotDihole.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricKastorTraschen.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricErezRosenVar.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricEinsteinRosenWaveWWB.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricCurzon.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\metric\m4dMetric.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricAlcubierre.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricBarriolaVilenkin.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricBertottiKasner.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricBesselGravWaveCart.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricCosmicStringSchwarzschild.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricDatabase.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricDeSitterUniv.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricDeSitterUnivConf.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricEddFinkIn.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricErnst.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricExtremeReissnerNordstromDihole.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricFriedmanNonEmptyNull.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricGoedel.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricGoedelCart.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricGoedelScaled.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricGoedelScaledCart.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricHalilsoyWave.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricJaNeWi.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricKasner.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricKerrBL.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricKottler.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricMinkowski.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricMinkowskiConformal.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricMinkRotLattice.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricMorrisThorne.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricPainleveGullstrand.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricPlaneGravWave.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricPravda_C.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricPravda_C_Can.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricPTD_AI.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricPTD_AII.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricPTD_AIII.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricPTD_BI.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricPTD_BII.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricPTD_BIII.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricPTD_C.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricReissnerNordstrom.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricSchwarzschild.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricSchwarzschildCart.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricSchwarzschildIsotropic.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricSchwarzschildTortoise.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricStraightSpinningString.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricSultanaDyer.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricTaubNUT.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricTeoWHl.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\motion\m4dFermiWalker.cpp">
+      <Filter>Source Files\Motion</Filter>
+    </ClCompile>
+    <ClCompile Include="src\motion\m4dGeodesic.cpp">
+      <Filter>Source Files\Motion</Filter>
+    </ClCompile>
+    <ClCompile Include="src\motion\m4dGeodesicBS.cpp">
+      <Filter>Source Files\Motion</Filter>
+    </ClCompile>
+    <ClCompile Include="src\motion\m4dGeodesicGSL.cpp">
+      <Filter>Source Files\Motion</Filter>
+    </ClCompile>
+    <ClCompile Include="src\motion\m4dGeodesicRK4.cpp">
+      <Filter>Source Files\Motion</Filter>
+    </ClCompile>
+    <ClCompile Include="src\motion\m4dMotion.cpp">
+      <Filter>Source Files\Motion</Filter>
+    </ClCompile>
+    <ClCompile Include="src\motion\m4dMotionDatabase.cpp">
+      <Filter>Source Files\Motion</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extra\m4dObject.cpp">
+      <Filter>Source Files\Extras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extra\m4dPlatform.cpp">
+      <Filter>Source Files\Extras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extra\m4dUtilities.cpp">
+      <Filter>Source Files\Extras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\TransfMat.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\TransCoordinates.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\Mat.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricAlcubierreSimple.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricChazyCurzonRot.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricCurzon.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricEinsteinRosenWaveWWB.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricErezRosenVar.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricKastorTraschen.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricRotDihole.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\VnD.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

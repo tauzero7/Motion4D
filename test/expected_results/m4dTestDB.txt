@@ -1,0 +1,77 @@
+      Metric name                # params
+-----------------------------------------------------------
+unknown                              0     ()
+Minkowski                            0     ()
+MinkowskiConformal                   0     ()
+MinkowskiRotLattice                  1     (omega=0.000000 )
+Schwarzschild                        1     (mass=1.000000 )
+SchwarzschildCart                    1     (mass=1.000000 )
+SchwarzschildIsotropic               1     (mass=1.000000 )
+SchwarzschildTortoise                1     (mass=1.000000 )
+EddFinkIn                            1     (mass=1.000000 )
+PainleveGullstrand                   1     (mass=1.000000 )
+AlcubierreWarp                       3     (r=1.000000 sigma=8.000000 vs=1.000000 )
+AlcubierreWarpSimple                 2     (r=1.000000 vs=1.000000 )
+BarriolaVilenkin                     1     (k=0.800000 )
+BertottiKasner                       1     (lambda=1.000000 )
+BesselGravWaveCart                   1     (c=1.000000 )
+ChazyCurzonRot                       2     (mass=1.000000 p=0.500000 )
+CosmicStringSchwarzschild            2     (beta=0.500000 mass=1.000000 )
+Curzon                               1     (mass=1.000000 )
+EinsteinRosenWaveWWB                 2     (a=1.000000 c=1.000000 )
+ErezRosenVar                         2     (mass=1.000000 q=0.100000 )
+Ernst                                2     (b=0.100000 mass=1.000000 )
+ExtremeReissnerNordstromDihole       2     (m1=1.000000 m2=1.000000 )
+FriedmanNonEmptyNull                 2     (k=0.000000 mass=1.000000 )
+Goedel                               2     (a=1.000000 zeta=0.000000 )
+GoedelCart                           2     (a=1.000000 zeta=0.000000 )
+GoedelScaled                         2     (rg=1.000000 zeta=0.000000 )
+GoedelScaledCart                     2     (rg=1.000000 zeta=0.000000 )
+HalilsoyWave                         2     (alpha=0.000000 c=1.000000 )
+JanisNewmanWinicour                  2     (gamma=1.000000 mass=1.000000 )
+Kasner                               1     (u=0.000000 )
+KastorTraschen                       5     (h=0.000000 m1=1.000000 m2=1.000000 z1=1.000000 z2=-1.000000 )
+KerrBL                               2     (angmom=0.500000 mass=1.000000 )
+Kottler                              2     (lambda=0.050000 mass=1.000000 )
+MorrisThorne                         1     (b0=1.000000 )
+Petrov_Type_D_AI_ES                  1     (b=1.000000 )
+Petrov_Type_D_AII_ES                 1     (b=1.000000 )
+Petrov_Type_D_AIII_ES                0     ()
+Petrov_Type_D_BI_ES                  1     (b=1.000000 )
+Petrov_Type_D_BII_ES                 1     (b=1.000000 )
+Petrov_Type_D_BIII_ES                0     ()
+Petrov_Type_D_C_ES                   2     (a=-1.000000 b=1.000000 )
+PlaneGravWave                        2     (degree=30.000000 long_ext=1.000000 )
+Pravda_C-Metric                      2     (a=0.100000 m=1.000000 )
+Pravda_C-Metric_Canonical_Coords       2     (a=0.010000 m=1.000000 )
+ReissnerNordstrom                    2     (charge=0.100000 mass=1.000000 )
+RotDihole                            3     (mass1=1.000000 mass2=1.000000 omega=0.000000 )
+DeSitterUniv                         1     (hubble=0.100000 )
+DeSitterUnivConformal                2     (hubble=0.100000 p=1.000000 )
+StraightSpinningString               2     (a=1.000000 k=0.500000 )
+SultanaDyerBlackhole                 1     (mass=1.000000 )
+TaubNUT                              2     (l=0.500000 mass=1.000000 )
+TeoWHl                               1     (b0=1.000000 )
+
+num   Integrator name
+-----------------------------------------------------------
+ 0   Runge-Kutta (fourth order)
+ 1   Bulirsch-Stoer
+ 2   GSL: Embedded 2nd order Runge-Kutta
+ 3   GSL: 4th order (classical) Runge-Kutta
+ 4   GSL: Embedded 4th order Runge-Kutta-Fehlberg
+ 5   GSL: Embedded 4th order Runge-Kutta Cash-Karp
+ 6   GSL: Embedded 8th order Runge-Kutta Prince-Dormand
+ 7   GSL: Implicit 2nd order Runge-Kutta at Gaussian points
+ 8   GSL: M=1 implicit Gear
+ 9   GSL: M=2 implicit Gear
+
+num   name of tetrad type
+-----------------------------------------------------------
+ 0   default
+ 1   static
+ 2   locally nonrotating frame
+ 3   freefall
+ 4   comoving
+ 5   cylinder
+ 6   cartesian
