@@ -199,10 +199,11 @@ public:
     bool             isZero(void) const;
 
     void             type(void) const;
+
     //! Print to stdout.
-    void             print(int nks = 4) const;
+    void             printC(int nks = 4) const;
     void             printS(FILE* fptr = stderr, const std::string format = std::string("%12.8f ")) const;
-    void             print(std::ostream & os, std::string text = std::string(), int nks = 4) const;
+    void             printO(std::ostream & os, std::string text = std::string(), int nks = 4) const;
     void             printF(std::ostream &os=std::cerr) const;
 
     VnD<vType,3>     getAsV3D() const;
@@ -499,7 +500,7 @@ template <class vType, int size> void VnD<vType,size>::type() const {
 //---------------------------------------------------------------------------
 //      print()
 //---------------------------------------------------------------------------
-template <class vType, int size> void VnD<vType,size>::print(int nks) const {
+template <class vType, int size> void VnD<vType,size>::printC(int nks) const {
     // nks = Zahl der Nachkommastellen
     std::cout.precision(nks);
     std::cout << "( ";
@@ -519,7 +520,7 @@ template <class vType, int size> void VnD<vType, size>::printS(FILE* fptr, const
 }
 
 
-template <class vType, int size> void VnD<vType,size>::print(std::ostream &os, std::string text, int nks) const {
+template <class vType, int size> void VnD<vType,size>::printO(std::ostream &os, std::string text, int nks) const {
     // nks = Zahl der Nachkommastellen
     os.precision(nks);
     os << text << "( ";

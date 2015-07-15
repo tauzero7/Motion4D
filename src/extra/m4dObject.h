@@ -98,6 +98,14 @@
 #include <motion/m4dMotionDatabase.h>
 #include <extra/m4dUtilities.h>
 
+#ifdef _WIN32
+#ifndef __GNUC__
+#pragma warning (disable: 4244 )
+#endif
+#else
+#define EXTRA_API
+#endif
+
 namespace m4d {
 
 // ---------------------------------------------------
@@ -110,13 +118,13 @@ public:
 
     // --------- public methods -----------
 public:
-    bool   setMetric(std::string metricName);
-    bool   setMetricParam(std::string paramName, double value);
+    bool   setMetric(const char* metricName);
+    bool   setMetricParam(const char* paramName, double value);
 
-    bool   setSolver(std::string solverName);
-    bool   setSolverParam(std::string paramName, bool val);
-    bool   setSolverParam(std::string paramName, double value);
-    bool   setSolverParam(std::string paramName, double v0, double v1, double v2, double v3);
+    bool   setSolver(const char* solverName);
+    bool   setSolverParam(const char* paramName, bool val);
+    bool   setSolverParam(const char* paramName, double value);
+    bool   setSolverParam(const char* paramName, double v0, double v1, double v2, double v3);
 
     bool   setInitialPosition(double x0, double x1, double x2, double x3);
     bool   setInitialDirection(double v0, double v1, double v2, double v3);
@@ -130,6 +138,11 @@ public:
                                         enum_nat_tetrad_type natType = enum_nat_tetrad_default);
 
     enum_break_condition  calculateGeodesic(int numPoints);
+
+    void   printStatus();
+
+    unsigned int  getNumPoints();
+    vec4   getPosition(unsigned int num);
 
     void   clearAll();
     void   resetAll();

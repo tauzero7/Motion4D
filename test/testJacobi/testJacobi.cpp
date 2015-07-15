@@ -69,8 +69,8 @@ int main( int argc, char* argv[] )
   }
   mObject.printSettings();
  
-  mObject.currMetric->print();
-  mObject.geodSolver->print();
+  mObject.currMetric->printF();
+  mObject.geodSolver->printF();
   
   mObject.geodSolver->setInitialPosition( mObject.startPos );
   

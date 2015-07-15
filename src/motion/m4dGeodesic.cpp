@@ -207,8 +207,7 @@ double Geodesic::testConstraint() {
 /*! Print geodesic solver properties.
  * \param fptr : file pointer.
  */
-void
-Geodesic::print(FILE* fptr) {
+void Geodesic::printF(FILE* fptr) {
     fprintf(fptr, "\nGeodesic:\n");
     fprintf(fptr, "\tstepsize controlled : %s\n", ((mStepsizeControlled) ? "yes" : "no"));
     fprintf(fptr, "\tepsilon_abs         : %12.8e\n", epsilon_abs);

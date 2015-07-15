@@ -118,7 +118,7 @@ public:
 
     void               operator*=(const Matrix<mType,n,m> &B);
 
-    void   print(std::ostream& ostr = std::cerr) const;
+    void   printO(std::ostream& ostr = std::cerr) const;
     void   printS(FILE* fptr = stderr, const std::string format = "%12.8f ") const;
 
     // --------------------- friend functions ---------------------
@@ -770,7 +770,7 @@ template <class mType, int n, int m> Matrix<mType,n,m> Matrix<mType,n,m>::operat
  *
  * @param ostr   output stream
  */
-template <class mType, int n, int m> void Matrix<mType,n,m>::print(std::ostream& ostr) const {
+template <class mType, int n, int m> void Matrix<mType,n,m>::printO(std::ostream& ostr) const {
     for (int i=0; i<n; i++) {
         ostr << "( ";
         for (int j=0; j<m; j++) {

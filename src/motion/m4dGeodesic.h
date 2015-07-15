@@ -130,7 +130,7 @@ public:
 
     virtual double  testConstraint();
 
-    virtual void    print(FILE* fptr = stderr);
+    virtual void    printF(FILE* fptr = stderr);
 
     // --------- protected methods -----------
 protected:

@@ -63,6 +63,14 @@
 #include <gsl/gsl_linalg.h>
 #include <gsl/gsl_matrix.h>
 
+#ifdef _WIN32
+#ifndef __GNUC__
+#pragma warning (disable: 4244 )
+#endif
+#else
+#define METRIC_API
+#endif
+
 namespace m4d {
 
 // ---------------------------------------------------

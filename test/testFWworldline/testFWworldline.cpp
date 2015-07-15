@@ -161,7 +161,7 @@ int main( int argc, char* argv[] )
 
   m4d::Metric* metric = metricDB->getMetric("Schwarzschild");
   metric->setParam("mass",mass);
-  metric->print(); 
+  metric->printF(); 
 
   /* ----------------------------------
    *  Define initial position.

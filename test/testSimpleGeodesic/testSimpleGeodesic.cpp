@@ -57,7 +57,7 @@ int main( int argc, char* argv[] ) {
     
     // Set metric
     mObject.setMetric("SchwarzschildCart");
-    mObject.currMetric->print(); 
+    mObject.currMetric->printF(); 
   
     // Set geodesic integrator.
     mObject.setSolver("GSL_RK4");
@@ -66,7 +66,7 @@ int main( int argc, char* argv[] ) {
     double boxSize = 20.0;
     mObject.setSolverParam("lower_bb", -boxSize, -boxSize, -boxSize, -boxSize);
     mObject.setSolverParam("upper_bb", DBL_MAX, boxSize, boxSize, boxSize);
-    mObject.geodSolver->print();
+    mObject.geodSolver->printF();
     
   
     /* -----------------------------------------

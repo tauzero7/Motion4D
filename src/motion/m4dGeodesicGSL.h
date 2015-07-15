@@ -125,7 +125,7 @@ public:
     virtual bool  nextStepPar(int &status);
     virtual bool  nextStepSachsJacobi(int &status);
 
-    virtual void  print(FILE* fptr = stderr);
+    virtual void  printF(FILE* fptr = stderr);
 
 
     // --------- protected methods -----------

@@ -47,7 +47,7 @@ Object::~Object() {
 }
 
 
-bool Object::setMetric(std::string metricName) {
+bool Object::setMetric(const char *metricName) {
     if (currMetric != nullptr) {
         delete currMetric;
     }
@@ -56,7 +56,7 @@ bool Object::setMetric(std::string metricName) {
 }
 
 
-bool Object::setMetricParam(std::string paramName, double value) {
+bool Object::setMetricParam(const char *paramName, double value) {
     if (currMetric == nullptr) {
         fprintf(stderr,"Object::setMetricParam() ... metric is missing!\n");
         return false;
@@ -65,7 +65,7 @@ bool Object::setMetricParam(std::string paramName, double value) {
 }
 
 
-bool Object::setSolver(std::string solverName) {
+bool Object::setSolver(const char *solverName) {
     if (currMetric == nullptr) {
         fprintf(stderr,"Object::setSolver() ... metric is missing!\n");
         return false;
@@ -78,7 +78,7 @@ bool Object::setSolver(std::string solverName) {
 }
 
 
-bool Object::setSolverParam(std::string paramName, bool val) {
+bool Object::setSolverParam(const char *paramName, bool val) {
     if (geodSolver == nullptr) {
         fprintf(stderr,"Object::setSolverParam() ... solver is missing!\n");
         return false;
@@ -86,7 +86,8 @@ bool Object::setSolverParam(std::string paramName, bool val) {
     return geodSolver->setParam(paramName, val);
 }
 
-bool Object::setSolverParam(std::string paramName, double value) {
+
+bool Object::setSolverParam(const char *paramName, double value) {
     if (geodSolver == nullptr) {
         fprintf(stderr,"Object::setSolverParam() ... solver is missing!\n");
         return false;
@@ -95,7 +96,7 @@ bool Object::setSolverParam(std::string paramName, double value) {
 }
 
 
-bool Object::setSolverParam(std::string paramName, double v0, double v1, double v2, double v3) {
+bool Object::setSolverParam(const char *paramName, double v0, double v1, double v2, double v3) {
     if (geodSolver == nullptr) {
         fprintf(stderr,"Object::setSolverParam() ... solver is missing!\n");
         return false;
@@ -107,12 +108,13 @@ bool Object::setSolverParam(std::string paramName, double v0, double v1, double 
 bool Object::setInitialPosition(double x0, double x1, double x2, double x3) {
     if (currMetric == nullptr) {
         fprintf(stderr,"Object::setInitialPosition() ... metric is missing!\n");
+        return false;
     }
     this->startPos = vec4(x0, x1, x2, x3);
 
     // test if initial position is valid
     currMetric->calculateMetric(this->startPos);
-    return currMetric->breakCondition(this->startPos);
+    return (currMetric->breakCondition(this->startPos) == enum_break_none ? true : false);
 }
 
 
@@ -175,6 +177,37 @@ enum_break_condition Object::calculateGeodesic(int numPoints) {
 
     return geodSolver->calculateGeodesic(this->startPos, this->coordDir, numPoints,
                                          this->points, this->dirs, this->lambda);
+}
+
+
+void Object::printStatus() {
+    if (currMetric != nullptr) {
+        currMetric->printF();
+    }
+    if (geodSolver != nullptr) {
+        geodSolver->printF();
+    }
+
+    fprintf(stderr,"\n");
+    fprintf(stderr,"initial position:  %f %f %f %f\n",
+            this->startPos[0], this->startPos[1], this->startPos[2], this->startPos[3]);
+    fprintf(stderr,"initial direction: %f %f %f %f\n",
+            this->coordDir[0], this->coordDir[1], this->coordDir[2], this->coordDir[3]);
+
+    fprintf(stderr,"\n");
+    fprintf(stderr,"#points: %d\n", (int)this->points.size());
+}
+
+
+unsigned int Object::getNumPoints() {
+    return this->points.size();
+}
+
+vec4 Object::getPosition(unsigned int num) {
+    if (num >= this->points.size()) {
+        return vec4(0);
+    }
+    return this->points[num];
 }
 
 
@@ -585,7 +618,7 @@ bool Object::loadSettings(std::string filename, bool printset) {
 
     if (printset && ok) {
         printSettings();
-        currMetric->print();
+        currMetric->printF();
     }
 
     if (geodSolver != NULL) {

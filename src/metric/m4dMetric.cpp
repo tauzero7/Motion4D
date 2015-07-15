@@ -1404,7 +1404,7 @@ bool Metric::report(const vec4 , const vec4 , std::string &text) {
 /*!
  *  \param fptr : pointer to FILE.
  */
-void Metric::print(FILE* fptr) {
+void Metric::printF(FILE* fptr) {
     fprintf(fptr, "\nMetricName : %s\n", mMetricName.c_str());
     for (int i = 0; i < 13 + (int)mMetricName.length(); i++) {
         fprintf(fptr, "-");

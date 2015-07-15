@@ -62,7 +62,7 @@ int main( int argc, char* argv[] )
    * ----------------------------------------- */
   m4d::MetricDatabase* metricDB = m4d::MetricDatabase::getInstance();
   m4d::Metric* metric = metricDB->getMetric("SchwarzschildCart");
-  metric->print(); 
+  metric->printF(); 
   
   /* -----------------------------------------
    *    Set geodesic integrator.

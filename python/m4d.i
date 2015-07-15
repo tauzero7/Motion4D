@@ -1,6 +1,8 @@
 
 %module m4d
 
+#pragma SWIG nowarn=362,389,503
+
 %typemap(in) double*(double temp[4]) {   // temp[4] becomes a local variable
   int i;
   if (PyTuple_Check($input)) {
@@ -39,26 +41,45 @@
 #include "Mat.h"
 #include "m4dMetric.h"
 #include "m4dMetricSchwarzschild.h"
+#include "m4dMetricList.h"
 #include "m4dMotion.h"
 #include "m4dGeodesic.h"
 #include "m4dGeodesicGSL.h"
 #include "m4dGeodesicRK4.h"
+#include "m4dObject.h"
 %}
 
 
 %include "../src/m4dGlobalDefs.h"
 %include "../src/math/VnD.h"
 %include "../src/math/Mat.h"
+%include "../src/metric/m4dMetricList.h"
 %include "../src/metric/m4dMetric.h"
 %include "../src/metric/m4dMetricSchwarzschild.h"
+%include "../src/metric/m4dMetricDatabase.h"
+%include "../src/motion/m4dMotionList.h"
 %include "../src/motion/m4dMotion.h"
 %include "../src/motion/m4dGeodesic.h"
 %include "../src/motion/m4dGeodesicGSL.h"
 %include "../src/motion/m4dGeodesicRK4.h"
+%include "../src/motion/m4dMotionDatabase.h"
+%include "../src/extra/m4dObject.h"
 
 %template(vec3) m4d::VnD<double,3>;
 %template(vec4) m4d::VnD<double,4>;
 
+
+%extend m4d::VnD<double,3> {
+    double __getitem__(unsigned int i) {
+        return (*($self))[i];
+    }
+}
+
+%extend m4d::VnD<double,4> {
+    double __getitem__(unsigned int i) {
+        return (*($self))[i];
+    }
+}
 
 
 %inline %{

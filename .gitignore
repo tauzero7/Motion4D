@@ -39,4 +39,4 @@ test/testJacobi/m4dTestJacobi_debug
 python/*.so
 python/m4d.py
 python/m4d.pyc
-
+python/*.txt

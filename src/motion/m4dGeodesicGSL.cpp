@@ -928,8 +928,7 @@ GeodesicGSL::func_jacobi(double , const double y[], double dydx[], void*) {
 /*! Print geodesic solver properties.
  * \param fptr : file pointer.
  */
-void
-GeodesicGSL::print(FILE* fptr) {
+void GeodesicGSL::printF(FILE* fptr) {
     fprintf(fptr, "\nGeodesicGSL:\n------------\n");
     fprintf(fptr, "\tstep type           : %s\n", stl_solver_names[mSolverType]);
     fprintf(fptr, "\tstepsize controlled : %s\n", ((mStepsizeControlled) ? "yes" : "no"));

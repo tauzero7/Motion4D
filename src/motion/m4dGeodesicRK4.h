@@ -99,7 +99,7 @@ public:
     //   virtual enum_break_condition  nextStepPar           ( double &constraint );
     //   virtual enum_break_condition  nextStepSachsJacobi   ( double &constraint );
 
-    virtual void                  print(FILE* fptr = stderr);
+    virtual void  printF(FILE* fptr = stderr);
 
     // -------- protected attribute ---------
 protected:

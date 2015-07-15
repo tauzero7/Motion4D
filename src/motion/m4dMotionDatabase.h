@@ -35,6 +35,14 @@
 #include <map>
 #include "m4dMotionList.h"
 
+#ifdef _WIN32
+#ifndef __GNUC__
+#pragma warning (disable: 4244 )
+#endif
+#else
+#define MOTION_API
+#endif
+
 namespace m4d {
 
 class MOTION_API IntegratorDatabase {

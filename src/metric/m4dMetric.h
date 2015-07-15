@@ -242,7 +242,7 @@ public:
     bool    isResizeEnabled();
 
     virtual bool    report(const vec4 pos, const vec4 cdir, std::string &text);
-    virtual void    print(FILE* fptr = stderr);
+    virtual void    printF(FILE* fptr = stderr);
 
 
     // --------- protected methods -----------

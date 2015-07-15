@@ -738,8 +738,7 @@ GeodesicRK4::nextStepSachsJacobi(int &status) {
 /*! Print geodesic solver properties.
  * \param fptr : file pointer.
  */
-void
-GeodesicRK4::print(FILE* fptr) {
+void GeodesicRK4::printF(FILE* fptr) {
     fprintf(fptr, "\nGeodesicRK4:\n------------\n");
     fprintf(fptr, "\tstepsize controlled : %s\n", "no");
     fprintf(fptr, "\tstep size           : %12.8e\n", mLambdaStep);
