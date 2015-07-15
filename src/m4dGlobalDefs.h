@@ -323,7 +323,7 @@ enum  enum_coordinate_type
     enum_coordinate_custom
 };
 
-static const char stl_coordinate_types[NUM_ENUM_COORDINATE_TYPES][18] =
+const char stl_coordinate_types[NUM_ENUM_COORDINATE_TYPES][18] =
 {  "cartesian",
    "spherical",
    "cylinder",
@@ -341,7 +341,7 @@ enum  enum_single_coordinate_type
     enum_scoord_range
 };
 
-static const char stl_single_coordinate_types[NUM_ENUM_SINGLE_COORDINATE_TYPES][12] = 
+ const char stl_single_coordinate_types[NUM_ENUM_SINGLE_COORDINATE_TYPES][12] =
 {
     "linear", "semilinear", "periodic", "range"
 };
@@ -356,7 +356,7 @@ enum  enum_coordinate_character
     enum_cchar_unknown
 };
 
-static const char stl_coordinate_characters[NUM_ENUM_COORDINATE_CHARACTERS][10] = 
+const char stl_coordinate_characters[NUM_ENUM_COORDINATE_CHARACTERS][10] =
 {
     "lightlike", "timelike", "spacelike", "unknown"
 };
@@ -389,7 +389,7 @@ enum  enum_nat_tetrad_type
     enum_nat_tetrad_cartesian
 };
 
-static const char* stl_nat_tetrad_types[] __attribute__((unused)) =
+const char stl_nat_tetrad_types[][10]  =
 {  "default",
    "static",
    "lnrf",
@@ -412,14 +412,14 @@ enum  enum_predef_tetrad
     enum_predef_lt_invert
 };
 
-static const char  stl_predef_tetrads[NUM_PREDEF_TETRADS][14] =
+const char  stl_predef_tetrads[NUM_PREDEF_TETRADS][14] =
 {  "standard",
    "right handed",
    "inward",
    "inverted"
 };
 
-static const double vec_predef_tetrad[NUM_PREDEF_TETRADS][16] =
+const double vec_predef_tetrad[NUM_PREDEF_TETRADS][16] =
 {
     {1.0,0.0,0.0,0.0, 0.0,1.0,0.0,0.0,  0.0,0.0,1.0,0.0, 0.0,0.0,0.0,1.0},
     {1.0,0.0,0.0,0.0, 0.0,1.0,0.0,0.0,  0.0,0.0,0.0,1.0, 0.0,0.0,-1.0,0.0},
@@ -451,7 +451,7 @@ enum  enum_break_condition
     enum_break_other             /*!< other error occured */
 };
 
-static const char stl_break_condition[NUM_ENUM_BREAK_CONDITIONS][34] =
+const char stl_break_condition[NUM_ENUM_BREAK_CONDITIONS][34] =
 {  "no break",
    "spacetime breaks down",
    "outside bounding box",
@@ -476,7 +476,7 @@ enum  enum_geodesic_type
     enum_geodesic_spacelike
 };
 
-static const char stl_geodesic_type[NUM_ENUM_GEODESIC_TYPE][16] =
+const char stl_geodesic_type[NUM_ENUM_GEODESIC_TYPE][16] =
 { "lightlike",
   "lightlike_sachs",
   "timelike",
@@ -492,7 +492,7 @@ enum  enum_time_direction
     enum_time_backward = -1,
     enum_time_forward = 1
 };
-static const char  str_time_dir[2][9] = {"backward","forward"};
+const char  str_time_dir[2][9] = {"backward","forward"};
 
 
 /* --------------------------------------------------------
@@ -510,7 +510,7 @@ enum  enum_draw_type
     enum_draw_custom
 };
 
-static const char stl_draw_type[NUM_ENUM_DRAW_TYPE][20] =
+const char stl_draw_type[NUM_ENUM_DRAW_TYPE][20] =
 { "pseudo cartesian",
   "coordinates",
   "embedding diagram",
@@ -521,11 +521,6 @@ static const char stl_draw_type[NUM_ENUM_DRAW_TYPE][20] =
 
 
 
-// prototype of functions
-double radians(double phi);
-double degree(double phi);
-
-int find_nat_tetrad_type( const char* name);
 
 }  // end namespace m4d
 

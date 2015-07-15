@@ -2,6 +2,7 @@
 # directories
 .svn
 build
+compiled
 config
 doc
 lib
@@ -12,6 +13,7 @@ src/metric/kickedout
 # files
 *.dat
 *.png
+*.pro.user
 
 m4dLua
 m4dLua_debug
@@ -31,3 +33,8 @@ test/testDatabase/m4dTestDatabase_debug
 test/testFWworldline/m4dTestFWworldline_debug
 test/testGeodesic/m4dTestGeodesic_debug
 test/testJacobi/m4dTestJacobi_debug
+
+python/*.so
+python/m4d.py
+python/m4d.pyc
+

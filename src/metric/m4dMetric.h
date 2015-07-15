@@ -86,6 +86,8 @@
 #ifndef __GNUC__
 #pragma warning (disable: 4244 )
 #endif
+#else
+#define METRIC_API
 #endif
 
 #define  DEF_SHOW_EMB_WARN 0

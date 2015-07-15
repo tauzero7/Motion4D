@@ -27,13 +27,12 @@
 
 namespace m4d {
 
+IntegratorDatabase* IntegratorDatabase::m_instance = nullptr;
+
 /*!
  */
-IntegratorDatabase::IntegratorDatabase(bool printDatabase) {
+IntegratorDatabase::IntegratorDatabase() {
     init();
-    if (printDatabase) {
-        printIntegratorList();
-    }
 }
 
 IntegratorDatabase::~IntegratorDatabase() {

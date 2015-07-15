@@ -157,7 +157,7 @@ int main( int argc, char* argv[] )
   /* ----------------------------------
    *  initialize metric database
    * ---------------------------------- */  
-  m4d::MetricDatabase* metricDB = new m4d::MetricDatabase;
+  m4d::MetricDatabase* metricDB = m4d::MetricDatabase::getInstance();
 
   m4d::Metric* metric = metricDB->getMetric("Schwarzschild");
   metric->setParam("mass",mass);
@@ -240,7 +240,7 @@ int main( int argc, char* argv[] )
   {
     pos = motion->getPosition();
     e1  = motion->getE(1);
-	fprintf(stderr,"\r%5d  %8.4f",i,motion->getAffineParam());
+    fprintf(stderr,"\r%5d  %8.4f",i,motion->getAffineParam());
     fprintf(stdout,"%5d  %8.4f  %12.8f %12.8f %12.8f %12.8f  ",i,motion->getAffineParam(),pos[0],pos[1],pos[2],pos[3]);
     e1.printS(stdout,"%12.8f ");
     motion->nextStepWL();
@@ -255,7 +255,6 @@ int main( int argc, char* argv[] )
   
   delete motion;
   delete metric;
-  delete metricDB;
   return 1;
 }
 

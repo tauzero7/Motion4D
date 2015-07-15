@@ -63,6 +63,13 @@ bool getStringFromTokens(const std::vector<std::string> &tokenRow, std::string n
 bool     writeFloatArray(std::string filename, const float* array, int x, int y, int c);
 float*   readFloatArray(std::string filename, int &x, int &y, int &c);
 
+
+// prototype of functions
+double radians(double phi);
+double degree(double phi);
+
+int find_nat_tetrad_type( const char* name);
+
 } // end namespace m4d
 
 #endif

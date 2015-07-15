@@ -3,7 +3,6 @@
 #
 
 M4D_GLOBAL_HEADER = $$M4D_SRC_DIR/m4dGlobalDefs.h
-M4D_GLOBAL_SOURCE = $$M4D_SRC_DIR/m4dGlobalDefs.cpp
 
 M4D_EXTRA_HEADERS = $$M4D_SRC_DIR/extra/m4dObject.h \
         $$M4D_SRC_DIR/extra/m4dUtilities.h \
@@ -175,8 +174,7 @@ M4D_HEADERS   = $$M4D_GLOBAL_HEADER \
                 $$M4D_METRIC_HEADERS \
                 $$M4D_MOTION_HEADERS
 
-M4D_SOURCES   = $$M4D_GLOBAL_SOURCE \
-                $$M4D_EXTRA_SOURCES \
+M4D_SOURCES   = $$M4D_EXTRA_SOURCES \
                 $$M4D_MATH_SOURCES \
                 $$M4D_METRIC_SOURCES \
                 $$M4D_MOTION_SOURCES

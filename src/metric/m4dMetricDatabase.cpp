@@ -27,13 +27,12 @@
 
 namespace m4d {
 
+MetricDatabase* MetricDatabase::m_instance = nullptr;
+
 /*!
  */
-MetricDatabase::MetricDatabase(bool printDatabase) {
+MetricDatabase::MetricDatabase() {
     init();
-    if (printDatabase) {
-        printMetricList();
-    }
 }
 
 MetricDatabase::~MetricDatabase() {

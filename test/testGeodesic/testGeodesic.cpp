@@ -60,7 +60,7 @@ int main( int argc, char* argv[] )
   /* -----------------------------------------
    *   Initialize metric.
    * ----------------------------------------- */
-  m4d::MetricDatabase* metricDB = new m4d::MetricDatabase;
+  m4d::MetricDatabase* metricDB = m4d::MetricDatabase::getInstance();
   m4d::Metric* metric = metricDB->getMetric("SchwarzschildCart");
   metric->print(); 
   
@@ -129,6 +129,5 @@ int main( int argc, char* argv[] )
   
   delete geod;
   delete metric;
-  delete metricDB;
   return 1;
 }

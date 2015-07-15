@@ -34,8 +34,8 @@ Object::Object() :
     currMetric(NULL),
     geodSolver(NULL) {
 
-    metricDB   = new MetricDatabase();
-    solverDB   = new IntegratorDatabase();
+    metricDB = MetricDatabase::getInstance();
+    solverDB = IntegratorDatabase::getInstance();
     resetAll();
 }
 
@@ -43,8 +43,6 @@ Object::Object() :
  * @brief Standard destructor.
  */
 Object::~Object() {
-    delete metricDB;
-    delete solverDB;
     clearAll();
 }
 

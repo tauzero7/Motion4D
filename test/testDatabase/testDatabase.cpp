@@ -43,7 +43,7 @@ int main( int argc, char* argv[] )
 {
     fprintf(stderr,"\n\n=================== Test Database ===================\n\n");
 
-    m4d::MetricDatabase* metricDB = new m4d::MetricDatabase;
+    m4d::MetricDatabase* metricDB = m4d::MetricDatabase::getInstance();
     metricDB->printMetricList(stdout);
 
     fprintf(stdout,"\nnum   Integrator name\n-----------------------------------------------------------\n");
@@ -54,8 +54,7 @@ int main( int argc, char* argv[] )
     fprintf(stdout,"\nnum   name of tetrad type\n-----------------------------------------------------------\n");
     for(unsigned int i=0; i<m4d::NUM_ENUM_NAT_TETRAD_TYPES; i++) {
         fprintf(stdout,"%2d   %s\n",i, m4d::stl_nat_tetrad_types[i]);
-    }
-    delete metricDB;
+    }    
     return 1;
 }
 

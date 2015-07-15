@@ -165,11 +165,21 @@ public:
 
     // define return values
     vType            x(int nr) const {
-        return v[nr];
+        if (nr>=0 && nr < size) {
+            return v[nr];
+        } else {
+            return (vType)0;
+        }
     }
+    /*
     vType&           x(int nr)       {
-        return v[nr];
+        if (nr>=0 && nr < size) {
+            return v[nr];
+        } else {
+            return (vType)0;
+        }
     }
+    */
 
     //! Get norm of vector.
     vType            getNorm() const;
@@ -181,7 +191,7 @@ public:
     void             vabs();
     VnD<vType,size>  getVabs() const;
 
-    int              getSize();
+    int              getSize() { return size; }
 
     int              mostDominantCoord() const;
     int              leastDominantCoord() const;
@@ -341,11 +351,16 @@ template <class vType, int size> void VnD<vType,size>::operator/=(const vType a)
 //---------------------------------------------------------------------------
 
 template <class vType, int size> VnD<vType,size> VnD<vType,size>::operator^(const VnD<vType,size> &vec) const {
-    VnD<vType,3> q;
-    q[0] = v[1]*vec.v[2]-v[2]*vec.v[1];
-    q[1] = v[2]*vec.v[0]-v[0]*vec.v[2];
-    q[2] = v[0]*vec.v[1]-v[1]*vec.v[0];
-    return q;
+    if (size == 3) {
+        VnD<vType,size> q;
+        q[0] = v[1]*vec.v[2]-v[2]*vec.v[1];
+        q[1] = v[2]*vec.v[0]-v[0]*vec.v[2];
+        q[2] = v[0]*vec.v[1]-v[1]*vec.v[0];
+        return q;
+    } else {
+        VnD<vType,size> q;
+        return q;
+    }
 }
 
 //---------------------------------------------------------------------------

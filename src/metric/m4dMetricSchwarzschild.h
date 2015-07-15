@@ -64,6 +64,11 @@ public:
 
     // --------- public methods -----------
 public:
+    /**
+     * @brief Calculate the contravariant metric components at position 'pos'.
+     * @param pos  Position in metric coordinates where coefficients have to be evaluated.
+     * @return true if calculation succeeded.
+     */
     virtual bool   calculateMetric(const double* pos);
     virtual bool   calculateChristoffels(const double* pos);
     virtual bool   calculateChrisD(const double* pos);

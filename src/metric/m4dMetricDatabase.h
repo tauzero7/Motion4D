@@ -41,8 +41,13 @@ namespace m4d {
 
 class METRIC_API MetricDatabase {
 public:
-    MetricDatabase(bool printDatabase = false);
-    ~MetricDatabase();
+    static MetricDatabase* getInstance() {
+        static CGuard g;
+        if (m_instance == nullptr) {
+            m_instance = new MetricDatabase();
+        }
+        return m_instance;
+    }
 
     int          getNumMetrics();
     Metric*      getMetric(enum_metric  num);
@@ -55,6 +60,26 @@ public:
 protected:
     void      init();
     Metric*   initializeMetric(enum_metric  num);
+
+
+    // make the Database class a singleton
+private:
+    static MetricDatabase* m_instance;
+    MetricDatabase();
+    MetricDatabase(const MetricDatabase&) {}
+    ~MetricDatabase();
+
+    class CGuard {
+    public:
+        ~CGuard() {
+            if (MetricDatabase::m_instance != nullptr) {
+                delete MetricDatabase::m_instance;
+                MetricDatabase::m_instance = nullptr;
+            }
+        }
+    };
+
+    friend class CGuard;
 
 private:
     std::map<std::string, enum_metric>            mMetricMap;
