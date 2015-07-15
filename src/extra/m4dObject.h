@@ -110,6 +110,27 @@ public:
 
     // --------- public methods -----------
 public:
+    bool   setMetric(std::string metricName);
+    bool   setMetricParam(std::string paramName, double value);
+
+    bool   setSolver(std::string solverName);
+    bool   setSolverParam(std::string paramName, bool val);
+    bool   setSolverParam(std::string paramName, double value);
+    bool   setSolverParam(std::string paramName, double v0, double v1, double v2, double v3);
+
+    bool   setInitialPosition(double x0, double x1, double x2, double x3);
+    bool   setInitialDirection(double v0, double v1, double v2, double v3);
+
+    bool   setInitialLocalNullDirection(enum_time_direction tdir,
+                                        double l0, double l1, double l2,
+                                        enum_nat_tetrad_type nattype = enum_nat_tetrad_default);
+
+    bool   setInitialLocalTimeDirection(enum_time_direction tdir,
+                                        double l0, double l1, double l2, double beta,
+                                        enum_nat_tetrad_type natType = enum_nat_tetrad_default);
+
+    enum_break_condition  calculateGeodesic(int numPoints);
+
     void   clearAll();
     void   resetAll();
 

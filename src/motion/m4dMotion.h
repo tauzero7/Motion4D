@@ -90,6 +90,9 @@ public:
     virtual  void        setMetric(Metric* metric);
     virtual  Metric*     getMetric();
 
+    virtual bool  setParam(std::string paramName, double val);
+    virtual bool  setParam(std::string paramName, double v0, double v1, double v2, double v3);
+
     void    getPosition(double* p);
     vec4    getPosition();
 

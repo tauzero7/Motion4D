@@ -24,6 +24,7 @@ test/testCircular/m4dTestCircular
 test/testDatabase/m4dTestDatabase
 test/testFWworldline/m4dTestFWworldline
 test/testGeodesic/m4dTestGeodesic
+test/testSimpleGeodesic/m4dTestSimpleGeodesic
 test/testJacobi/m4dTestJacobi
 
 test/calcGeodesic/m4dCalcGeodesic_debug
@@ -32,6 +33,7 @@ test/testCircular/m4dTestCircular_debug
 test/testDatabase/m4dTestDatabase_debug
 test/testFWworldline/m4dTestFWworldline_debug
 test/testGeodesic/m4dTestGeodesic_debug
+test/testSimpleGeodesic/m4dTestSimpleGeodesic_debug
 test/testJacobi/m4dTestJacobi_debug
 
 python/*.so

@@ -70,6 +70,10 @@ public:
     void    setGeodesicType(enum_geodesic_type  type);
     enum_geodesic_type   type();
 
+    virtual bool setParam(std::string paramName, bool val);
+    virtual bool setParam(std::string paramName, double value);
+    virtual bool setParam(std::string paramName, double v0, double v1, double v2, double v3);
+
     void    setEpsilons(double eps_a, double eps_r);
     void    getEpsilons(double &eps_a, double &eps_r);
 

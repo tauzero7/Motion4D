@@ -200,6 +200,59 @@ Motion::getMetric() {
     return mMetric;
 }
 
+
+bool Motion::setParam(std::string paramName, double val) {
+    if (paramName.compare("lambda")==0) {
+        mLambda = val;
+        return true;
+    }
+    else if (paramName.compare("minLambdaStep")==0) {
+        mMinLambdaStep = val;
+        return true;
+    }
+    else if (paramName.compare("maxLambdaStep")==0) {
+        mMaxLambdaStep = val;
+        return true;
+    }
+    else if (paramName.compare("constr_eps")==0) {
+        mConstraintEpsilon = val;
+        return true;
+    }
+    return false;
+}
+
+
+bool Motion::setParam(std::string paramName, double v0, double v1, double v2, double v3) {
+    /*
+    if (paramName.compare("init_position")==0) {
+        return setInitialPosition(m4d::vec4(v0, v1, v2, v3));
+    }
+    else if (paramName.compare("init_direction")==0) {
+        return setInitialDirection(m4d::vec4(v0, v1, v2, v3));
+    }
+    else if (paramName.compare("local_init_direction")==0) {
+        return setLocalInitialDir(v0, v1, v2, v3);
+    }
+    else
+    */
+    if (paramName.compare("lower_bb")==0) {
+        mBoundBoxMin[0] = v0;
+        mBoundBoxMin[1] = v1;
+        mBoundBoxMin[2] = v2;
+        mBoundBoxMin[3] = v3;
+        return true;
+    }
+    else if (paramName.compare("upper_bb")==0) {
+        mBoundBoxMax[0] = v0;
+        mBoundBoxMax[1] = v1;
+        mBoundBoxMax[2] = v2;
+        mBoundBoxMax[3] = v3;
+        return true;
+    }
+    return false;
+}
+
+
 /*! Get the current position.
  *
  * \param p : pointer to position.

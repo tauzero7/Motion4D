@@ -46,6 +46,138 @@ Object::~Object() {
     clearAll();
 }
 
+
+bool Object::setMetric(std::string metricName) {
+    if (currMetric != nullptr) {
+        delete currMetric;
+    }
+    currMetric = metricDB->getMetric(metricName);
+    return (currMetric == nullptr ? false : true);
+}
+
+
+bool Object::setMetricParam(std::string paramName, double value) {
+    if (currMetric == nullptr) {
+        fprintf(stderr,"Object::setMetricParam() ... metric is missing!\n");
+        return false;
+    }
+    return currMetric->setParam(paramName, value);
+}
+
+
+bool Object::setSolver(std::string solverName) {
+    if (currMetric == nullptr) {
+        fprintf(stderr,"Object::setSolver() ... metric is missing!\n");
+        return false;
+    }
+    if (geodSolver != nullptr) {
+        delete geodSolver;
+    }
+    geodSolver = solverDB->getIntegrator(currMetric, solverName);
+    return (geodSolver == nullptr ? false : true);
+}
+
+
+bool Object::setSolverParam(std::string paramName, bool val) {
+    if (geodSolver == nullptr) {
+        fprintf(stderr,"Object::setSolverParam() ... solver is missing!\n");
+        return false;
+    }
+    return geodSolver->setParam(paramName, val);
+}
+
+bool Object::setSolverParam(std::string paramName, double value) {
+    if (geodSolver == nullptr) {
+        fprintf(stderr,"Object::setSolverParam() ... solver is missing!\n");
+        return false;
+    }
+    return geodSolver->setParam(paramName, value);
+}
+
+
+bool Object::setSolverParam(std::string paramName, double v0, double v1, double v2, double v3) {
+    if (geodSolver == nullptr) {
+        fprintf(stderr,"Object::setSolverParam() ... solver is missing!\n");
+        return false;
+    }
+    return geodSolver->setParam(paramName, v0, v1, v2, v3);
+}
+
+
+bool Object::setInitialPosition(double x0, double x1, double x2, double x3) {
+    if (currMetric == nullptr) {
+        fprintf(stderr,"Object::setInitialPosition() ... metric is missing!\n");
+    }
+    this->startPos = vec4(x0, x1, x2, x3);
+
+    // test if initial position is valid
+    currMetric->calculateMetric(this->startPos);
+    return currMetric->breakCondition(this->startPos);
+}
+
+
+bool Object::setInitialDirection(double v0, double v1, double v2, double v3) {
+    this->coordDir = vec4(v0, v1, v2, v3);
+    return true;
+}
+
+bool Object::setInitialLocalNullDirection(enum_time_direction tdir,
+                                          double l0, double l1, double l2,
+                                          enum_nat_tetrad_type natType)
+{
+    if (currMetric == nullptr) {
+        fprintf(stderr,"Object::setInitialPosition() ... metric is missing!\n");
+    }
+
+    double tf = (tdir == enum_time_backward ? -1.0 : 1.0);
+
+    vec4 locDir, coDir;
+    vec3 dir = vec3(l0, l1, l2).getNormalized();
+    locDir = vec4(tf, dir[0], dir[1], dir[2]);
+    currMetric->localToCoord(this->startPos, locDir, coDir, natType);
+    this->coordDir = coDir;
+    this->type = enum_geodesic_lightlike;
+    return true;
+}
+
+
+bool Object::setInitialLocalTimeDirection(enum_time_direction tdir,
+                                    double l0, double l1, double l2, double beta,
+                                    enum_nat_tetrad_type natType)
+{
+    if (currMetric == nullptr) {
+        fprintf(stderr,"Object::setInitialPosition() ... metric is missing!\n");
+    }
+
+    double tf = (tdir == enum_time_backward ? -1.0 : 1.0);
+    if (fabs(beta) >= 1.0) {
+        fprintf(stderr,"Object::setInitialPosition() ... velocity too fast!\n");
+        return false;
+    }
+    double gam = 1.0/sqrt(1.0 - beta*beta);
+
+    vec4 locDir, coDir;
+    vec3 dir = vec3(l0, l1, l2).getNormalized();
+    locDir = vec4(tf*gam, gam*beta*dir[0], gam*beta*dir[1], gam*beta*dir[2]);
+    currMetric->localToCoord(this->startPos, locDir, coDir, natType);
+    this->coordDir = coDir;
+    this->type = enum_geodesic_timelike;
+    return true;
+}
+
+
+enum_break_condition Object::calculateGeodesic(int numPoints) {
+    if (geodSolver == nullptr) {
+        fprintf(stderr,"Object::calculateGeodesic() ... solver is missing!\n");
+        return enum_break_other;
+    }
+    clearAll();
+
+    return geodSolver->calculateGeodesic(this->startPos, this->coordDir, numPoints,
+                                         this->points, this->dirs, this->lambda);
+}
+
+
 /**
  * @brief Object::clearAll
  */
@@ -118,24 +250,7 @@ void Object::resetAll() {
     geodSolverType = gsIrk4;
     type =  enum_geodesic_lightlike;
 
-    if (!points.empty()) {
-        points.clear();
-    }
-    if (!dirs.empty()) {
-        dirs.clear();
-    }
-    if (!lambda.empty()) {
-        lambda.clear();
-    }
-    if (!sachs1.empty()) {
-        sachs1.clear();
-    }
-    if (!sachs2.empty()) {
-        sachs2.clear();
-    }
-    if (!jacobi.empty()) {
-        jacobi.clear();
-    }
+    clearAll();
 
     // geometric units
     speed_of_light  = 1.0;

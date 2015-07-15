@@ -78,6 +78,34 @@ Geodesic::type() {
     return mType;
 }
 
+
+bool Geodesic::setParam(std::string paramName, bool val) {
+    if (paramName.compare("stepctrl")==0) {
+        mStepsizeControlled = val;
+        return true;
+    }
+    return false;
+}
+
+
+bool Geodesic::setParam(std::string paramName, double value) {
+    if (paramName.compare("eps_a")==0 || paramName.compare("epsilon_abs")==0) {
+        epsilon_abs = value;
+        return true;
+    }
+    else if (paramName.compare("eps_r")==0 || paramName.compare("epsilon_rel")==0) {
+        epsilon_rel = value;
+        return true;
+    }
+    return false;
+}
+
+
+bool Geodesic::setParam(std::string paramName, double v0, double v1, double v2, double v3) {
+    return Motion::setParam(paramName, v0, v1, v2, v3);
+}
+
+
 /*! Set absolute and relative epsilon.
  *
  *  \param  eps_a  : epsilon absolute.

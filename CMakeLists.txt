@@ -102,6 +102,11 @@ if (COMPILE_TEST_PRGS)
     install(TARGETS m4dTestGeodesic${DAR} DESTINATION bin)
     install(FILES ${CMAKE_SOURCE_DIR}/test/testGeodesic/plotSchwGeods.gnu DESTINATION bin)
 
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY  ${CMAKE_SOURCE_DIR}/test/testSimpleGeodesic)
+    add_executable(m4dTestSimpleGeodesic${DAR} test/testSimpleGeodesic/testSimpleGeodesic.cpp)
+    target_link_libraries(m4dTestSimpleGeodesic${DAR} m4d${BITS}${DAR} gsl gslcblas)
+    install(TARGETS m4dTestSimpleGeodesic${DAR} DESTINATION bin)
+
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY  ${CMAKE_SOURCE_DIR}/test/testJacobi)
     add_executable(m4dTestJacobi${DAR} test/testJacobi/testJacobi.cpp)
     target_link_libraries(m4dTestJacobi${DAR} m4d${BITS}${DAR} gsl gslcblas)
