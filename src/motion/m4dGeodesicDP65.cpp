@@ -24,6 +24,7 @@
 // -------------------------------------------------------------------------------
 
 #include "m4dGeodesicDP65.h"
+#include <algorithm>
 
 #ifdef USE_DP_INT
 
@@ -172,11 +173,11 @@ GeodesicDP65::calculateGeodesic(const vec4 initPos, const vec4 initDir, const in
                 nextStep(status);
                 delta = 0.0;
                 for (int i = 0; i < 8; i++) {
-                    delta = M4D_MAX(delta, fabs(yerr[i]));
+                    delta = std::max(delta, fabs(yerr[i]));
                 }
                 delta *= stepFac / h;
 
-                h = M4D_MIN(mMaxLambdaStep, stepSigma * h * pow(epsilon_abs / delta, 1.0 / (double)mOrder));
+                h = std::min(mMaxLambdaStep, stepSigma * h * pow(epsilon_abs / delta, 1.0 / (double)mOrder));
 
                 if (delta < epsilon_abs) {
                     break;
@@ -283,11 +284,11 @@ GeodesicDP65::calculateGeodesicData(const vec4 initPos, const vec4 initDir, cons
                 nextStep(status);
                 delta = 0.0;
                 for (int i = 0; i < 8; i++) {
-                    delta = M4D_MAX(delta, fabs(yerr[i]));
+                    delta = std::max(delta, fabs(yerr[i]));
                 }
                 delta *= stepFac / h;
 
-                h = M4D_MIN(mMaxLambdaStep, stepSigma * h * pow(epsilon_abs / delta, 1.0 / (double)mOrder));
+                h = std::min(mMaxLambdaStep, stepSigma * h * pow(epsilon_abs / delta, 1.0 / (double)mOrder));
 
                 if (delta < epsilon_abs) {
                     break;
@@ -430,11 +431,11 @@ GeodesicDP65::calcParTransport(const vec4 initPos, const vec4 initDir,
                 nextStepPar(status);
                 delta = 0.0;
                 for (int i = 0; i < DEF_MAX_YS_PAR; i++) {
-                    delta = M4D_MAX(delta, fabs(yerr[i]));
+                    delta = std::max(delta, fabs(yerr[i]));
                 }
                 delta *= stepFac / h;
 
-                h = M4D_MIN(mMaxLambdaStep, stepSigma * h * pow(epsilon_abs / delta, 1.0 / (double)mOrder));
+                h = std::min(mMaxLambdaStep, stepSigma * h * pow(epsilon_abs / delta, 1.0 / (double)mOrder));
 
                 if (delta < epsilon_abs) {
                     break;
@@ -596,12 +597,12 @@ GeodesicDP65::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
                 nextStepSachsJacobi(status);
                 delta = 0.0;
                 for (int i = 0; i < DEF_MAX_YS_JAC; i++) {
-                    delta = M4D_MAX(delta, fabs(yerr[i]));
+                    delta = std::max(delta, fabs(yerr[i]));
                 }
 
                 delta *= stepFac / h;
 
-                h = M4D_MIN(mMaxLambdaStep, stepSigma * h * pow(epsilon_abs / delta, 1.0 / (double)mOrder));
+                h = std::min(mMaxLambdaStep, stepSigma * h * pow(epsilon_abs / delta, 1.0 / (double)mOrder));
 
                 if (h < 1e-6) {
                     h = 1e-6;

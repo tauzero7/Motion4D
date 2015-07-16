@@ -24,6 +24,7 @@
 // -------------------------------------------------------------------------------
 
 #include "m4dGeodesicBS.h"
+#include <algorithm>
 
 namespace m4d {
 
@@ -758,7 +759,7 @@ GeodesicBS::nextStep(double htry, double &hdid, double &hnext, double &constrain
             if (k != 0) {
                 errmax = DEF_BS_TINY;
                 for (i = 0; i < mNumCoords; i++) {
-                    errmax = M4D_MAX(errmax, fabs(yerr[i] / yscal[i]));
+                    errmax = std::max(errmax, fabs(yerr[i] / yscal[i]));
                 }
                 errmax /= eps;
                 km = k - 1;
@@ -791,10 +792,9 @@ GeodesicBS::nextStep(double htry, double &hdid, double &hnext, double &constrain
             break;
         }
 
-        red = M4D_MIN(red, DEF_BS_MIN_RED);
-        red = M4D_MAX(red, DEF_BS_MAX_RED);
+        red = std::min(red, DEF_BS_MIN_RED);
+        red = std::max(red, DEF_BS_MAX_RED);
 
-        // std::cerr << red << std::endl;
         h *= red;
         mReduct = 1;
     }
@@ -806,7 +806,7 @@ GeodesicBS::nextStep(double htry, double &hdid, double &hnext, double &constrain
     double wrkmin = 1e35;
     double fact, work, scale = 1.0;
     for (k = 0; k < km; k++) {
-        fact = M4D_MAX(err[k], DEF_BS_MAX_SCALE);
+        fact = std::max(err[k], DEF_BS_MAX_SCALE);
         work = fact * a[k + 1];
         if (work < wrkmin) {
             scale  = fact;
@@ -818,7 +818,7 @@ GeodesicBS::nextStep(double htry, double &hdid, double &hnext, double &constrain
     hnext = h / scale;
 
     if (mKopt >= k && mKopt != mKmax && !mReduct) {
-        fact = M4D_MAX(scale / alf[mKopt - 1][mKopt], DEF_BS_MAX_SCALE);
+        fact = std::max(scale / alf[mKopt - 1][mKopt], DEF_BS_MAX_SCALE);
         if (a[mKopt + 1]*fact <= wrkmin) {
             hnext = h / fact;
             mKopt++;
@@ -901,7 +901,7 @@ GeodesicBS::nextStepSachsJacobi(double htry, double &hdid, double &hnext, double
             if (k != 0) {
                 errmax = DEF_BS_TINY;
                 for (i = 0; i < mNumCoords; i++) {
-                    errmax = M4D_MAX(errmax, fabs(yerr[i] / yscal[i]));
+                    errmax = std::max(errmax, fabs(yerr[i] / yscal[i]));
                 }
                 errmax /= eps;
                 km = k - 1;
@@ -934,8 +934,8 @@ GeodesicBS::nextStepSachsJacobi(double htry, double &hdid, double &hnext, double
             break;
         }
 
-        red = M4D_MIN(red, DEF_BS_MIN_RED);
-        red = M4D_MAX(red, DEF_BS_MAX_RED);
+        red = std::min(red, DEF_BS_MIN_RED);
+        red = std::max(red, DEF_BS_MAX_RED);
 
         // std::cerr << red << std::endl;
         h *= red;
@@ -949,7 +949,7 @@ GeodesicBS::nextStepSachsJacobi(double htry, double &hdid, double &hnext, double
     double wrkmin = 1e35;
     double fact, work, scale = 1.0;
     for (k = 0; k < km; k++) {
-        fact = M4D_MAX(err[k], DEF_BS_MAX_SCALE);
+        fact = std::max(err[k], DEF_BS_MAX_SCALE);
         work = fact * a[k + 1];
         if (work < wrkmin) {
             scale  = fact;
@@ -961,7 +961,7 @@ GeodesicBS::nextStepSachsJacobi(double htry, double &hdid, double &hnext, double
     hnext = h / scale;
 
     if (mKopt >= k && mKopt != mKmax && !mReduct) {
-        fact = M4D_MAX(scale / alf[mKopt - 1][mKopt], DEF_BS_MAX_SCALE);
+        fact = std::max(scale / alf[mKopt - 1][mKopt], DEF_BS_MAX_SCALE);
         if (a[mKopt + 1]*fact <= wrkmin) {
             hnext = h / fact;
             mKopt++;

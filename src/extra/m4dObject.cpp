@@ -200,7 +200,7 @@ void Object::printStatus() {
 
 
 unsigned int Object::getNumPoints() {
-    return this->points.size();
+    return static_cast<unsigned int>(this->points.size());
 }
 
 vec4 Object::getPosition(unsigned int num) {

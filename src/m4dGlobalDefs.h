@@ -182,8 +182,6 @@
 
 #define M4D_SIGN(x)    (x>0 ? 1.0 : -1.0)
 #define M4D_DELTA(x,y) (x==y ? 1.0 : 0.0)
-#define M4D_MAX(x,y)   (x>y ? x : y)
-#define M4D_MIN(x,y)   (x>y ? y : x)
 #define M4D_SQR(x)     ((x)*(x))
 
 #define DEF_MAX_STEPSIZE        1.0
