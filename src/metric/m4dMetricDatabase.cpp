@@ -27,7 +27,7 @@
 
 namespace m4d {
 
-MetricDatabase* MetricDatabase::m_instance = nullptr;
+	MetricDatabase* MetricDatabase::m_instance = nullptr;
 
 /*!
  */
@@ -67,10 +67,10 @@ MetricDatabase::getMetric(enum_metric num) {
  *  \return Metric: pointer to metric.
  */
 Metric*
-MetricDatabase::getMetric(std::string mName) {
+MetricDatabase::getMetric(const char* mName) {
     mMetricMapItr = mMetricMap.find(mName);
     if (mMetricMapItr == mMetricMap.end()) {
-        fprintf(stderr, "Metric '%s' is not implemented!\n", mName.c_str());
+        fprintf(stderr, "Metric '%s' is not implemented!\n", mName);
         return NULL;
     }
 
@@ -95,10 +95,10 @@ std::string MetricDatabase::getMetricName(enum_metric num) {
  *  \param mName : name of metric.
  *  \return enum_metric : number of metric.
  */
-enum_metric MetricDatabase::getMetricNr(std::string mName) {
+enum_metric MetricDatabase::getMetricNr(const char* mName) {
     mMetricMapItr = mMetricMap.find(mName);
     if (mMetricMapItr == mMetricMap.end()) {
-        fprintf(stderr, "Metric '%s' is not implemented!\n", mName.c_str());
+        fprintf(stderr, "Metric '%s' is not implemented!\n", mName);
         return enum_metric_unknown;
     }
 

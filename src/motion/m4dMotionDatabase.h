@@ -45,7 +45,7 @@
 
 namespace m4d {
 
-class MOTION_API IntegratorDatabase {
+class EXTRA_API IntegratorDatabase {
 public:
     static IntegratorDatabase* getInstance() {
         static CGuard g;

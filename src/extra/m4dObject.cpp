@@ -492,7 +492,7 @@ bool Object::loadSettings(std::string filename, bool printset) {
 
         std::string baseString = tokens[i][0];
         if (baseString.compare("METRIC") == 0 && tokens[i].size() > 1) {
-            currMetric = metricDB->getMetric(tokens[i][1]);
+            currMetric = metricDB->getMetric(tokens[i][1].c_str());
             if (currMetric == NULL) {
                 return false;
             }

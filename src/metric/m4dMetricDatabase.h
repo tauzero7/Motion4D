@@ -41,13 +41,11 @@
 #ifndef __GNUC__
 #pragma warning (disable: 4244 )
 #endif
-#else
-#define METRIC_API
 #endif
 
 namespace m4d {
 
-class METRIC_API MetricDatabase {
+class EXTRA_API MetricDatabase {
 public:
     static MetricDatabase* getInstance() {
         static CGuard g;
@@ -59,9 +57,9 @@ public:
 
     int          getNumMetrics();
     Metric*      getMetric(enum_metric  num);
-    Metric*      getMetric(std::string mName);
+    Metric*      getMetric(const char* mName);
     std::string  getMetricName(enum_metric  num);
-    enum_metric  getMetricNr(std::string mName);
+	enum_metric  getMetricNr(const char* mName);
 
     void         printMetricList(FILE* fptr = stderr);
 

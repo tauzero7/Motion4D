@@ -755,13 +755,13 @@ template <class mType, int n, int m> Matrix<mType,n,m> Matrix<mType,n,m>::operat
 
     if (l>0) {
         for (int i=0; i<l; i++) {
-            pow = pow*mat;
+          //  pow = pow * this->mat;
         }
         pow.matIsUnit = isIdentMat();
         return pow;
     }
 
-    return mat;
+    return pow;
 }
 
 

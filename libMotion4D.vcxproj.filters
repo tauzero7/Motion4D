@@ -255,6 +255,18 @@
     <ClInclude Include="src\metric\m4dMetricCurzon.h">
       <Filter>Header Files\Metrics</Filter>
     </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricBonnor.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricGlampedakis.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricHartleThorneGB.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricTomimatsuSato.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\metric\m4dMetric.cpp">
@@ -457,6 +469,18 @@
     </ClCompile>
     <ClCompile Include="src\math\VnD.cpp">
       <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricBonnor.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricGlampedakis.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricHartleThorneGB.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricTomimatsuSato.cpp">
+      <Filter>Source Files\Metrics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
