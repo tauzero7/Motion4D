@@ -82,8 +82,9 @@ M4D_METRIC_HEADERS = $$M4D_SRC_DIR/metric/m4dMetric.h \
         $$M4D_SRC_DIR/metric/m4dMetricStraightSpinningString.h \
         $$M4D_SRC_DIR/metric/m4dMetricSultanaDyer.h \
         $$M4D_SRC_DIR/metric/m4dMetricTaubNUT.h \
+        $$M4D_SRC_DIR/metric/m4dMetricTeoSimpleWH.h \
         $$M4D_SRC_DIR/metric/m4dMetricTeoWHl.h \
-	$$M4D_SRC_DIR/metric/m4dMetricTomimatsuSato.h
+        $$M4D_SRC_DIR/metric/m4dMetricTomimatsuSato.h
 
 M4D_METRIC_SOURCES = $$M4D_SRC_DIR/metric/m4dMetric.cpp \
         $$M4D_SRC_DIR/metric/m4dMetricAlcubierre.cpp \
@@ -141,8 +142,9 @@ M4D_METRIC_SOURCES = $$M4D_SRC_DIR/metric/m4dMetric.cpp \
         $$M4D_SRC_DIR/metric/m4dMetricStraightSpinningString.cpp \
         $$M4D_SRC_DIR/metric/m4dMetricSultanaDyer.cpp \
         $$M4D_SRC_DIR/metric/m4dMetricTaubNUT.cpp \
+        $$M4D_SRC_DIR/metric/m4dMetricTeoSimpleWH.cpp \
         $$M4D_SRC_DIR/metric/m4dMetricTeoWHl.cpp \
-	$$M4D_SRC_DIR/metric/m4dMetricTomimatsuSato.cpp
+        $$M4D_SRC_DIR/metric/m4dMetricTomimatsuSato.cpp
 
 
 M4D_MOTION_HEADERS = $$M4D_SRC_DIR/motion/m4dFermiWalker.h \

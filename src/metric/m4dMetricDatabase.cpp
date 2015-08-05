@@ -301,6 +301,9 @@ MetricDatabase::initializeMetric(enum_metric  num) {
     case enum_metric_taub_nut:
         currMetric = new MetricTaubNUT;
         break;
+    case enum_metric_teoSimpleWH:
+        currMetric = new MetricTeoSimpleWH;
+        break;
     case enum_metric_teowhl:
         currMetric = new MetricTeoWHl;
         break;

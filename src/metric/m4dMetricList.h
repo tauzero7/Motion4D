@@ -72,6 +72,7 @@
 #include "m4dMetricStraightSpinningString.h"
 #include "m4dMetricSultanaDyer.h"
 #include "m4dMetricTaubNUT.h"
+#include "m4dMetricTeoSimpleWH.h"
 #include "m4dMetricTeoWHl.h"
 #include "m4dMetricTomimatsuSato.h"
 #include "m4dMetricPTD_AI.h"
@@ -86,7 +87,7 @@
 
 namespace m4d {
 
-const int  NUM_METRICS = 56;
+const int  NUM_METRICS = 57;
 
 /* --------------------------------------------------------
  *   List of all metrics currently implemented
@@ -152,6 +153,7 @@ static const char stl_metric_names[NUM_METRICS][60] =  {
     "StraightSpinningString",
     "SultanaDyerBlackhole",
     "TaubNUT",
+    "TeoSimpleWH",
     "TeoWHl",
     "TomimatsuSato"
 };
@@ -211,6 +213,7 @@ enum  enum_metric {
     enum_metric_spinning_string,
     enum_metric_sultana_dyer,
     enum_metric_taub_nut,
+    enum_metric_teoSimpleWH,
     enum_metric_teowhl,
     enum_metric_tomimatsusato
 };

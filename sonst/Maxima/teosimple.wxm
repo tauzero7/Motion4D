@@ -1,0 +1,64 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 15.04.0 ] */
+
+/* [wxMaxima: input   start ] */
+¦
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+load(ctensor);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ct_coords:[t,l,theta,phi];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+lg:ident(4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+lg[1,1]:-c^2 + (l^2+b0^2)*sin(theta)^2*b0^4*c^2/4/(l^2+b0^2)^(3/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+lg[2,2]:1$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+lg[3,3]:(l^2+b0^2)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+lg[4,4]:(l^2+b0^2)*sin(theta)^2$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+lg[1,4]:-1/2*(l^2+b0^2)*sin(theta)^2*b0^2*c/2/(l^2+b0^2)^(3/2)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+lg[4,1]:-1/2*(l^2+b0^2)*sin(theta)^2*b0^2*c/2/(l^2+b0^2)^(3/2)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+cmetric();
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+christof(mcs)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+for k from 1 thru 4 do  dydx[k+4]:sum(sum(-mcs[i,j,k]*yn[i+4]*yn[j+4],i,1,4),j,1,4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+for i from 1 thru 4 do 
+   for j from 1 thru 4 do
+      for k from 1 thru 4 do
+          print("christoffel[",i-1,"][",j-1,"][",k-1,"]=",mcs[i,j,k]);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
