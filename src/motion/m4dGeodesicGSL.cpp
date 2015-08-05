@@ -1038,6 +1038,18 @@ GeodesicGSL::nextStep(int &status) {
     if (status == GSL_EBADFUNC) {
         return false;
     }
+
+#if 0
+    double dt = y[4];
+    double dphi = y[7];
+    double l = y[1];
+    double b0;
+    mMetric->getParam("b0",b0);
+    double c1 = 2.0*dt + b0*b0/sqrt(l*l+b0*b0)*(dphi - 0.5*b0*b0*pow(l*l+b0*b0,-1.5)*dt);
+    double c2 = (l*l + b0*b0)*(dphi - 0.5*b0*b0*pow(l*l+b0*b0,-1.5)*dt);
+    double dl2 = pow(c1*0.5 - b0*b0*0.5*c2*pow(l*l+b0*b0,-1.5),2.0) - c2*c2/(l*l+b0*b0);
+    std::cerr << l << " " << c1 << " " << c2 << " " << dl2 << " " << y[5]*y[5] << std::endl;
+#endif
     return true;
 }
 

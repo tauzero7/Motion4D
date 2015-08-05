@@ -56,18 +56,25 @@ int main( int argc, char* argv[] ) {
     m4d::Object  mObject;
     
     // Set metric
-    mObject.setMetric("SchwarzschildCart");
+    //mObject.setMetric("SchwarzschildCart");
+    mObject.setMetric("TeoSimpleWH");
     mObject.currMetric->printF(); 
   
     // Set geodesic integrator.
-    mObject.setSolver("GSL_RK4");
-    mObject.setSolverParam("eps_a", 1e-12);
+    mObject.setSolver("GSL_RK_Cash-Karp");
+    mObject.setSolverParam("eps_a", 1e-8);
     mObject.setSolverParam("stepctrl", true);
-    double boxSize = 20.0;
-    mObject.setSolverParam("lower_bb", -boxSize, -boxSize, -boxSize, -boxSize);
+    double boxSize = 100.0;
+    mObject.setSolverParam("lower_bb", -DBL_MAX, -boxSize, -boxSize, -boxSize);
     mObject.setSolverParam("upper_bb", DBL_MAX, boxSize, boxSize, boxSize);
     mObject.geodSolver->printF();
     
+    mObject.setInitialPosition(0.0, 10.0, M_PI_2, 0.0);
+    mObject.setInitialLocalNullDirection(m4d::enum_time_forward, -1.0, 0.0, 1.0);
+    m4d::enum_break_condition bcd;
+    bcd = mObject.calculateGeodesic(1000);
+    std::cerr << m4d::stl_break_condition[(int)bcd] << std::endl;
+    exit(1);
   
     /* -----------------------------------------
      *    Loop over several initial positions.

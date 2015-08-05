@@ -69,16 +69,15 @@ bool MetricTeoSimpleWH::calculateMetric(const double* pos) {
     double l2 = l*l;
     double st = sin(theta);
     double st2 = st*st;
-    double st4 = st2*st2;
     double t4 = pow(b0h2 + l2, -1.5);
     double t5 = pow(b0h2 + l2, -2.0);
 
     g_compts[0][0] = 0.25*b0h4*ch2*t5*st2 - ch2;
     g_compts[0][1] = 0;
     g_compts[0][2] = 0;
-    g_compts[0][3] = b0h2*c*(-0.5*b0h2 - 0.5*l2)*t4*st4;
+    g_compts[0][3] = b0h2*c*(-0.5*b0h2 - 0.5*l2)*t4*st2;
     g_compts[1][0] = 0;
-    g_compts[1][1] = 1.00000000000000;
+    g_compts[1][1] = 1.0;
     g_compts[1][2] = 0;
     g_compts[1][3] = 0;
     g_compts[2][0] = 0;
@@ -89,7 +88,6 @@ bool MetricTeoSimpleWH::calculateMetric(const double* pos) {
     g_compts[3][1] = 0;
     g_compts[3][2] = 0;
     g_compts[3][3] = (b0h2 + l2)*st2;
-
 /*
     g_compts[0][0] = -c*c + r*r * st*st * 0.25 * c*c * pow(b0,4.0)*pow(r,-6.0);
     g_compts[0][1] = 0;
@@ -119,7 +117,6 @@ bool MetricTeoSimpleWH::calculateChristoffels(const double* pos) {
     double l     = pos[1];
     double theta = pos[2];
     double c = 1.0;
-    double c2 = 1.0;
     double b0 = mb0;
     double b0h2 = b0*b0;
     double b0h4 = b0h2*b0h2;
@@ -143,6 +140,72 @@ bool MetricTeoSimpleWH::calculateChristoffels(const double* pos) {
     double t6 = pow(-0.5*b0h2 - 0.5*l2, 2);
     double b0h6 = pow(b0, 6.0);
 
+
+    christoffel[0][0][0] = 0;
+    christoffel[0][0][1] = 0.5*b0h4*ch2*l*invr3*st2;
+    christoffel[0][0][2] = -0.25*b0h4*ch2*invr3*st*ct;
+    christoffel[0][0][3] = 0;
+    christoffel[0][1][0] = -1.0L/2.0L*b0h2*ch3*(-0.5*b0h2 - 0.5*l2)*t1*(0.25*b0h4*st2 - r2)*(-3.0*b0h2*c*l*(-0.5*b0h2 - 0.5*l2)*t3*st2 - 1.0*b0h2*c*l*t4*st2)*st2/((0.25*b0h4*ch2*t5*st2 - ch2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) - 1.0*b0h4*ch2*l*invr3*((1.0L/2.0L)*b0h4*ch4*t6*t5*(0.25*b0h4*st2 - r2)*st4/(pow(0.25*b0h4*ch2*t5*st2 - ch2, 2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) + (1.0L/2.0L)/(0.25*b0h4*ch2*t5*st2 - ch2))*st2;
+    christoffel[0][1][1] = 0;
+    christoffel[0][1][2] = 0;
+    christoffel[0][1][3] = 0.5*b0h6*ch5*l*(-0.5*b0h2 - 0.5*l2)*t2*(0.25*b0h4*st2 - r2)*st4/((0.25*b0h4*ch2*t5*st2 - ch2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) + (1.0L/2.0L)*ch2*pow(b0h2 + l2, 1.0)*(0.25*b0h4*st2 - r2)*(-3.0*b0h2*c*l*(-0.5*b0h2 - 0.5*l2)*t3*st2 - 1.0*b0h2*c*l*t4*st2)/(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2);
+    christoffel[0][2][0] = 0.5*b0h4*ch2*t5*((1.0L/2.0L)*b0h4*ch4*t6*t5*(0.25*b0h4*st2 - r2)*st4/(pow(0.25*b0h4*ch2*t5*st2 - ch2, 2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) + (1.0L/2.0L)/(0.25*b0h4*ch2*t5*st2 - ch2))*st*ct - 1.0*b0h4*ch4*t6*t5*(0.25*b0h4*st2 - r2)*st3*ct/((0.25*b0h4*ch2*t5*st2 - ch2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2));
+    christoffel[0][2][1] = 0;
+    christoffel[0][2][2] = 0;
+    christoffel[0][2][3] = 1.0*b0h2*ch3*(-0.5*b0h2 - 0.5*l2)*t1*(0.25*b0h4*st2 - r2)*st*ct/(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2) - 0.25*b0h6*ch5*(-0.5*b0h2 - 0.5*l2)*t3*(0.25*b0h4*st2 - r2)*st3*ct/((0.25*b0h4*ch2*t5*st2 - ch2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2));
+    christoffel[0][3][0] = 0;
+    christoffel[0][3][1] = 1.5*b0h2*c*l*(-0.5*b0h2 - 0.5*l2)*t3*st2 + 0.5*b0h2*c*l*t4*st2;
+    christoffel[0][3][2] = -1.0*b0h2*c*(-0.5*b0h2 - 0.5*l2)*t3*st*ct;
+    christoffel[0][3][3] = 0;
+    christoffel[1][0][0] = -1.0L/2.0L*b0h2*ch3*(-0.5*b0h2 - 0.5*l2)*t1*(0.25*b0h4*st2 - r2)*(-3.0*b0h2*c*l*(-0.5*b0h2 - 0.5*l2)*t3*st2 - 1.0*b0h2*c*l*t4*st2)*st2/((0.25*b0h4*ch2*t5*st2 - ch2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) - 1.0*b0h4*ch2*l*invr3*((1.0L/2.0L)*b0h4*ch4*t6*t5*(0.25*b0h4*st2 - r2)*st4/(pow(0.25*b0h4*ch2*t5*st2 - ch2, 2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) + (1.0L/2.0L)/(0.25*b0h4*ch2*t5*st2 - ch2))*st2;
+    christoffel[1][0][1] = 0;
+    christoffel[1][0][2] = 0;
+    christoffel[1][0][3] = 0.5*b0h6*ch5*l*(-0.5*b0h2 - 0.5*l2)*t2*(0.25*b0h4*st2 - r2)*st4/((0.25*b0h4*ch2*t5*st2 - ch2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) + (1.0L/2.0L)*ch2*pow(b0h2 + l2, 1.0)*(0.25*b0h4*st2 - r2)*(-3.0*b0h2*c*l*(-0.5*b0h2 - 0.5*l2)*t3*st2 - 1.0*b0h2*c*l*t4*st2)/(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2);
+    christoffel[1][1][0] = 0;
+    christoffel[1][1][1] = 0;
+    christoffel[1][1][2] = 0;
+    christoffel[1][1][3] = 0;
+    christoffel[1][2][0] = 0;
+    christoffel[1][2][1] = 0;
+    christoffel[1][2][2] = 1.0*l/(b0h2 + l2);
+    christoffel[1][2][3] = 0;
+    christoffel[1][3][0] = -1.0*b0h2*ch3*l*(-0.5*b0h2 - 0.5*l2)*t1*(0.25*b0h4*st2 - r2)*st4/((0.25*b0h4*ch2*t5*st2 - ch2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) + (-3.0*b0h2*c*l*(-0.5*b0h2 - 0.5*l2)*t3*st2 - 1.0*b0h2*c*l*t4*st2)*((1.0L/2.0L)*b0h4*ch4*t6*t5*(0.25*b0h4*st2 - r2)*st4/(pow(0.25*b0h4*ch2*t5*st2 - ch2, 2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) + (1.0L/2.0L)/(0.25*b0h4*ch2*t5*st2 - ch2));
+    christoffel[1][3][1] = 0;
+    christoffel[1][3][2] = 0;
+    christoffel[1][3][3] = -1.0L/2.0L*b0h2*ch3*(-0.5*b0h2 - 0.5*l2)*t1*(0.25*b0h4*st2 - r2)*(-3.0*b0h2*c*l*(-0.5*b0h2 - 0.5*l2)*t3*st2 - 1.0*b0h2*c*l*t4*st2)*st2/((0.25*b0h4*ch2*t5*st2 - ch2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) + 1.0*ch2*l*pow(b0h2 + l2, 1.0)*(0.25*b0h4*st2 - r2)*st2/(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2);
+    christoffel[2][0][0] = 0.5*b0h4*ch2*t5*((1.0L/2.0L)*b0h4*ch4*t6*t5*(0.25*b0h4*st2 - r2)*st4/(pow(0.25*b0h4*ch2*t5*st2 - ch2, 2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) + (1.0L/2.0L)/(0.25*b0h4*ch2*t5*st2 - ch2))*st*ct - 1.0*b0h4*ch4*t6*t5*(0.25*b0h4*st2 - r2)*st3*ct/((0.25*b0h4*ch2*t5*st2 - ch2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2));
+    christoffel[2][0][1] = 0;
+    christoffel[2][0][2] = 0;
+    christoffel[2][0][3] = 1.0*b0h2*ch3*(-0.5*b0h2 - 0.5*l2)*t1*(0.25*b0h4*st2 - r2)*st*ct/(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2) - 0.25*b0h6*ch5*(-0.5*b0h2 - 0.5*l2)*t3*(0.25*b0h4*st2 - r2)*st3*ct/((0.25*b0h4*ch2*t5*st2 - ch2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2));
+    christoffel[2][1][0] = 0;
+    christoffel[2][1][1] = 0;
+    christoffel[2][1][2] = 1.0*l/(b0h2 + l2);
+    christoffel[2][1][3] = 0;
+    christoffel[2][2][0] = 0;
+    christoffel[2][2][1] = -1.0*l;
+    christoffel[2][2][2] = 0;
+    christoffel[2][2][3] = 0;
+    christoffel[2][3][0] = 2.0*b0h2*c*(-0.5*b0h2 - 0.5*l2)*t4*((1.0L/2.0L)*b0h4*ch4*t6*t5*(0.25*b0h4*st2 - r2)*st4/(pow(0.25*b0h4*ch2*t5*st2 - ch2, 2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) + (1.0L/2.0L)/(0.25*b0h4*ch2*t5*st2 - ch2))*st*ct - 1.0*b0h2*ch3*(-0.5*b0h2 - 0.5*l2)*sqrt(b0h2 + l2)*(0.25*b0h4*st2 - r2)*st3*ct/((0.25*b0h4*ch2*t5*st2 - ch2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2));
+    christoffel[2][3][1] = 0;
+    christoffel[2][3][2] = 0;
+    christoffel[2][3][3] = -1.0*b0h4*ch4*t6*t5*(0.25*b0h4*st2 - r2)*st3*ct/((0.25*b0h4*ch2*t5*st2 - ch2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) + 1.0*ch2*r2*(0.25*b0h4*st2 - r2)*st*ct/(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2);
+    christoffel[3][0][0] = 0;
+    christoffel[3][0][1] = 1.5*b0h2*c*l*(-0.5*b0h2 - 0.5*l2)*t3*st2 + 0.5*b0h2*c*l*t4*st2;
+    christoffel[3][0][2] = -1.0*b0h2*c*(-0.5*b0h2 - 0.5*l2)*t3*st*ct;
+    christoffel[3][0][3] = 0;
+    christoffel[3][1][0] = -1.0*b0h2*ch3*l*(-0.5*b0h2 - 0.5*l2)*t1*(0.25*b0h4*st2 - r2)*st4/((0.25*b0h4*ch2*t5*st2 - ch2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) + (-3.0*b0h2*c*l*(-0.5*b0h2 - 0.5*l2)*t3*st2 - 1.0*b0h2*c*l*t4*st2)*((1.0L/2.0L)*b0h4*ch4*t6*t5*(0.25*b0h4*st2 - r2)*st4/(pow(0.25*b0h4*ch2*t5*st2 - ch2, 2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) + (1.0L/2.0L)/(0.25*b0h4*ch2*t5*st2 - ch2));
+    christoffel[3][1][1] = 0;
+    christoffel[3][1][2] = 0;
+    christoffel[3][1][3] = -1.0L/2.0L*b0h2*ch3*(-0.5*b0h2 - 0.5*l2)*t1*(0.25*b0h4*st2 - r2)*(-3.0*b0h2*c*l*(-0.5*b0h2 - 0.5*l2)*t3*st2 - 1.0*b0h2*c*l*t4*st2)*st2/((0.25*b0h4*ch2*t5*st2 - ch2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) + 1.0*ch2*l*pow(b0h2 + l2, 1.0)*(0.25*b0h4*st2 - r2)*st2/(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2);
+    christoffel[3][2][0] = 2.0*b0h2*c*(-0.5*b0h2 - 0.5*l2)*t4*((1.0L/2.0L)*b0h4*ch4*t6*t5*(0.25*b0h4*st2 - r2)*st4/(pow(0.25*b0h4*ch2*t5*st2 - ch2, 2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) + (1.0L/2.0L)/(0.25*b0h4*ch2*t5*st2 - ch2))*st*ct - 1.0*b0h2*ch3*(-0.5*b0h2 - 0.5*l2)*sqrt(b0h2 + l2)*(0.25*b0h4*st2 - r2)*st3*ct/((0.25*b0h4*ch2*t5*st2 - ch2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2));
+    christoffel[3][2][1] = 0;
+    christoffel[3][2][2] = 0;
+    christoffel[3][2][3] = -1.0*b0h4*ch4*t6*t5*(0.25*b0h4*st2 - r2)*st3*ct/((0.25*b0h4*ch2*t5*st2 - ch2)*(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2)) + 1.0*ch2*r2*(0.25*b0h4*st2 - r2)*st*ct/(-0.25*b0h4*ch2*r2*st4 + ch2*r2*(0.25*b0h4*st2 - r2)*st2);
+    christoffel[3][3][0] = 0;
+    christoffel[3][3][1] = -1.0*l*st2;
+    christoffel[3][3][2] = -1.0*st*ct;
+    christoffel[3][3][3] = 0;
+/*
     christoffel[0][0][0] = 0;
     christoffel[0][0][1] = 0.5*b0h4*ch2*l*invr3*st2;
     christoffel[0][0][2] = -0.25*b0h4*ch2*invr3*st*ct;
@@ -207,7 +270,7 @@ bool MetricTeoSimpleWH::calculateChristoffels(const double* pos) {
     christoffel[3][3][1] = -1.0*l*st2;
     christoffel[3][3][2] = -1.0*st*ct;
     christoffel[3][3][3] = 0;
-
+*/
     return true;
 }
 
