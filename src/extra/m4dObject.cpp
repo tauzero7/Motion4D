@@ -653,6 +653,8 @@ bool Object::saveSettings(std::string filename, std::string dat) {
         return false;
     }
 
+    char* oldlocale = setlocale(LC_NUMERIC, "C");
+
     fprintf(fptr, "# ----------------------------------------------------------\n");
     fprintf(fptr, "# Settings file : %s\n", filename.c_str());
     fprintf(fptr, "#          date : %s\n", dat.c_str());
@@ -693,6 +695,8 @@ bool Object::saveSettings(std::string filename, std::string dat) {
     fprintf(fptr, "GRAV_CONSTANT     %12.6e\n", grav_constant);
     fprintf(fptr, "DIELECTRIC_PERM   %12.6e\n", dielectric_perm);
     fclose(fptr);
+
+    setlocale(LC_NUMERIC, oldlocale);
     return true;
 }
 
@@ -705,6 +709,8 @@ void  Object::printSettings(FILE* fptr) {
         fprintf(fptr, "Error in Object::printSettings() ... no metric or solver set!\n");
         return;
     }
+
+    char* oldlocale = setlocale(LC_NUMERIC, "C");
 
     fprintf(fptr, "\n--------------------- parameter settings ---------------------\n");
     fprintf(fptr, "METRIC       %s\n", currMetric->getMetricName().c_str());
@@ -742,6 +748,7 @@ void  Object::printSettings(FILE* fptr) {
     fprintf(fptr, "SPEED_OF_LIGHT    %16.12f\n", speed_of_light);
     fprintf(fptr, "GRAV_CONSTANT     %16.12e\n", grav_constant);
     fprintf(fptr, "DIELECTRIC_PERM   %16.12e\n", dielectric_perm);
+    setlocale(LC_NUMERIC, oldlocale);
 }
 
 /*! Prepare a report for the current metric.

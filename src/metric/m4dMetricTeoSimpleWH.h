@@ -58,13 +58,28 @@ public:
 
     virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
 
+    virtual bool   transToEmbedding(vec4 p, vec4 &ep);
+    virtual bool   setEmbeddingParam(std::string name, double val);
+    virtual int    getEmbeddingVertices(std::vector<vec3> &verts,
+                                        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter);
+
+
     // --------- protected methods -----------
 protected:
     virtual void setStandardValues();
 
+    double getShapeVal(double r);
+
     // -------- protected attribute ---------
 protected:
     double mb0;   
+
+    double mEmb_lmin;
+    double mEmb_lmax;
+    double mEmb_lstep;
+    double mEmb_phistep;
+    double mEmb_l_num;
+    double mEmb_phi_num;
 };
 
 } // end namespace m4d

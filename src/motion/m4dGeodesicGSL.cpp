@@ -89,8 +89,7 @@ GeodesicGSL::~GeodesicGSL() {
  * \param initDir : initial coordinate direction.
  * \param cstr
  */
-enum_break_condition
-GeodesicGSL::initializeGeodesic(const vec4 initPos, const vec4 initDir, double &cstr) {
+enum_break_condition GeodesicGSL::initializeGeodesic(const vec4 initPos, const vec4 initDir, double &cstr) {
     resetAffineParam();
     resetAffineParamStep();
 
@@ -125,9 +124,10 @@ GeodesicGSL::initializeGeodesic(const vec4 initPos, const vec4 initDir, double &
  *  \return enum_break_condition : break condition.
  *  \sa enum_break_condition
  */
-enum_break_condition
-GeodesicGSL::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
-                                 std::vector<vec4> &points , std::vector<vec4> &dirs, std::vector<double> &lambda) {
+enum_break_condition GeodesicGSL::calculateGeodesic(const vec4 initPos, const vec4 initDir,
+    const int maxNumPoints,
+    std::vector<vec4> &points , std::vector<vec4> &dirs, std::vector<double> &lambda)
+{
     if (!points.empty()) {
         points.clear();
     }
@@ -190,9 +190,10 @@ GeodesicGSL::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int
 }
 
 
-enum_break_condition
-GeodesicGSL ::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
-                                vec4 *&points, vec4 *&dirs, int &numPoints) {
+enum_break_condition GeodesicGSL ::calculateGeodesic(const vec4 initPos, const vec4 initDir,
+    const int maxNumPoints,
+    vec4 *&points, vec4 *&dirs, int &numPoints)
+{
     if (points != NULL) {
         delete [] points;
     }
@@ -1010,8 +1011,7 @@ GeodesicGSL::freeMemory() {
  *
  *  \param status : gsl status after this step.
  */
-bool
-GeodesicGSL::nextStep(int &status) {
+bool GeodesicGSL::nextStep(int &status) {
     if (mMetric->breakCondition(&y[0])) {
         return false;
     }
@@ -1035,21 +1035,23 @@ GeodesicGSL::nextStep(int &status) {
         mLambda += mLambdaStep;
     }
 
+#if 0
+    // experimental for TeoSimpleWH
+    double l = y[1];
+    double dt = y[4];
+    double dphi = y[7];
+    double b0;
+    mMetric->getParam("b0",b0);
+    double w = sqrt(l*l+b0*b0);
+    double c1 = 2.0*dt + b0*b0/w*(dphi - b0*b0*0.5*pow(w,-3.0)*dt);
+    double c2 = w*w*(dphi - b0*b0*0.5*pow(w,-3.0)*dt);
+    double dl2 = -1.0 + pow(0.5*c1 - b0*b0*c2*0.5*pow(w,-3.0), 2.0) - c2*c2/(w*w);
+    double dp = c2/(w*w) + b0*b0*c1*0.25*pow(w,-3.0) - pow(b0,4.0)*c2*0.25*pow(w,-6);
+    fprintf(stderr,"c: %f %f %f %f\n",c1,c2,dphi,dp);
+#endif
     if (status == GSL_EBADFUNC) {
         return false;
     }
-
-#if 0
-    double dt = y[4];
-    double dphi = y[7];
-    double l = y[1];
-    double b0;
-    mMetric->getParam("b0",b0);
-    double c1 = 2.0*dt + b0*b0/sqrt(l*l+b0*b0)*(dphi - 0.5*b0*b0*pow(l*l+b0*b0,-1.5)*dt);
-    double c2 = (l*l + b0*b0)*(dphi - 0.5*b0*b0*pow(l*l+b0*b0,-1.5)*dt);
-    double dl2 = pow(c1*0.5 - b0*b0*0.5*c2*pow(l*l+b0*b0,-1.5),2.0) - c2*c2/(l*l+b0*b0);
-    std::cerr << l << " " << c1 << " " << c2 << " " << dl2 << " " << y[5]*y[5] << std::endl;
-#endif
     return true;
 }
 
@@ -1085,8 +1087,7 @@ GeodesicGSL::nextStepPar(int &status) {
  *
  *  \param status : gsl status after this step.
  */
-bool
-GeodesicGSL::nextStepSachsJacobi(int &status) {
+bool GeodesicGSL::nextStepSachsJacobi(int &status) {
     if (mMetric->breakCondition(&y[0])) {
         return false;
     }

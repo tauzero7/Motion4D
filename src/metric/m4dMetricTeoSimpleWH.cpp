@@ -47,6 +47,24 @@ MetricTeoSimpleWH::MetricTeoSimpleWH(double b0) {
 
     mLocTeds.push_back(enum_nat_tetrad_static);
     mLocTeds.push_back(enum_nat_tetrad_lnrf);
+
+    mDrawTypes.push_back(enum_draw_embedding);
+
+    if (!mEmbParam.empty()) {
+        mEmbParam.clear();
+    }
+    mHaveEmbedding = true;
+
+    mEmb_lmin    = -10.0;
+    mEmb_lmax    =  10.0;
+    mEmb_l_num   =  40.0;
+    mEmb_phi_num =  40.0;
+    mEmb_lstep = (mEmb_lmax - mEmb_lmin) / mEmb_l_num;
+    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
+    addEmbeddingParam("emb_lmin", mEmb_lmin);
+    addEmbeddingParam("emb_lmax", mEmb_lmax);
+    addEmbeddingParam("emb_l_num", mEmb_l_num);
+    addEmbeddingParam("emb_phi_num", mEmb_phi_num);
 }
 
 MetricTeoSimpleWH::~MetricTeoSimpleWH() {
@@ -361,6 +379,99 @@ bool MetricTeoSimpleWH::report(const vec4 , const vec4 , std::string &text) {
     text = ss.str();
     return true;
 }
+
+bool MetricTeoSimpleWH::transToEmbedding(vec4 p, vec4 &ep) {
+    if (mb0 <= 0.0) {
+        return false;
+    }
+
+    vec4 cp;
+    vec4 propCoords = p;
+    propCoords[1] = sqrt(mb0 * mb0 + p[1] * p[1]);
+    transToPseudoCart(propCoords, cp);
+
+    double r = propCoords[1];
+    double x = cp[1];
+    double y = cp[2];
+    double z;
+
+    z = getShapeVal(r);
+    if (p[1] < 0.0) {
+        z *= -1.0;
+    }
+
+    ep = vec4(p[0], x, y, z);
+    return true;
+}
+
+double MetricTeoSimpleWH::getShapeVal(double r) {
+    return mb0 * log((sqrt(r*r - mb0*mb0) + r)/mb0);
+}
+
+bool MetricTeoSimpleWH::setEmbeddingParam(std::string name, double val) {
+    Metric::setEmbeddingParam(name, val);
+
+    if (name == "emb_lmin") {
+        mEmb_lmin = val;
+    } else if (name == "emb_lmax") {
+        mEmb_lmax = val;
+    } else if (name == "emb_l_num") {
+        mEmb_l_num = val;
+        if (mEmb_l_num < 5.0) {
+            mEmb_l_num = 5.0;
+        }
+    } else if (name == "emb_phi_num") {
+        mEmb_phi_num = val;
+        if (mEmb_phi_num < 4) {
+            mEmb_phi_num = 4;
+        }
+    }
+    return true;
+}
+
+int MetricTeoSimpleWH::getEmbeddingVertices(std::vector<vec3> &verts,
+        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter) {
+    if (!verts.empty()) {
+        verts.clear();
+    }
+
+    if (!indices.empty()) {
+        indices.clear();
+    }
+
+    mEmb_lstep = (mEmb_lmax - mEmb_lmin) / mEmb_l_num;
+    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
+
+    numElems = int(mEmb_l_num);
+    counter  = int(mEmb_phi_num) + 1;
+
+    int vnum;
+
+    double x, y, z, r, phi, l;
+    for (unsigned int k = 0; k < counter; k++) {
+        phi = k * mEmb_phistep;
+        for (unsigned int j = 0; j < numElems; j++) {
+            l = mEmb_lmin + j * mEmb_lstep;
+            r = sqrt(mb0 * mb0 + l * l);
+            x = r * cos(phi);
+            y = r * sin(phi);
+            z = getShapeVal(r);
+
+            if (l < 0.0) {
+                z *= -1.0;
+            }
+
+            verts.push_back(vec3(x, y, z));
+            vnum = k * numElems + j;
+
+            indices.push_back(vnum);
+            indices.push_back(vnum + numElems);
+        }
+    }
+
+    return (int)verts.size();
+}
+
 
 // ********************************* protected methods *****************************
 /*!

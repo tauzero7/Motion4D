@@ -1137,9 +1137,6 @@ bool MetricAlcubierre::report(const vec4 , const vec4 , std::string &text) {
     return true;
 }
 
-// *************************** specific  public methods ****************************
-
-
 // ********************************* protected methods *****************************
 /*!
  */
