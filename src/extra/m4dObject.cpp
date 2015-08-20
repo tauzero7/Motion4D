@@ -160,6 +160,7 @@ bool Object::setInitialLocalTimeDirection(enum_time_direction tdir,
 
     vec4 locDir, coDir;
     vec3 dir = vec3(l0, l1, l2).getNormalized();
+
     locDir = vec4(tf*gam, gam*beta*dir[0], gam*beta*dir[1], gam*beta*dir[2]);
     currMetric->localToCoord(this->startPos, locDir, coDir, natType);
     this->coordDir = coDir;
@@ -174,7 +175,7 @@ enum_break_condition Object::calculateGeodesic(int numPoints) {
         return enum_break_other;
     }
     clearAll();
-
+	geodSolver->setGeodesicType(this->type);
     return geodSolver->calculateGeodesic(this->startPos, this->coordDir, numPoints,
                                          this->points, this->dirs, this->lambda);
 }

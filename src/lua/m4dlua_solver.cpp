@@ -209,7 +209,7 @@ int setGeodParams(lua_State* L) {
  */
 int printSolver(lua_State* ) {
     if (mObject.geodSolver!=NULL) {
-        mObject.geodSolver->print(stdout);
+        mObject.geodSolver->printF(stdout);
     }
     return 0;
 }

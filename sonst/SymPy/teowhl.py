@@ -28,4 +28,5 @@ g_metric     = m4d.Metric(gdd)
 m4d.codeprint_metric(g_metric)
 
 christoffels = m4d.Gamma(g_metric,x_coords)
-m4d.codeprint_christoffels(christoffels)
+#m4d.codeprint_christoffels(christoffels)
+m4d.pprint_christoffel_ddu(christoffels,0,0,1)

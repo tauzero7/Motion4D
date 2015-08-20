@@ -2,10 +2,6 @@
 /* [ Created with wxMaxima version 15.04.0 ] */
 
 /* [wxMaxima: input   start ] */
-¦
-/* [wxMaxima: input   end   ] */
-
-/* [wxMaxima: input   start ] */
 load(ctensor);
 /* [wxMaxima: input   end   ] */
 
@@ -18,7 +14,7 @@ lg:ident(4);
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-lg[1,1]:-c^2 + (l^2+b0^2)*sin(theta)^2*b0^4*c^2/4/(l^2+b0^2)^(3/2);
+lg[1,1]:-c^2 + sin(theta)^2*b0^4*c^2/4/(l^2+b0^2)^2$
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
@@ -34,15 +30,19 @@ lg[4,4]:(l^2+b0^2)*sin(theta)^2$
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-lg[1,4]:-1/2*(l^2+b0^2)*sin(theta)^2*b0^2*c/2/(l^2+b0^2)^(3/2)$
+lg[1,4]:-1/2*sin(theta)^2*b0^2*c/(l^2+b0^2)^(1/2)$
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-lg[4,1]:-1/2*(l^2+b0^2)*sin(theta)^2*b0^2*c/2/(l^2+b0^2)^(3/2)$
+lg[4,1]:-1/2*sin(theta)^2*b0^2*c/(l^2+b0^2)^(1/2)$
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
 cmetric();
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(mcs[2,4,4]);
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */

@@ -73,7 +73,7 @@ int setMetric(lua_State* L) {
     if (!lua_isnil(L,-numParams)) {
         if (lua_isstring(L,-numParams)) {
             std::string metricName = std::string(lua_tostring(L,-numParams));
-            if (!(mObject.currMetric = mObject.metricDB->getMetric(metricName))) {
+            if (!mObject.setMetric(metricName.c_str())) {
                 mlua_error(L,"SetMetric: no valid metric set.\n");
                 return 0;
             }
@@ -173,7 +173,7 @@ int setMetricParams(lua_State* L) {
  */
 int printMetric(lua_State* ) {
     if (mObject.currMetric!=NULL) {
-        mObject.currMetric->print();
+        mObject.currMetric->printF(stdout);
     }
     return 0;
 }

@@ -79,6 +79,7 @@ $M4D_DIR/src/metric/m4dMetricSchwarzschildTortoise.h \
 $M4D_DIR/src/metric/m4dMetricStraightSpinningString.h \
 $M4D_DIR/src/metric/m4dMetricSultanaDyer.h \
 $M4D_DIR/src/metric/m4dMetricTaubNUT.h \
+$M4D_DIR/src/metric/m4dMetricTeoSimpleWH.h \
 $M4D_DIR/src/metric/m4dMetricTeoWHl.h \
 $M4D_DIR/src/metric/m4dMetricTomimatsuSato.h \
 $M4D_DIR/src/metric/m4dMetric.cpp \
@@ -136,6 +137,7 @@ $M4D_DIR/src/metric/m4dMetricSchwarzschildTortoise.cpp \
 $M4D_DIR/src/metric/m4dMetricStraightSpinningString.cpp \
 $M4D_DIR/src/metric/m4dMetricSultanaDyer.cpp \
 $M4D_DIR/src/metric/m4dMetricTaubNUT.cpp \
+$M4D_DIR/src/metric/m4dMetricTeoSimpleWH.cpp \
 $M4D_DIR/src/metric/m4dMetricTeoWHl.cpp \
 $M4D_DIR/src/metric/m4dMetricTomimatsuSato.cpp \
 $M4D_DIR/src/motion/*.cpp \
