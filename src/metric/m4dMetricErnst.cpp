@@ -702,6 +702,44 @@ bool MetricErnst::totEnergy(const vec4 , const vec4 , const double , double &val
     return true;
 }
 
+void MetricErnst::calcFmu_nu(const double* pos) {
+    double r = pos[1];
+    double theta = pos[2];
+    double rs = 2.0*mMass;
+
+    double t2 = mB*mB;
+    double t3 = r*r;
+    double t5 = sin(theta);
+    double t6 = t5*t5;
+    double t9 = t2*t2;
+    double t10 = t3*t3;
+    double t12 = t6*t6;
+    double t14 = 1.0+2.0*t2*t3*t6+t9*t10*t12;
+    double t15 = 1/t14;
+    double t18 = 4.0+t2;
+    double t23 = pow(4.0+t2+4.0*t3*t6,2.0);
+    double t24 = 1/t23;
+    double t30 = cos(theta);
+    double t32 = t30*t18*t24;
+
+    fmu_nu[0][0] = 0.0;
+    fmu_nu[0][1] = 0.0;
+    fmu_nu[0][2] = 0.0;
+    fmu_nu[0][3] = 0.0;
+    fmu_nu[1][0] = 0.0;
+    fmu_nu[1][1] = 0.0;
+    fmu_nu[1][2] = 0.0;
+    fmu_nu[1][3] = -4.0*(r-rs)*t15*mB*t6*t18*t24;
+    fmu_nu[2][0] = 0.0;
+    fmu_nu[2][1] = 0.0;
+    fmu_nu[2][2] = 0.0;
+    fmu_nu[2][3] = -4.0*t15*mB*t5*t32;
+    fmu_nu[3][0] = 0.0;
+    fmu_nu[3][1] = 4.0*t14/r*mB*t18*t24;
+    fmu_nu[3][2] = 4.0*t14/t5*mB*t32;
+    fmu_nu[3][3] = 0.0;
+}
+
 /*! Generate report.
  */
 bool MetricErnst::report(const vec4 pos, const vec4 cdir, std::string &text) {

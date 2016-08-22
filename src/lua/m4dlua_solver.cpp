@@ -22,6 +22,8 @@
 #include "lua/m4dlua_solver.h"
 #include "math/TransCoordinates.h"
 
+extern m4d::Object  mObject;
+
 /**
  * @brief Register functions for lua.
  * @param L  Pointer to lua state.
@@ -38,6 +40,7 @@ void lua_reg_solver(lua_State *L) {
     lua_register(L, "PrintTetrad", printTetrad);
 
     lua_register(L, "CalculateGeodesic", calculateGeodesic);
+    lua_register(L, "CalculateParTransport", calculateParTransport);
 
     lua_register(L, "InterpPosByCoord", interpolatePosByCoord);
     lua_register(L, "InterpPosByLambda", interpolatePosByLambda);
@@ -95,8 +98,8 @@ int setGeodSolver(lua_State* L) {
         if (lua_isstring(L,-numParams)) {
             std::string solverName = std::string(lua_tostring(L,-numParams));
             //std::cerr << solverName << std::endl;
-            mObject.geodSolver = mObject.solverDB->getIntegrator(mObject.currMetric,solverName);
-            mObject.geodSolverType = mObject.solverDB->getIntegratorNr(solverName);
+            mObject.geodSolver = mObject.solverDB->getIntegrator(mObject.currMetric, solverName.c_str());
+            mObject.geodSolverType = mObject.solverDB->getIntegratorNr(solverName.c_str());
         }
     }
     lua_pop(L,lua_gettop(L));
@@ -434,6 +437,122 @@ int calculateGeodesic(lua_State* L) {
 
 
 /**
+ * @brief Calculate parallel transport
+ * @param L  Pointer to lua state.
+ * @return  Number of calculated points.
+ */
+int calculateParTransport(lua_State *L) {
+    if (mObject.geodSolver == NULL) {
+        mlua_error(L,"CalculateParTransport: no geodesic solver set!\n");
+        return 0;
+    }
+
+    double      pVal;
+    std::string sVal;
+
+    if (!lua_isnil(L,-1)) {
+        if (lua_istable(L,-1)) {
+            std::vector<double> initDir;
+
+            getfield(L, "dir", initDir);
+            if (initDir.size() == 3) {
+                mObject.startDir = m4d::vec3(initDir[0],initDir[1],initDir[2]).getNormalized();
+                //mObject.startDir.printF();
+            }
+
+            if (getfield(L, "beta", pVal)) {
+                mObject.vel = pVal;
+            }
+
+            // set Lorentz transformation for boosting the initial local tetrad
+            // along 'dir'.
+            mObject.setLorentzTransf(mObject.vel * mObject.startDir.getNormalized());
+
+            mObject.type = m4d::enum_geodesic_timelike;
+            mObject.geodSolver->setGeodesicType(mObject.type);
+
+            if (getfield(L,"timedir",pVal)) {
+                mObject.timeDirection = (int)pVal;
+            }
+
+            if (getfield(L,"timedir",sVal)) {
+                if (sVal.compare("forward") == 0) {
+                    mObject.timeDirection = 1.0;
+                }
+                else if (sVal.compare("backward") == 0) {
+                    mObject.timeDirection = -1.0;
+                }
+                else {
+                    mObject.timeDirection = 0.0;
+                }
+            }
+
+            if (getfield(L,"maxpoints",pVal)) {
+                mObject.maxNumPoints = (unsigned int)pVal;
+            }
+
+            // boosting the local tetrad vectors
+            m4d::vec4 b[4];
+            for(int i=0; i<4; i++) {
+                for(int k=0; k<4; k++) {
+                    b[i] += mObject.lorentz.getElem(i,k) * mObject.base[k];
+                }
+            }
+
+            // convert the local tetrad vectors into coordinate representation
+            for(int i=0; i<4; i++) {
+                mObject.currMetric->localToCoord(mObject.startPos, b[i], b[i]);
+            }
+
+
+            // ----------
+            // this might not be necessary because b0 represents initial direction
+            double eta = 1.0;
+            double y0  = 1.0;
+
+            if (fabs(mObject.vel) < 1.0) {
+                double beta = mObject.vel/mObject.currMetric->speed_of_light();
+                double gm = 1.0 - beta*beta;
+                if (gm > 0.0) {
+                    y0  = mObject.currMetric->speed_of_light()/sqrt(gm);
+                    eta = beta*y0;
+                }
+            }
+            else {
+                return 0;
+            }
+
+            // Initial direction with respect to natural local tetrad:
+            m4d::vec4 locDir  = mObject.timeDirection * y0 * mObject.base[0] +
+                    eta*(mObject.startDir[0] * mObject.base[1] +
+                         mObject.startDir[1] * mObject.base[2] +
+                         mObject.startDir[2] * mObject.base[3]);
+            m4d::vec4 coDir;
+            mObject.currMetric->localToCoord( mObject.startPos, locDir, coDir, mObject.tetradType );
+
+            //std::cerr << "##########\n";
+            //locDir.printF();
+            //coDir.printF();
+            //b[0].printF();
+            // coDir = b[0] ?!
+            // ----------
+
+            mObject.geodSolver->setAffineParamStep( mObject.stepsize );
+            mObject.coordDir = coDir;
+
+            mObject.geodSolver->calcParTransport(mObject.startPos, coDir,
+                 b[0], b[1], b[2], b[3],
+                 mObject.maxNumPoints,
+                 mObject.points, mObject.dirs, mObject.lambda,
+                 mObject.trans_lt[0], mObject.trans_lt[1], mObject.trans_lt[2], mObject.trans_lt[3]);
+        }
+    }
+    lua_pushnumber(L, mObject.points.size());
+    return 1;
+}
+
+
+/**
  * @brief Interpolate position by coordinates.
  *
  *   After calculating a geodesic, a position along it can be interpolated by means of
@@ -628,8 +747,13 @@ int saveGeodesic(lua_State* L) {
         if (lua_isstring(L,-1)) {
             filename = lua_tostring(L,-1);
             fprintf(stderr,"file: %s\n",filename.c_str());
-            FILE* fptr;
-            if ((fptr=fopen(filename.c_str(),"w"))==NULL) {
+			FILE* fptr;
+#ifdef _WIN32
+			fopen_s(&fptr, filename.c_str(), "w");
+#else
+			fptr = fopen(filename.c_str(), "w");
+#endif
+			if (fptr == NULL) {
                 return 0;
             }
 

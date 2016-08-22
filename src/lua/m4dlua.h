@@ -27,18 +27,22 @@
 #include <vector>
 #include <cstdlib>
 
+// Linux: use 'extern "C"', Windows ?
+#ifndef _WIN32
 extern "C" {
+#endif
 #include <lua.h>
 #include <lualib.h>
 #include <lauxlib.h>
+#ifndef _WIN32
 }
+#endif
+
 
 #include <m4dGlobalDefs.h>
 #include <metric/m4dMetricDatabase.h>
 #include <extra/m4dObject.h>
 #include <extra/m4dUtilities.h>
-
-extern m4d::Object  mObject;
 
 
 #ifndef DEF_LUA_SIGNUM

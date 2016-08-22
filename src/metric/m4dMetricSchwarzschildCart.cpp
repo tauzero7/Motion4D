@@ -23,6 +23,8 @@
 */
 // -------------------------------------------------------------------------------
 
+using namespace std;
+
 #include "m4dMetricSchwarzschildCart.h"
 
 namespace m4d {
@@ -237,7 +239,23 @@ bool MetricSchwarzschildCart::calculateChristoffels(const double* pos) {
     christoffel[3][3][2] = t29 * t139 / 2.0;
     christoffel[3][3][3] = t32 * t139 / 2.0;
 
+    //    coutChristoffel();
+    //    abort();
+
     return true;
+}
+
+void MetricSchwarzschildCart::coutChristoffel(){
+    cout << "\n";
+    for(int i = 0; i<4; ++i){
+        for(int j = 0; j<4; ++j){
+            for(int k = 0; k<4; ++k){
+                if(abs(christoffel[i][j][k]) > 1e-14){
+                    cout << "christoffel[" << i << "][" << j << "][" << k << "]=" << christoffel[i][j][k] << "\n";
+                }
+            }
+        }
+    }
 }
 
 

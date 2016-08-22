@@ -939,6 +939,7 @@ void GeodesicGSL::printF(FILE* fptr) {
     fprintf(fptr, "\tconstraint epsilon  : %12.8e\n", mConstraintEpsilon);
     fprintf(fptr, "\tbounding box min    : %14.6e %14.6e %14.6e %14.6e\n", mBoundBoxMin[0], mBoundBoxMin[1], mBoundBoxMin[2], mBoundBoxMin[3]);
     fprintf(fptr, "\tbounding box max    : %14.6e %14.6e %14.6e %14.6e\n", mBoundBoxMax[0], mBoundBoxMax[1], mBoundBoxMax[2], mBoundBoxMax[3]);
+    fprintf(fptr, "\tgeodesic type       : %s\n", stl_geodesic_type[mType]);
 }
 
 // ********************************* protected methods *****************************

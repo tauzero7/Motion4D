@@ -25,6 +25,9 @@
 
 #include "m4dUtilities.h"
 #include "m4dGlobalDefs.h"
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 namespace m4d {
 
@@ -284,16 +287,16 @@ float* readFloatArray(std::string filename, int &x, int &y, int &c) {
     return array;
 }
 
-double radians(double phi) {
+double API_EXPORT radians(double phi) {
     return phi * DEG_TO_RAD;
 }
 
-double degree(double phi) {
+API_EXPORT double degree(double phi) {
     return phi * RAD_TO_DEG;
 }
 
 
-int find_nat_tetrad_type( const char* name) {
+int API_EXPORT find_nat_tetrad_type( const char* name) {
     unsigned int n = 0;
     while(n < NUM_ENUM_NAT_TETRAD_TYPES) {
         if (strcmp(name,stl_nat_tetrad_types[n])==0) {

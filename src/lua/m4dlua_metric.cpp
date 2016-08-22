@@ -24,12 +24,13 @@
 #include "m4dGlobalDefs.h"
 #include "math/TransCoordinates.h"
 
+extern m4d::Object  mObject;
 
 /**
  * @brief lua_reg_metric
  * @param L
  */
-void  lua_reg_metric(lua_State* L) {
+void lua_reg_metric(lua_State* L) {
     lua_register(L, "PrintMetricDB",   printMetricDB);
 
     lua_register(L, "SetMetric",       setMetric);
@@ -44,25 +45,17 @@ void  lua_reg_metric(lua_State* L) {
     lua_register(L, "ToPseudoCoords", transToPseudoCoords);
     lua_register(L, "CoordTrans", coordTrans);
 
+    lua_register(L, "CalcProduct", calcProduct);
     lua_register(L, "CalcTidalMatrix", calcTidalMatrix);
 }
 
 
-/**
- * @brief printMetricDB
- * @return
- */
 int printMetricDB(lua_State* ) {
     mObject.metricDB->printMetricList();
     return 0;
 }
 
 
-/**
- * @brief setMetric
- * @param L
- * @return
- */
 int setMetric(lua_State* L) {
     int numParams = lua_gettop(L);
     if (numParams==0) {
@@ -105,11 +98,6 @@ int setMetric(lua_State* L) {
 }
 
 
-/**
- * @brief setMetricParam
- * @param L
- * @return
- */
 int setMetricParam(lua_State* L) {
     int numParams = lua_gettop(L);
     if (numParams!=2) {
@@ -166,11 +154,6 @@ int setMetricParams(lua_State* L) {
 }
 
 
-/**
- * @brief printMetric
- * @param L
- * @return
- */
 int printMetric(lua_State* ) {
     if (mObject.currMetric!=NULL) {
         mObject.currMetric->printF(stdout);
@@ -199,18 +182,6 @@ int getMetricParam(lua_State *L) {
 }
 
 
-/**
- * @brief localToCoord transformation
- *
- *    cpos = LocalToCoord({
- *        pos = {t, x, y, z},
- *        vec = {dt, dx, dy, dz},
- *        type = "lnrf"
- *    })
- *
- * @param L
- * @return
- */
 int localToCoord(lua_State *L) {
     if (mObject.currMetric == NULL) {
         fprintf(stderr,"LocalToCoord: No metric set!\n");
@@ -250,18 +221,6 @@ int localToCoord(lua_State *L) {
 }
 
 
-/**
- * @brief coordToLocal transformation
- *
- *    lpos = CoordToLocal({
- *        pos = {t, x, y, z},
- *        vec = {dt, dx, dy, dz},
- *        type = "lnrf"
- *    })
- *
- * @param L
- * @return
- */
 int  coordToLocal(lua_State *L) {
     if (mObject.currMetric == NULL) {
         fprintf(stderr,"CoordToLocal: No metric set!");
@@ -332,11 +291,6 @@ int transToPseudoCoords( lua_State *L ) {
 }
 
 
-/**
- * @brief coordTrans
- * @param L
- * @return
- */
 int coordTrans(lua_State *L) {
     int numParams = lua_gettop(L);
     if (numParams != 3 || !lua_istable(L,-3) || !lua_isstring(L,-2) || !lua_isstring(L,-1)) {
@@ -385,6 +339,47 @@ int coordTrans(lua_State *L) {
         }
     }
     return 0;
+}
+
+
+int calcProduct( lua_State *L ) {
+    if (mObject.currMetric == NULL) {
+        fprintf(stderr,"CalcProduct: metric not set!\n");
+        return 0;
+    }
+
+    if (lua_isnil(L,-1) || !lua_istable(L,-1)) {
+        fprintf(stderr, "CalcProduct: needs parameters\n");
+        return 0;
+    }
+
+    std::vector<double>  dpos;
+    if (!getfield(L, "pos", dpos) || dpos.size()<4) {
+        fprintf(stderr, "CalcProduct: position vector is missing\n");
+        return 0;
+    }
+
+    std::vector<double>  du;
+    if (!getfield(L, "u", du) || du.size()<4) {
+        fprintf(stderr, "CalcProduct: vector u is missing\n");
+        return 0;
+    }
+
+    std::vector<double>  dv;
+    if (!getfield(L, "v", dv) || dv.size()<4) {
+        fprintf(stderr, "CalcProduct: vector v is missing\n");
+        return 0;
+    }
+
+    m4d::vec4 pos = m4d::vec4(&dpos[0], 4);
+    m4d::vec4 u = m4d::vec4(&du[0], 4);
+    m4d::vec4 v = m4d::vec4(&dv[0], 4);
+
+    double prod;
+    mObject.currMetric->calcProduct(pos, u, v, prod);
+
+    lua_pushnumber(L, prod);
+    return 1;
 }
 
 

@@ -27,25 +27,27 @@
 
 void  lua_reg_solver(lua_State *L);
 
-int   printSolverDB  ( lua_State *L );
-int   printGeodTypes ( lua_State *L );
+int  printSolverDB  ( lua_State *L );
+int  printGeodTypes ( lua_State *L );
 
-int   setGeodSolver ( lua_State *L );
-int   setGeodParams ( lua_State *L );
-int   printSolver   ( lua_State *L );
+int  setGeodSolver ( lua_State *L );
+int  setGeodParams ( lua_State *L );
+int  printSolver   ( lua_State *L );
 
-int   setLocalTetrad( lua_State *L );
-int   printTetrad   ( lua_State *L );
+int  setLocalTetrad( lua_State *L );
+int  printTetrad   ( lua_State *L );
 
-int   calculateGeodesic ( lua_State *L );
+int  calculateGeodesic ( lua_State *L );
 
-int   interpolatePosByCoord  ( lua_State *L );
-int   interpolatePosByLambda ( lua_State *L );
+int  calculateParTransport ( lua_State *L );
 
-int   getCurrentLambda  ( lua_State *L );
-int   getCurrentPos     ( lua_State *L );
-int   getCurrentDir     ( lua_State *L );
+int  interpolatePosByCoord  ( lua_State *L );
+int  interpolatePosByLambda ( lua_State *L );
 
-int   saveGeodesic      ( lua_State* L );
+int  getCurrentLambda  ( lua_State *L );
+int  getCurrentPos     ( lua_State *L );
+int  getCurrentDir     ( lua_State *L );
+
+int  saveGeodesic      ( lua_State* L );
 
 #endif // M4D_LUA_SOLVER_H

@@ -47,6 +47,8 @@ Details to the implemented spacetimes can be found also in the
 ## Prerequisits:
 
 * You need the GNU Scientific Library which is available [here](http://www.gnu.org/software/gsl/)  
+  for Linux systems. A cmake-Version which can also be used for Windows/Visual Studio 2015 can 
+  be found [here](https://github.com/ampl/gsl).
 * If you want to use lua scripting, then you also need [lua](http://www.lua.org/).
 
 
@@ -119,7 +121,7 @@ You have to have a qmake somewhere available.
 
 
 
-## Installation with VisualStudio 2012 (Windows):  
+## Installation with VisualStudio 2012 (Windows, deprecated):  
 You need a Windows port of the GSL for your Visual Studio version. Store that in
 the libMotion4D subfolder, e.g. `C:\Develop\libMotion4D\gsl`.
 
@@ -141,6 +143,28 @@ the libMotion4D subfolder, e.g. `C:\Develop\libMotion4D\gsl`.
   * Change to the 'test' directory.
   * testAll.bat
 
+  
+## Installation with Visual Studio 2015 (Windows, deprecated):
+You need GSL for Windows. There is a cmake-Version which can be found [here](https://github.com/ampl/gsl).  
+Compile this version with cmake/vs 2015 (32 or 64bit).
+
+1. Open the solution file "m4d.sln" in Visual Studio 2015.
+
+2. Go to the property manager page
+    * Right click and select "Properties".
+	* The user macro "GSL_DIR" points to the gsl library. If you jave installed
+	  GSL in, e.g., `C:\Develop\libMotion4D\gsl-vs2015`, then you have to adjust
+	  this macro.
+	* If you have installed GSL at a completely different location, you have to
+	  adjust the following properties:
+         - C/C++ -> "Additional Include Directories"  
+         - Linker -> "Additional Library Directories  
+		 
+3. Build the solution in `debug` or `release` configuration.
+
+4. Run the test programs from a command shell:
+  * Change to the `test` directory.
+  * call testAll.bat
 
 ## Add new metric:  
 * Write `m4dMetric...` .h and .cpp file.
@@ -150,6 +174,49 @@ the libMotion4D subfolder, e.g. `C:\Develop\libMotion4D\gsl`.
 
 Take care that in `m4dMetricList.h` the order of the metrics of `stl_metric_names`
 and `enum_metric` are the same !!!
+
+
+
+## Install with cmake and Visual Studio 2015
+You need GSL for Windows. There is a cmake-Version which can be found [here](https://github.com/ampl/gsl).  
+If you also want to use LUA, download the sources from [here](https://www.lua.org/). 
+You might need 7-zip or something else to extract the .tar.gz file.
+
+Take care that you always choose the same configuration (Debug/Release), (Win32/x64) 
+for all libraries.
+
+### Compile this GSL version with cmake/vs 2015 (32 or 64bit):
+1. Open "CMakeLists.txt" in cmake-gui and adjust the corresponding paths.
+    - Use ".\build\Debug" or ".\build\Release"  as build paths
+    - Set CMAKE_BUILD_TYPE  to either Debug or Release
+    - Set CMAKE_CONFIGURATION_TYPES  to either Debug or Release
+    - Set CMAKE_INSTALL_PREFIX  to e.g. "D:/local/ampl_gsl_vs2015"
+    - Run 'Configure'
+    - Run 'Generate'
+2. Open ".\build\Debug\GSL.sln" or ".\build\Release\GSL.sln" with Visual Studio 2015
+3. Run 'Build Solution'
+4. Go to the "INSTALL" entry and run 'Build INSTALL' to install into "CMAKE_INSTALL_PREFIX".
+
+
+### Compile LUA 
+1. Download "CMakeLists.txt" for LUA from [here](TODO) and copy it into the root path of LUA.
+2. TODO
+3. TODO
+4. Go to the "INSTALL" entry and run 'Build INSTALL'  to install into "CMAKE_INSTALL_PREFIX".
+
+
+### Compile libMotion4D
+1. Open "CMakeLists.txt" in cmake-gui and adjust the corresponding paths.
+   - Use .\build\Debug  or .\build\Release as build paths.
+   - Set CMAKE_CONFIGURATION_TYPES to either Debug or Release
+   - Set GSL_DIR to e.g. "D:\local\ampl_gsl_vs2015"
+   - Set GSL_LIB_DIR to e.g. "D:\local\ampl_gsl_vs2015\lib"
+   - Run 'Configure'
+   - Run 'Generate'
+2. Open ".\build\Debug\libmotion4d.sln" or ".\build\Release\libmotion4d.sln" with Visual Studio 2015
+3. Run 'Build Solution'
+4. Go to the "INSTALL" entry and run 'Build INSTALL' to install into "CMAKE_INSTALL_PREFIX".
+   
 
 
 ## FILES (generated with 'tree'):

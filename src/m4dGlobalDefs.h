@@ -103,49 +103,20 @@
 #include <float.h>
 
 #ifdef _WIN32
-#include <windows.h>
+//#include <windows.h>
 #endif
 
 #ifdef _WIN32
-#ifdef METRIC_EXPORTS
-#define METRIC_API __declspec(dllexport)
-#else /* METRIC_EXPORTS */
-#define METRIC_API __declspec(dllimport)
-#endif /* METRIC_EXPORTS */
-#else /* _WIN32 */
-#define METRIC_API
-#endif /* _WIN32 */
-
-
-#ifdef _WIN32
-#ifdef MOTION_EXPORTS
-#define MOTION_API __declspec(dllexport)
-#else /* METRIC_EXPORTS */
-#define MOTION_API __declspec(dllimport)
-#endif /* METRIC_EXPORTS */
-#else /* _WIN32 */
-#define MOTION_API
-#endif /* _WIN32 */
-
-#ifdef _WIN32
-#ifdef MATH_EXPORTS
-#define MATH_API __declspec(dllexport)
-#else /* METRIC_EXPORTS */
-#define MATH_API __declspec(dllimport)
-#endif /* METRIC_EXPORTS */
-#else /* _WIN32 */
-#define MATH_API
-#endif /* _WIN32 */
-
-#ifdef _WIN32
-#ifdef EXTRA_EXPORTS
-#define EXTRA_API __declspec(dllexport)
-#else /* METRIC_EXPORTS */
-#define EXTRA_API __declspec(dllimport)
-#endif /* METRIC_EXPORTS */
-#else /* _WIN32 */
-#define EXTRA_API
-#endif /* _WIN32 */
+#if defined(m4d_EXPORTS) || defined(m4d_lua_EXPORTS) || defined(m4dd_EXPORTS) || defined(m4d_luad_EXPORTS)
+#define API_EXPORT __declspec(dllexport)
+#else 
+#define API_EXPORT __declspec(dllimport)
+#endif 
+#define M4D_CALL __stdcall
+#else // _WIN32
+#define M4D_CALL
+#define API_EXPORT
+#endif // _WIN32
 
 #ifdef _WIN32
 #define  isnan(x) ((x) != (x))

@@ -67,6 +67,7 @@
 #include "m4dMetricRotDihole.h"
 #include "m4dMetricSchwarzschild.h"
 #include "m4dMetricSchwarzschildCart.h"
+#include "m4dMetricSchwarzschildCartNew.h"
 #include "m4dMetricSchwarzschildIsotropic.h"
 #include "m4dMetricSchwarzschildTortoise.h"
 #include "m4dMetricStraightSpinningString.h"
@@ -87,7 +88,7 @@
 
 namespace m4d {
 
-const int  NUM_METRICS = 57;
+const int  NUM_METRICS = 58;
 
 /* --------------------------------------------------------
  *   List of all metrics currently implemented
@@ -105,6 +106,7 @@ static const char stl_metric_names[NUM_METRICS][60] =  {
     "MinkowskiRotLattice",
     "Schwarzschild",
     "SchwarzschildCart",
+    "SchwarzschildCartNew",
     "SchwarzschildIsotropic",
     "SchwarzschildTortoise",
     "EddFinkIn",
@@ -165,6 +167,7 @@ enum  enum_metric {
     enum_metric_minkowski_rotlattice,
     enum_metric_schwarzschild,
     enum_metric_schwarzschild_cart,
+    enum_metric_schwarzschild_cartnew,
     enum_metric_schwarzschild_isotropic,
     enum_metric_schwarzschild_tortoise,
     enum_metric_eddfinkin,

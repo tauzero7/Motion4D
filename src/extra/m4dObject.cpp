@@ -212,6 +212,14 @@ vec4 Object::getPosition(unsigned int num) {
 }
 
 
+double Object::getAffineParam(unsigned int num) {
+    if (num >= this->lambda.size()) {
+        return 0.0;
+    }
+    return this->lambda[num];
+}
+
+
 /**
  * @brief Object::clearAll
  */
@@ -233,6 +241,12 @@ void Object::clearAll() {
     }
     if (!jacobi.empty()) {
         jacobi.clear();
+    }
+
+    for(unsigned int i=0; i < 4; i++) {
+        if (!trans_lt[i].empty()) {
+            trans_lt[i].clear();
+        }
     }
 }
 
@@ -446,6 +460,7 @@ bool Object::setLorentzTransf(const double chi, const double ksi, const double b
     boost_beta = beta;
 
     if (fabs(beta) < 1.0) {
+        resetLorentzTransf();
         double n[3] = {sin(chi * DEG_TO_RAD)*cos(ksi * DEG_TO_RAD),
                        sin(chi * DEG_TO_RAD)*sin(ksi * DEG_TO_RAD),
                        cos(chi * DEG_TO_RAD)
@@ -463,6 +478,28 @@ bool Object::setLorentzTransf(const double chi, const double ksi, const double b
         return true;
     }
     return false;
+}
+
+
+bool Object::setLorentzTransf(const m4d::vec3 beta) {
+    double bn = beta.getNorm();
+    if (bn >= 1.0) {
+        return false;
+    }
+    m4d::vec3 n = beta.getNormalized();
+
+    resetLorentzTransf();
+    double gamma = 1.0 / sqrt(1.0 - bn * bn);
+
+    lorentz.setElem(0, 0, gamma);
+    for (int row = 1; row < 4; row++) {
+        for (int col = 1; col < 4; col++) {
+            lorentz.setElem(row, col, (gamma - 1.0) * n[row - 1] * n[col - 1] + M4D_DELTA(row, col));
+        }
+        lorentz.setElem(0, row, bn * gamma * n[row - 1]);
+        lorentz.setElem(row, 0, bn * gamma * n[row - 1]);
+    }
+    return true;
 }
 
 /**

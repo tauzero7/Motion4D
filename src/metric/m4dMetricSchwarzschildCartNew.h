@@ -1,8 +1,8 @@
 // -------------------------------------------------------------------------------
 /*
-    m4dMetricErnst.h
+    m4dMetricSchwarzschildCart.h
 
-  Copyright (c) 2010-2014  Thomas Mueller
+  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
 
 
    This file is part of the m4d-library.
@@ -22,77 +22,72 @@
 
 */
 
-/*!  \class  m4d::MetricErnst
-     \brief  Ernst metric in spherical Schwarzschild-like coordinates (t,r,theta,phi).
+/*!  \class  m4d::MetricSchwarzschildCart
+     \brief  Schwarzschild metric in cartesian coordinates (t,x,y,z).
 
              The line element is given by
 
-             \f[ds^2 = \Lambda^2\left[-\left(1-\frac{2m}{r}\right) dt^2 + \frac{dr^2}{1-2m/r} + r^2d\vartheta^2\right] + \frac{r^2\sin^2\vartheta}{\Lambda^2}d\varphi^2,\f]
-             where \f$\Lambda = 1+B^2r^2\sin^2\vartheta\f$.
+             \f[ ds^2 = -\left(1-\frac{r_s}{r}\right)c^2dt^2 + \left(\frac{x^2}{1-r_s/r}+y^2+z^2\right)\frac{dx^2}{r^2} + \left(x^2+\frac{y^2}{1-r_s/r}+z^2\right)\frac{dy^2}{r^2} + \left(x^2+y^2+\frac{z^2}{1-r_s/r}\right)\frac{dz^2}{r^2} + \frac{2r_s}{r^2(r-r_s)}\left(xy\,dx\,dy+xz\,dx\,dz+yz\,dy\,dz\right), \f]
 
-             The natural local tetrad reads:
-             \f[ \mathbf{e}_{(t)} = \frac{1}{\Lambda\sqrt{1-2m/r}}\partial_t,\quad \mathbf{e}_{(r)}=\frac{\sqrt{1-2m/r}}{\Lambda}\partial_r,\quad \mathbf{e}_{(\vartheta)}=\frac{1}{\Lambda r}\partial_{\vartheta},\quad \mathbf{e}_{(\varphi)}=\frac{\Lambda}{r\sin\vartheta}\partial_{\varphi}.\f]
-
-             Detailed discussions about the Ernst metric can be found in
-             <ul>
-               <li> Frederick J. Ernst, "Black holes in a magnetic universe," J. Math. Phys. <b>17</b>, 54--56 (1976).
-               <li> R.A. Konoplya, "Magnetised black hole as a gravitational lens," Phys. Lett. B <b>644</b>, 219--223 (2007).
-             </ul>
-
-
+             with Schwarzschild radius \f$r_s = 2GM/c^2\f$.
 */
 // -------------------------------------------------------------------------------
 
-#ifndef M4D_METRIC_ERNST_H
-#define M4D_METRIC_ERNST_H
+#ifndef M4D_METRIC_SCHWARZSCHILD_CARTNEW_H
+#define M4D_METRIC_SCHWARZSCHILD_CARTNEW_H
 
 #include "m4dMetric.h"
 
 namespace m4d {
 
 // ---------------------------------------------------
-//    class definition:   MetricErnst
+//    class definition:   MetricSchwarzschildCart
 // ---------------------------------------------------
-class MetricErnst : public Metric {
+class MetricSchwarzschildCartNew : public Metric {
 public:
-    MetricErnst(double mass = 1.0, double B = 0.1);
-    virtual ~MetricErnst();
+    //! Standard constructor for the Schwarzschildcart.
+    MetricSchwarzschildCartNew(double mass = 1.0);
+    virtual ~MetricSchwarzschildCartNew();
 
 // --------- public methods -----------
 public:
     virtual bool   calculateMetric(const double* pos);
     virtual bool   calculateChristoffels(const double* pos);
-    virtual bool   calculateChrisD(const double* pos);
 
     virtual void   localToCoord(const double* pos, const double* ldir, double* dir,
                                 enum_nat_tetrad_type  type = enum_nat_tetrad_default);
     virtual void   coordToLocal(const double* pos, const double* cdir, double* ldir,
                                 enum_nat_tetrad_type  type = enum_nat_tetrad_default);
 
+
     virtual bool   breakCondition(const double* pos);
 
     virtual double testConstraint(const double y[], const double kappa);
 
+
     virtual bool   setParam(std::string pName, double val);
 
-    virtual bool   effPotentialValue(const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double &val);
-    virtual bool   totEnergy(const vec4 pos, const vec4 cdir, const double x, double &val);
-
-    virtual void   calcFmu_nu(const double* pos);
-
     virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
+
 
 // --------- protected methods -----------
 protected:
     virtual void setStandardValues();
 
+    void   calcLTcoeffs(const double* pos);
+
 // -------- protected attribute ---------
 protected:
-    double mMass;
-    double mB;
+    double rs;
 
+    void coutChristoffel();
+
+    // Tetrad coefficients;
+    double A, B, C, D, E, F;
 };
 
 } // end namespace m4d
 
 #endif
+
+

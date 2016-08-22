@@ -47,7 +47,7 @@ namespace m4d {
 // ---------------------------------------------------
 //    class definition:   GeodesicRK4
 // ---------------------------------------------------
-class MOTION_API GeodesicRK4 : public Geodesic {
+class API_EXPORT GeodesicRK4 : public Geodesic {
 public:
     GeodesicRK4(Metric* metric, enum_geodesic_type  type = enum_geodesic_lightlike);
     virtual ~GeodesicRK4();

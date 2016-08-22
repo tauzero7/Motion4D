@@ -25,21 +25,97 @@
 #include "lua/m4dlua.h"
 #include "lua/m4dlua_utils.h"
 
+/**
+ * @brief Register metric functions to be available from Lua
+ * @param L  Lua state
+ */
 void lua_reg_metric(lua_State *L);
 
+/**
+ * @brief Print metric database
+ * @param L  Lua state
+ * @return
+ */
 int  printMetricDB   ( lua_State* L );
 
-int  setMetric       ( lua_State *L );
+/**
+ * @brief Set metric
+ *
+ *    SetMetric("Schwarzschild", {mass = 1.0})
+ *
+ * @param L  Lua state
+ * @return
+ */
+int  setMetric( lua_State *L );
+
+/**
+ * @brief Set metric parameters
+ * @param L  Lua state
+ * @return
+ */
 int  setMetricParam  ( lua_State *L );
 int  setMetricParams ( lua_State *L );
-int  getMetricParam  ( lua_State *L );
-int  printMetric     ( lua_State *L );
 
+/**
+ * @brief Get metric parameter
+ * @param L  Lua state
+ * @return
+ */
+int  getMetricParam  ( lua_State *L );
+
+/**
+ * @brief Print the currently set metric.
+ * @param L
+ * @return
+ */
+int printMetric( lua_State *L );
+
+/**
+ * @brief localToCoord transformation
+ *
+ *    cpos = LocalToCoord({
+ *        pos = {t, x, y, z},
+ *        vec = {dt, dx, dy, dz},
+ *        type = "lnrf"
+ *    })
+ *
+ * @param L
+ * @return
+ */
 int  localToCoord    ( lua_State *L );
+
+/**
+ * @brief coordToLocal transformation
+ *
+ *    lpos = CoordToLocal({
+ *        pos = {t, x, y, z},
+ *        vec = {dt, dx, dy, dz},
+ *        type = "lnrf"
+ *    })
+ *
+ * @param L
+ * @return
+ */
 int  coordToLocal    ( lua_State *L );
 
 int  transToPseudoCoords ( lua_State *L );
 int  coordTrans(lua_State *L);
+
+
+/**
+ * @brief Calculate product between two 4-vectors 'u' and 'v' given at a specific position 'pos'.
+ *   Both vectors have to be given in coordinate representation.
+ *
+ *    prod = CalcProduct({
+ *      pos = {t, x, y, z},
+ *      u = {u0, u1, u2, u3},
+ *      v = {v0, v1, v2, v3}
+ *    })
+ * @param L
+ * @return
+ */
+int  calcProduct( lua_State *L );
+
 
 int  calcTidalMatrix( lua_State *L );
 

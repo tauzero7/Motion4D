@@ -267,6 +267,12 @@
     <ClInclude Include="src\metric\m4dMetricTomimatsuSato.h">
       <Filter>Header Files\Metrics</Filter>
     </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricSchwarzschildCartNew.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\metric\m4dMetricTeoSimpleWH.h">
+      <Filter>Header Files\Metrics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\metric\m4dMetric.cpp">
@@ -480,6 +486,12 @@
       <Filter>Source Files\Metrics</Filter>
     </ClCompile>
     <ClCompile Include="src\metric\m4dMetricTomimatsuSato.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricSchwarzschildCartNew.cpp">
+      <Filter>Source Files\Metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\metric\m4dMetricTeoSimpleWH.cpp">
       <Filter>Source Files\Metrics</Filter>
     </ClCompile>
   </ItemGroup>

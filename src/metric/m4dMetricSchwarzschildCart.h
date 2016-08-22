@@ -75,10 +75,12 @@ protected:
     virtual void setStandardValues();
 
     void   calcLTcoeffs(const double* pos);
+    void coutChristoffel();
 
 // -------- protected attribute ---------
 protected:
     double rs;
+
 
     // Tetrad coefficients;
     double A, B, C, D, E, F;

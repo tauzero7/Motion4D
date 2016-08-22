@@ -27,7 +27,7 @@
 
 namespace m4d {
 
-	MetricDatabase* MetricDatabase::m_instance = nullptr;
+MetricDatabase* MetricDatabase::m_instance = nullptr;
 
 /*!
  */
@@ -285,6 +285,9 @@ MetricDatabase::initializeMetric(enum_metric  num) {
         break;
     case enum_metric_schwarzschild_cart:
         currMetric = new MetricSchwarzschildCart;
+        break;
+    case enum_metric_schwarzschild_cartnew:
+        currMetric = new MetricSchwarzschildCartNew;
         break;
     case enum_metric_schwarzschild_isotropic:
         currMetric = new MetricSchwarzschildIsotropic;

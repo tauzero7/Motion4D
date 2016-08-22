@@ -4,7 +4,8 @@ unix {
 }
 
 win32 {
-  GSL_DIR = $$PWD/gsl
+  #GSL_DIR = $$PWD/gsl
+  GSL_DIR = "D:/local/amplgsl"
 }
 
 GSL_LIB_DIR = $$GSL_DIR/lib
@@ -15,7 +16,7 @@ QT -= gui core
 
 LUA_DIR = /usr/local/lua/5.3
 LUA_LIB_DIR = $$LUA_DIR/lib
-CONFIG += USE_LUA
+CONFIG += #USE_LUA
 
 
 isEmpty(PREFIX) {

@@ -67,8 +67,6 @@
 #ifndef __GNUC__
 #pragma warning (disable: 4244 )
 #endif
-#else
-#define METRIC_API
 #endif
 
 namespace m4d {
@@ -76,7 +74,7 @@ namespace m4d {
 // ---------------------------------------------------
 //    class definition:   Motion
 // ---------------------------------------------------
-class METRIC_API Motion {
+class API_EXPORT Motion {
 public:
     Motion(Metric* metric);
     virtual ~Motion();

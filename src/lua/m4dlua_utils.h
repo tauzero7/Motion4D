@@ -28,7 +28,7 @@
 //  internal functions
 // ------------------------------------------------------------------------------
 
-void  lua_reg_utils(lua_State *L);
+void  M4D_CALL lua_reg_utils(lua_State *L);
 
 void  stackDump( lua_State *L);
 void  mlua_error( lua_State *L, const char *fmt, ...);
@@ -55,6 +55,11 @@ int   getCameraView(lua_State *L);
 int   getGeodPoint(lua_State *L);
 int   getGeodDir(lua_State *L);
 int   getGeodLambda(lua_State *L);
+int   getTrajE0(lua_State *L);
+int   getTrajE1(lua_State *L);
+int   getTrajE2(lua_State *L);
+int   getTrajE3(lua_State *L);
+int   getTrajEi(lua_State *L, unsigned int i);
 
 int   getNumPoints(lua_State *L);
 

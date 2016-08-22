@@ -13,6 +13,9 @@ QT -= gui core
 TEMPLATE = lib
 ##CONFIG += staticlib
 
+unix {
+QMAKE_CXXFLAGS += -std=c++11
+}
 
 CONFIG(debug, debug|release) {
     TARGET = m4d_debug
@@ -45,11 +48,8 @@ unix {
 }
 
 win32 {
-    DEFINES += METRIC_EXPORTS
-    DEFINES += MOTION_EXPORTS
-    DEFINES += MATH_EXPORTS
-    DEFINES += EXTRA_EXPORTS
-    LIBS += -mwindows  -L"$$GSL_LIB_DIR"  $$GSL_LIB_DIR/libgsl.a  $$GSL_LIB_DIR/libgslcblas.a
+    DEFINES += m4d_EXPORTS
+    LIBS += -L"$$GSL_LIB_DIR"  $$GSL_LIB_DIR/gsl.lib  $$GSL_LIB_DIR/gslcblas.lib
     INCLUDEPATH += .  .. "$$M4D_DIR" "$$GSL_DIR/include"
 }
 

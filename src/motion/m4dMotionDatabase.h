@@ -39,13 +39,11 @@
 #ifndef __GNUC__
 #pragma warning (disable: 4244 )
 #endif
-#else
-#define MOTION_API
 #endif
 
 namespace m4d {
 
-class EXTRA_API IntegratorDatabase {
+class API_EXPORT IntegratorDatabase {
 public:
     static IntegratorDatabase* getInstance() {
         static CGuard g;
@@ -57,9 +55,9 @@ public:
 
     int              getNumIntegrators();
     Geodesic*        getIntegrator(Metric* cMetric, enum_integrator  num);
-    Geodesic*        getIntegrator(Metric* cMetric, std::string mName);
-    std::string      getIntegratorName(enum_integrator  num);
-    enum_integrator  getIntegratorNr(std::string mName);
+    Geodesic*        getIntegrator(Metric* cMetric, const char* mName);
+    const char*      getIntegratorName(enum_integrator  num);
+    enum_integrator  getIntegratorNr(const char* mName);
 
     void         printIntegratorList(FILE* fptr = stderr);
 

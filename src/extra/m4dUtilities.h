@@ -42,6 +42,18 @@
 
 #include "m4dPlatform.h"
 
+#ifdef _WIN32
+#if defined(m4d_EXPORTS) || defined(m4d_lua_EXPORTS) || defined(m4dd_EXPORTS) || defined(m4d_luad_EXPORTS)
+#define API_EXPORT __declspec(dllexport)
+#else 
+#define API_EXPORT __declspec(dllimport)
+#endif 
+#define M4D_CALL __stdcall
+#else // _WIN32
+#define M4D_CALL
+#define API_EXPORT
+#endif // _WIN32
+
 namespace m4d {
 
 
@@ -65,10 +77,10 @@ float*   readFloatArray(std::string filename, int &x, int &y, int &c);
 
 
 // prototype of functions
-double radians(double phi);
-double degree(double phi);
+double API_EXPORT radians(double phi);
+API_EXPORT double degree(double phi);
 
-int find_nat_tetrad_type( const char* name);
+int API_EXPORT find_nat_tetrad_type( const char* name);
 
 } // end namespace m4d
 

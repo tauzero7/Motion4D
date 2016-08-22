@@ -33,7 +33,7 @@
 
 #ifdef _WIN32
 #include <time.h>
-#include <windows.h>
+//#include <windows.h>
 #include <stdio.h>
 typedef signed long long int int64_t;
 #if defined(_MSC_VER) || defined(_MSC_EXTENSIONS)

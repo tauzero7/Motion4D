@@ -77,7 +77,7 @@ namespace m4d {
 //  TranslateMat3D =  (  0  1  0  ty )
 //                    (  0  0  0  tz )
 //
-class MATH_API TranslateMat3D : public Matrix<double,3,4> {
+class API_EXPORT TranslateMat3D : public Matrix<double,3,4> {
 public:
     TranslateMat3D(double tx, double ty, double tz);
     TranslateMat3D(const vec3 &translat);
@@ -88,13 +88,13 @@ public:
 //
 //  angles in radiant!
 //----------------------------------------------------------------------------
-class MATH_API RotateMat3D : public Matrix<double,3,4> {
+class API_EXPORT RotateMat3D : public Matrix<double,3,4> {
 public:
     RotateMat3D(const vec3 &rotAxis, double rotAngle);
     RotateMat3D(enum_axisID  mainAxis, double rotAngle);
 };
 
-class MATH_API RotateMat3Dd : public Matrix<double,3,3> {
+class API_EXPORT RotateMat3Dd : public Matrix<double,3,3> {
 public:
     RotateMat3Dd();
     RotateMat3Dd(const vec3  &rotAxis,  double rotAngle);
@@ -102,7 +102,7 @@ public:
 };
 
 
-class MATH_API RotateMat3Df : public Matrix<float,3,3> {
+class API_EXPORT RotateMat3Df : public Matrix<float,3,3> {
 public:
     RotateMat3Df();
     RotateMat3Df(const vec3f &rotAxis,  float rotAngle);
@@ -118,7 +118,7 @@ public:
 //  ScaleMat3D =  (  0 sy  0  0  )
 //                (  0  0 sz  0  )
 //
-class MATH_API ScaleMat3D : public Matrix<double,3,4> {
+class API_EXPORT ScaleMat3D : public Matrix<double,3,4> {
 public:
     ScaleMat3D(double sx, double sy, double sz);
     ScaleMat3D(const vec3 &scale);
@@ -128,7 +128,7 @@ public:
 //----------------------------------------------------------------------------
 //         TranslateMat2D
 //----------------------------------------------------------------------------
-class MATH_API TranslateMat2D : public Matrix<double,2,3> {
+class API_EXPORT TranslateMat2D : public Matrix<double,2,3> {
 public:
     TranslateMat2D(double tx, double ty);
 };
@@ -136,7 +136,7 @@ public:
 //----------------------------------------------------------------------------
 //         RotateMat2D
 //----------------------------------------------------------------------------
-class MATH_API RotateMat2D : public Matrix<double,2,3> {
+class API_EXPORT RotateMat2D : public Matrix<double,2,3> {
 public:
     RotateMat2D(double rotAngle);
     RotateMat2D(double rotCenterX, double rotCenterY, double rotAngle);
@@ -145,7 +145,7 @@ public:
 //----------------------------------------------------------------------------
 //         ScaleMat2D
 //----------------------------------------------------------------------------
-class MATH_API ScaleMat2D : public Matrix<double,2,3> {
+class API_EXPORT ScaleMat2D : public Matrix<double,2,3> {
 public:
     ScaleMat2D(double sx, double sy);
 };
@@ -153,7 +153,7 @@ public:
 //----------------------------------------------------------------------------
 //         Lorentz matrix
 //----------------------------------------------------------------------------
-class MATH_API LorentzTransf : public Matrix<double,4,4> {
+class API_EXPORT LorentzTransf : public Matrix<double,4,4> {
 public:
     LorentzTransf(double beta, VnD<double,3> n);
 };

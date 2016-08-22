@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -14,15 +14,17 @@
     <ProjectGuid>{6F279CDD-5D37-4022-9720-B7CAEBD2D50E}</ProjectGuid>
     <RootNamespace>libMotion4D</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>libMotion4D</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -43,22 +45,25 @@
     <OutDir>$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\compiled\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <TargetName>$(SolutionName)_debug</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\compiled\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <TargetName>$(SolutionName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;LIBMOTION4D_EXPORTS;MATH_EXPORTS;METRIC_EXPORTS;MOTION_EXPORTS;EXTRA_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;m4d_EXPORTS;MATH_EXPORTS;METRIC_EXPORTS;MOTION_EXPORTS;EXTRA_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -73,6 +78,7 @@
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -93,6 +99,8 @@
     <ClInclude Include="src\metric\m4dMetricHartleThorneGB.h" />
     <ClInclude Include="src\metric\m4dMetricKastorTraschen.h" />
     <ClInclude Include="src\metric\m4dMetricRotDihole.h" />
+    <ClInclude Include="src\metric\m4dMetricSchwarzschildCartNew.h" />
+    <ClInclude Include="src\metric\m4dMetricTeoSimpleWH.h" />
     <ClInclude Include="src\metric\m4dMetricTomimatsuSato.h" />
     <ClInclude Include="src\motion\m4dFermiWalker.h" />
     <ClInclude Include="src\motion\m4dGeodesic.h" />
@@ -171,6 +179,8 @@
     <ClCompile Include="src\metric\m4dMetricHartleThorneGB.cpp" />
     <ClCompile Include="src\metric\m4dMetricKastorTraschen.cpp" />
     <ClCompile Include="src\metric\m4dMetricRotDihole.cpp" />
+    <ClCompile Include="src\metric\m4dMetricSchwarzschildCartNew.cpp" />
+    <ClCompile Include="src\metric\m4dMetricTeoSimpleWH.cpp" />
     <ClCompile Include="src\metric\m4dMetricTomimatsuSato.cpp" />
     <ClCompile Include="src\motion\m4dFermiWalker.cpp" />
     <ClCompile Include="src\motion\m4dGeodesic.cpp" />

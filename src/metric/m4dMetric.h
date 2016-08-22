@@ -95,7 +95,7 @@ namespace m4d {
 // ---------------------------------------------------
 //    class definition:   Metric
 // ---------------------------------------------------
-class METRIC_API Metric {
+class API_EXPORT Metric {
 public:
     Metric();
     virtual ~Metric();
@@ -184,6 +184,9 @@ public:
     bool    calcCoordTidalMatrix(const vec4 pos, const vec4 u);
     double  getCoordTidalMatrixCoeff(const int i, const int j);
     void    getCoordTidalMatrix(mat4 &m);
+
+    virtual void    calcFmu_nu(const double* pos);
+    double  getFmu_nu(const int mu, const int nu);
 
     virtual enum_physical_constants    physicalUnits();
     virtual void                       usePhysicalUnits(const enum_physical_constants  units);
@@ -274,6 +277,8 @@ protected:
 
     mat4  tidalMatrix;
     mat4  coordTidalMatrix;
+
+    double fmu_nu[4][4];     //!< electromagnetic field tensor F^mu_nu
 
     bool                      inPhysicalUnits;
     enum_physical_constants   mPhysicalUnits;

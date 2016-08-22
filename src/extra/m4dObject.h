@@ -102,8 +102,6 @@
 #ifndef __GNUC__
 #pragma warning (disable: 4244 )
 #endif
-#else
-#define EXTRA_API
 #endif
 
 namespace m4d {
@@ -111,7 +109,7 @@ namespace m4d {
 // ---------------------------------------------------
 //    class definition:   Object
 // ---------------------------------------------------
-class EXTRA_API Object {
+class API_EXPORT Object {
 public:
     Object();
     ~Object();
@@ -143,6 +141,7 @@ public:
 
     unsigned int  getNumPoints();
     vec4   getPosition(unsigned int num);
+    double getAffineParam(unsigned int num);
 
     void   clearAll();
     void   resetAll();
@@ -153,6 +152,7 @@ public:
     bool   getParam(std::string paramName, m4d::vec4 &paramValue);
 
     bool   setLorentzTransf(const double chi, const double ksi, const double beta);
+    bool   setLorentzTransf(const m4d::vec3 beta);
     void   resetLorentzTransf();
 
     bool   loadSettings(std::string filename, bool printset = false);
@@ -196,13 +196,15 @@ public:
 
     int                   timeDirection;
     enum_nat_tetrad_type  tetradType;
-    unsigned int          maxNumPoints;
-    std::vector<vec4>     points;
-    std::vector<vec4>     dirs;
-    std::vector<double>   lambda;
+    unsigned int          maxNumPoints;   //!< maximum number of points to be calculated
+
+    std::vector<vec4>     points;   //!< trajectory points
+    std::vector<vec4>     dirs;     //!< trajectory coordinate directions
+    std::vector<double>   lambda;   //!< trajectory affine parameter
     std::vector<vec4>     sachs1;
     std::vector<vec4>     sachs2;
     std::vector<vec5>     jacobi;
+    std::vector<vec4>     trans_lt[4];        //!< transported local tetrad vector e0...e3
     vec5                  maxJacobi;
 
     double                speed_of_light;

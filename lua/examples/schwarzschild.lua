@@ -9,7 +9,7 @@ SetMetric("Schwarzschild",{mass = 1.0})
 --SetMetricParams({mass = 2.0})
 PrintMetric()
 
---PrintSolverDB()
+PrintSolverDB()
 
 SetGeodSolver("GSL_RK_Fehlberg")
 SetGeodParams({stepctrl = "yes",

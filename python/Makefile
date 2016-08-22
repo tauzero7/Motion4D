@@ -1,6 +1,7 @@
 
 CXX   = g++
-SWIG  = /usr/local/swig/3.0.6/bin/swig
+#SWIG  = /usr/local/swig/3.0.6/bin/swig
+SWIG = /usr/bin/swig
 
 INC_PATH = /usr/include/python2.7
 CXXFLAGS = -std=c++11 -O2 -fPIC
@@ -13,7 +14,7 @@ M4D_EXTRA_DIR = $(M4D_SRC_DIR)/extra
 M4D_MATH_DIR = $(M4D_SRC_DIR)/math
 M4D_METRIC_DIR = $(M4D_SRC_DIR)/metric
 M4D_MOTION_DIR = $(M4D_SRC_DIR)/motion
-M4D_LIB_SO = libm4d_debug.so
+M4D_LIB_SO = libm4dd.so
 
 
 BUILD_DIR = compiled/

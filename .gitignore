@@ -17,7 +17,7 @@ src/metric/kickedout
 *.pyc
 
 m4dLua
-m4dLua_debug
+m4dLuad
 
 test/calcGeodesic/m4dCalcGeodesic
 test/calcParallel/m4dCalcParallel
@@ -28,14 +28,14 @@ test/testGeodesic/m4dTestGeodesic
 test/testSimpleGeodesic/m4dTestSimpleGeodesic
 test/testJacobi/m4dTestJacobi
 
-test/calcGeodesic/m4dCalcGeodesic_debug
-test/calcParallel/m4dCalcParallel_debug
-test/testCircular/m4dTestCircular_debug
-test/testDatabase/m4dTestDatabase_debug
-test/testFWworldline/m4dTestFWworldline_debug
-test/testGeodesic/m4dTestGeodesic_debug
-test/testSimpleGeodesic/m4dTestSimpleGeodesic_debug
-test/testJacobi/m4dTestJacobi_debug
+test/calcGeodesic/m4dCalcGeodesicd
+test/calcParallel/m4dCalcParalleld
+test/testCircular/m4dTestCirculard
+test/testDatabase/m4dTestDatabased
+test/testFWworldline/m4dTestFWworldlined
+test/testGeodesic/m4dTestGeodesicd
+test/testSimpleGeodesic/m4dTestSimpleGeodesicd
+test/testJacobi/m4dTestJacobid
 
 python/*.so
 python/m4d.py

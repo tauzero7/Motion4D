@@ -27,7 +27,7 @@
 
 namespace m4d {
 
-IntegratorDatabase* IntegratorDatabase::m_instance = nullptr;
+ IntegratorDatabase* IntegratorDatabase::m_instance = nullptr;
 
 /*!
  */
@@ -71,12 +71,12 @@ IntegratorDatabase::getIntegrator(Metric* cMetric, enum_integrator num) {
  *  \param mName   : name of metric.
  */
 Geodesic*
-IntegratorDatabase::getIntegrator(Metric* cMetric, std::string mName) {
+IntegratorDatabase::getIntegrator(Metric* cMetric, const char* mName) {
     mIntegratorMapItr = mIntegratorNickMap.find(mName);
-    if (mIntegratorMapItr == mIntegratorMap.end()) {
+    if (mIntegratorMapItr == mIntegratorNickMap.end()) {
         mIntegratorMapItr = mIntegratorMap.find(mName);
         if (mIntegratorMapItr == mIntegratorMap.end()) {
-            fprintf(stderr, "Integrator '%s' is not implemented!\n", mName.c_str());
+            fprintf(stderr, "Integrator '%s' is not implemented!\n", mName);
             return NULL;
         }
     }
@@ -89,11 +89,11 @@ IntegratorDatabase::getIntegrator(Metric* cMetric, std::string mName) {
  *  \param num : number of metric.
  *  \return string : name of metric.
  */
-std::string IntegratorDatabase::getIntegratorName(enum_integrator num) {
+const char* IntegratorDatabase::getIntegratorName(enum_integrator num) {
     if (num >= 0 && num < (int)NUM_GEOD_SOLVERS) {
         return stl_solver_names[num];
     }
-    return std::string();
+    return nullptr;
 }
 
 /*! Get the number of the 'mName' metric.
@@ -101,12 +101,12 @@ std::string IntegratorDatabase::getIntegratorName(enum_integrator num) {
  *  \param mName : name of metric.
  *  \return enum_metric : number of metric.
  */
-enum_integrator IntegratorDatabase::getIntegratorNr(std::string mName) {
+enum_integrator IntegratorDatabase::getIntegratorNr(const char* mName) {
     mIntegratorMapItr = mIntegratorNickMap.find(mName);
-    if (mIntegratorMapItr == mIntegratorMap.end()) {
+    if (mIntegratorMapItr == mIntegratorNickMap.end()) {
         mIntegratorMapItr = mIntegratorMap.find(mName);
         if (mIntegratorMapItr == mIntegratorMap.end()) {
-            fprintf(stderr, "Integrator '%s' is not implemented!\n", mName.c_str());
+            fprintf(stderr, "Integrator '%s' is not implemented!\n", mName);
             return gsUnknown;
         }
     }

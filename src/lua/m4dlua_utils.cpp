@@ -22,7 +22,9 @@
 #include "lua/m4dlua_utils.h"
 #include "m4dGlobalDefs.h"
 
-void lua_reg_utils(lua_State *L) {
+extern m4d::Object  mObject;
+
+void M4D_CALL lua_reg_utils(lua_State *L) {
     lua_register(L, "PrintObjectSettings", printObjectSettings);
 
     lua_register(L, "GetCameraView", getCameraView);
@@ -31,6 +33,11 @@ void lua_reg_utils(lua_State *L) {
     lua_register(L, "GetGeodDir", getGeodDir);
     lua_register(L, "GetGeodLambda", getGeodLambda);
     lua_register(L, "GetNumPoints", getNumPoints);
+
+    lua_register(L, "GetTrajE0", getTrajE0);
+    lua_register(L, "GetTrajE1", getTrajE1);
+    lua_register(L, "GetTrajE2", getTrajE2);
+    lua_register(L, "GetTrajE3", getTrajE3);
 
     lua_register(L, "LinInterpolVec", linInterpolVec);
 
@@ -401,16 +408,47 @@ int getGeodDir(lua_State *L) {
         return 0;
     }
 
-    /*
-    lua_newtable(L);
-    for(int i=1; i<=4; i++) {
-        lua_pushnumber(L,i);
-        lua_pushnumber(L,mObject.dirs[idx][i-1]);
-        lua_settable(L,-3);
-    }
-    return 1;
-    */
     return pushVec(L,mObject.dirs[idx]);
+}
+
+int getTrajEi(lua_State *L, unsigned int i) {
+    assert(i < 4);
+    char msg[30];
+#ifdef _WIN32
+    sprintf_s(msg, "GetTrajE%d needs valid index.\n", i);
+#else
+    sprintf(msg, "GetTrajE%d needs valid index.\n", i);
+#endif
+
+    if (lua_isnil(L,-1) || !lua_isinteger(L,-1)) {
+        mlua_error(L, msg);
+        return 0;
+    }
+
+    int idx = lua_tointeger(L,-1);
+    if (idx < 0 || idx >= (int)mObject.trans_lt[i].size()) {
+        mlua_error(L, msg);
+        return 0;
+    }
+
+    return pushVec(L, mObject.trans_lt[i][idx]);
+}
+
+
+int getTrajE0(lua_State *L) {
+    return getTrajEi(L, 0);
+}
+
+int getTrajE1(lua_State *L) {
+    return getTrajEi(L, 1);
+}
+
+int getTrajE2(lua_State *L) {
+    return getTrajEi(L, 2);
+}
+
+int getTrajE3(lua_State *L) {
+    return getTrajEi(L, 3);
 }
 
 

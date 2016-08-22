@@ -45,13 +45,11 @@
 /* ----------------------------------------------------------------- 
  *                     m a i n
  * ----------------------------------------------------------------- */
-int main( int argc, char* argv[] )
-{
-  if (argc!=1)
-  {
-    fprintf(stderr,"Usage: ./m4dTestGeodesic\n");
-    return -1;
-  }
+int main(int argc, char* argv[]) {
+	if (argc != 1) {
+		fprintf(stderr, "Usage: ./m4dTestGeodesic\n");
+		return -1;
+	}
   
   fprintf(stderr,"\n\n=================== Test Geodesic ===================\n\n");  
   
@@ -62,17 +60,17 @@ int main( int argc, char* argv[] )
    * ----------------------------------------- */
   m4d::MetricDatabase* metricDB = m4d::MetricDatabase::getInstance();
   m4d::Metric* metric = metricDB->getMetric("SchwarzschildCart");
-  metric->printF(); 
+  metric->printF();
   
   /* -----------------------------------------
    *    Set geodesic integrator.
    * ----------------------------------------- */
-  m4d::GeodesicGSL* geod = new m4d::GeodesicGSL( metric, gsl_odeiv_step_rkf45, 4, m4d::enum_geodesic_lightlike );     
+  m4d::GeodesicGSL* geod = new m4d::GeodesicGSL(metric, gsl_odeiv_step_rkf45, 4, m4d::enum_geodesic_lightlike);
   //m4d::GeodesicRK4* geod = new m4d::GeodesicRK4( metric, m4d::enum_geodesic_lightlike );
-  geod->setEpsilons(1.0e-8,0.0);
+  geod->setEpsilons(1.0e-8, 0.0);
   geod->setStepSizeControlled(true);
   double boxSize = 20.0;
-  geod->setBoundingBox(m4d::vec4(-DBL_MAX,-boxSize,-boxSize,-boxSize),m4d::vec4(DBL_MAX,boxSize,boxSize,boxSize));
+  geod->setBoundingBox(m4d::vec4(-DBL_MAX, -boxSize, -boxSize, -boxSize), m4d::vec4(DBL_MAX, boxSize, boxSize, boxSize));
 
   m4d::vec4 pos, locDir, coDir;
   locDir = m4d::vec4(1.0, -1.0, 0.0, 0.0);

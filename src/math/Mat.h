@@ -46,15 +46,6 @@
 #endif
 #endif
 
-#ifdef _WIN32
-#ifdef MATH_EXPORTS
-#define MATH_API __declspec(dllexport)
-#else /* METRIC_EXPORTS */
-#define MATH_API __declspec(dllimport)
-#endif /* METRIC_EXPORTS */
-#else /* _WIN32 */
-#define MATH_API
-#endif /* _WIN32 */
 
 namespace m4d {
 

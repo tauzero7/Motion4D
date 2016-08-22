@@ -926,6 +926,14 @@ void Metric::getCoordTidalMatrix(mat4 &m) {
     m = coordTidalMatrix;
 }
 
+void Metric::calcFmu_nu(const double* ) {
+    // has to be implemented in the corresponding metric
+}
+
+double Metric::getFmu_nu(const int mu, const int nu) {
+    return fmu_nu[mu][nu];
+}
+
 
 /*! Add parameter 'pName'.
  *
