@@ -85,10 +85,12 @@
 #include "m4dMetricPTD_C.h"
 #include "m4dMetricPravda_C.h"
 #include "m4dMetricPravda_C_Can.h"
+#include "m4dMetricVaidyaIncRad.h"
+
 
 namespace m4d {
 
-const int  NUM_METRICS = 58;
+const int  NUM_METRICS = 59;
 
 /* --------------------------------------------------------
  *   List of all metrics currently implemented
@@ -99,7 +101,7 @@ const int  NUM_METRICS = 58;
  *   The names here must be equal to the names
  *   given in the constructor of the metric: mMetricName
  * -------------------------------------------------------- */
-static const char stl_metric_names[NUM_METRICS][60] =  {
+static const char stl_metric_names[NUM_METRICS][61] =  {
     "unknown",
     "Minkowski",
     "MinkowskiConformal",
@@ -157,7 +159,8 @@ static const char stl_metric_names[NUM_METRICS][60] =  {
     "TaubNUT",
     "TeoSimpleWH",
     "TeoWHl",
-    "TomimatsuSato"
+    "TomimatsuSato",
+    "VaidyaIncRad"
 };
 
 enum  enum_metric {
@@ -218,7 +221,8 @@ enum  enum_metric {
     enum_metric_taub_nut,
     enum_metric_teoSimpleWH,
     enum_metric_teowhl,
-    enum_metric_tomimatsusato
+    enum_metric_tomimatsusato,
+    enum_metric_vaidyaincrad
 };
 
 } // end namespace m4d

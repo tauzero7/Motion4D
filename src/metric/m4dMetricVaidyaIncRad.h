@@ -1,8 +1,8 @@
 // -------------------------------------------------------------------------------
 /*
-    m4dMetricSchwarzschildCart.h
+    m4dMetricVaidyaIncRad.h
 
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
+  Copyright (c) 2016  Thomas Mueller
 
 
    This file is part of the m4d-library.
@@ -22,72 +22,62 @@
 
 */
 
-/*!  \class  m4d::MetricSchwarzschildCart
-     \brief  Schwarzschild metric in cartesian coordinates (t,x,y,z).
+/*!  \class  m4d::MetricVaidyaIncRad
+     \brief  Incoming radiation Vaidya metric in spherical coordinates (v,r,theta,phi).
 
              The line element is given by
 
-             \f[ ds^2 = -\left(1-\frac{r_s}{r}\right)c^2dt^2 + \left(\frac{x^2}{1-r_s/r}+y^2+z^2\right)\frac{dx^2}{r^2} + \left(x^2+\frac{y^2}{1-r_s/r}+z^2\right)\frac{dy^2}{r^2} + \left(x^2+y^2+\frac{z^2}{1-r_s/r}\right)\frac{dz^2}{r^2} + \frac{2r_s}{r^2(r-r_s)}\left(xy\,dx\,dy+xz\,dx\,dz+yz\,dy\,dz\right), \f]
+             \f[ds^2 = 2dvdr - \left(1-\frac{2m(v)}{r}\right)dv^2 + r^2(d\theta^2+\sin^2\theta d\phi^2).\f]
 
-             with Schwarzschild radius \f$r_s = 2GM/c^2\f$.
+             Detailed discussions about the Vaidya metric can be found in Griffiths,Podolsky.
+
 */
 // -------------------------------------------------------------------------------
 
-#ifndef M4D_METRIC_SCHWARZSCHILD_CARTNEW_H
-#define M4D_METRIC_SCHWARZSCHILD_CARTNEW_H
+#ifndef M4D_METRIC_VAIDYA_INC_RAD_H
+#define M4D_METRIC_VAIDYA_INC_RAD_H
 
 #include "m4dMetric.h"
 
 namespace m4d {
 
 // ---------------------------------------------------
-//    class definition:   MetricSchwarzschildCart
+//    class definition:   MetricVaidyaIncRad
 // ---------------------------------------------------
-class MetricSchwarzschildCartNew : public Metric {
+class MetricVaidyaIncRad : public Metric {
 public:
-    //! Standard constructor for the Schwarzschildcart.
-    MetricSchwarzschildCartNew(double mass = 1.0);
-    virtual ~MetricSchwarzschildCartNew();
+    MetricVaidyaIncRad(double p = 1.0);
+    virtual ~MetricVaidyaIncRad();
 
 // --------- public methods -----------
 public:
     virtual bool   calculateMetric(const double* pos);
     virtual bool   calculateChristoffels(const double* pos);
-
+    
     virtual void   localToCoord(const double* pos, const double* ldir, double* dir,
                                 enum_nat_tetrad_type  type = enum_nat_tetrad_default);
     virtual void   coordToLocal(const double* pos, const double* cdir, double* ldir,
                                 enum_nat_tetrad_type  type = enum_nat_tetrad_default);
 
-
     virtual bool   breakCondition(const double* pos);
-
-    virtual double testConstraint(const double y[], const double kappa);
-
-
-    virtual bool   setParam(std::string pName, double val);
 
     virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
 
+    virtual bool   setParam(std::string pName, double val);
 
 // --------- protected methods -----------
 protected:
     virtual void setStandardValues();
 
-    void   calcLTcoeffs(const double* pos);
+    void calcMassFunc(const double v, double &m);    
+    void calcMassFunc(const double v, double &m, double &dmdv);
 
 // -------- protected attribute ---------
 protected:
-    double rs;
-
-    void coutChristoffel();
-
-    // Tetrad coefficients;
-    double A, B, C, D, E, F;
+    double mP;  // constant factor
 };
 
 } // end namespace m4d
 
-#endif
-
+#endif // M4D_METRIC_VAIDYA_INC_RAD_H
 

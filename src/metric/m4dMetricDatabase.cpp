@@ -339,8 +339,12 @@ MetricDatabase::initializeMetric(enum_metric  num) {
         break;
     case enum_metric_Pravda_C_Can:
         currMetric = new MetricPravda_C_Can;
+        break;        
+    case enum_metric_vaidyaincrad:
+        currMetric = new MetricVaidyaIncRad;
         break;
     }
+    
     return currMetric;
 }
 
