@@ -67,14 +67,53 @@ public:
 
     // --------- public methods -----------
 public:
+    /*!
+     * @brief  Set type of geodesic.
+     * @param type  Type of geodesic: lightlike, timelike,
+     */
     void    setGeodesicType(enum_geodesic_type  type);
+    
+    /*!
+     * @brief  Get type of geodesic.
+     */
     enum_geodesic_type   type();
 
+    /*!
+     * @brief Set parameter via key-value.
+     * @param paramName   Name of parameter.
+     * @param val         Parameter value to be set.
+     */
     virtual bool setParam(std::string paramName, bool val);
+    
+    /*!
+     * @brief Set parameter via key-value.
+     * @param paramName   Name of parameter.
+     * @param value       Parameter value to be set.
+     */
     virtual bool setParam(std::string paramName, double value);
+    
+    /*!
+     * @brief Set four parameters via key-values.
+     * @param paramName   Name of parameter.
+     * @param v0          Parameter v0.
+     * @param v1          Parameter v1.
+     * @param v2          Parameter v2.
+     * @param v3          Parameter v3.
+     */
     virtual bool setParam(std::string paramName, double v0, double v1, double v2, double v3);
 
+    /*! 
+     * @brief Set absolute and relative epsilon.
+     * @param  eps_a   epsilon absolute.
+     * @param  eps_r   epsilon relative.
+     */
     void    setEpsilons(double eps_a, double eps_r);
+    
+    /*! 
+     * @brief Get absolute and relative epsilons.
+     * @param eps_a : reference to epsilon absolute.
+     * @param eps_r : reference to epsilon relative.
+     */
     void    getEpsilons(double &eps_a, double &eps_r);
 
     void    setStepSizeControlled(bool control = true);

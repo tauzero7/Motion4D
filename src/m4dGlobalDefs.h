@@ -186,6 +186,8 @@
 #define DEF_JAC2_IDX  24
 #define DEF_DJ2_IDX   28
 
+#define M4D_MSG(msg)    printf("%s (%d): %s\n",__FILE__,__LINE__,msg);
+
 /* --------------------------------------------------------
  *   mathematical stuff
  * -------------------------------------------------------- */

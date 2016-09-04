@@ -5,14 +5,14 @@ obj = m4d.Object()
 obj.setMetric("SchwarzschildCart")
 
 obj.setSolver("GSL_RK4")
-obj.setSolverParam("eps_a", 1e-12)
+obj.setSolverParam("eps_a", 1e-8)
 obj.setSolverParam("stepctrl", True)
 
 boxSize = 20.0
 obj.setSolverParam("lower_bb", -1e12, -boxSize, -boxSize, -boxSize)
 obj.setSolverParam("upper_bb", 1e12, boxSize, boxSize, boxSize)
 
-#obj.printStatus()
+obj.printStatus()
 
 yinit = [ 0.0, 1.0, 2.0, 3.0, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, \
 7.5, 8.0, 9.0, 10.0 ]
@@ -22,7 +22,7 @@ for n in range(0, len(yinit)):
     obj.setInitialPosition(0.0, 10.0, yinit[n], 0.0)
     obj.setInitialLocalNullDirection(1, -1.0, 0.0, 0.0)
 
-    obj.calculateGeodesic(1000)
+    obj.calculateGeodesic(2000)
     num = obj.getNumPoints()
     print num
     for i in range(0,num):

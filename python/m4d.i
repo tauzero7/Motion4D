@@ -100,7 +100,7 @@ std::tuple<double, double, double> getThree() {
     return res;
 }
 
-std::vector<m4d::VnD<double,4>> getEmptyList() {
+std::vector<m4d::VnD<double,4> > getEmptyList() {
     return std::vector<m4d::VnD<double,4>>();
 }
 

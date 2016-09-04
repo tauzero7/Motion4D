@@ -89,11 +89,14 @@ bool Geodesic::setParam(std::string paramName, bool val) {
 
 
 bool Geodesic::setParam(std::string paramName, double value) {
-    if (paramName.compare("eps_a")==0 || paramName.compare("epsilon_abs")==0) {
+    if (paramName.compare("stepctrl") == 0) {
+        mStepsizeControlled = (int(value) == 1);
+    }
+    else if (paramName.compare("eps_a") == 0 || paramName.compare("epsilon_abs") == 0) {
         epsilon_abs = value;
         return true;
     }
-    else if (paramName.compare("eps_r")==0 || paramName.compare("epsilon_rel")==0) {
+    else if (paramName.compare("eps_r") == 0 || paramName.compare("epsilon_rel") == 0) {
         epsilon_rel = value;
         return true;
     }
@@ -106,23 +109,13 @@ bool Geodesic::setParam(std::string paramName, double v0, double v1, double v2, 
 }
 
 
-/*! Set absolute and relative epsilon.
- *
- *  \param  eps_a  : epsilon absolute.
- *  \param  eps_r  : epsilon relative.
- */
-void
-Geodesic::setEpsilons(double eps_a, double eps_r) {
+void Geodesic::setEpsilons(double eps_a, double eps_r) {
     epsilon_abs = eps_a;
     epsilon_rel = eps_r;
 }
 
-/*! Get absolute and relative epsilons.
- *  \param eps_a : reference to epsilon absolute.
- *  \param eps_r : reference to epsilon relative.
- */
-void
-Geodesic::getEpsilons(double &eps_a, double &eps_r) {
+
+void Geodesic::getEpsilons(double &eps_a, double &eps_r) {
     eps_a = epsilon_abs;
     eps_r = epsilon_rel;
 }

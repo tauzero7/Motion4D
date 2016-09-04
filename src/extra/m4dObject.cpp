@@ -83,6 +83,7 @@ bool Object::setSolverParam(const char *paramName, bool val) {
         fprintf(stderr,"Object::setSolverParam() ... solver is missing!\n");
         return false;
     }
+    //M4D_MSG((val ? "yes" : "no"));
     return geodSolver->setParam(paramName, val);
 }
 
@@ -91,7 +92,8 @@ bool Object::setSolverParam(const char *paramName, double value) {
     if (geodSolver == nullptr) {
         fprintf(stderr,"Object::setSolverParam() ... solver is missing!\n");
         return false;
-    }
+    }    
+    //M4D_MSG(std::to_string(value).c_str());
     return geodSolver->setParam(paramName, value);
 }
 
