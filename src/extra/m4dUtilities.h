@@ -42,8 +42,8 @@
 
 #include "m4dPlatform.h"
 
-#ifdef _WIN32
-#if defined(m4d_EXPORTS) || defined(m4d_lua_EXPORTS) || defined(m4dd_EXPORTS) || defined(m4d_luad_EXPORTS)
+#if defined _WIN32 && defined(M4D_LIB)
+#if defined(m4d_EXPORTS) || defined(m4d_lua_EXPORTS) || defined(m4dd_EXPORTS) || defined(m4d_luad_EXPORTS) || defined(_m4d_EXPORTS)
 #define API_EXPORT __declspec(dllexport)
 #else 
 #define API_EXPORT __declspec(dllimport)

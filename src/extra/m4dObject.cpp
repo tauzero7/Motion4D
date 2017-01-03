@@ -177,9 +177,31 @@ enum_break_condition Object::calculateGeodesic(int numPoints) {
         return enum_break_other;
     }
     clearAll();
-	geodSolver->setGeodesicType(this->type);
+    geodSolver->setGeodesicType(this->type);
     return geodSolver->calculateGeodesic(this->startPos, this->coordDir, numPoints,
                                          this->points, this->dirs, this->lambda);
+}
+
+
+enum_break_condition  Object::calcSachsJacobi(int numPoints) {
+    if (geodSolver == nullptr) {
+        fprintf(stderr,"Object::calcSachsJacobi() ... solver is missing!\n");
+        return enum_break_other;
+    }
+    clearAll();
+    geodSolver->setGeodesicType(enum_geodesic_lightlike_sachs);
+    
+    vec3 localNullDir;
+    vec3 locX;
+    vec3 locY;
+    vec3 locZ;
+    
+    return geodSolver->calcSachsJacobi(this->startPos, this->coordDir, 
+        localNullDir, locX, locY, locZ, 
+        this->base[0], this->base[1], this->base[2], this->base[3],
+        this->tetradType, numPoints, 
+        this->points, this->dirs, this->lambda, this->sachs1, this->sachs2,
+        this->jacobi, this->maxJacobi);    
 }
 
 

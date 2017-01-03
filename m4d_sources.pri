@@ -78,6 +78,7 @@ M4D_METRIC_HEADERS = $$M4D_SRC_DIR/metric/m4dMetric.h \
         $$M4D_SRC_DIR/metric/m4dMetricSchwarzschild.h \
         $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildCart.h \
         $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildCartNew.h \
+        $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildGravWave.h \
         $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildIsotropic.h \
         $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildTortoise.h \
         $$M4D_SRC_DIR/metric/m4dMetricStraightSpinningString.h \
@@ -140,6 +141,7 @@ M4D_METRIC_SOURCES = $$M4D_SRC_DIR/metric/m4dMetric.cpp \
         $$M4D_SRC_DIR/metric/m4dMetricSchwarzschild.cpp \
         $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildCart.cpp \
         $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildCartNew.cpp \
+        $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildGravWave.cpp \
         $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildIsotropic.cpp \
         $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildTortoise.cpp \
         $$M4D_SRC_DIR/metric/m4dMetricStraightSpinningString.cpp \

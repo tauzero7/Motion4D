@@ -59,7 +59,7 @@ public:
     Metric*      getMetric(enum_metric  num);
     Metric*      getMetric(const char* mName);
     std::string  getMetricName(enum_metric  num);
-	enum_metric  getMetricNr(const char* mName);
+    enum_metric  getMetricNr(const char* mName);
 
     void         printMetricList(FILE* fptr = stderr);
 

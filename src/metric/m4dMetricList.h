@@ -68,6 +68,7 @@
 #include "m4dMetricSchwarzschild.h"
 #include "m4dMetricSchwarzschildCart.h"
 #include "m4dMetricSchwarzschildCartNew.h"
+#include "m4dMetricSchwarzschildGravWave.h"
 #include "m4dMetricSchwarzschildIsotropic.h"
 #include "m4dMetricSchwarzschildTortoise.h"
 #include "m4dMetricStraightSpinningString.h"
@@ -90,7 +91,7 @@
 
 namespace m4d {
 
-const int  NUM_METRICS = 59;
+const int  NUM_METRICS = 60;
 
 /* --------------------------------------------------------
  *   List of all metrics currently implemented
@@ -101,7 +102,7 @@ const int  NUM_METRICS = 59;
  *   The names here must be equal to the names
  *   given in the constructor of the metric: mMetricName
  * -------------------------------------------------------- */
-static const char stl_metric_names[NUM_METRICS][61] =  {
+static const char stl_metric_names[NUM_METRICS][62] =  {
     "unknown",
     "Minkowski",
     "MinkowskiConformal",
@@ -109,6 +110,7 @@ static const char stl_metric_names[NUM_METRICS][61] =  {
     "Schwarzschild",
     "SchwarzschildCart",
     "SchwarzschildCartNew",
+    "SchwarzschildGravWave",
     "SchwarzschildIsotropic",
     "SchwarzschildTortoise",
     "EddFinkIn",
@@ -171,6 +173,7 @@ enum  enum_metric {
     enum_metric_schwarzschild,
     enum_metric_schwarzschild_cart,
     enum_metric_schwarzschild_cartnew,
+    enum_metric_schwarzschild_gravwave,
     enum_metric_schwarzschild_isotropic,
     enum_metric_schwarzschild_tortoise,
     enum_metric_eddfinkin,

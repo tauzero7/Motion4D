@@ -22,6 +22,7 @@ m4dLuad
 test/calcGeodesic/m4dCalcGeodesic
 test/calcParallel/m4dCalcParallel
 test/testCircular/m4dTestCircular
+test/testCPmotion/m4dTestCPmotion
 test/testDatabase/m4dTestDatabase
 test/testFWworldline/m4dTestFWworldline
 test/testGeodesic/m4dTestGeodesic
@@ -31,6 +32,7 @@ test/testJacobi/m4dTestJacobi
 test/calcGeodesic/m4dCalcGeodesicd
 test/calcParallel/m4dCalcParalleld
 test/testCircular/m4dTestCirculard
+test/testCPmotion/m4dTestCPmotiond
 test/testDatabase/m4dTestDatabased
 test/testFWworldline/m4dTestFWworldlined
 test/testGeodesic/m4dTestGeodesicd

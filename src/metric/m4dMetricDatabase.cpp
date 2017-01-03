@@ -27,7 +27,9 @@
 
 namespace m4d {
 
+#ifndef _WIN32
 MetricDatabase* MetricDatabase::m_instance = nullptr;
+#endif
 
 /*!
  */
@@ -114,10 +116,10 @@ void MetricDatabase::printMetricList(FILE* fptr) {
     fprintf(fptr, "-----------------------------------------------------------\n");
 
     int      numParams;
-    Metric*  metric;
+    Metric*  metric = nullptr;
     std::vector<std::string> paramNames;
     double   value;
-
+std::cerr << stl_metric_names[1] << std::endl;
 
     for (int i = 0; i < NUM_METRICS; i++) {
         paramNames.clear();
@@ -288,6 +290,9 @@ MetricDatabase::initializeMetric(enum_metric  num) {
         break;
     case enum_metric_schwarzschild_cartnew:
         currMetric = new MetricSchwarzschildCartNew;
+        break;
+    case enum_metric_schwarzschild_gravwave:
+        currMetric = new MetricSchwarzschildGravWave;
         break;
     case enum_metric_schwarzschild_isotropic:
         currMetric = new MetricSchwarzschildIsotropic;

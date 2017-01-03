@@ -136,6 +136,7 @@ public:
                                         enum_nat_tetrad_type natType = enum_nat_tetrad_default);
 
     enum_break_condition  calculateGeodesic(int numPoints);
+    enum_break_condition  calcSachsJacobi(int numPoints);
 
     void   printStatus();
 
