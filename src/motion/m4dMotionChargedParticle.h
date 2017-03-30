@@ -42,7 +42,7 @@ namespace m4d {
 // ---------------------------------------------------
 //    class definition:   MotionChargedParticle
 // ---------------------------------------------------
-class API_EXPORT MotionChargedParticle : public Motion {
+class API_M4D_EXPORT MotionChargedParticle : public Motion {
 public:
     MotionChargedParticle(Metric* metric);
     virtual ~MotionChargedParticle();

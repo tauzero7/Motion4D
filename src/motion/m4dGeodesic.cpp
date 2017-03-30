@@ -431,11 +431,11 @@ Geodesic::calcJacobiParams(const double lambda, const double y[], vec5 &currJaco
     fprintf(stderr, "%12.8f %12.8f %12.8f %12.8f\n", z1p, z2p, z1m, z2m);
 #endif
 
-    if (fabs(dm) > fabs(dp)) {
-        std::swap(dm, dp);
-        std::swap(z1p, z1m);
-        std::swap(z2p, z2m);
-    }
+  //  if (fabs(dm) > fabs(dp)) {
+  //      std::swap(dm, dp);
+  //      std::swap(z1p, z1m);
+  //      std::swap(z2p, z2m);
+  //  }
 
     double angle = atan2(z2p, z1p);
     double elipt = fabs(dp - dm) / fabs(dp + dm);

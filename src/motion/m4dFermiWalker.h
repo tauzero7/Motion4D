@@ -60,7 +60,7 @@ namespace m4d {
 // ---------------------------------------------------
 //    class definition:   FermiWalker
 // ---------------------------------------------------
-class API_EXPORT FermiWalker : public Motion {
+class API_M4D_EXPORT FermiWalker : public Motion {
 public:
     FermiWalker(Metric* metric);
     virtual ~FermiWalker();

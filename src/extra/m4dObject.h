@@ -109,7 +109,7 @@ namespace m4d {
 // ---------------------------------------------------
 //    class definition:   Object
 // ---------------------------------------------------
-class API_EXPORT Object {
+class API_M4D_EXPORT Object {
 public:
     Object();
     ~Object();
@@ -124,9 +124,14 @@ public:
     bool   setSolverParam(const char* paramName, double value);
     bool   setSolverParam(const char* paramName, double v0, double v1, double v2, double v3);
 
+    bool   setInitialPosition(const double* x);
     bool   setInitialPosition(double x0, double x1, double x2, double x3);
+
+    bool   setInitialDirection(const double* v);
     bool   setInitialDirection(double v0, double v1, double v2, double v3);
 
+    bool   setInitialLocalNullDirection(enum_time_direction tdir, const double *l,
+                                        enum_nat_tetrad_type nattype = enum_nat_tetrad_default);
     bool   setInitialLocalNullDirection(enum_time_direction tdir,
                                         double l0, double l1, double l2,
                                         enum_nat_tetrad_type nattype = enum_nat_tetrad_default);
@@ -135,8 +140,8 @@ public:
                                         double l0, double l1, double l2, double beta,
                                         enum_nat_tetrad_type natType = enum_nat_tetrad_default);
 
-    enum_break_condition  calculateGeodesic(int numPoints);
-    enum_break_condition  calcSachsJacobi(int numPoints);
+    enum_break_condition  calculateGeodesic();
+    enum_break_condition  calcSachsJacobi();
 
     void   printStatus();
 
@@ -161,6 +166,7 @@ public:
     void   printSettings(FILE* fptr = stderr);
 
     bool   makeReport(std::string  &text);
+    void   printReport(FILE* fptr = stdout);
 
     // --------- public attributes --------
 public:

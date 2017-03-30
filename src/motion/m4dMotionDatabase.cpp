@@ -27,7 +27,9 @@
 
 namespace m4d {
 
- IntegratorDatabase* IntegratorDatabase::m_instance = nullptr;
+//#ifndef _WIN32
+IntegratorDatabase* IntegratorDatabase::m_instance = nullptr;
+//#endif // _WIN32
 
 /*!
  */

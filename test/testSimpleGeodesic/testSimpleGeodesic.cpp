@@ -71,8 +71,9 @@ int main( int argc, char* argv[] ) {
     
     mObject.setInitialPosition(0.0, 10.0, M_PI_2, 0.0);
     mObject.setInitialLocalNullDirection(m4d::enum_time_forward, -1.0, 0.0, 1.0);
+    mObject.maxNumPoints = 1000;
     m4d::enum_break_condition bcd;
-    bcd = mObject.calculateGeodesic(1000);
+    bcd = mObject.calculateGeodesic();
     std::cerr << m4d::stl_break_condition[(int)bcd] << std::endl;
     exit(1);
   
@@ -106,7 +107,7 @@ int main( int argc, char* argv[] ) {
         mObject.setInitialLocalNullDirection(m4d::enum_time_forward, -1.0, 0.0, 0.0);
   
         m4d::enum_break_condition bc;
-        bc = mObject.calculateGeodesic(1000);
+        bc = mObject.calculateGeodesic();
         std::cerr << m4d::stl_break_condition[(int)bc];
         std::cerr << "#points: " << mObject.points.size() << std::endl;
   

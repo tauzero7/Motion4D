@@ -45,7 +45,7 @@
 
 namespace m4d {
 
-class API_EXPORT MetricDatabase {
+class API_M4D_EXPORT MetricDatabase {
 public:
     static MetricDatabase* M4D_CALL getInstance() {
         static CGuard g;

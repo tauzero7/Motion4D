@@ -541,12 +541,12 @@ GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
         y[DEF_DJ2_IDX + i]  = bb2[i];
     }
 
-    /*
+#if 0
     double prod;
     mMetric->calcProduct(initPos,initCoordDir,initCoordDir,prod);  fprintf(stderr,"%g\n",prod);
-    mMetric->calcProduct(initPos,initCoordDir,bb1,prod);  fprintf(stderr,"%g\n",prod);
-    mMetric->calcProduct(initPos,initCoordDir,bb2,prod);  fprintf(stderr,"%g\n",prod);  std::cerr << std::endl;
-    */
+    mMetric->calcProduct(initPos,initCoordDir,bb1,prod);  fprintf(stderr,"p: %g\n",prod);
+    mMetric->calcProduct(initPos,initCoordDir,bb2,prod);  fprintf(stderr,"p: %g\n",prod);  std::cerr << std::endl;
+#endif
 
     enum_break_condition  breakType = enum_break_none;
     double cstr;
@@ -589,6 +589,13 @@ GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
                 sachs0.push_back(vec4(&y[DEF_SA1_IDX]));
                 sachs1.push_back(vec4(&y[DEF_SA2_IDX]));
 
+#if 0
+                // Sachs basis keeps perpendicular to the null geodesic:
+                double prod;
+                mMetric->calcProduct(p,vec4(&y[DEF_TG_IDX]),vec4(&y[DEF_TG_IDX]),prod);  fprintf(stderr,"%g\n",prod);
+                mMetric->calcProduct(p,vec4(&y[DEF_TG_IDX]),vec4(&y[DEF_SA1_IDX]),prod);  fprintf(stderr,"p: %g\n",prod);
+                mMetric->calcProduct(p,vec4(&y[DEF_TG_IDX]),vec4(&y[DEF_SA2_IDX]),prod);  fprintf(stderr,"p: %g\n",prod);  std::cerr << std::endl;
+#endif
                 /*
                 fprintf(stdout,"%12.6f %12.6e %12.6e   %12.6e %12.6e %12.6e %12.6e    %12.6e %12.6e %12.6e %12.6e\n",
                 y[0],y[1],y[2],

@@ -287,16 +287,16 @@ float* readFloatArray(std::string filename, int &x, int &y, int &c) {
     return array;
 }
 
-double API_EXPORT radians(double phi) {
+double M4D_CALL radians(double phi) {
     return phi * DEG_TO_RAD;
 }
 
-API_EXPORT double degree(double phi) {
+double M4D_CALL degree(double phi) {
     return phi * RAD_TO_DEG;
 }
 
 
-int API_EXPORT find_nat_tetrad_type( const char* name) {
+int M4D_CALL find_nat_tetrad_type( const char* name) {
     unsigned int n = 0;
     while(n < NUM_ENUM_NAT_TETRAD_TYPES) {
         if (strcmp(name,stl_nat_tetrad_types[n])==0) {

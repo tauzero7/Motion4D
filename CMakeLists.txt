@@ -64,10 +64,16 @@ if(CMAKE_BUILD_TYPE MATCHES "debug" OR
 endif()
 #message(m4d${DAR})
 
+if(WIN32)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DM4D_LIB -D_m4d_EXPORTS")
+endif(WIN32)
+
 # build m4d library
 add_library(m4d${DAR} SHARED ${m4d_source_files})
 target_link_libraries(m4d${DAR} gsl gslcblas)
-set_target_properties(m4d${DAR} PROPERTIES  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
+set_target_properties(m4d${DAR} 
+    PROPERTIES  
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 
 install(TARGETS m4d${DAR} LIBRARY DESTINATION lib  RUNTIME DESTINATION bin)
 install(TARGETS m4d${DAR} DESTINATION lib)

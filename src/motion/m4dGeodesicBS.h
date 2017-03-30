@@ -58,7 +58,7 @@ namespace m4d {
 // ---------------------------------------------------
 //    class definition:   GeodesicBS
 // ---------------------------------------------------
-class API_EXPORT GeodesicBS : public Geodesic {
+class API_M4D_EXPORT GeodesicBS : public Geodesic {
 public:
     GeodesicBS(Metric* metric, enum_geodesic_type  type = enum_geodesic_lightlike);
     virtual ~GeodesicBS();

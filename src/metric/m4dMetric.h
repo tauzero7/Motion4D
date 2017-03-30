@@ -95,7 +95,7 @@ namespace m4d {
 // ---------------------------------------------------
 //    class definition:   Metric
 // ---------------------------------------------------
-class API_EXPORT Metric {
+class API_M4D_EXPORT Metric {
 public:
     Metric();
     virtual ~Metric();

@@ -67,7 +67,7 @@ int func_adaptor_jacobi(double x, const double y[], double f[], void *params);
 // ---------------------------------------------------
 //    class definition:   GeodesicGSL
 // ---------------------------------------------------
-class API_EXPORT GeodesicGSL : public Geodesic {
+class API_M4D_EXPORT GeodesicGSL : public Geodesic {
 public:
     GeodesicGSL(Metric* metric, const gsl_odeiv_step_type*  step_type, int solver_type,
                 enum_geodesic_type  type = enum_geodesic_lightlike);

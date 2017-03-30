@@ -107,6 +107,14 @@ bool Object::setSolverParam(const char *paramName, double v0, double v1, double 
 }
 
 
+bool Object::setInitialPosition(const double* x) {
+    if (x == nullptr) {
+        return false;
+    }
+    return setInitialPosition(x[0], x[1], x[2], x[3]);
+}
+
+
 bool Object::setInitialPosition(double x0, double x1, double x2, double x3) {
     if (currMetric == nullptr) {
         fprintf(stderr,"Object::setInitialPosition() ... metric is missing!\n");
@@ -120,9 +128,27 @@ bool Object::setInitialPosition(double x0, double x1, double x2, double x3) {
 }
 
 
+bool Object::setInitialDirection(const double *v) {
+    if (v == nullptr) {
+        return false;
+    }
+    return setInitialDirection(v[0], v[1], v[2], v[3]);
+}
+
+
 bool Object::setInitialDirection(double v0, double v1, double v2, double v3) {
     this->coordDir = vec4(v0, v1, v2, v3);
     return true;
+}
+
+
+bool Object::setInitialLocalNullDirection(enum_time_direction tdir, const double *l,
+                                        enum_nat_tetrad_type nattype)
+{
+    if (l == nullptr) {
+        return false;
+    }
+    return setInitialLocalNullDirection(tdir, l[0], l[1], l[2], nattype);
 }
 
 bool Object::setInitialLocalNullDirection(enum_time_direction tdir,
@@ -138,6 +164,7 @@ bool Object::setInitialLocalNullDirection(enum_time_direction tdir,
     vec4 locDir, coDir;
     vec3 dir = vec3(l0, l1, l2).getNormalized();
     locDir = vec4(tf, dir[0], dir[1], dir[2]);
+    this->startDir = dir;
     currMetric->localToCoord(this->startPos, locDir, coDir, natType);
     this->coordDir = coDir;
     this->type = enum_geodesic_lightlike;
@@ -171,37 +198,38 @@ bool Object::setInitialLocalTimeDirection(enum_time_direction tdir,
 }
 
 
-enum_break_condition Object::calculateGeodesic(int numPoints) {
+enum_break_condition Object::calculateGeodesic() {
     if (geodSolver == nullptr) {
         fprintf(stderr,"Object::calculateGeodesic() ... solver is missing!\n");
         return enum_break_other;
     }
     clearAll();
-    geodSolver->setGeodesicType(this->type);
-    return geodSolver->calculateGeodesic(this->startPos, this->coordDir, numPoints,
+    geodSolver->setGeodesicType(this->type);    
+    return geodSolver->calculateGeodesic(this->startPos, this->coordDir, this->maxNumPoints,
                                          this->points, this->dirs, this->lambda);
 }
 
 
-enum_break_condition  Object::calcSachsJacobi(int numPoints) {
+enum_break_condition  Object::calcSachsJacobi() {
     if (geodSolver == nullptr) {
         fprintf(stderr,"Object::calcSachsJacobi() ... solver is missing!\n");
         return enum_break_other;
     }
     clearAll();
     geodSolver->setGeodesicType(enum_geodesic_lightlike_sachs);
-    
-    vec3 localNullDir;
-    vec3 locX;
-    vec3 locY;
-    vec3 locZ;
-    
+
+    vec3 localNullDir = this->startDir;
+
+    vec3 locX = vec3(1.0, 0.0, 0.0);
+    vec3 locY = vec3(0.0, 1.0, 0.0);
+    vec3 locZ = vec3(0.0, 0.0, 1.0);
+
     return geodSolver->calcSachsJacobi(this->startPos, this->coordDir, 
         localNullDir, locX, locY, locZ, 
         this->base[0], this->base[1], this->base[2], this->base[3],
-        this->tetradType, numPoints, 
+        this->tetradType, this->maxNumPoints,
         this->points, this->dirs, this->lambda, this->sachs1, this->sachs2,
-        this->jacobi, this->maxJacobi);    
+        this->jacobi, this->maxJacobi);
 }
 
 
@@ -837,6 +865,12 @@ bool Object::makeReport(std::string  &text) {
 
     currMetric->report(startPos, coDir, text);
     return true;
+}
+
+void Object::printReport(FILE* fptr) {
+    std::string text;
+    makeReport(text);
+    fprintf(fptr, "%s\n", text.c_str());
 }
 
 } // end namespace m4d

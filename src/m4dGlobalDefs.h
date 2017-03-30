@@ -108,14 +108,14 @@
 
 #if defined _WIN32 && defined(M4D_LIB)
 #if defined(m4d_EXPORTS) || defined(m4d_lua_EXPORTS) || defined(m4dd_EXPORTS) || defined(m4d_luad_EXPORTS) || defined(_m4d_EXPORTS)
-#define API_EXPORT __declspec(dllexport)
+#define API_M4D_EXPORT __declspec(dllexport)
 #else 
-#define API_EXPORT __declspec(dllimport)
+#define API_M4D_EXPORT __declspec(dllimport)
 #endif 
 #define M4D_CALL __stdcall
 #else // _WIN32
 #define M4D_CALL
-#define API_EXPORT
+#define API_M4D_EXPORT
 #endif // _WIN32
 
 #ifdef _WIN32

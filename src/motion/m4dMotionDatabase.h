@@ -43,7 +43,7 @@
 
 namespace m4d {
 
-class API_EXPORT IntegratorDatabase {
+class API_M4D_EXPORT IntegratorDatabase {
 public:
     static IntegratorDatabase* getInstance() {
         static CGuard g;

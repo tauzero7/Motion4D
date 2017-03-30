@@ -46,7 +46,7 @@
 
 namespace m4d {
 
-class API_EXPORT TransCoordinates {
+class API_M4D_EXPORT TransCoordinates {
 public:
     TransCoordinates();
     ~TransCoordinates();

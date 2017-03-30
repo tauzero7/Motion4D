@@ -27,9 +27,9 @@
 
 namespace m4d {
 
-#ifndef _WIN32
+//#ifndef _WIN32
 MetricDatabase* MetricDatabase::m_instance = nullptr;
-#endif
+//#endif
 
 /*!
  */

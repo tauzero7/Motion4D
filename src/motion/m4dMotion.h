@@ -74,7 +74,7 @@ namespace m4d {
 // ---------------------------------------------------
 //    class definition:   Motion
 // ---------------------------------------------------
-class API_EXPORT Motion {
+class API_M4D_EXPORT Motion {
 public:
     Motion(Metric* metric);
     virtual ~Motion();
