@@ -120,9 +120,11 @@ public:
     bool   setMetricParam(const char* paramName, double value);
 
     bool   setSolver(const char* solverName);
-    bool   setSolverParam(const char* paramName, bool val);
+    bool   setSolverParam(const char* paramName, bool val);    
     bool   setSolverParam(const char* paramName, double value);
     bool   setSolverParam(const char* paramName, double v0, double v1, double v2, double v3);
+
+    bool   setParam(const char* paramName, int val);
 
     bool   setInitialPosition(const double* x);
     bool   setInitialPosition(double x0, double x1, double x2, double x3);
@@ -156,6 +158,7 @@ public:
     bool   getParam(std::string paramName, double &paramValue);
     bool   getParam(std::string paramName, m4d::vec3 &paramValue);
     bool   getParam(std::string paramName, m4d::vec4 &paramValue);
+
 
     bool   setLorentzTransf(const double chi, const double ksi, const double beta);
     bool   setLorentzTransf(const m4d::vec3 beta);

@@ -80,7 +80,7 @@ Geodesic::type() {
 
 
 bool Geodesic::setParam(std::string paramName, bool val) {
-    if (paramName.compare("stepctrl")==0) {
+    if (paramName.compare("stepctrl") == 0) {
         mStepsizeControlled = val;
         return true;
     }

@@ -106,6 +106,13 @@ bool Object::setSolverParam(const char *paramName, double v0, double v1, double 
     return geodSolver->setParam(paramName, v0, v1, v2, v3);
 }
 
+bool Object::setParam(const char* paramName, int val) {
+    if (paramName != nullptr && strcmp(paramName, "maxNumPoints") == 0) {
+        maxNumPoints = static_cast<unsigned int>(val);
+    }
+    return true;
+}
+
 
 bool Object::setInitialPosition(const double* x) {
     if (x == nullptr) {
