@@ -23,6 +23,7 @@
 */
 // -------------------------------------------------------------------------------
 
+#include <cmath>
 #include "m4dMetricTomimatsuSato.h"
 
 namespace m4d {
@@ -465,7 +466,7 @@ void MetricTomimatsuSato::coordToLocal(const double* , const double* , double* ,
 bool MetricTomimatsuSato::breakCondition(const double* pos) {
     bool br = false;
     // x<1 oder y<1 als abbruchbedingung??
-    if (isnan(pos[0]) || isnan(pos[1]) || isnan(pos[2]) || isnan(pos[3])) {
+    if (std::isnan(pos[0]) || std::isnan(pos[1]) || std::isnan(pos[2]) || std::isnan(pos[3])) {
         br = true;
     } else {
         calcTomimatsuSato(pos);

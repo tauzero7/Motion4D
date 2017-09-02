@@ -23,6 +23,7 @@
 */
 // -------------------------------------------------------------------------------
 
+#include <cmath>
 #include "m4dMetricKerrBL.h"
 
 namespace m4d {
@@ -1089,7 +1090,7 @@ bool MetricKerrBL::calcMSOvelocities(double &velDirect, double &velRetrograd) {
     double g = ut / dt;
     velDirect = sqrt(1.0 - 1.0 / (g * g));
 
-    if (isnan(velDirect)) {
+    if (std::isnan(velDirect)) {
         return false;
     }
     velRetrograd = 0.0;  // TODO

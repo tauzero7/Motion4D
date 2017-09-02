@@ -20,12 +20,14 @@ obj.setSolverParam("upper_bb", 1e12, boxSize, boxSize, boxSize)
 obj.setInitialPosition(0.0, 10.0, 0.0, 0.0)
 
 maxPoints = 1000
+obj.setParam("maxNumPoints", maxPoints)
 
 data = np.ndarray((361,maxPoints,4))
 for n in range(0,361):
+    print(i)
     alpha = 2.0 * np.pi / 360.0 * n;
     obj.setInitialLocalNullDirection(1, -np.cos(alpha), np.sin(alpha), 0.0)
-    obj.calculateGeodesic(maxPoints)
+    obj.calculateGeodesic()
     num = obj.getNumPoints()    
     for i in range(num):
         pos = obj.getPosition(i)
