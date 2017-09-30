@@ -579,7 +579,7 @@ bool MetricPTD_AI::totEnergy(const vec4 , const vec4 , const double , double &va
  */
 bool MetricPTD_AI::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "b") {
+    if (strcmp(pName,"b") == 0) {
         Par_b = val;
     }
     return true;

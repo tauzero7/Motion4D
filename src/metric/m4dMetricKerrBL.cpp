@@ -876,9 +876,10 @@ double MetricKerrBL::testConstraint(const double y[], const double kappa) {
  */
 bool MetricKerrBL::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "mass") {
+    if (strcmp(pName,"mass") == 0) {
         mass = val;
-    } else if (pName == "angmom") {
+    }
+    else if (strcmp(pName,"angmom") == 0) {
         angmom = val;
     }
     return true;

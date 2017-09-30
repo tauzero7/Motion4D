@@ -255,9 +255,10 @@ bool MetricGoedel
 bool MetricGoedel
 ::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "a") {
+    if (strcmp(pName,"a") == 0) {
         mA = val;
-    } else if (pName == "zeta") {
+    }
+    else if (strcmp(pName,"zeta") == 0) {
         mZeta = val;
     }
 

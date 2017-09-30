@@ -603,14 +603,15 @@ double MetricFriedmanNonEmptyNull::testConstraint(const double y[], const double
 bool MetricFriedmanNonEmptyNull::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
-    if (pName == "k") {
+    if (strcmp(pName,"k") == 0) {
         mK = 0;
         if (val >= 1.0) {
             mK = 1;
         } else if (val <= -1.0) {
             mK = -1;
         }
-    } else if (pName == "mass") {
+    }
+    else if (strcmp(pName,"mass") == 0) {
         mC = 4.0 * mGravConstant * val / (3.0 * M_PI);
     }
     return true;

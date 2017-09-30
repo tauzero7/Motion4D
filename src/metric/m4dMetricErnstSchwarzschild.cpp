@@ -643,9 +643,10 @@ double MetricErnstSchwarzschild::testConstraint(const double y[], const double k
 bool MetricErnstSchwarzschild::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
-    if (pName == "mass") {
+    if (strcmp(pName,"mass") == 0) {
         mMass = val;
-    } else if (pName == "b") {
+    }
+    else if (strcmp(pName,"b") == 0) {
         mB = val;
     }
 

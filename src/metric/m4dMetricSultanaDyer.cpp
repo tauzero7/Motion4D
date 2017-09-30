@@ -593,7 +593,7 @@ bool MetricSultanaDyer::breakCondition(const double* pos) {
  */
 bool MetricSultanaDyer::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "mass") {
+    if (strcmp(pName,"mass") == 0) {
         mMass = val;
     }
     return true;

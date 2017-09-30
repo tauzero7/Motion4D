@@ -204,8 +204,7 @@ bool MetricGoedelCart
 // ---------------------------------------------------
 //    public::localToCoord
 // ---------------------------------------------------
-void MetricGoedelCart
-::localToCoord(const double* pos, const double* ldir, double* dir,
+void MetricGoedelCart::localToCoord(const double* pos, const double* ldir, double* dir,
                enum_nat_tetrad_type) {
     double x = pos[1];
     double y = pos[2];
@@ -240,8 +239,7 @@ void MetricGoedelCart
 // ---------------------------------------------------
 //    public::coordToLocal
 // ---------------------------------------------------
-void MetricGoedelCart
-::coordToLocal(const double* , const double* , double* ,
+void MetricGoedelCart::coordToLocal(const double* , const double* , double* ,
                enum_nat_tetrad_type) {
     printf("MetricGoedelCart::coordToLocal missing\n");
 }
@@ -249,20 +247,19 @@ void MetricGoedelCart
 // ---------------------------------------------------
 //    public::breakCondition
 // ---------------------------------------------------
-bool MetricGoedelCart
-::breakCondition(const double*) {
+bool MetricGoedelCart::breakCondition(const double*) {
     return false;
 }
 
 // ---------------------------------------------------
 //    public::setParam
 // ---------------------------------------------------
-bool MetricGoedelCart
-::setParam(const char* pName, double val) {
+bool MetricGoedelCart::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "a") {
+    if (strcmp(pName,"a") == 0) {
         mA = val;
-    } else if (pName == "zeta") {
+    }
+    else if (strcmp(pName,"zeta") == 0) {
         mZeta = val;
     }
 

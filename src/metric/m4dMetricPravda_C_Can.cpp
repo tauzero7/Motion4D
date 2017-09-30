@@ -413,10 +413,10 @@ MetricPravda_C_Can::testConstraint(const double y[], const double kappa) {
 bool
 MetricPravda_C_Can::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "m") {
+    if (strcmp(pName,"m") == 0) {
         Par_m = val;
     }
-    if (pName == "a") {
+    else if (strcmp(pName,"a") == 0) {
         Par_A = val;
     }
     double A = Par_A;

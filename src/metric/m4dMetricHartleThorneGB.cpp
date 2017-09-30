@@ -945,11 +945,13 @@ bool MetricHartleThorneGB::breakCondition(const double* pos) {
  */
 bool MetricHartleThorneGB::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "mass") {
+    if (strcmp(pName,"mass") == 0) {
         mMass = val;
-    } else if (pName == "angmom") {
+    }
+    else if (strcmp(pName,"angmom") == 0) {
         mAngmom = val;
-    } else if (pName == "eta") {
+    }
+    else if (strcmp(pName,"eta") == 0) {
         mEta = val;
     }
     return true;

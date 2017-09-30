@@ -237,9 +237,10 @@ bool MetricGoedelScaled::breakCondition(const double*) {
 // ---------------------------------------------------
 bool MetricGoedelScaled::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "rG") {
+    if (strcmp(pName,"rG") == 0) {
         mRG = val;
-    } else if (pName == "zeta") {
+    }
+    else if (strcmp(pName, "zeta") == 0) {
         mZeta = val;
     }
 

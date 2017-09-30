@@ -803,9 +803,10 @@ double MetricTaubNUT::testConstraint(const double y[], const double kappa) {
 bool MetricTaubNUT::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
-    if (pName == "mass") {
+    if (strcmp(pName,"mass") == 0) {
         mMass = val;
-    } else if (pName == "l") {
+    }
+    else if (strcmp(pName,"l") == 0) {
         mL = val;
     }
     return true;

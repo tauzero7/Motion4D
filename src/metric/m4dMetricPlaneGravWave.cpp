@@ -547,7 +547,7 @@ bool MetricPlaneGravWave::breakCondition(const double* pos) {
  */
 bool MetricPlaneGravWave::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "long_ext") {
+    if (strcmp(pName,"long_ext") == 0) {
         if (val < eps) {
             mLongExt = eps;
             dataCalculated = false;
@@ -556,7 +556,7 @@ bool MetricPlaneGravWave::setParam(const char* pName, double val) {
             dataCalculated = false;
         }
     }
-    if (pName == "degree") {
+    else if (strcmp(pName,"degree") == 0) {
         if (val < 1.0) {
             mDegree = 1.0;
             dataCalculated = false;

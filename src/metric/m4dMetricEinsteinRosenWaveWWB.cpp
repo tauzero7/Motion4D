@@ -550,9 +550,10 @@ double MetricEinsteinRosenWaveWWB::testConstraint(const double* y, const double 
 bool MetricEinsteinRosenWaveWWB::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
-    if (pName == "c") {
+    if (strcmp(pName,"c") == 0) {
         m_c = val;
-    } else if (pName == "a") {
+    }
+    else if (strcmp(pName, "a") == 0) {
         m_a = val;
     }
     return true;

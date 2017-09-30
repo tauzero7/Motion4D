@@ -584,15 +584,19 @@ double MetricKastorTraschen::testConstraint(const double y[], const double kappa
  */
 bool MetricKastorTraschen::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "m1") {
+    if (strcmp(pName,"m1") == 0) {
         m1 = val;
-    } else if (pName == "z1") {
+    }
+    else if (strcmp(pName,"z1") == 0) {
         z1 = val;
-    } else if (pName == "m2") {
+    }
+    else if (strcmp(pName,"m2") == 0) {
         m2 = val;
-    } else if (pName == "z2") {
+    }
+    else if (strcmp(pName,"z2") == 0) {
         z2 = val;
-    } else if (pName == "h") {
+    }
+    else if (strcmp(pName,"h") == 0) {
         mH = val;
     }
     return true;

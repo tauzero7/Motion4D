@@ -327,9 +327,10 @@ double MetricAlcubierreSimple::testConstraint(const double y[], const double kap
  */
 bool MetricAlcubierreSimple::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "r") {
+    if (strcmp(pName,"r") == 0) {
         mR = val;
-    } else if (pName == "vs") {
+    }
+    else if (strcmp(pName,"vs") == 0) {
         mvs = val;
     }
     return true;

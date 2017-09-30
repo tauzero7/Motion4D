@@ -517,7 +517,7 @@ bool MetricPTD_BII::breakCondition(const double* pos) {
          */
 bool MetricPTD_BII::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "b") {
+    if (strcmp(pName,"b") == 0) {
         Par_b = val;
     }
     return true;

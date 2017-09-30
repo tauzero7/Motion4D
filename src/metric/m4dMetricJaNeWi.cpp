@@ -588,10 +588,11 @@ bool MetricJaNeWi::breakCondition(const double* pos) {
 bool MetricJaNeWi::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
-    if (pName == "mass") {
+    if (strcmp(pName,"mass") == 0) {
         mMass = val;
         rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
-    } else if (pName == "gamma") {
+    }
+    else if (strcmp(pName,"gamma") == 0) {
         mGamma = val;
     }
     calcCriticalPoint();
@@ -631,13 +632,16 @@ bool MetricJaNeWi::transToEmbedding(vec4 p, vec4 &ep) {
 bool MetricJaNeWi::setEmbeddingParam(const char* name, double val) {
     Metric::setEmbeddingParam(name, val);
 
-    if (name == "emb_rmin") {
+    if (strcmp(name,"emb_rmin") == 0) {
         mEmb_rmin = val;
-    } else if (name == "emb_rmax") {
+    }
+    else if (strcmp(name,"emb_rmax") == 0) {
         mEmb_rmax = val;
-    } else if (name == "emb_r_num") {
+    }
+    else if (strcmp(name,"emb_r_num") == 0) {
         mEmb_r_num = val;
-    } else if (name == "emb_phi_num") {
+    }
+    else if (strcmp(name,"emb_phi_num") == 0) {
         mEmb_phi_num = val;
     }
     return testEmbeddingParams();

@@ -567,9 +567,10 @@ bool MetricDeSitterUnivConf::transToTwoPlusOne(vec4 p, vec4 &cp) {
 bool MetricDeSitterUnivConf::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
-    if (pName == "hubble") {
+    if (strcmp(pName,"hubble") == 0) {
         mHubble = val;
-    } else if (pName == "p") {
+    }
+    else if (strcmp(pName,"p") == 0) {
         mP = val;
     }
     return true;

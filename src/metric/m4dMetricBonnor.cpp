@@ -313,9 +313,10 @@ double MetricBonnor::testConstraint ( const double y[], const double kappa )
 bool MetricBonnor::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
-    if (pName == "mass") {
+    if (strcmp(pName,"mass") == 0) {
         mMass = val;
-    } else if (pName == "b") {
+    }
+    else if (strcmp(pName,"b") == 0) {
         mB = val;
     }
     return true;

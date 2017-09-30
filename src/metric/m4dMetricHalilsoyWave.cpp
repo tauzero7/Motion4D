@@ -270,9 +270,10 @@ bool MetricHalilsoyWave::breakCondition(const double*) {
  */
 bool MetricHalilsoyWave::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "alpha") {
+    if (strcmp(pName,"alpha") == 0) {
         mAlpha = val;
-    } else if (pName == "c") {
+    }
+    else if (strcmp(pName,"c") == 0) {
         mC = val;
     }
     return true;

@@ -626,9 +626,10 @@ double MetricExtremeReissnerNordstromDihole::testConstraint(const double y[], co
 bool MetricExtremeReissnerNordstromDihole::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
-    if (pName == "m1") {
+    if (strcmp(pName,"m1") == 0) {
         mM1 = val;
-    } else if (pName == "m2") {
+    }
+    else if (strcmp(pName, "m2") == 0) {
         mM2 = val;
     }
     return true;

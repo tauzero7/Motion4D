@@ -411,16 +411,19 @@ double MetricTeoSimpleWH::getShapeVal(double r) {
 bool MetricTeoSimpleWH::setEmbeddingParam(const char* name, double val) {
     Metric::setEmbeddingParam(name, val);
 
-    if (name == "emb_lmin") {
+    if (strcmp(name,"emb_lmin") == 0) {
         mEmb_lmin = val;
-    } else if (name == "emb_lmax") {
+    }
+    else if (strcmp(name,"emb_lmax") == 0) {
         mEmb_lmax = val;
-    } else if (name == "emb_l_num") {
+    }
+    else if (strcmp(name,"emb_l_num") == 0) {
         mEmb_l_num = val;
         if (mEmb_l_num < 5.0) {
             mEmb_l_num = 5.0;
         }
-    } else if (name == "emb_phi_num") {
+    }
+    else if (strcmp(name,"emb_phi_num") == 0) {
         mEmb_phi_num = val;
         if (mEmb_phi_num < 4) {
             mEmb_phi_num = 4;

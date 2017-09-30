@@ -340,9 +340,10 @@ double MetricChazyCurzonRot::testConstraint(const double y[], const double kappa
 bool MetricChazyCurzonRot::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
-    if (pName == "mass") {
+    if (strcmp(pName,"mass") == 0) {
         mMass = val;
-    } else if (pName == "p") {
+    }
+    else if (strcmp(pName,"p")) {
         m_p = val;
         m_q = sqrt(1.0 - m_p * m_p);
     }

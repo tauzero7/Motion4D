@@ -1101,11 +1101,13 @@ bool MetricAlcubierre::resize(double* y, double kappa, double factor) {
  */
 bool MetricAlcubierre::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "sigma") {
+    if (strcmp(pName,"sigma") == 0) {
         mSigma = val;
-    } else if (pName == "r") {
+    }
+    else if (strcmp(pName,"r") == 0) {
         mR = val;
-    } else if (pName == "vs") {
+    }
+    else if (strcmp(pName,"vs") == 0) {
         mvs = val;
     }
     return true;

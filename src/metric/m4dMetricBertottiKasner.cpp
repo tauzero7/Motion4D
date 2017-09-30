@@ -526,7 +526,7 @@ double MetricBertottiKasner::testConstraint(const double y[], const double kappa
 bool MetricBertottiKasner::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
-    if (pName == "lambda") {
+    if (strcmp(pName,"lambda") == 0) {
         mLambda = val;
     }
     return true;

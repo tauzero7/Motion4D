@@ -726,10 +726,10 @@ double MetricPTD_C::testConstraint(const double y[], const double kappa) {
  */
 bool MetricPTD_C::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "b") {
+    if (strcmp(pName,"b") == 0) {
         Par_b = val;
     }
-    if (pName == "a") {
+    else if (strcmp(pName,"a") == 0) {
         Par_a = val;
     }
     return true;

@@ -776,7 +776,7 @@ double MetricCurzon::testConstraint(const double y[], const double kappa) {
 bool MetricCurzon::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
-    if (pName == "mass") {
+    if (strcmp(pName,"mass") == 0) {
         mMass = val;
     }
     return true;

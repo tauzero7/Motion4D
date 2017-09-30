@@ -646,15 +646,17 @@ bool MetricGlampedakis::breakCondition(const double* pos) {
  */
 bool MetricGlampedakis::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "mass") {
+    if (strcmp(pName,"mass") == 0) {
         mMass = val;
         M = mMass;
         rs = 2.0 * mMass;
-    } else if (pName == "angmom") {
+    }
+    else if (strcmp(pName,"angmom") == 0) {
         mAngmom = val;
         a   = mAngmom;
         a2  = a * a;
-    } else if (pName == "epsilon") {
+    }
+    else if (strcmp(pName,"epsilon") == 0) {
         mEpsilon = val;
     }
     return true;

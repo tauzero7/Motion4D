@@ -228,11 +228,13 @@ bool MetricRotDihole::breakCondition(const double*) {
 bool MetricRotDihole::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
-    if (pName == "mass1") {
+    if (strcmp(pName,"mass1") == 0) {
         mMass1 = val;
-    } else if (pName == "mass2") {
+    }
+    else if (strcmp(pName,"mass2") == 0) {
         mMass2 = val;
-    } else if (pName == "omega") {
+    }
+    else if (strcmp(pName,"omega") == 0) {
         mOmega = val;
     }
     return true;

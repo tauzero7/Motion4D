@@ -462,12 +462,15 @@ double MetricSchwarzschildGravWave::testConstraint(const double y[], const doubl
  */
 bool MetricSchwarzschildGravWave::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "mass") {
+
+    if (strcmp(pName,"mass") == 0) {
         mMass = val;
         rs = 2*mMass;
-    } else if (pName == "epsilon") {
+    }
+    else if (strcmp(pName,"epsilon") == 0) {
         mEpsilon = val;
-    } else if (pName == "sigma") {
+    }
+    else if (strcmp(pName,"sigma") == 0) {
         mSigma = val;
     }
     return true;

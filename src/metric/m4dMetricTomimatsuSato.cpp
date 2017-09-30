@@ -488,15 +488,17 @@ bool MetricTomimatsuSato::breakCondition(const double* pos) {
  */
 bool MetricTomimatsuSato::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
-    if (pName == "k") {
+    if (strcmp(pName,"k") == 0) {
         k = val;
         mk = k;
-    } else if (pName == "q") {
+    }
+    else if (strcmp(pName, "q") == 0) {
         q = val;
         p = sqrt(1.0 - q * q);
         mq = q;
         mp = p;
-    } else if (pName == "p") {
+    }
+    else if (strcmp(pName,"p") == 0) {
         p = val;
         q = sqrt(1.0 - p * p);
         mq = q;

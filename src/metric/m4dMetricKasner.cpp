@@ -512,7 +512,7 @@ bool MetricKasner::breakCondition(const double* pos) {
 bool MetricKasner::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
-    if (pName == "u") {
+    if (strcmp(pName,"u") == 0) {
         mU = val;
         calc_parameters();
     }
