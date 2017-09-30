@@ -83,7 +83,7 @@ public:
     virtual bool   totEnergy(const vec4 pos, const vec4 cdir, const double x, double &val);
     virtual double calculateVeffRoot(double C02, double K, double r0);
 
-    virtual bool   setParam(std::string pName, double val);
+    virtual bool   setParam(const char* pName, double val);
 
     virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
 

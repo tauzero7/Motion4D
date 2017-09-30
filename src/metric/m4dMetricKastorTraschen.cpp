@@ -582,7 +582,7 @@ double MetricKastorTraschen::testConstraint(const double y[], const double kappa
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricKastorTraschen::setParam(std::string pName, double val) {
+bool MetricKastorTraschen::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "m1") {
         m1 = val;

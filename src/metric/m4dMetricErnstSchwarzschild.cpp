@@ -640,7 +640,7 @@ double MetricErnstSchwarzschild::testConstraint(const double y[], const double k
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  *  'charge' represents the charge of the black hole.
  */
-bool MetricErnstSchwarzschild::setParam(std::string pName, double val) {
+bool MetricErnstSchwarzschild::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
     if (pName == "mass") {

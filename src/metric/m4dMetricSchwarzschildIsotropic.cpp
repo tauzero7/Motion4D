@@ -660,7 +660,7 @@ bool MetricSchwarzschildIsotropic::calcProduct(const double* pos, const double* 
  *
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  */
-bool MetricSchwarzschildIsotropic::setParam(std::string pName, double val) {
+bool MetricSchwarzschildIsotropic::setParam(const char* pName, double val) {
     if (Metric::setParam(pName, val)) {
         mMass = val;
         rho_s = 0.5 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);

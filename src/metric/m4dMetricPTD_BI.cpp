@@ -630,7 +630,7 @@ double MetricPTD_BI::calculateVeffRoot(double C02, double K, double r0) {
  *
  *
  */
-bool MetricPTD_BI::setParam(std::string pName, double val) {
+bool MetricPTD_BI::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "b") {
         Par_b = val;

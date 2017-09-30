@@ -66,7 +66,7 @@ public:
 
     virtual bool  transToTwoPlusOne(vec4 p, vec4 &cp);
 
-    virtual bool  setParam(std::string pName, double val);
+    virtual bool  setParam(const char* pName, double val);
 
     virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
 // --------- protected methods -----------

@@ -358,7 +358,7 @@ int MetricTeoSimpleWH::transToPseudoCart(vec4 p, vec4 &cp) {
 /*!
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  */
-bool MetricTeoSimpleWH::setParam(std::string pName, double val) {
+bool MetricTeoSimpleWH::setParam(const char* pName, double val) {
     bool ok = Metric::setParam(pName, val);
     if (ok) {
         mb0 = val;
@@ -408,7 +408,7 @@ double MetricTeoSimpleWH::getShapeVal(double r) {
     return mb0 * log((sqrt(r*r - mb0*mb0) + r)/mb0);
 }
 
-bool MetricTeoSimpleWH::setEmbeddingParam(std::string name, double val) {
+bool MetricTeoSimpleWH::setEmbeddingParam(const char* name, double val) {
     Metric::setEmbeddingParam(name, val);
 
     if (name == "emb_lmin") {
@@ -429,48 +429,48 @@ bool MetricTeoSimpleWH::setEmbeddingParam(std::string name, double val) {
     return true;
 }
 
-int MetricTeoSimpleWH::getEmbeddingVertices(std::vector<vec3> &verts,
-        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter) {
-    if (!verts.empty()) {
-        verts.clear();
-    }
+//int MetricTeoSimpleWH::getEmbeddingVertices(std::vector<vec3> &verts,
+//        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter) {
+//    if (!verts.empty()) {
+//        verts.clear();
+//    }
 
-    if (!indices.empty()) {
-        indices.clear();
-    }
+//    if (!indices.empty()) {
+//        indices.clear();
+//    }
 
-    mEmb_lstep = (mEmb_lmax - mEmb_lmin) / mEmb_l_num;
-    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
+//    mEmb_lstep = (mEmb_lmax - mEmb_lmin) / mEmb_l_num;
+//    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
 
-    numElems = int(mEmb_l_num);
-    counter  = int(mEmb_phi_num) + 1;
+//    numElems = int(mEmb_l_num);
+//    counter  = int(mEmb_phi_num) + 1;
 
-    int vnum;
+//    int vnum;
 
-    double x, y, z, r, phi, l;
-    for (unsigned int k = 0; k < counter; k++) {
-        phi = k * mEmb_phistep;
-        for (unsigned int j = 0; j < numElems; j++) {
-            l = mEmb_lmin + j * mEmb_lstep;
-            r = sqrt(mb0 * mb0 + l * l);
-            x = r * cos(phi);
-            y = r * sin(phi);
-            z = getShapeVal(r);
+//    double x, y, z, r, phi, l;
+//    for (unsigned int k = 0; k < counter; k++) {
+//        phi = k * mEmb_phistep;
+//        for (unsigned int j = 0; j < numElems; j++) {
+//            l = mEmb_lmin + j * mEmb_lstep;
+//            r = sqrt(mb0 * mb0 + l * l);
+//            x = r * cos(phi);
+//            y = r * sin(phi);
+//            z = getShapeVal(r);
 
-            if (l < 0.0) {
-                z *= -1.0;
-            }
+//            if (l < 0.0) {
+//                z *= -1.0;
+//            }
 
-            verts.push_back(vec3(x, y, z));
-            vnum = k * numElems + j;
+//            verts.push_back(vec3(x, y, z));
+//            vnum = k * numElems + j;
 
-            indices.push_back(vnum);
-            indices.push_back(vnum + numElems);
-        }
-    }
+//            indices.push_back(vnum);
+//            indices.push_back(vnum + numElems);
+//        }
+//    }
 
-    return (int)verts.size();
-}
+//    return (int)verts.size();
+//}
 
 
 // ********************************* protected methods *****************************

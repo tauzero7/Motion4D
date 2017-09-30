@@ -312,7 +312,7 @@ enum  enum_single_coordinate_type
     enum_scoord_range
 };
 
- const char stl_single_coordinate_types[NUM_ENUM_SINGLE_COORDINATE_TYPES][12] =
+const char stl_single_coordinate_types[NUM_ENUM_SINGLE_COORDINATE_TYPES][12] =
 {
     "linear", "semilinear", "periodic", "range"
 };

@@ -57,7 +57,7 @@ public:
 
     virtual double testConstraint(const double y[], const double kappa);
 
-    virtual bool   setParam(std::string pName, double val);
+    virtual bool   setParam(const char* pName, double val);
 
     virtual double getCircularVelocity(const double r, const enum_nat_tetrad_type  tedType = enum_nat_tetrad_default);
     virtual vec4   getCircularFourVel(const vec4 pos, const enum_nat_tetrad_type  tedType = enum_nat_tetrad_default);

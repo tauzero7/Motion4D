@@ -586,7 +586,7 @@ double MetricMorrisThorne::testConstraint(const double y[], const double kappa) 
  *
  *  Set throat parameter 'b0'.
  */
-bool MetricMorrisThorne::setParam(std::string pName, double val) {
+bool MetricMorrisThorne::setParam(const char* pName, double val) {
     if (Metric::setParam(pName, val)) {
         mb0 = val;
     }
@@ -641,7 +641,7 @@ bool MetricMorrisThorne::transToCustom(vec4 , vec4&) {
  *  \return true  : success.
  *  \return false : parameter not valid.
  */
-bool MetricMorrisThorne::setEmbeddingParam(std::string name, double val) {
+bool MetricMorrisThorne::setEmbeddingParam(const char *name, double val) {
     Metric::setEmbeddingParam(name, val);
 
     if (name == "emb_lmin") {

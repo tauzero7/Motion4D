@@ -538,7 +538,7 @@ bool MetricDeSitterUniv::transToTwoPlusOne(vec4 p, vec4 &cp) {
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricDeSitterUniv::setParam(std::string pName, double val) {
+bool MetricDeSitterUniv::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
     if (pName == "hubble") {

@@ -1583,7 +1583,7 @@ double MetricBesselGravWaveCart::testConstraint(const double Y[], const double k
 /*! Set parameter 'pName' to 'val'.
  *
  */
-bool MetricBesselGravWaveCart::setParam(std::string pName, double val) {
+bool MetricBesselGravWaveCart::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
     if (pName == "c") {

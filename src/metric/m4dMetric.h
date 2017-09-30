@@ -102,11 +102,10 @@ public:
 
     // --------- public methods -----------
 public:
-    std::string           getMetricName();
-    std::string           getMetricCPPfilename();
+    const char*           getMetricName();
+    const char*           getMetricCPPfilename();
     enum_coordinate_type  getCoordType();
-    std::string           getCoordName(int num);
-    void                  getCoordNames(std::string names[4]);
+    const char*           getCoordName(int num);
     double                sign();
 
     virtual bool    calculateMetric(const double* pos) = 0;
@@ -196,17 +195,18 @@ public:
     double  grav_constant();
     double  dielectric_perm();
 
-    virtual bool    addParam(std::string pName, double val = 0.0);
-    virtual bool    setParam(std::string pName, double val);
-    virtual bool    getParam(std::string pName, double &val);
-    virtual bool    getParam(int pNr, std::string& pName, double& val);
+    virtual bool    addParam(const char* pName, double val = 0.0);
+    virtual bool    setParam(const char* pName, double val);
+    virtual bool    getParam(const char* pName, double &val);
+    //virtual bool    getParam(int pNr, std::string& pName, double& val);
     virtual bool    setParam(int pNr, double val);
 
     int     getNumParams();
-    void    getParamNames(std::vector<std::string> &names);
-    int     getParamNum(std::string name);
+    //void    getParamNames(std::vector<std::string> &names);
+    int     getParamNum(const char* name);
+    const char*  getParamName(int pNr);
 
-    int                   getLocTedTypes(std::vector<enum_nat_tetrad_type> &locted);
+    //int                   getLocTedTypes(std::vector<enum_nat_tetrad_type> &locted);
     enum_nat_tetrad_type  getCurrLTtype(int num);
 
     int                   getDrawTypes(std::vector<enum_draw_type> &drawTypes);
@@ -220,14 +220,16 @@ public:
 
     virtual void   transFromPseudoCart(vec4 cp, vec4 &p);
 
-    virtual bool   addEmbeddingParam(std::string name, double val = 0.0);
-    virtual bool   setEmbeddingParam(std::string name, double val);
-    virtual bool   getEmbeddingParam(std::string name, double &val);
+    virtual bool   addEmbeddingParam(const char* name, double val = 0.0);
+    virtual bool   setEmbeddingParam(const char* name, double val);
+    virtual bool   getEmbeddingParam(const char* name, double &val);
+    /*
     virtual void   getEmbeddingNames(std::vector<std::string> &names);
     virtual bool   getAllEmbeddingParams(std::vector<std::string> &names, std::vector<double> &params);
     virtual bool   getEmbeddingMap(std::map<std::string, double> &params);
     virtual int    getEmbeddingVertices(std::vector<vec3> &verts,
                                         std::vector<int> &indices, unsigned int &numElems, unsigned int &counter);
+                                       */
     virtual bool   haveEmbedding();
 
     virtual bool   effPotentialValue(const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double &val);
@@ -242,7 +244,7 @@ public:
 
     bool    isResizeEnabled();
 
-    virtual bool    report(const vec4 pos, const vec4 cdir, std::string &text);
+   // virtual bool    report(const vec4 pos, const vec4 cdir, std::string &text);
     virtual void    printF(FILE* fptr = stderr);
 
 

@@ -68,7 +68,7 @@ public:
     virtual bool   calcDerivs(const double y[], double dydx[]);
     virtual double testConstraint(const double y[], const double kappa);
 
-    virtual bool   setParam(std::string pName, double val);
+    virtual bool   setParam(const char* pName, double val);
 
     virtual bool   effPotentialValue(const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double &val);
     virtual bool   totEnergy(const vec4 pos, const vec4 cdir, const double x, double &val);

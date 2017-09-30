@@ -79,12 +79,12 @@ public:
     virtual bool   calcDerivs(const double y[], double dydx[]);
     virtual double testConstraint(const double y[], const double kappa);
 
-    virtual bool   setParam(std::string pName, double val);
+    virtual bool   setParam(const char* pName, double val);
 
     virtual bool   transToEmbedding(vec4 p, vec4 &ep);
     virtual bool   transToCustom(vec4 p, vec4 &cp);
 
-    virtual bool   setEmbeddingParam(std::string name, double val);
+    virtual bool   setEmbeddingParam(const char* name, double val);
     virtual int    getEmbeddingVertices(std::vector<vec3> &verts,
                                         std::vector<int> &indices, unsigned int &numElems, unsigned int &counter);
 

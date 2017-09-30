@@ -68,14 +68,14 @@ public:
     virtual bool   calcDerivs(const double y[], double dydx[]);
     virtual double testConstraint(const double y[], const double kappa);
 
-    virtual bool   setParam(std::string pName, double val);
+    virtual bool   setParam(const char* pName, double val);
 
     virtual bool   transToEmbedding(vec4 p, vec4 &ep);
 
-    virtual bool   setEmbeddingParam(std::string name, double val);
+    virtual bool   setEmbeddingParam(const char *name, double val);
     virtual bool   testEmbeddingParams();
-    virtual int    getEmbeddingVertices(std::vector<vec3> &verts,
-                                        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter);
+//    virtual int    getEmbeddingVertices(std::vector<vec3> &verts,
+//                                        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter);
 
     virtual bool   effPotentialValue(const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double &val);
     virtual bool   totEnergy(const vec4 pos, const vec4 cdir, const double x, double &val);

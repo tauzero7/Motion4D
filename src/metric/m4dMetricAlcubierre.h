@@ -80,7 +80,7 @@ public:
     virtual double testConstraint(const double y[], const double kappa);
     virtual bool   resize(double* y, double kappa, double factor = DEF_RESIZE_FACTOR);
 
-    virtual bool   setParam(std::string pName, double val);
+    virtual bool   setParam(const char* pName, double val);
 
     virtual bool   transToTwoPlusOne(vec4 p, vec4 &cp);
 

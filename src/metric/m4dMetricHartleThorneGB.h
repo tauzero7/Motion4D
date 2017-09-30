@@ -67,7 +67,7 @@ public:
 
     virtual bool   breakCondition(const double* pos);
 
-    virtual bool   setParam(std::string pName, double val);
+    virtual bool   setParam(const char* pName, double val);
 
     virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
 

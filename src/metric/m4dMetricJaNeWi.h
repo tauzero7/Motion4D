@@ -78,14 +78,14 @@ public:
 
     virtual bool   breakCondition(const double* pos);
 
-    virtual bool   setParam(std::string pName, double val);
+    virtual bool   setParam(const char* pName, double val);
 
     virtual bool   transToEmbedding(vec4 p, vec4 &ep);
 
-    virtual bool   setEmbeddingParam(std::string name, double val);
+    virtual bool   setEmbeddingParam(const char *name, double val);
     virtual bool   testEmbeddingParams();
-    virtual int    getEmbeddingVertices(std::vector<vec3> &verts,
-                                        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter);
+//    virtual int    getEmbeddingVertices(std::vector<vec3> &verts,
+//                                        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter);
 
     virtual double getCircularVelocity(const double r, const enum_nat_tetrad_type  tedType = enum_nat_tetrad_default);
     virtual vec4   getCircularFourVel(const vec4 pos, const enum_nat_tetrad_type  tedType = enum_nat_tetrad_default);

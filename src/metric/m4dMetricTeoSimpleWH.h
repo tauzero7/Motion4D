@@ -54,14 +54,14 @@ public:
     virtual bool   breakCondition(const double* pos);
     virtual int    transToPseudoCart(vec4 p, vec4 &cp);
 
-    virtual bool   setParam(std::string pName, double val);
+    virtual bool   setParam(const char* pName, double val);
 
     virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
 
     virtual bool   transToEmbedding(vec4 p, vec4 &ep);
-    virtual bool   setEmbeddingParam(std::string name, double val);
-    virtual int    getEmbeddingVertices(std::vector<vec3> &verts,
-                                        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter);
+    virtual bool   setEmbeddingParam(const char *name, double val);
+//    virtual int    getEmbeddingVertices(std::vector<vec3> &verts,
+//                                        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter);
 
 
     // --------- protected methods -----------

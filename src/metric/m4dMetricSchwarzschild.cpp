@@ -1403,7 +1403,7 @@ bool MetricSchwarzschild::calcProduct(const double* pos, const double* u, const 
  *
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  */
-bool MetricSchwarzschild::setParam(std::string pName, double val) {
+bool MetricSchwarzschild::setParam(const char* pName, double val) {
     if (Metric::setParam(pName, val)) {
         mMass = val;
         rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
@@ -1471,7 +1471,7 @@ bool MetricSchwarzschild::transToCustom(vec4 p, vec4 &cp) {
  *  \return true  : success.
  *  \return false : parameter not valid.
  */
-bool MetricSchwarzschild::setEmbeddingParam(std::string name, double val) {
+bool MetricSchwarzschild::setEmbeddingParam(const char* name, double val) {
     Metric::setEmbeddingParam(name, val);
 
     if (name == "emb_rmin") {
@@ -1520,53 +1520,53 @@ bool MetricSchwarzschild::testEmbeddingParams() {
  *  \param counter  : number of strips.
  *  \return int : number of vertices.
  */
-int MetricSchwarzschild::getEmbeddingVertices(std::vector<vec3> &verts,
-        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter) {
-    if (!verts.empty()) {
-        verts.clear();
-    }
+//int MetricSchwarzschild::getEmbeddingVertices(std::vector<vec3> &verts,
+//        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter) {
+//    if (!verts.empty()) {
+//        verts.clear();
+//    }
 
-    if (!indices.empty()) {
-        indices.clear();
-    }
+//    if (!indices.empty()) {
+//        indices.clear();
+//    }
 
-    testEmbeddingParams();
-    mEmb_rstep = (mEmb_rmax - mEmb_rmin) / mEmb_r_num;
-    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
+//    testEmbeddingParams();
+//    mEmb_rstep = (mEmb_rmax - mEmb_rmin) / mEmb_r_num;
+//    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
 
-    numElems = int(mEmb_r_num);
-    counter  = int(mEmb_phi_num) + 1;
+//    numElems = int(mEmb_r_num);
+//    counter  = int(mEmb_phi_num) + 1;
 
-    int vnum;
+//    int vnum;
 
-    double x, y, z, r, phi;
-    for (unsigned int k = 0; k < counter; k++) {
-        phi = k * mEmb_phistep;
-        for (unsigned int j = 0; j < numElems; j++) {
-            r = mEmb_rmin + j * mEmb_rstep;
-            x = r * cos(phi);
-            y = r * sin(phi);
-            if (r >= rs) {
-                z = 2.0 * sqrt(rs) * sqrt(fabs(r - rs));
-                verts.push_back(vec3(x, y, z));
+//    double x, y, z, r, phi;
+//    for (unsigned int k = 0; k < counter; k++) {
+//        phi = k * mEmb_phistep;
+//        for (unsigned int j = 0; j < numElems; j++) {
+//            r = mEmb_rmin + j * mEmb_rstep;
+//            x = r * cos(phi);
+//            y = r * sin(phi);
+//            if (r >= rs) {
+//                z = 2.0 * sqrt(rs) * sqrt(fabs(r - rs));
+//                verts.push_back(vec3(x, y, z));
 
-                vnum = k * numElems + j;
+//                vnum = k * numElems + j;
 
-                indices.push_back(vnum);
-                indices.push_back(vnum + numElems);
-            }
-        }
-    }
+//                indices.push_back(vnum);
+//                indices.push_back(vnum + numElems);
+//            }
+//        }
+//    }
 
-    int numVerts = (int)verts.size();
-    int numInds  = (int)indices.size();
+//    int numVerts = (int)verts.size();
+//    int numInds  = (int)indices.size();
 
-    if (2 * numVerts == numInds) {
-        return numVerts;
-    }
+//    if (2 * numVerts == numInds) {
+//        return numVerts;
+//    }
 
-    return 0;
-}
+//    return 0;
+//}
 
 /*! Effective potential.
  *  \param pos : initial position.

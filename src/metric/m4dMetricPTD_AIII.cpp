@@ -526,7 +526,7 @@ double MetricPTD_AIII::testConstraint(const double y[], const double kappa) {
  *
  *  No parameters in this metric.
  */
-bool MetricPTD_AIII::setParam(std::string,  double) {
+bool MetricPTD_AIII::setParam(const char*,  double) {
     return true;
 }
 

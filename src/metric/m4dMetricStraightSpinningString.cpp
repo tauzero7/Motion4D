@@ -542,7 +542,7 @@ bool MetricStraightSpinningString::calcDerivs(const double y[], double dydx[]) {
  *  \param pName : parameter name.
  *  \param val : parameter value.
  */
-bool MetricStraightSpinningString::setParam(std::string pName, double val) {
+bool MetricStraightSpinningString::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
     if (pName == "a") {

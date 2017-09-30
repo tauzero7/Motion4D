@@ -874,7 +874,7 @@ double MetricKerrBL::testConstraint(const double y[], const double kappa) {
  *
  *  Set 'mass' and 'angmom' parameter.
  */
-bool MetricKerrBL::setParam(std::string pName, double val) {
+bool MetricKerrBL::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "mass") {
         mass = val;

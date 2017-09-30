@@ -74,7 +74,7 @@ public:
 
     virtual bool   calcProduct(const double* pos, const double* u, const double* v, double &prod, bool preCalcMetric = true);
 
-    virtual bool   setParam(std::string pName, double val);
+    virtual bool   setParam(const char* pName, double val);
 
     virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
 

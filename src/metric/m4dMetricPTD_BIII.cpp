@@ -500,7 +500,7 @@ bool MetricPTD_BIII::breakCondition(const double* pos) {
  *
  * No Parameters in this spacetime.
  */
-bool MetricPTD_BIII::setParam(std::string,  double) {
+bool MetricPTD_BIII::setParam(const char*,  double) {
     return true;
 }
 

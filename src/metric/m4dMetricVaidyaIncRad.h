@@ -63,7 +63,7 @@ public:
 
     virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
 
-    virtual bool   setParam(std::string pName, double val);
+    virtual bool   setParam(const char* pName, double val);
 
 // --------- protected methods -----------
 protected:

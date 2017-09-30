@@ -943,7 +943,7 @@ bool MetricHartleThorneGB::breakCondition(const double* pos) {
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricHartleThorneGB::setParam(std::string pName, double val) {
+bool MetricHartleThorneGB::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "mass") {
         mMass = val;

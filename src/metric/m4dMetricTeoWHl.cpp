@@ -653,7 +653,7 @@ int MetricTeoWHl::transToPseudoCart(vec4 p, vec4 &cp) {
 /*!
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  */
-bool MetricTeoWHl::setParam(std::string pName, double val) {
+bool MetricTeoWHl::setParam(const char* pName, double val) {
     bool ok = Metric::setParam(pName, val);
 
     return ok;

@@ -85,7 +85,7 @@ public:
 
     virtual double testConstraint(const double y[], const double kappa);
 
-    virtual bool   setParam(std::string pName, double val);
+    virtual bool   setParam(const char* pName, double val);
 
     virtual void   calculateRoots(vec3 & roots, double p, double q);
 

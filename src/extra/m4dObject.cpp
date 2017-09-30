@@ -599,7 +599,7 @@ bool Object::loadSettings(std::string filename, bool printset) {
             //int    pnum  = atoi(tokens[i][1].c_str());
             std::string pname = tokens[i][2];
             double val   = atof(tokens[i][3].c_str());
-            currMetric->setParam(pname, val);
+            currMetric->setParam(pname.c_str(), val);
         }
         else if (baseString.compare("INIT_POS") == 0 && tokens[i].size() > 4) {
             for (int j = 0; j < 4; j++) {
@@ -757,11 +757,13 @@ bool Object::saveSettings(std::string filename, std::string dat) {
     fprintf(fptr, "#          date : %s\n", dat.c_str());
     fprintf(fptr, "# ----------------------------------------------------------\n");
 
-    fprintf(fptr, "METRIC       %s\n", currMetric->getMetricName().c_str());
+    fprintf(fptr, "METRIC       %s\n", currMetric->getMetricName());
     double val;
+
+    // TODO
     std::string pname;
     for (int i = 0; i < currMetric->getNumParams(); i++) {
-        currMetric->getParam(i, pname, val);
+        //currMetric->getParam(i, pname, val);
         fprintf(fptr, "PARAM  %d  %10s  %16.12f\n", i, pname.c_str(), val);
     }
     fprintf(fptr, "INIT_POS         %18.14f %18.14f %18.14f %18.14f\n", startPos[0], startPos[1], startPos[2], startPos[3]);
@@ -810,11 +812,13 @@ void  Object::printSettings(FILE* fptr) {
     char* oldlocale = setlocale(LC_NUMERIC, "C");
 
     fprintf(fptr, "\n--------------------- parameter settings ---------------------\n");
-    fprintf(fptr, "METRIC       %s\n", currMetric->getMetricName().c_str());
+    fprintf(fptr, "METRIC       %s\n", currMetric->getMetricName());
     double val;
+
+    // TODO
     std::string pname;
     for (int i = 0; i < currMetric->getNumParams(); i++) {
-        currMetric->getParam(i, pname, val);
+        //currMetric->getParam(i, pname, val);
         fprintf(fptr, "PARAM  %d  %10s  %16.12f\n", i, pname.c_str(), val);
     }
     fprintf(fptr, "INIT_POS         %16.12f %16.12f %16.12f %16.12f\n", startPos[0], startPos[1], startPos[2], startPos[3]);
@@ -870,13 +874,13 @@ bool Object::makeReport(std::string  &text) {
     vec4 coDir;
     currMetric->localToCoord(startPos, locDir, coDir, tetradType);
 
-    currMetric->report(startPos, coDir, text);
+  //  currMetric->report(startPos, coDir, text);
     return true;
 }
 
 void Object::printReport(FILE* fptr) {
     std::string text;
-    makeReport(text);
+   // makeReport(text);
     fprintf(fptr, "%s\n", text.c_str());
 }
 

@@ -243,7 +243,7 @@ bool MetricMinkRotLattice::breakCondition(const double* pos) {
  *
  *  Set 'omega' parameter.
  */
-bool MetricMinkRotLattice::setParam(std::string pName, double val) {
+bool MetricMinkRotLattice::setParam(const char* pName, double val) {
     if (Metric::setParam(pName, val)) {
         mOmega = val;
     }

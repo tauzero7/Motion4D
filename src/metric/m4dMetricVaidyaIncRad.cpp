@@ -267,7 +267,7 @@ bool MetricVaidyaIncRad::report(const vec4 , const vec4 , std::string &text) {
 }
 
 
-bool MetricVaidyaIncRad::setParam(std::string pName, double val) {
+bool MetricVaidyaIncRad::setParam(const char* pName, double val) {
     if (Metric::setParam(pName, val)) {
         mP = val;
         return true;

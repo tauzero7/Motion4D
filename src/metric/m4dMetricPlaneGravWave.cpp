@@ -545,7 +545,7 @@ bool MetricPlaneGravWave::breakCondition(const double* pos) {
  *	the degree 'mDegree' of the Fourier polynomial and reset the state of
  *	'dataCalculated'.
  */
-bool MetricPlaneGravWave::setParam(std::string pName, double val) {
+bool MetricPlaneGravWave::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "long_ext") {
         if (val < eps) {

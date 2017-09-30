@@ -253,7 +253,7 @@ bool MetricGoedel
 //    public::setParam
 // ---------------------------------------------------
 bool MetricGoedel
-::setParam(std::string pName, double val) {
+::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "a") {
         mA = val;

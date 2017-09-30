@@ -310,7 +310,7 @@ double MetricBonnor::testConstraint ( const double y[], const double kappa )
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  *  'charge' represents the charge of the black hole.
  */
-bool MetricBonnor::setParam(std::string pName, double val) {
+bool MetricBonnor::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
     if (pName == "mass") {

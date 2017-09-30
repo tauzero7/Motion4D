@@ -225,7 +225,7 @@ bool MetricRotDihole::breakCondition(const double*) {
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricRotDihole::setParam(std::string pName, double val) {
+bool MetricRotDihole::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
     if (pName == "mass1") {

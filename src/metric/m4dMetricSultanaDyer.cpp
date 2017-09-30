@@ -591,7 +591,7 @@ bool MetricSultanaDyer::breakCondition(const double* pos) {
 /*! Set parameter 'pName' to 'val'.
  *
  */
-bool MetricSultanaDyer::setParam(std::string pName, double val) {
+bool MetricSultanaDyer::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "mass") {
         mMass = val;

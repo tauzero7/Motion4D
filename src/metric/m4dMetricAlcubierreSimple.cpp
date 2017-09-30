@@ -325,7 +325,7 @@ double MetricAlcubierreSimple::testConstraint(const double y[], const double kap
  *
  *  Set 'sigma', 'R', and 'vs' parameters.
  */
-bool MetricAlcubierreSimple::setParam(std::string pName, double val) {
+bool MetricAlcubierreSimple::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "r") {
         mR = val;

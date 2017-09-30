@@ -547,7 +547,7 @@ double MetricEinsteinRosenWaveWWB::testConstraint(const double* y, const double 
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricEinsteinRosenWaveWWB::setParam(std::string pName, double val) {
+bool MetricEinsteinRosenWaveWWB::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
     if (pName == "c") {

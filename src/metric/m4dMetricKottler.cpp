@@ -605,7 +605,7 @@ double MetricKottler::testConstraint(const double y[], const double kappa) {
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricKottler::setParam(std::string pName, double val) {
+bool MetricKottler::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
     if (pName == "mass") {
@@ -664,7 +664,7 @@ bool MetricKottler::transToEmbedding(vec4 p, vec4 &ep) {
  *  \return true  : success.
  *  \return false : parameter not valid.
  */
-bool MetricKottler::setEmbeddingParam(std::string name, double val) {
+bool MetricKottler::setEmbeddingParam(const char* name, double val) {
     Metric::setEmbeddingParam(name, val);
 
     if (name == "emb_rmin") {
@@ -734,52 +734,52 @@ bool MetricKottler::testEmbeddingParams() {
  *  \param counter  : number of strips.
  *  \return int : number of vertices.
  */
-int MetricKottler::getEmbeddingVertices(std::vector<vec3> &verts,
-                                        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter) {
-    if (!verts.empty()) {
-        verts.clear();
-    }
+//int MetricKottler::getEmbeddingVertices(std::vector<vec3> &verts,
+//                                        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter) {
+//    if (!verts.empty()) {
+//        verts.clear();
+//    }
 
-    if (!indices.empty()) {
-        indices.clear();
-    }
+//    if (!indices.empty()) {
+//        indices.clear();
+//    }
 
-    testEmbeddingParams();
-    mEmb_rstep = (mEmb_rmax - mEmb_rmin) / mEmb_r_num;
-    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
+//    testEmbeddingParams();
+//    mEmb_rstep = (mEmb_rmax - mEmb_rmin) / mEmb_r_num;
+//    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
 
-    numElems = int(mEmb_r_num);
-    counter  = int(mEmb_phi_num) + 1;
+//    numElems = int(mEmb_r_num);
+//    counter  = int(mEmb_phi_num) + 1;
 
-    int vnum;
-    double x, y, z, r, phi;
-    for (unsigned int k = 0; k < counter; k++) {
-        phi = k * mEmb_phistep;
-        for (unsigned int j = 0; j < numElems; j++) {
-            r = mEmb_rmin + eps + j * mEmb_rstep;
-            //std::cerr << rp << " " << rm <<" " << r << std::endl;
-            x = r * cos(phi);
-            y = r * sin(phi);
-            if ((mLambda <= 0.0 && r > r1) || (mLambda > 0.0 && r > rp && r <= rm - eps)) {
-                calcEmbeddingZ(r, z);
-            }
-            verts.push_back(vec3(x, y, z));
-            vnum = k * numElems + j;
+//    int vnum;
+//    double x, y, z, r, phi;
+//    for (unsigned int k = 0; k < counter; k++) {
+//        phi = k * mEmb_phistep;
+//        for (unsigned int j = 0; j < numElems; j++) {
+//            r = mEmb_rmin + eps + j * mEmb_rstep;
+//            //std::cerr << rp << " " << rm <<" " << r << std::endl;
+//            x = r * cos(phi);
+//            y = r * sin(phi);
+//            if ((mLambda <= 0.0 && r > r1) || (mLambda > 0.0 && r > rp && r <= rm - eps)) {
+//                calcEmbeddingZ(r, z);
+//            }
+//            verts.push_back(vec3(x, y, z));
+//            vnum = k * numElems + j;
 
-            indices.push_back(vnum);
-            indices.push_back(vnum + numElems);
-        }
-    }
+//            indices.push_back(vnum);
+//            indices.push_back(vnum + numElems);
+//        }
+//    }
 
-    int numVerts = (int)verts.size();
-    int numInds  = (int)indices.size();
+//    int numVerts = (int)verts.size();
+//    int numInds  = (int)indices.size();
 
-    if (2 * numVerts == numInds) {
-        return numVerts;
-    }
+//    if (2 * numVerts == numInds) {
+//        return numVerts;
+//    }
 
-    return 0;
-}
+//    return 0;
+//}
 
 /*!
  *  \param units : type of physical constants.

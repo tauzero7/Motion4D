@@ -509,7 +509,7 @@ bool MetricKasner::breakCondition(const double* pos) {
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricKasner::setParam(std::string pName, double val) {
+bool MetricKasner::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
     if (pName == "u") {

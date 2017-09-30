@@ -489,7 +489,7 @@ bool MetricTomimatsuSato::breakCondition(const double* pos) {
  *
  *
  */
-bool MetricTomimatsuSato::setParam(std::string pName, double val) {
+bool MetricTomimatsuSato::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "k") {
         k = val;

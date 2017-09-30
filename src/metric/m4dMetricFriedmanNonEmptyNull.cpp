@@ -600,7 +600,7 @@ double MetricFriedmanNonEmptyNull::testConstraint(const double y[], const double
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricFriedmanNonEmptyNull::setParam(std::string pName, double val) {
+bool MetricFriedmanNonEmptyNull::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
     if (pName == "k") {

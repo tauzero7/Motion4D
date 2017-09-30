@@ -268,7 +268,7 @@ bool MetricHalilsoyWave::breakCondition(const double*) {
 /*! Set parameter 'pName' to 'val'.
  *
  */
-bool MetricHalilsoyWave::setParam(std::string pName, double val) {
+bool MetricHalilsoyWave::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "alpha") {
         mAlpha = val;

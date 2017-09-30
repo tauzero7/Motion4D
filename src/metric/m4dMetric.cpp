@@ -108,15 +108,15 @@ Metric::~Metric() {
 /*! Get the name of the metric.
  *
  */
-std::string Metric::getMetricName() {
-    return mMetricName;
+const char* Metric::getMetricName() {
+    return mMetricName.c_str();
 }
 
 /*! Get the filename of the metric.
  *
  */
-std::string Metric::getMetricCPPfilename() {
-    return mMetricCPPfilename;
+const char* Metric::getMetricCPPfilename() {
+    return mMetricCPPfilename.c_str();
 }
 
 /*! Get the type of the coordinates.
@@ -133,23 +133,14 @@ Metric::getCoordType() {
  *
  *  \param  num  :  number of coordinate (0,1,2,3).
  */
-std::string Metric::getCoordName(int num) {
+const char* Metric::getCoordName(int num) {
     if (num >= 0 && num <= 3) {
-        return mCoordNames[num];
+        return mCoordNames[num].c_str();
     }
 
-    return std::string();
+    return nullptr;
 }
 
-/*!  Get all coordinate names.
- *
- *  \param names[] : reference to coordinate names.
- */
-void Metric::getCoordNames(std::string names[4]) {
-    for (int i = 0; i < 4; i++) {
-        names[i] = mCoordNames[i];
-    }
-}
 
 /*! Return the signum of the signature of the metric.
  *  \return +1.0 : sign(g)=+2
@@ -942,16 +933,17 @@ double Metric::getFmu_nu(const int mu, const int nu) {
  *  \return true  : parameter was added.
  *  \return false : parameter already exists.
  */
-bool Metric::addParam(std::string pName, double val) {
-    lowCase(pName);
+bool Metric::addParam(const char* pName, double val) {
+    std::string paramname = std::string(pName);
+    lowCase(paramname);
 
-    mParamItr = mParam.find(pName);
+    mParamItr = mParam.find(paramname);
     if (mParamItr == mParam.end()) {
-        mParam.insert(std::pair<std::string, double>(pName, val));
+        mParam.insert(std::pair<std::string, double>(paramname, val));
         mNumParam++;
         return true;
     } else {
-        fprintf(stderr, "Parameter %s already exists!\n", pName.c_str());
+        fprintf(stderr, "Parameter %s already exists!\n", paramname.c_str());
         return false;
     }
 }
@@ -964,11 +956,13 @@ bool Metric::addParam(std::string pName, double val) {
  *  \return true  : parameter was set.
  *  \return false : parameter was not set.
  */
-bool Metric::setParam(std::string pName, double val) {
-    lowCase(pName);
-    mParamItr = mParam.find(pName);
+bool Metric::setParam(const char* pName, double val) {
+    std::string paramname = std::string(pName);
+    lowCase(paramname);
+
+    mParamItr = mParam.find(paramname);
     if (mParamItr == mParam.end()) {
-        fprintf(stderr, "Parameter %s do no exist!\n", pName.c_str());
+        fprintf(stderr, "Parameter %s do no exist!\n", paramname.c_str());
         return false;
     } else {
         mParamItr->second = val;
@@ -983,11 +977,13 @@ bool Metric::setParam(std::string pName, double val) {
  *  \return true  : parameter exists.
  *  \return false : parameter do not exist.
  */
-bool Metric::getParam(std::string pName, double &val) {
-    lowCase(pName);
-    mParamItr = mParam.find(pName);
+bool Metric::getParam(const char* pName, double &val) {
+    std::string paramname = std::string(pName);
+    lowCase(paramname);
+
+    mParamItr = mParam.find(paramname);
     if (mParamItr == mParam.end()) {
-        fprintf(stderr, "Parameter %s do no exist!\n", pName.c_str());
+        fprintf(stderr, "Parameter %s do no exist!\n", paramname.c_str());
         return false;
     } else {
         val = mParamItr->second;
@@ -1003,19 +999,20 @@ bool Metric::getParam(std::string pName, double &val) {
  *  \return true  : parameter exists.
  *  \return false : parameter do not exist.
  */
-bool Metric::getParam(int pNr, std::string& pName, double& val) {
-    if (pNr >= 0 && pNr < mNumParam) {
-        std::map<std::string, double>::iterator p_itr = mParam.begin();
-        for (int i = 0; i < pNr; i++) {
-            p_itr++;
-        }
-        pName = (*p_itr).first;
-        val   = (*p_itr).second;
+//bool Metric::getParam(int pNr, std::string& pName, double& val) {
+//    if (pNr >= 0 && pNr < mNumParam) {
+//        std::map<std::string, double>::iterator p_itr = mParam.begin();
+//        for (int i = 0; i < pNr; i++) {
+//            p_itr++;
+//        }
+//        pName = (*p_itr).first;
+//        val   = (*p_itr).second;
 
-        return true;
-    }
-    return false;
-}
+//        return true;
+//    }
+//    return false;
+//}
+
 
 bool Metric::setParam(int pNr, double val) {
     if (pNr >= 0 && pNr < mNumParam) {
@@ -1024,7 +1021,7 @@ bool Metric::setParam(int pNr, double val) {
             p_itr++;
         }
         std::string pName = p_itr->first;
-        return setParam(pName, val);
+        return setParam(pName.c_str(), val);
     }
     return false;
 }
@@ -1041,19 +1038,19 @@ int Metric::getNumParams() {
  *
  *  \param  names : reference to vector of strings.
  */
-void Metric::getParamNames(std::vector<std::string> &names) {
-    if (!names.empty()) {
-        names.clear();
-    }
+//void Metric::getParamNames(std::vector<std::string> &names) {
+//    if (!names.empty()) {
+//        names.clear();
+//    }
 
-    mParamItr = mParam.begin();
-    while (mParamItr != mParam.end()) {
-        names.push_back(mParamItr->first);
-        mParamItr++;
-    }
-}
+//    mParamItr = mParam.begin();
+//    while (mParamItr != mParam.end()) {
+//        names.push_back(mParamItr->first);
+//        mParamItr++;
+//    }
+//}
 
-int Metric::getParamNum(std::string name) {
+int Metric::getParamNum(const char *name) {
     int count = 0;
     mParamItr = mParam.begin();
     while (mParamItr != mParam.end()) {
@@ -1066,6 +1063,19 @@ int Metric::getParamNum(std::string name) {
     return -1;
 }
 
+
+const char* Metric::getParamName(int pNr) {
+    if (pNr >= 0 && pNr < mNumParam) {
+        std::map<std::string, double>::iterator p_itr = mParam.begin();
+        for(int n=0; n<pNr; n++) {
+            p_itr++;
+        }
+        return p_itr->first.c_str();
+    }
+    return nullptr;
+}
+
+
 /*! Get types of local tetrads defined for the metric.
  *
  *  All metrics have a default local tetrads which should be adapted to
@@ -1074,10 +1084,10 @@ int Metric::getParamNum(std::string name) {
  *  \return int : number of local tetrad types defined for the metric.
  *  \sa enum_nat_tetrad_type
  */
-int Metric::getLocTedTypes(std::vector<enum_nat_tetrad_type> &locted) {
-    locted = mLocTeds;
-    return (int)mLocTeds.size();
-}
+//int Metric::getLocTedTypes(std::vector<enum_nat_tetrad_type> &locted) {
+//    locted = mLocTeds;
+//    return (int)mLocTeds.size();
+//}
 
 /*! Get type of local tetrad 'num'.
  *
@@ -1201,16 +1211,17 @@ void Metric::transFromPseudoCart(vec4 cp, vec4 &p) {
  *  \return true  : parameter was added.
  *  \return false : parameter already exists.
  */
-bool Metric::addEmbeddingParam(std::string name, double val) {
-    lowCase(name);
+bool Metric::addEmbeddingParam(const char* name, double val) {
+    std::string paramname = std::string(name);
+    lowCase(paramname);
 
-    mEmbParamItr = mEmbParam.find(name);
+    mEmbParamItr = mEmbParam.find(paramname);
     if (mEmbParamItr == mEmbParam.end()) {
-        mEmbParam.insert(std::pair<std::string, double>(name, val));
+        mEmbParam.insert(std::pair<std::string, double>(paramname, val));
         return true;
     } else {
 #if DEF_SHOW_EMB_WARN==1
-        fprintf(stderr, "Embedding parameter %s already exists!\n", name.c_str());
+        fprintf(stderr, "Embedding parameter %s already exists!\n", paramname.c_str());
 #endif
         return false;
     }
@@ -1223,12 +1234,14 @@ bool Metric::addEmbeddingParam(std::string name, double val) {
  *  \return true  : success.
  *  \return false : parameter not valid.
  */
-bool Metric::setEmbeddingParam(std::string name, double val) {
-    lowCase(name);
-    mEmbParamItr = mEmbParam.find(name);
+bool Metric::setEmbeddingParam(const char* name, double val) {
+    std::string paramname = std::string(name);
+    lowCase(paramname);
+
+    mEmbParamItr = mEmbParam.find(paramname);
     if (mEmbParamItr == mEmbParam.end()) {
 #if DEF_SHOW_EMB_WARN==1
-        fprintf(stderr, "Embedding parameter %s do no exist!\n", name.c_str());
+        fprintf(stderr, "Embedding parameter %s do no exist!\n", paramname.c_str());
 #endif
         return false;
     } else {
@@ -1244,12 +1257,14 @@ bool Metric::setEmbeddingParam(std::string name, double val) {
  *  \return true  : success.
  *  \return false : parameter not valid.
  */
-bool Metric::getEmbeddingParam(std::string name, double &val) {
-    lowCase(name);
-    mEmbParamItr = mEmbParam.find(name);
+bool Metric::getEmbeddingParam(const char* name, double &val) {
+    std::string paramname = std::string(name);
+    lowCase(paramname);
+
+    mEmbParamItr = mEmbParam.find(paramname);
     if (mEmbParamItr == mEmbParam.end()) {
 #if DEF_SHOW_EMB_WARN==1
-        fprintf(stderr, "Embedding parameter %s do no exist!\n", name.c_str());
+        fprintf(stderr, "Embedding parameter %s do no exist!\n", paramname.c_str());
 #endif
         return false;
     } else {
@@ -1262,65 +1277,65 @@ bool Metric::getEmbeddingParam(std::string name, double &val) {
  *
  *  \param names : reference to vector of strings.
  */
-void Metric::getEmbeddingNames(std::vector<std::string> &names) {
-    if (!names.empty()) {
-        names.clear();
-    }
+//void Metric::getEmbeddingNames(std::vector<std::string> &names) {
+//    if (!names.empty()) {
+//        names.clear();
+//    }
 
-    mEmbParamItr = mEmbParam.begin();
-    while (mEmbParamItr != mEmbParam.end()) {
-        names.push_back(mEmbParamItr->first);
-        mEmbParamItr++;
-    }
-}
+//    mEmbParamItr = mEmbParam.begin();
+//    while (mEmbParamItr != mEmbParam.end()) {
+//        names.push_back(mEmbParamItr->first);
+//        mEmbParamItr++;
+//    }
+//}
 
 /*! Get all embedding parameters.
  * \param names : reference to parameter name list.
  * \param params : reference to parameter value list.
  * \return true : both lists have the same size.
  */
-bool Metric::getAllEmbeddingParams(std::vector<std::string> &names, std::vector<double> &params) {
-    if (!params.empty()) {
-        params.clear();
-    }
-    getEmbeddingNames(names);
+//bool Metric::getAllEmbeddingParams(std::vector<std::string> &names, std::vector<double> &params) {
+//    if (!params.empty()) {
+//        params.clear();
+//    }
+//    getEmbeddingNames(names);
 
-    double val;
-    for (unsigned int i = 0; i < names.size(); i++) {
-        if (getEmbeddingParam(names[i], val)) {
-            params.push_back(val);
-        }
-    }
+//    double val;
+//    for (unsigned int i = 0; i < names.size(); i++) {
+//        if (getEmbeddingParam(names[i], val)) {
+//            params.push_back(val);
+//        }
+//    }
 
-    if (params.size() == names.size()) {
-        return true;
-    }
+//    if (params.size() == names.size()) {
+//        return true;
+//    }
 
-    names.clear();
-    params.clear();
-    return false;
-}
+//    names.clear();
+//    params.clear();
+//    return false;
+//}
 
 /*! Get embedding parameter map.
  *  \param params : reference to embedding parameter map.
  *  \return true: successfull.
  */
-bool Metric::getEmbeddingMap(std::map<std::string, double> &params) {
-    if (mEmbParam.size() == 0) {
-        return false;
-    }
+//bool Metric::getEmbeddingMap(std::map<std::string, double> &params) {
+//    if (mEmbParam.size() == 0) {
+//        return false;
+//    }
 
-    if (!params.empty()) {
-        params.clear();
-    }
+//    if (!params.empty()) {
+//        params.clear();
+//    }
 
-    mEmbParamItr = mEmbParam.begin();
-    while (mEmbParamItr != mEmbParam.end()) {
-        params.insert(std::pair<std::string, double>(mEmbParamItr->first, mEmbParamItr->second));
-        mEmbParamItr++;
-    }
-    return true;
-}
+//    mEmbParamItr = mEmbParam.begin();
+//    while (mEmbParamItr != mEmbParam.end()) {
+//        params.insert(std::pair<std::string, double>(mEmbParamItr->first, mEmbParamItr->second));
+//        mEmbParamItr++;
+//    }
+//    return true;
+//}
 
 /*! Generate vertices for the embedding diagram.
  *
@@ -1330,10 +1345,10 @@ bool Metric::getEmbeddingMap(std::map<std::string, double> &params) {
  *  \param counter  : number of strips.
  *  \return int : 0
  */
-int Metric::getEmbeddingVertices(std::vector<vec3>&,
-                                 std::vector<int>&, unsigned int&, unsigned int&) {
-    return 0;
-}
+//int Metric::getEmbeddingVertices(std::vector<vec3>&,
+//                                 std::vector<int>&, unsigned int&, unsigned int&) {
+//    return 0;
+//}
 
 /*! Have embedding diagram.
  */
@@ -1403,10 +1418,10 @@ bool Metric::isResizeEnabled() {
  *  \return true  : success.
  *  \return false : no report available.
  */
-bool Metric::report(const vec4 , const vec4 , std::string &text) {
-    text = std::string();
-    return false;
-}
+//bool Metric::report(const vec4 , const vec4 , std::string &text) {
+//    text = std::string();
+//    return false;
+//}
 
 
 /*!

@@ -261,7 +261,7 @@ bool MetricGoedelScaledCart::breakCondition(const double*) {
 // ---------------------------------------------------
 //    public::setParam
 // ---------------------------------------------------
-bool MetricGoedelScaledCart::setParam(std::string pName, double val) {
+bool MetricGoedelScaledCart::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "rG") {
         mRG = val;

@@ -614,7 +614,7 @@ double MetricEddFinkIn::testConstraint(const double y[], const double kappa) {
  *
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  */
-bool MetricEddFinkIn::setParam(std::string pName, double val) {
+bool MetricEddFinkIn::setParam(const char* pName, double val) {
     if (Metric::setParam(pName, val)) {
         mMass = val;
         rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);

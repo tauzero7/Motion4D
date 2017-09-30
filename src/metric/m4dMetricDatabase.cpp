@@ -125,7 +125,12 @@ std::cerr << stl_metric_names[1] << std::endl;
         paramNames.clear();
         if ((metric = getMetric(stl_metric_names[i])) != NULL) {
             numParams = metric->getNumParams();
-            metric->getParamNames(paramNames);
+            for(int j = 0; j < numParams; j++) {
+                const char* pname = metric->getParamName(j);
+                if (pname != nullptr) {
+                    paramNames.push_back(std::string(pname));
+                }
+            }
         } else {
             numParams = 0;
         }
@@ -133,7 +138,7 @@ std::cerr << stl_metric_names[1] << std::endl;
 
         if (metric != NULL) {
             for (unsigned int j = 0; j < paramNames.size(); j++) {
-                metric->getParam(paramNames[j], value);
+                metric->getParam(paramNames[j].c_str(), value);
                 fprintf(fptr, "%s=%f ", paramNames[j].c_str(), value);
             }
         }

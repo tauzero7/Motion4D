@@ -75,7 +75,7 @@ public:
 
     virtual double testConstraint(const double y[], const double kappa);
 
-    virtual bool   setParam(std::string pName, double val);
+    virtual bool   setParam(const char* pName, double val);
 
     virtual void   usePhysicalUnits(const enum_physical_constants  units);
     virtual void   setUnits(const double speed_of_light, const double grav_const, const double diel_perm);

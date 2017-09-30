@@ -282,7 +282,7 @@ double MetricErezRosenVar::testConstraint(const double y[], const double kappa) 
 }
 
 
-bool MetricErezRosenVar::setParam(std::string pName, double val) {
+bool MetricErezRosenVar::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "mass") {
         mMass = val;

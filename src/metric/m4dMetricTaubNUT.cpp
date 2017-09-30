@@ -800,7 +800,7 @@ double MetricTaubNUT::testConstraint(const double y[], const double kappa) {
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricTaubNUT::setParam(std::string pName, double val) {
+bool MetricTaubNUT::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
     if (pName == "mass") {

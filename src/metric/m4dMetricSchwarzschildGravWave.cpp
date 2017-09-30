@@ -460,7 +460,7 @@ double MetricSchwarzschildGravWave::testConstraint(const double y[], const doubl
  *
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  */
-bool MetricSchwarzschildGravWave::setParam(std::string pName, double val) {
+bool MetricSchwarzschildGravWave::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "mass") {
         mMass = val;

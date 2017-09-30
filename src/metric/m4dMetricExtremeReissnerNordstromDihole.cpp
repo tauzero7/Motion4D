@@ -623,7 +623,7 @@ double MetricExtremeReissnerNordstromDihole::testConstraint(const double y[], co
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricExtremeReissnerNordstromDihole::setParam(std::string pName, double val) {
+bool MetricExtremeReissnerNordstromDihole::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
 
     if (pName == "m1") {

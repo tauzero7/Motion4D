@@ -1099,7 +1099,7 @@ bool MetricAlcubierre::resize(double* y, double kappa, double factor) {
  *
  *  Set 'sigma', 'R', and 'vs' parameters.
  */
-bool MetricAlcubierre::setParam(std::string pName, double val) {
+bool MetricAlcubierre::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "sigma") {
         mSigma = val;

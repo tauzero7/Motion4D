@@ -411,7 +411,7 @@ MetricPravda_C_Can::testConstraint(const double y[], const double kappa) {
 *
 */
 bool
-MetricPravda_C_Can::setParam(std::string pName, double val) {
+MetricPravda_C_Can::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "m") {
         Par_m = val;

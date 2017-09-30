@@ -643,7 +643,7 @@ bool MetricGlampedakis::breakCondition(const double* pos) {
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricGlampedakis::setParam(std::string pName, double val) {
+bool MetricGlampedakis::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "mass") {
         mMass = val;
