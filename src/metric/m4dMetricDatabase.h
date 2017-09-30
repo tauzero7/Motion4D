@@ -47,18 +47,13 @@ namespace m4d {
 
 class API_M4D_EXPORT MetricDatabase {
 public:
-    static MetricDatabase* M4D_CALL getInstance() {
-        static CGuard g;
-        if (m_instance == nullptr) {
-            m_instance = new MetricDatabase();
-        }
-        return m_instance;
-    }
-
+    MetricDatabase();
+    ~MetricDatabase();
+    
     int          getNumMetrics();
     Metric*      getMetric(enum_metric  num);
     Metric*      getMetric(const char* mName);
-    std::string  getMetricName(enum_metric  num);
+    const char*  getMetricName(enum_metric  num);
     enum_metric  getMetricNr(const char* mName);
 
     void         printMetricList(FILE* fptr = stderr);
@@ -66,26 +61,6 @@ public:
 protected:
     void      init();
     Metric*   initializeMetric(enum_metric  num);
-
-
-    // make the Database class a singleton
-private:
-    static MetricDatabase* m_instance;
-    MetricDatabase();
-    MetricDatabase(const MetricDatabase&) {}
-    ~MetricDatabase();
-
-    class CGuard {
-    public:
-        ~CGuard() {
-            if (MetricDatabase::m_instance != nullptr) {
-                delete MetricDatabase::m_instance;
-                MetricDatabase::m_instance = nullptr;
-            }
-        }
-    };
-
-    friend class CGuard;
 
 private:
     std::map<std::string, enum_metric>            mMetricMap;

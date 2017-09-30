@@ -43,8 +43,8 @@ int main( int argc, char* argv[] )
 {
     fprintf(stderr,"\n\n=================== Test Database ===================\n\n");
 
-    m4d::MetricDatabase* metricDB = m4d::MetricDatabase::getInstance();
-    metricDB->printMetricList(stdout);
+    m4d::MetricDatabase metricDB;
+    metricDB.printMetricList(stdout);
 
     fprintf(stdout,"\nnum   Integrator name\n-----------------------------------------------------------\n");
     for(unsigned int i=0; i<m4d::NUM_GEOD_SOLVERS; i++) {

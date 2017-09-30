@@ -157,9 +157,9 @@ int main( int argc, char* argv[] )
   /* ----------------------------------
    *  initialize metric database
    * ---------------------------------- */  
-  m4d::MetricDatabase* metricDB = m4d::MetricDatabase::getInstance();
+  m4d::MetricDatabase metricDB;
 
-  m4d::Metric* metric = metricDB->getMetric("Schwarzschild");
+  m4d::Metric* metric = metricDB.getMetric("Schwarzschild");
   metric->setParam("mass",mass);
   metric->printF(); 
 

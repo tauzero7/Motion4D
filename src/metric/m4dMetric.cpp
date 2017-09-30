@@ -983,7 +983,7 @@ bool Metric::getParam(const char* pName, double &val) {
 
     mParamItr = mParam.find(paramname);
     if (mParamItr == mParam.end()) {
-        fprintf(stderr, "Parameter %s do no exist!\n", paramname.c_str());
+        fprintf(stderr, "Parameter %s does no exist!\n", paramname.c_str());
         return false;
     } else {
         val = mParamItr->second;

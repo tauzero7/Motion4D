@@ -173,9 +173,9 @@ public:
 
     // --------- public attributes --------
 public:
-    MetricDatabase*       metricDB;
+    MetricDatabase        metricDB;
     Metric*               currMetric;
-    IntegratorDatabase*   solverDB;
+    IntegratorDatabase    solverDB;
     Geodesic*             geodSolver;
     enum_integrator       geodSolverType;
 

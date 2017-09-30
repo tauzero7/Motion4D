@@ -95,8 +95,8 @@ int main( int argc, char* argv[] )
   /* -----------------------------------------
    *   Initialize metric.
    * ----------------------------------------- */
-  m4d::MetricDatabase* metricDB = m4d::MetricDatabase::getInstance();
-  m4d::Metric* metric = metricDB->getMetric("Schwarzschild");
+  m4d::MetricDatabase metricDB;
+  m4d::Metric* metric = metricDB.getMetric("Schwarzschild");
   metric->printF(); 
 
   

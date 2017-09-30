@@ -49,9 +49,9 @@ int main( int argc, char* argv[] ) {
     /* ----------------------------------
     *  initialize metric database
     * ---------------------------------- */  
-    m4d::MetricDatabase* metricDB = m4d::MetricDatabase::getInstance();
+    m4d::MetricDatabase metricDB;
 
-    m4d::Metric* metric = metricDB->getMetric("Ernst");
+    m4d::Metric* metric = metricDB.getMetric("Ernst");
     metric->setParam("mass", 1.0);
     metric->setParam("b", 0.1);
     metric->printF(); 

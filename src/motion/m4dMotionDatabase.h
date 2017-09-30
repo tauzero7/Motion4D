@@ -45,14 +45,9 @@ namespace m4d {
 
 class API_M4D_EXPORT IntegratorDatabase {
 public:
-    static IntegratorDatabase* getInstance() {
-        static CGuard g;
-        if (m_instance == nullptr) {
-            m_instance = new IntegratorDatabase();
-        }
-        return m_instance;
-    }
-
+    IntegratorDatabase();
+    ~IntegratorDatabase();
+    
     int              getNumIntegrators();
     Geodesic*        getIntegrator(Metric* cMetric, enum_integrator  num);
     Geodesic*        getIntegrator(Metric* cMetric, const char* mName);
@@ -64,25 +59,6 @@ public:
 protected:
     void        init();
     Geodesic*   initializeIntegrator(Metric* cMetric, enum_integrator  num);
-
-private:
-    static IntegratorDatabase* m_instance;
-    IntegratorDatabase();
-    IntegratorDatabase(const IntegratorDatabase &) {}
-    ~IntegratorDatabase();
-
-    class CGuard {
-    public:
-        ~CGuard() {
-            if (IntegratorDatabase::m_instance != nullptr) {
-                delete IntegratorDatabase::m_instance;
-                IntegratorDatabase::m_instance = nullptr;
-            }
-        }
-    };
-
-    friend class CGuard;
-
 
 private:
     std::map<std::string, enum_integrator>            mIntegratorMap;

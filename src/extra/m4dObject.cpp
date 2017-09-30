@@ -32,10 +32,8 @@ namespace m4d {
  */
 Object::Object() :
     currMetric(NULL),
-    geodSolver(NULL) {
-
-    metricDB = MetricDatabase::getInstance();
-    solverDB = IntegratorDatabase::getInstance();
+    geodSolver(NULL) 
+{
     resetAll();
 }
 
@@ -51,7 +49,7 @@ bool Object::setMetric(const char *metricName) {
     if (currMetric != nullptr) {
         delete currMetric;
     }
-    currMetric = metricDB->getMetric(metricName);
+    currMetric = metricDB.getMetric(metricName);
     return (currMetric == nullptr ? false : true);
 }
 
@@ -73,7 +71,7 @@ bool Object::setSolver(const char *solverName) {
     if (geodSolver != nullptr) {
         delete geodSolver;
     }
-    geodSolver = solverDB->getIntegrator(currMetric, solverName);
+    geodSolver = solverDB.getIntegrator(currMetric, solverName);
     return (geodSolver == nullptr ? false : true);
 }
 
@@ -589,7 +587,7 @@ bool Object::loadSettings(std::string filename, bool printset) {
 
         std::string baseString = tokens[i][0];
         if (baseString.compare("METRIC") == 0 && tokens[i].size() > 1) {
-            currMetric = metricDB->getMetric(tokens[i][1].c_str());
+            currMetric = metricDB.getMetric(tokens[i][1].c_str());
             if (currMetric == NULL) {
                 return false;
             }
@@ -629,7 +627,7 @@ bool Object::loadSettings(std::string filename, bool printset) {
         else if (baseString.compare("GEOD_SOLVER_TYPE") == 0 && tokens[i].size() > 1) {
             geodSolverType = enum_integrator(atoi(tokens[i][1].c_str()));
             if (currMetric != NULL) {
-                geodSolver = solverDB->getIntegrator(currMetric, geodSolverType);
+                geodSolver = solverDB.getIntegrator(currMetric, geodSolverType);
             }
         }
         else if (baseString.compare("GEODESIC_TYPE") == 0 && tokens[i].size() > 1) {
@@ -813,13 +811,13 @@ void  Object::printSettings(FILE* fptr) {
 
     fprintf(fptr, "\n--------------------- parameter settings ---------------------\n");
     fprintf(fptr, "METRIC       %s\n", currMetric->getMetricName());
-    double val;
+    double val = 0.0;
 
-    // TODO
-    std::string pname;
     for (int i = 0; i < currMetric->getNumParams(); i++) {
-        //currMetric->getParam(i, pname, val);
-        fprintf(fptr, "PARAM  %d  %10s  %16.12f\n", i, pname.c_str(), val);
+        const char* pname = currMetric->getParamName(i);
+        if (pname != nullptr && currMetric->getParam(pname, val)) {
+            fprintf(fptr, "PARAM  %d  %10s  %16.12f\n", i, pname, val);
+        }
     }
     fprintf(fptr, "INIT_POS         %16.12f %16.12f %16.12f %16.12f\n", startPos[0], startPos[1], startPos[2], startPos[3]);
     fprintf(fptr, "INIT_DIR         %16.12f %16.12f %16.12f\n", startDir[0], startDir[1], startDir[2]);

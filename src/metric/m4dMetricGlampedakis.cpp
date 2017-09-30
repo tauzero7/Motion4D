@@ -621,6 +621,7 @@ void MetricGlampedakis::coordToLocal(const double* , const double* , double* ,
  */
 bool MetricGlampedakis::breakCondition(const double* pos) {
     bool br = false;
+    
     if (pos[1] <= 2.0 * mMass || std::isnan(pos[0]) || std::isnan(pos[1]) || std::isnan(pos[2]) || std::isnan(pos[3])) {
         br = true;
     } else {

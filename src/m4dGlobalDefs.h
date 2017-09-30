@@ -119,7 +119,7 @@
 #endif // _WIN32
 
 #ifdef _WIN32
-#define  isnan(x) ((x) != (x))
+//#define  isnan(x) ((x) != (x))
 #define  asinh(x)   (log(x + sqrt(x*x+1)))
 #endif
 

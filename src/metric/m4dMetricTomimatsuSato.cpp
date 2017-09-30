@@ -39,12 +39,7 @@ MetricTomimatsuSato::MetricTomimatsuSato(double k0, double p0, double q0) {
     mPhysicalUnits = enum_physical_constants_geom;
     mSpeedOfLight = 1.0;
     mGravConstant = 1.0;
-
-    addParam("k", mk);
-    addParam("p", mp);
-    addParam("q", mq);
-
-
+    
     setStandardValues();
     initToZero();
 
@@ -56,6 +51,10 @@ MetricTomimatsuSato::MetricTomimatsuSato(double k0, double p0, double q0) {
     mk = k0;
     mp = p0;
     mq = q0;
+
+    addParam("k", mk);
+    addParam("p", mp);
+    addParam("q", mq);
 
     k2 = k * k;
     p2 = p * p;
@@ -69,8 +68,6 @@ MetricTomimatsuSato::MetricTomimatsuSato(double k0, double p0, double q0) {
 
     chrisDskip = 0;
     chrisDcalled = 0;
-
-
 }
 
 MetricTomimatsuSato::~MetricTomimatsuSato() {

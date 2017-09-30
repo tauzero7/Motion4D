@@ -27,10 +27,6 @@
 
 namespace m4d {
 
-//#ifndef _WIN32
-MetricDatabase* MetricDatabase::m_instance = nullptr;
-//#endif
-
 /*!
  */
 MetricDatabase::MetricDatabase() {
@@ -84,12 +80,12 @@ MetricDatabase::getMetric(const char* mName) {
  *  \param num : number of metric.
  *  \return string : name of metric.
  */
-std::string MetricDatabase::getMetricName(enum_metric num) {
+const char* MetricDatabase::getMetricName(enum_metric num) {
     if (int(num) >= 0 && int(num) < NUM_METRICS) {
         return stl_metric_names[num];
     }
 
-    return std::string();
+    return nullptr;
 }
 
 /*! Get the number of the 'mName' metric.
@@ -119,10 +115,10 @@ void MetricDatabase::printMetricList(FILE* fptr) {
     Metric*  metric = nullptr;
     std::vector<std::string> paramNames;
     double   value;
-std::cerr << stl_metric_names[1] << std::endl;
 
     for (int i = 0; i < NUM_METRICS; i++) {
         paramNames.clear();
+
         if ((metric = getMetric(stl_metric_names[i])) != NULL) {
             numParams = metric->getNumParams();
             for(int j = 0; j < numParams; j++) {
@@ -138,8 +134,9 @@ std::cerr << stl_metric_names[1] << std::endl;
 
         if (metric != NULL) {
             for (unsigned int j = 0; j < paramNames.size(); j++) {
-                metric->getParam(paramNames[j].c_str(), value);
-                fprintf(fptr, "%s=%f ", paramNames[j].c_str(), value);
+                if (metric->getParam(paramNames[j].c_str(), value)) {
+                    fprintf(fptr, "%s=%f ", paramNames[j].c_str(), value);
+                }
             }
         }
         fprintf(fptr, ")\n");

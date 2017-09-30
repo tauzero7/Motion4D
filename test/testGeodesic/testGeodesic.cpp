@@ -58,8 +58,8 @@ int main(int argc, char* argv[]) {
   /* -----------------------------------------
    *   Initialize metric.
    * ----------------------------------------- */
-  m4d::MetricDatabase* metricDB = m4d::MetricDatabase::getInstance();
-  m4d::Metric* metric = metricDB->getMetric("SchwarzschildCart");
+  m4d::MetricDatabase metricDB;
+  m4d::Metric* metric = metricDB.getMetric("SchwarzschildCart");
   metric->printF();
   
   /* -----------------------------------------
