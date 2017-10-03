@@ -249,7 +249,7 @@ public:
 
 
     // --------- protected methods -----------
-protected:
+protected:    
     void  lowCase(std::string &s);
     void  setCoordType(enum_coordinate_type coord_type);
 

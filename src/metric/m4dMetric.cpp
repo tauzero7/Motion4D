@@ -956,19 +956,20 @@ bool Metric::addParam(const char* pName, double val) {
  *  \return true  : parameter was set.
  *  \return false : parameter was not set.
  */
-bool Metric::setParam(const char* pName, double val) {
+bool Metric::setParam(const char* pName, double val) {    
     std::string paramname = std::string(pName);
     lowCase(paramname);
 
     mParamItr = mParam.find(paramname);
     if (mParamItr == mParam.end()) {
-        fprintf(stderr, "Parameter %s do no exist!\n", paramname.c_str());
+        fprintf(stderr, "Parameter %s does no exist!\n", paramname.c_str());
         return false;
     } else {
         mParamItr->second = val;
         return true;
     }
 }
+
 
 /*! Get parameter 'pName'.
  *

@@ -878,11 +878,13 @@ bool MetricKerrBL::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (strcmp(pName,"mass") == 0) {
         mass = val;
+        return true;
     }
     else if (strcmp(pName,"angmom") == 0) {
         angmom = val;
+        return true;
     }
-    return true;
+    return false;
 }
 
 /*!  Transform point p to 2+1 coordinates.

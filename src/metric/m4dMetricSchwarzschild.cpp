@@ -1403,12 +1403,14 @@ bool MetricSchwarzschild::calcProduct(const double* pos, const double* u, const 
  *
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  */
-bool MetricSchwarzschild::setParam(const char* pName, double val) {
-    if (Metric::setParam(pName, val)) {
+bool MetricSchwarzschild::setParam(const char* pName, double val) {    
+    if (Metric::setParam(pName,val)) {
         mMass = val;
         rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
+        return true;
     }
-    return true;
+
+    return false;
 }
 
 /*! Transform point p to embedding coordinates.
