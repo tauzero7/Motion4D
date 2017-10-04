@@ -87,6 +87,13 @@ bool Object::setSolverParam(const char *paramName, bool val) {
 
 
 bool Object::setSolverParam(const char *paramName, double value) {
+    if (strcmp(paramName, "eps_a") == 0) {
+        this->epsAbs = value;
+    }
+    else if (strcmp(paramName, "eps_r") == 0) {
+        this->epsRel = value;
+    }
+
     if (geodSolver == nullptr) {
         fprintf(stderr,"Object::setSolverParam() ... solver is missing!\n");
         return false;
