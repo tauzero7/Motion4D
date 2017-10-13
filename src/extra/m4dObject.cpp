@@ -378,16 +378,16 @@ void Object::resetAll() {
  * @return true : if parameter was found.\n
  *         false : parameter was not found.
  */
-bool Object::getParam(std::string paramName, int &paramValue) {
-    if (paramName.compare("axes_orient")==0) {
+bool Object::getParam(const char* paramName, int &paramValue) {
+    if (strcmp(paramName,"axes_orient") == 0) {
         paramValue = axes_orient;
         return true;
     }
-    else if (paramName.compare("timeDirection")==0) {
+    else if (strcmp(paramName,"timeDirection") == 0) {
         paramValue = timeDirection;
         return true;
     }
-    else if (paramName.compare("maxNumPoints")==0) {
+    else if (strcmp(paramName,"maxNumPoints") == 0) {
         paramValue = (int)maxNumPoints;
         return true;
     }
@@ -402,56 +402,56 @@ bool Object::getParam(std::string paramName, int &paramValue) {
  * @return true : if parameter was found.\n
  *         false : parameter was not found.
  */
-bool Object::getParam(std::string paramName, double &paramValue) {
-    if (paramName.compare("stepsize")==0) {
+bool Object::getParam(const char* paramName, double &paramValue) {
+    if (strcmp(paramName,"stepsize")==0) {
         paramValue = stepsize;
         return true;
     }
-    else if (paramName.compare("max_stepsize")==0) {
+    else if (strcmp(paramName,"max_stepsize")==0) {
         paramValue = max_stepsize;
         return true;
     }
-    else if (paramName.compare("min_stepsize")==0) {
+    else if (strcmp(paramName,"min_stepsize")==0) {
         paramValue = min_stepsize;
         return true;
     }
-    else if (paramName.compare("epsAbs")==0) {
+    else if (strcmp(paramName,"epsAbs")==0) {
         paramValue = epsAbs;
         return true;
     }
-    else if (paramName.compare("epsRel")==0) {
+    else if (strcmp(paramName,"epsRel")==0) {
         paramValue = epsRel;
         return true;
     }
-    else if (paramName.compare("epsConstr")==0) {
+    else if (strcmp(paramName,"epsConstr")==0) {
         paramValue = epsConstr;
         return true;
     }
-    else if (paramName.compare("epsResize")==0) {
+    else if (strcmp(paramName,"epsResize")==0) {
         paramValue = epsResize;
         return true;
     }
-    else if (paramName.compare("ksi")==0) {
+    else if (strcmp(paramName,"ksi")==0) {
         paramValue = ksi;
         return true;
     }
-    else if (paramName.compare("chi")==0) {
+    else if (strcmp(paramName,"chi")==0) {
         paramValue = chi;
         return true;
     }
-    else if (paramName.compare("vel")==0) {
+    else if (strcmp(paramName,"vel")==0) {
         paramValue = vel;
         return true;
     }
-    else if (paramName.compare("boost_ksi")==0) {
+    else if (strcmp(paramName,"boost_ksi")==0) {
         paramValue = boost_ksi;
         return true;
     }
-    else if (paramName.compare("boost_chi")==0) {
+    else if (strcmp(paramName,"boost_chi")==0) {
         paramValue = boost_chi;
         return true;
     }
-    else if (paramName.compare("boost_beta")==0) {
+    else if (strcmp(paramName,"boost_beta")==0) {
         paramValue = boost_beta;
         return true;
     }
@@ -466,8 +466,8 @@ bool Object::getParam(std::string paramName, double &paramValue) {
  * @return true : if parameter was found.\n
  *         false : parameter was not found.
  */
-bool Object::getParam(std::string paramName, m4d::vec3 &paramValue) {
-    if (paramName.compare("startDir")==0) {
+bool Object::getParam(const char* paramName, m4d::vec3 &paramValue) {
+    if (strcmp(paramName,"startDir")==0) {
         paramValue = startDir;
         return true;
     }
@@ -482,28 +482,28 @@ bool Object::getParam(std::string paramName, m4d::vec3 &paramValue) {
  * @return true : if parameter was found.\n
  *         false : parameter was not found.
  */
-bool Object::getParam(std::string paramName, m4d::vec4 &paramValue) {
-    if (paramName.compare("startPos")==0) {
+bool Object::getParam(const char* paramName, m4d::vec4 &paramValue) {
+    if (strcmp(paramName,"startPos")==0) {
         paramValue = startPos;
         return true;
     }
-    else if (paramName.compare("base0")==0) {
+    else if (strcmp(paramName,"base0")==0) {
         paramValue = base[0];
         return true;
     }
-    else if (paramName.compare("base1")==0) {
+    else if (strcmp(paramName,"base1")==0) {
         paramValue = base[1];
         return true;
     }
-    else if (paramName.compare("base2")==0) {
+    else if (strcmp(paramName,"base2")==0) {
         paramValue = base[2];
         return true;
     }
-    else if (paramName.compare("base3")==0) {
+    else if (strcmp(paramName,"base3")==0) {
         paramValue = base[3];
         return true;
     }
-    else if (paramName.compare("coordDir")==0) {
+    else if (strcmp(paramName,"coordDir")==0) {
         paramValue = coordDir;
         return true;
     }
@@ -581,10 +581,10 @@ void Object::resetLorentzTransf() {
  *  \return true : success.
  *  \return false : error occured.
  */
-bool Object::loadSettings(std::string filename, bool printset) {
+bool Object::loadSettings(const char* filename, bool printset) {
     setlocale(LC_NUMERIC, "C");
     std::vector<std::vector<std::string> >  tokens;
-    m4d::tokenizeFile(filename, tokens);
+    m4d::tokenizeFile(std::string(filename), tokens);
 
     bool ok = true;
     for (unsigned int i = 0; i < tokens.size(); i++) {
@@ -739,27 +739,29 @@ bool Object::loadSettings(std::string filename, bool printset) {
  *  \return true : success.
  *  \return false : error occured.
  */
-bool Object::saveSettings(std::string filename, std::string dat) {
+bool Object::saveSettings(const char* filename, const char *dat) {
     if (currMetric == NULL) {
         return false;
     }
 
     FILE* fptr;
 #ifdef _WIN32
-    fopen_s(&fptr, filename.c_str(), "w");
+    fopen_s(&fptr, filename, "w");
 #else
-    fptr = fopen(filename.c_str(), "w");
+    fptr = fopen(filename, "w");
 #endif
     if (fptr == NULL) {
-        fprintf(stderr, "Cannot open %s for output!\n", filename.c_str());
+        fprintf(stderr, "Cannot open %s for output!\n", filename);
         return false;
     }
 
     char* oldlocale = setlocale(LC_NUMERIC, "C");
 
     fprintf(fptr, "# ----------------------------------------------------------\n");
-    fprintf(fptr, "# Settings file : %s\n", filename.c_str());
-    fprintf(fptr, "#          date : %s\n", dat.c_str());
+    fprintf(fptr, "# Settings file : %s\n", filename);
+    if (dat != nullptr) {
+        fprintf(fptr, "#          date : %s\n", dat);
+    }
     fprintf(fptr, "# ----------------------------------------------------------\n");
 
     fprintf(fptr, "METRIC       %s\n", currMetric->getMetricName());

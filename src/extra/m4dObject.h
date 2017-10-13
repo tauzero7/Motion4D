@@ -154,18 +154,18 @@ public:
     void   clearAll();
     void   resetAll();
 
-    bool   getParam(std::string paramName, int &paramValue);
-    bool   getParam(std::string paramName, double &paramValue);
-    bool   getParam(std::string paramName, m4d::vec3 &paramValue);
-    bool   getParam(std::string paramName, m4d::vec4 &paramValue);
+    bool   getParam(const char* paramName, int &paramValue);
+    bool   getParam(const char* paramName, double &paramValue);
+    bool   getParam(const char* paramName, m4d::vec3 &paramValue);
+    bool   getParam(const char* paramName, m4d::vec4 &paramValue);
 
 
     bool   setLorentzTransf(const double chi, const double ksi, const double beta);
     bool   setLorentzTransf(const m4d::vec3 beta);
     void   resetLorentzTransf();
 
-    bool   loadSettings(std::string filename, bool printset = false);
-    bool   saveSettings(std::string filename, std::string dat = std::string());
+    bool   loadSettings(const char* filename, bool printset = false);
+    bool   saveSettings(const char* filename, const char* dat = nullptr);
     void   printSettings(FILE* fptr = stderr);
 
     bool   makeReport(std::string  &text);
