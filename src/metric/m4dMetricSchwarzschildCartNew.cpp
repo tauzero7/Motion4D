@@ -474,8 +474,9 @@ double MetricSchwarzschildCartNew::testConstraint(const double y[], const double
 bool MetricSchwarzschildCartNew::setParam(const char* pName, double val) {
     if (Metric::setParam(pName, val)) {
         rs = 2.0 * mGravConstant * val / (mSpeedOfLight * mSpeedOfLight);
+        return true;
     }
-    return true;
+    return false;
 }
 
 /*! Generate report.

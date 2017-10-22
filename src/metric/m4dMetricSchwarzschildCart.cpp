@@ -364,11 +364,13 @@ double MetricSchwarzschildCart::testConstraint(const double y[], const double ka
  *
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  */
-bool MetricSchwarzschildCart::setParam(const char* pName, double val) {
-    if (Metric::setParam(pName, val)) {
-        rs = 2.0 * mGravConstant * val / (mSpeedOfLight * mSpeedOfLight);
+bool MetricSchwarzschildCart::setParam(const char* pName, double val) {    
+    Metric::setParam(pName, val);
+    if (strcmp(pName,"mass") == 0) {
+        rs = 2.0 * mGravConstant * val / (mSpeedOfLight * mSpeedOfLight);        
+        return true;
     }
-    return true;
+    return false;
 }
 
 /*! Generate report.
