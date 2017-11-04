@@ -1039,17 +1039,17 @@ int Metric::getNumParams() {
  *
  *  \param  names : reference to vector of strings.
  */
-//void Metric::getParamNames(std::vector<std::string> &names) {
-//    if (!names.empty()) {
-//        names.clear();
-//    }
+void Metric::getParamNames(std::vector<std::string> &names) {
+    if (!names.empty()) {
+        names.clear();
+    }
 
-//    mParamItr = mParam.begin();
-//    while (mParamItr != mParam.end()) {
-//        names.push_back(mParamItr->first);
-//        mParamItr++;
-//    }
-//}
+    mParamItr = mParam.begin();
+    while (mParamItr != mParam.end()) {
+        names.push_back(mParamItr->first);
+        mParamItr++;
+    }
+}
 
 int Metric::getParamNum(const char *name) {
     int count = 0;
@@ -1085,10 +1085,10 @@ const char* Metric::getParamName(int pNr) {
  *  \return int : number of local tetrad types defined for the metric.
  *  \sa enum_nat_tetrad_type
  */
-//int Metric::getLocTedTypes(std::vector<enum_nat_tetrad_type> &locted) {
-//    locted = mLocTeds;
-//    return (int)mLocTeds.size();
-//}
+int Metric::getLocTedTypes(std::vector<enum_nat_tetrad_type> &locted) {
+    locted = mLocTeds;
+    return (int)mLocTeds.size();
+}
 
 /*! Get type of local tetrad 'num'.
  *
@@ -1274,69 +1274,70 @@ bool Metric::getEmbeddingParam(const char* name, double &val) {
     }
 }
 
+
 /*! Get embedding parameter names.
  *
  *  \param names : reference to vector of strings.
  */
-//void Metric::getEmbeddingNames(std::vector<std::string> &names) {
-//    if (!names.empty()) {
-//        names.clear();
-//    }
+void Metric::getEmbeddingNames(std::vector<std::string> &names) {
+    if (!names.empty()) {
+        names.clear();
+    }
 
-//    mEmbParamItr = mEmbParam.begin();
-//    while (mEmbParamItr != mEmbParam.end()) {
-//        names.push_back(mEmbParamItr->first);
-//        mEmbParamItr++;
-//    }
-//}
+    mEmbParamItr = mEmbParam.begin();
+    while (mEmbParamItr != mEmbParam.end()) {
+        names.push_back(mEmbParamItr->first);
+        mEmbParamItr++;
+    }
+}
 
 /*! Get all embedding parameters.
  * \param names : reference to parameter name list.
  * \param params : reference to parameter value list.
  * \return true : both lists have the same size.
  */
-//bool Metric::getAllEmbeddingParams(std::vector<std::string> &names, std::vector<double> &params) {
-//    if (!params.empty()) {
-//        params.clear();
-//    }
-//    getEmbeddingNames(names);
+bool Metric::getAllEmbeddingParams(std::vector<std::string> &names, std::vector<double> &params) {
+    if (!params.empty()) {
+        params.clear();
+    }
+    getEmbeddingNames(names);
 
-//    double val;
-//    for (unsigned int i = 0; i < names.size(); i++) {
-//        if (getEmbeddingParam(names[i], val)) {
-//            params.push_back(val);
-//        }
-//    }
+    double val;
+    for (unsigned int i = 0; i < names.size(); i++) {
+        if (getEmbeddingParam(names[i].c_str(), val)) {
+            params.push_back(val);
+        }
+    }
 
-//    if (params.size() == names.size()) {
-//        return true;
-//    }
+    if (params.size() == names.size()) {
+        return true;
+    }
 
-//    names.clear();
-//    params.clear();
-//    return false;
-//}
+    names.clear();
+    params.clear();
+    return false;
+}
 
 /*! Get embedding parameter map.
  *  \param params : reference to embedding parameter map.
  *  \return true: successfull.
  */
-//bool Metric::getEmbeddingMap(std::map<std::string, double> &params) {
-//    if (mEmbParam.size() == 0) {
-//        return false;
-//    }
+bool Metric::getEmbeddingMap(std::map<std::string, double> &params) {
+    if (mEmbParam.size() == 0) {
+        return false;
+    }
 
-//    if (!params.empty()) {
-//        params.clear();
-//    }
+    if (!params.empty()) {
+        params.clear();
+    }
 
-//    mEmbParamItr = mEmbParam.begin();
-//    while (mEmbParamItr != mEmbParam.end()) {
-//        params.insert(std::pair<std::string, double>(mEmbParamItr->first, mEmbParamItr->second));
-//        mEmbParamItr++;
-//    }
-//    return true;
-//}
+    mEmbParamItr = mEmbParam.begin();
+    while (mEmbParamItr != mEmbParam.end()) {
+        params.insert(std::pair<std::string, double>(mEmbParamItr->first, mEmbParamItr->second));
+        mEmbParamItr++;
+    }
+    return true;
+}
 
 /*! Generate vertices for the embedding diagram.
  *
@@ -1346,10 +1347,10 @@ bool Metric::getEmbeddingParam(const char* name, double &val) {
  *  \param counter  : number of strips.
  *  \return int : 0
  */
-//int Metric::getEmbeddingVertices(std::vector<vec3>&,
-//                                 std::vector<int>&, unsigned int&, unsigned int&) {
-//    return 0;
-//}
+int Metric::getEmbeddingVertices(std::vector<vec3>&,
+                                 std::vector<int>&, unsigned int&, unsigned int&) {
+    return 0;
+}
 
 /*! Have embedding diagram.
  */

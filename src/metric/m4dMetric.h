@@ -202,11 +202,11 @@ public:
     virtual bool    setParam(int pNr, double val);
 
     int     getNumParams();
-    //void    getParamNames(std::vector<std::string> &names);
+    void    getParamNames(std::vector<std::string> &names);
     int     getParamNum(const char* name);
     const char*  getParamName(int pNr);
 
-    //int                   getLocTedTypes(std::vector<enum_nat_tetrad_type> &locted);
+    int                   getLocTedTypes(std::vector<enum_nat_tetrad_type> &locted);
     enum_nat_tetrad_type  getCurrLTtype(int num);
 
     int                   getDrawTypes(std::vector<enum_draw_type> &drawTypes);
@@ -223,13 +223,13 @@ public:
     virtual bool   addEmbeddingParam(const char* name, double val = 0.0);
     virtual bool   setEmbeddingParam(const char* name, double val);
     virtual bool   getEmbeddingParam(const char* name, double &val);
-    /*
+
     virtual void   getEmbeddingNames(std::vector<std::string> &names);
     virtual bool   getAllEmbeddingParams(std::vector<std::string> &names, std::vector<double> &params);
     virtual bool   getEmbeddingMap(std::map<std::string, double> &params);
     virtual int    getEmbeddingVertices(std::vector<vec3> &verts,
                                         std::vector<int> &indices, unsigned int &numElems, unsigned int &counter);
-                                       */
+
     virtual bool   haveEmbedding();
 
     virtual bool   effPotentialValue(const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double &val);
