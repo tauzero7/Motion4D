@@ -302,6 +302,9 @@ MetricDatabase::initializeMetric(enum_metric  num) {
     case enum_metric_schwarzschild_tortoise:
         currMetric = new MetricSchwarzschildTortoise;
         break;
+    case enum_metric_schwarzschild_wt:
+        currMetric = new MetricSchwarzschildWT;
+        break;
     case enum_metric_spinning_string:
         currMetric = new MetricStraightSpinningString;
         break;
