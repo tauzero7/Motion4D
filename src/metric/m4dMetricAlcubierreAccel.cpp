@@ -1097,7 +1097,7 @@ double MetricAlcubierreAccel::testConstraint(const double y[], const double kapp
  *
  *  Set 'sigma', 'R', and 'vs' parameters.
  */
-bool MetricAlcubierreAccel::setParam(std::string pName, double val) {
+bool MetricAlcubierreAccel::setParam(const char* pName, double val) {
     Metric::setParam(pName, val);
     if (pName == "sigma") {
         mSigma = val;
