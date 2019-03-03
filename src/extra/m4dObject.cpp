@@ -93,6 +93,9 @@ bool Object::setSolverParam(const char *paramName, double value) {
     else if (strcmp(paramName, "eps_r") == 0) {
         this->epsRel = value;
     }
+    else if (strcmp(paramName, "stepsize") == 0) {
+        this->stepsize = value;
+    }
 
     if (geodSolver == nullptr) {
         fprintf(stderr,"Object::setSolverParam() ... solver is missing!\n");
@@ -216,7 +219,8 @@ enum_break_condition Object::calculateGeodesic() {
         return enum_break_other;
     }
     clearAll();
-    geodSolver->setGeodesicType(this->type);    
+    geodSolver->setGeodesicType(this->type);   
+    geodSolver->setAffineParamStep(this->stepsize);
     return geodSolver->calculateGeodesic(this->startPos, this->coordDir, this->maxNumPoints,
                                          this->points, this->dirs, this->lambda);
 }
@@ -767,12 +771,15 @@ bool Object::saveSettings(const char* filename, const char *dat) {
     fprintf(fptr, "METRIC       %s\n", currMetric->getMetricName());
     double val;
 
-    // TODO
-    std::string pname;
+    char* pname = nullptr;
     for (int i = 0; i < currMetric->getNumParams(); i++) {
-        //currMetric->getParam(i, pname, val);
-        fprintf(fptr, "PARAM  %d  %10s  %16.12f\n", i, pname.c_str(), val);
+        currMetric->getParam(i, pname, val);
+        fprintf(fptr, "PARAM  %d  %10s  %16.12f\n", i, pname, val);
     }
+    if (pname != nullptr) {
+        delete [] pname;
+    }
+    
     fprintf(fptr, "INIT_POS         %18.14f %18.14f %18.14f %18.14f\n", startPos[0], startPos[1], startPos[2], startPos[3]);
     fprintf(fptr, "INIT_DIR         %18.14f %18.14f %18.14f\n", startDir[0], startDir[1], startDir[2]);
     fprintf(fptr, "INIT_ANGLE_VEL   %18.14f %18.14f %18.14f\n", ksi, chi, vel);

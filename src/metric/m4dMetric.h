@@ -199,6 +199,7 @@ public:
     virtual bool    setParam(const char* pName, double val);
     virtual bool    getParam(const char* pName, double &val);
     //virtual bool    getParam(int pNr, std::string& pName, double& val);
+    virtual bool    getParam(int pNr, char*& pName, double& val);
     virtual bool    setParam(int pNr, double val);
 
     int     getNumParams();

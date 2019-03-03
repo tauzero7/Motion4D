@@ -962,7 +962,7 @@ bool Metric::setParam(const char* pName, double val) {
 
     mParamItr = mParam.find(paramname);
     if (mParamItr == mParam.end()) {
-        fprintf(stderr, "Parameter %s does no exist!\n", paramname.c_str());
+        //fprintf(stderr, "Parameter %s does not exist!\n", paramname.c_str());
         return false;
     } else {
         mParamItr->second = val;
@@ -984,7 +984,7 @@ bool Metric::getParam(const char* pName, double &val) {
 
     mParamItr = mParam.find(paramname);
     if (mParamItr == mParam.end()) {
-        fprintf(stderr, "Parameter %s does no exist!\n", paramname.c_str());
+        //fprintf(stderr, "Parameter %s does not exist!\n", paramname.c_str());
         return false;
     } else {
         val = mParamItr->second;
@@ -1013,6 +1013,33 @@ bool Metric::getParam(const char* pName, double &val) {
 //    }
 //    return false;
 //}
+
+bool Metric::getParam(int pNr, char*& pName, double& val) {
+    if (pNr >= 0 && pNr < mNumParam) {
+        std::map<std::string, double>::iterator p_itr = mParam.begin();
+        for(int i = 0; i < pNr; i++) {
+            p_itr++;
+        }
+        
+        if (pName != nullptr) {
+            delete [] pName;
+        }
+        
+        std::string n = (*p_itr).first;
+        size_t len = strlen(n.c_str());
+
+#ifdef _WIN32
+        pName = new char[len + 4];
+        strncpy_s(pName, len+4, n.c_str(), len);
+#else
+        pName = new char[len + 2];
+        strcpy(pName, n.c_str());
+#endif
+        val = (*p_itr).second;
+        return true;
+    }
+    return false;
+}
 
 
 bool Metric::setParam(int pNr, double val) {
