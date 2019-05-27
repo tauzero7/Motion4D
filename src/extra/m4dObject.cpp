@@ -31,8 +31,8 @@ namespace m4d {
  * @brief Standard constructor.
  */
 Object::Object() :
-    currMetric(NULL),
-    geodSolver(NULL) 
+    currMetric(nullptr),
+    geodSolver(nullptr)
 {
     resetAll();
 }
@@ -42,6 +42,16 @@ Object::Object() :
  */
 Object::~Object() {
     clearAll();
+
+    if (geodSolver != nullptr) {
+        delete geodSolver;
+        geodSolver = nullptr;
+    }
+
+    if (currMetric != nullptr) {
+        delete currMetric;
+        currMetric = nullptr;
+    }
 }
 
 
@@ -68,9 +78,12 @@ bool Object::setSolver(const char *solverName) {
         fprintf(stderr,"Object::setSolver() ... metric is missing!\n");
         return false;
     }
+
     if (geodSolver != nullptr) {
         delete geodSolver;
+        geodSolver = nullptr;
     }
+
     geodSolver = solverDB.getIntegrator(currMetric, solverName);
     return (geodSolver == nullptr ? false : true);
 }

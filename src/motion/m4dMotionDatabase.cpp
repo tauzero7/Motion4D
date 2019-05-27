@@ -75,7 +75,7 @@ IntegratorDatabase::getIntegrator(Metric* cMetric, const char* mName) {
         mIntegratorMapItr = mIntegratorMap.find(mName);
         if (mIntegratorMapItr == mIntegratorMap.end()) {
             fprintf(stderr, "Integrator '%s' is not implemented!\n", mName);
-            return NULL;
+            return nullptr;
         }
     }
 
