@@ -432,11 +432,11 @@ bool Object::getParam(const char* paramName, double &paramValue) {
         paramValue = min_stepsize;
         return true;
     }
-    else if (strcmp(paramName,"epsAbs")==0) {
+    else if (strcmp(paramName,"epsAbs")==0 || strcmp(paramName, "eps_a") == 0) {
         paramValue = epsAbs;
         return true;
     }
-    else if (strcmp(paramName,"epsRel")==0) {
+    else if (strcmp(paramName,"epsRel")==0 || strcmp(paramName, "eps_r") == 0) {
         paramValue = epsRel;
         return true;
     }
