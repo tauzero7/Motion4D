@@ -245,6 +245,8 @@ public:
 
     bool    isResizeEnabled();
 
+    bool  isChrisDAvailable();
+
    // virtual bool    report(const vec4 pos, const vec4 cdir, std::string &text);
     virtual void    printF(FILE* fptr = stderr);
 
@@ -310,6 +312,8 @@ protected:
 
     //! Factor for prolate spheroidal Coordinates
     double mprolSphfac;
+
+    bool mHaveChrisD;
 };
 
 } // end namespace m4d

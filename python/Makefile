@@ -5,7 +5,8 @@ CXX   = g++
 SWIG = /usr/local/misc/swig/3.0.12/bin/swig
 
 #INC_PATH = /usr/include/python2.7
-INC_PATH = /usr/local/python/3.6.1/include/python3.6m
+INC_PATH = /usr/local/python/3.7.3/include/python3.7m
+LIB_PATH = /usr/local/python/3.7.3/lib64
 CXXFLAGS = -std=c++11 -O2 -fPIC
 
 BASEFILE = m4d
@@ -34,7 +35,7 @@ all: _$(BASEFILE).so
 
 
 _$(BASEFILE).so: $(OBJS) 
-	$(CXX) -shared -o $@ $(OBJS) -Wl,-rpath $(M4D_LIB_DIR) $(M4D_LIB_DIR)/$(M4D_LIB_SO)
+	$(CXX) -shared -o $@ $(OBJS) -Wl,-rpath $(M4D_LIB_DIR) $(M4D_LIB_DIR)/$(M4D_LIB_SO) -Wl,-rpath ${LIB_PATH}
 	cp $(BUILD_DIR)$(BASEFILE).py .
 
 

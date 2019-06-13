@@ -58,6 +58,8 @@ MetricKerrBL::MetricKerrBL(double m, double a) {
 
     mDrawTypes.push_back(enum_draw_twoplusone);
     mDrawTypes.push_back(enum_draw_effpoti);
+
+    mHaveChrisD = true;
 }
 
 MetricKerrBL::~MetricKerrBL() {

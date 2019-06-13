@@ -82,6 +82,7 @@ Metric::Metric() {
     mHaveEmbedding    = false;
 
     mHaveEffPotential = false;
+    mHaveChrisD = false;
 
     mEnableResize = false;
 }
@@ -1437,6 +1438,10 @@ Metric::getStandardInitialDirection() {
 
 bool Metric::isResizeEnabled() {
     return mEnableResize;
+}
+
+bool Metric::isChrisDAvailable() {
+    return mHaveChrisD;
 }
 
 /*!  Generate report.

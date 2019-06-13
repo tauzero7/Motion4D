@@ -77,6 +77,8 @@ MetricSchwarzschild::MetricSchwarzschild(double mass) {
     addEmbeddingParam("emb_r_num", 20.0);
     addEmbeddingParam("emb_phi_num", 40.0);
 
+    mHaveChrisD = true;
+
     setStandardValues();
 }
 
