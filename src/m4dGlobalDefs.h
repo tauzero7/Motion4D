@@ -119,16 +119,6 @@
 #endif // _WIN32
 
 #ifdef _WIN32
-//#define  isnan(x) ((x) != (x))
-#define  asinh(x)   (log(x + sqrt(x*x+1)))
-#endif
-
-#ifdef __APPLE__
-#define  isnan(x) ((x) != (x))
-#define  asinh(x)   (log(x + sqrt(x*x+1)))
-#endif
-
-#ifdef _WIN32
 #pragma warning(disable: 4251 4273)
 #endif
 
