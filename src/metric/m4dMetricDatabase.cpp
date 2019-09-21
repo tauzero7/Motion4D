@@ -27,101 +27,75 @@
 
 namespace m4d {
 
-/*!
- */
-MetricDatabase::MetricDatabase() {
+MetricDatabase::MetricDatabase()
+{
     init();
 }
 
-MetricDatabase::~MetricDatabase() {
+MetricDatabase::~MetricDatabase()
+{
     if (!mMetricMap.empty()) {
         mMetricMap.clear();
     }
 }
 
-
-// *********************************** public methods ******************************
-/*! Get the number of implemented metrics.
- *
- *  \return int: number of implemented metrics.
- */
-int MetricDatabase::getNumMetrics() {
-    return NUM_METRICS;
+int MetricDatabase::getNumMetrics()
+{
+    return MetricList::NUM_METRICS;
 }
 
-/*!  Initialize metric 'num' and return the pointer to it.
- *
- *  \param num : metric number.
- *  \return Metric: pointer to metric.
- */
-Metric*
-MetricDatabase::getMetric(enum_metric num) {
+Metric* MetricDatabase::getMetric(MetricList::enum_metric num)
+{
     return initializeMetric(num);
 }
 
-/*! Initialize metric 'mName' and return the pointer to it.
- *
- *  \param mName : name of metric.
- *  \return Metric: pointer to metric.
- */
-Metric*
-MetricDatabase::getMetric(const char* mName) {
+Metric* MetricDatabase::getMetric(const char* mName)
+{
     mMetricMapItr = mMetricMap.find(mName);
     if (mMetricMapItr == mMetricMap.end()) {
         fprintf(stderr, "Metric '%s' is not implemented!\n", mName);
-        return NULL;
+        return nullptr;
     }
 
     return initializeMetric(mMetricMapItr->second);
 }
 
-/*! Get the name of metric 'num'.
- *
- *  \param num : number of metric.
- *  \return string : name of metric.
- */
-const char* MetricDatabase::getMetricName(enum_metric num) {
-    if (int(num) >= 0 && int(num) < NUM_METRICS) {
-        return stl_metric_names[num];
+const char* MetricDatabase::getMetricName(MetricList::enum_metric num)
+{
+    if (int(num) >= 0 && int(num) < MetricList::NUM_METRICS) {
+        return MetricList::stl_metric_names[num];
     }
 
     return nullptr;
 }
 
-/*! Get the number of the 'mName' metric.
- *
- *  \param mName : name of metric.
- *  \return enum_metric : number of metric.
- */
-enum_metric MetricDatabase::getMetricNr(const char* mName) {
+MetricList::enum_metric MetricDatabase::getMetricNr(const char* mName)
+{
     mMetricMapItr = mMetricMap.find(mName);
     if (mMetricMapItr == mMetricMap.end()) {
         fprintf(stderr, "Metric '%s' is not implemented!\n", mName);
-        return enum_metric_unknown;
+        return MetricList::enum_metric_unknown;
     }
 
     return mMetricMapItr->second;
 }
 
-/*!  Print list of all metrics.
- *
- *  \param fptr : pointer to file.
- */
-void MetricDatabase::printMetricList(FILE* fptr) {
+void MetricDatabase::printMetricList(FILE* fptr)
+{
     fprintf(fptr, "      Metric name                # params\n");
     fprintf(fptr, "-----------------------------------------------------------\n");
 
-    int      numParams;
-    Metric*  metric = nullptr;
+    int numParams;
+    Metric* metric = nullptr;
     std::vector<std::string> paramNames;
-    double   value;
+    double value;
 
-    for (int i = 0; i < NUM_METRICS; i++) {
+    for (int i = 0; i < MetricList::NUM_METRICS; i++) {
         paramNames.clear();
 
-        if ((metric = getMetric(stl_metric_names[i])) != NULL) {
+        if ((metric = getMetric(MetricList::stl_metric_names[i])) != nullptr) {
             numParams = metric->getNumParams();
-            for(int j = 0; j < numParams; j++) {
+            for (int j = 0; j < numParams; j++) {
                 const char* pname = metric->getParamName(j);
                 if (pname != nullptr) {
                     paramNames.push_back(std::string(pname));
@@ -130,9 +104,9 @@ void MetricDatabase::printMetricList(FILE* fptr) {
         } else {
             numParams = 0;
         }
-        fprintf(fptr, "%-30s       %d     (", stl_metric_names[i], numParams);
+        fprintf(fptr, "%-30s       %d     (", MetricList::stl_metric_names[i], numParams);
 
-        if (metric != NULL) {
+        if (metric != nullptr) {
             for (unsigned int j = 0; j < paramNames.size(); j++) {
                 if (metric->getParam(paramNames[j].c_str(), value)) {
                     fprintf(fptr, "%s=%f ", paramNames[j].c_str(), value);
@@ -143,36 +117,43 @@ void MetricDatabase::printMetricList(FILE* fptr) {
     }
 }
 
-
-// ******************************** protected methods ******************************
-
-/*!  Initialize database: store the metrics in a map.
- *
- */
-void MetricDatabase::init() {
-    for (int i = 0; i < NUM_METRICS; i++) {
-        mMetricMap.insert(std::pair<std::string, enum_metric>(stl_metric_names[i], enum_metric(i)));
+void MetricDatabase::init()
+{
+    for (int i = 0; i < MetricList::NUM_METRICS; i++) {
+        mMetricMap.insert(std::pair<std::string, MetricList::enum_metric>(MetricList::stl_metric_names[i], MetricList::enum_metric(i)));
     }
 }
-
 
 // ---------------------------------------------------
 //           Please sort by enum name !!
 // ---------------------------------------------------
-/*! Initialize metric: generate a new instance.
- *
- *  \param num : number of metric.
- *  \return Metric : pointer to metric.
- */
-Metric*
-MetricDatabase::initializeMetric(enum_metric  num) {
-    Metric*  currMetric;
+Metric* MetricDatabase::initializeMetric(MetricList::enum_metric num)
+{
+    Metric* currMetric;
 
     switch (num) {
-    default:
-    case enum_metric_unknown:
-        currMetric = NULL;
+
+    case MetricList::enum_metric_unknown:
+        currMetric = nullptr;
         break;
+
+    case MetricList::enum_metric_minkowski:
+        currMetric = new MetricMinkowski;
+        break;
+
+    case MetricList::enum_metric_schwarzschild:
+        currMetric = new MetricSchwarzschild;
+        break;
+
+    case MetricList::enum_metric_kerrbl:
+        currMetric = new MetricKerrBL;
+        break;
+
+    case MetricList::enum_metric_morristhorne:
+        currMetric = new MetricMorrisThorne;
+        break;
+
+#ifdef ALL_METRICS_AVAILABLE
     case enum_metric_alcubierre:
         currMetric = new MetricAlcubierre;
         break;
@@ -254,23 +235,14 @@ MetricDatabase::initializeMetric(enum_metric  num) {
     case enum_metric_kastortraschen:
         currMetric = new MetricKastorTraschen;
         break;
-    case enum_metric_kerrbl:
-        currMetric = new MetricKerrBL;
-        break;
     case enum_metric_kottler:
         currMetric = new MetricKottler;
-        break;
-    case enum_metric_minkowski:
-        currMetric = new MetricMinkowski;
         break;
     case enum_metric_minkowski_conf:
         currMetric = new MetricMinkowskiConformal;
         break;
     case enum_metric_minkowski_rotlattice:
         currMetric = new MetricMinkRotLattice;
-        break;
-    case enum_metric_morristhorne:
-        currMetric = new MetricMorrisThorne;
         break;
     case enum_metric_painleve:
         currMetric = new MetricPainleveGullstrand;
@@ -283,9 +255,6 @@ MetricDatabase::initializeMetric(enum_metric  num) {
         break;
     case enum_metric_rotdihole:
         currMetric = new MetricRotDihole;
-        break;
-    case enum_metric_schwarzschild:
-        currMetric = new MetricSchwarzschild;
         break;
     case enum_metric_schwarzschild_cart:
         currMetric = new MetricSchwarzschildCart;
@@ -349,12 +318,13 @@ MetricDatabase::initializeMetric(enum_metric  num) {
         break;
     case enum_metric_Pravda_C_Can:
         currMetric = new MetricPravda_C_Can;
-        break;        
+        break;
     case enum_metric_vaidyaincrad:
         currMetric = new MetricVaidyaIncRad;
         break;
+#endif // ALL_METRICS_AVAILABLE
     }
-    
+
     return currMetric;
 }
 

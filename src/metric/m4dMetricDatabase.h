@@ -33,13 +33,13 @@
 #ifndef M4D_METRIC_DATABASE_H
 #define M4D_METRIC_DATABASE_H
 
+#include "m4dMetricList.h"
 #include <iostream>
 #include <map>
-#include "m4dMetricList.h"
 
 #ifdef _WIN32
 #ifndef __GNUC__
-#pragma warning (disable: 4244 )
+#pragma warning(disable : 4244)
 #endif
 #endif
 
@@ -49,26 +49,56 @@ class API_M4D_EXPORT MetricDatabase {
 public:
     MetricDatabase();
     ~MetricDatabase();
-    
-    int          getNumMetrics();
-    Metric*      getMetric(enum_metric  num);
-    Metric*      getMetric(const char* mName);
-    const char*  getMetricName(enum_metric  num);
-    enum_metric  getMetricNr(const char* mName);
 
-    void         printMetricList(FILE* fptr = stderr);
+    /**
+     * @brief Get number of implementred metrics.
+     * @return
+     */
+    int getNumMetrics();
+
+    /**
+     * @brief Initialize metric and get pointer to it.
+     * @param num
+     * @return
+     */
+    Metric* getMetric(MetricList::enum_metric num);
+
+    /**
+     * @brief Initialize metric and get pointer to it.
+     * @param mName
+     * @return
+     */
+    Metric* getMetric(const char* mName);
+
+    /**
+     * @brief Get name of metric by id.
+     * @param num
+     * @return
+     */
+    const char* getMetricName(MetricList::enum_metric num);
+
+    /**
+     * @brief Get metric id by name.
+     * @param mName
+     * @return
+     */
+    MetricList::enum_metric getMetricNr(const char* mName);
+
+    /**
+     * @brief Print list of all available metrics
+     * @param fptr
+     */
+    void printMetricList(FILE* fptr = stderr);
 
 protected:
-    void      init();
-    Metric*   initializeMetric(enum_metric  num);
+    void init();
+    Metric* initializeMetric(MetricList::enum_metric num);
 
 private:
-    std::map<std::string, enum_metric>            mMetricMap;
-    std::map<std::string, enum_metric>::iterator  mMetricMapItr;
+    std::map<std::string, MetricList::enum_metric> mMetricMap;
+    std::map<std::string, MetricList::enum_metric>::iterator mMetricMapItr;
 };
 
 } // end namespace m4d
 
 #endif
-
-
