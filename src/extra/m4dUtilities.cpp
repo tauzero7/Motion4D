@@ -27,7 +27,8 @@ int64_t get_system_clock()
  *  \param useStandardIgnoreTokens : use standard ignore tokens ("#").
  *  \return  true : success.
  */
-bool tokenizeFile(const std::string filename, std::vector<std::vector<std::string>>& tokens, bool useStandardIgnoreTokens)
+bool tokenizeFile(
+    const std::string filename, std::vector<std::vector<std::string>>& tokens, bool useStandardIgnoreTokens)
 {
     std::ifstream in(filename.c_str());
 
@@ -76,7 +77,8 @@ bool tokenizeFile(const std::string filename, std::vector<std::vector<std::strin
  *  \param tokens   : reference to vector of vector of string.
  *  \return  true : success.
  */
-bool tokenizeFile(const std::string filename, const std::vector<std::string> ignores, std::vector<std::vector<std::string>>& tokens)
+bool tokenizeFile(
+    const std::string filename, const std::vector<std::string> ignores, std::vector<std::vector<std::string>>& tokens)
 {
     std::ifstream in(filename.c_str());
 
@@ -164,7 +166,7 @@ bool getDoubleFromTokens(const std::vector<std::string>& tokenRow, std::string n
 bool getDoubleFromTokensV(const std::vector<std::string>& tokenRow, std::string name, int num, double* val)
 {
     std::string baseString = tokenRow[0];
-    if (baseString.compare(name) == 0 && (int)tokenRow.size() > (num + 1)) {
+    if (baseString.compare(name) == 0 && static_cast<int>(tokenRow.size()) > (num + 1)) {
         for (int i = 0; i < num; i++) {
             val[i] = atof(tokenRow[i + 1].c_str());
         }
@@ -243,7 +245,7 @@ float* readFloatArray(std::string filename, int& x, int& y, int& c)
     std::ifstream in(filename.c_str(), std::ios::binary);
     if (!in.is_open()) {
         fprintf(stderr, "Can't open file %s for reading.\n", filename.c_str());
-        return NULL;
+        return nullptr;
     }
 
     char buf[5];
@@ -295,6 +297,28 @@ int M4D_CALL find_nat_tetrad_type(const char* name)
         n++;
     }
     return -1;
+}
+
+bool CopyString(const char* src, char*& dest)
+{
+    if (src == nullptr) {
+        return false;
+    }
+
+    if (dest != nullptr) {
+        delete[] dest;
+    }
+    size_t len = strlen(src);
+
+    bool isOkay = true;
+#ifdef _WIN32
+    dest = new char[len + 4];
+    isOkay &= (strncpy_s(dest, len + 4, src, len) == NULL);
+#else
+    dest = new char[len + 2];
+    isOkay &= (strcpy(dest, src) != nullptr);
+#endif
+    return isOkay;
 }
 
 } // end namespace m4d

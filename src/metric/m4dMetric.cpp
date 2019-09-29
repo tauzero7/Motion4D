@@ -1393,18 +1393,10 @@ bool Metric::isChrisDAvailable()
     return mHaveChrisD;
 }
 
-/*!  Generate report.
- *
- *  \param  pos  : initial position.
- *  \param  cdir : initial coordinate direction.
- *  \param  text : reference to string.
- *  \return true  : success.
- *  \return false : no report available.
- */
-// bool Metric::report(const vec4 , const vec4 , std::string &text) {
-//    text = std::string();
-//    return false;
-//}
+bool Metric::report(const vec4, const vec4, char*&)
+{
+    return false;
+}
 
 void Metric::printF(FILE* fptr)
 {

@@ -39,13 +39,15 @@ M4D_METRIC_HEADERS += \
         $$M4D_SRC_DIR/metric/m4dMetricKerrBL.h \
         $$M4D_SRC_DIR/metric/m4dMetricMinkowski.h \
         $$M4D_SRC_DIR/metric/m4dMetricMorrisThorne.h \
-        $$M4D_SRC_DIR/metric/m4dMetricSchwarzschild.h
+        $$M4D_SRC_DIR/metric/m4dMetricSchwarzschild.h \
+        $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildIsotropic.h
 
 M4D_METRIC_SOURCES +=  \
         $$M4D_SRC_DIR/metric/m4dMetricKerrBL.cpp \
         $$M4D_SRC_DIR/metric/m4dMetricMinkowski.cpp \
         $$M4D_SRC_DIR/metric/m4dMetricSchwarzschild.cpp \
-        $$M4D_SRC_DIR/metric/m4dMetricMorrisThorne.cpp
+        $$M4D_SRC_DIR/metric/m4dMetricMorrisThorne.cpp \
+        $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildIsotropic.cpp
 
 #
 #  Further metrics
@@ -102,7 +104,6 @@ use_all_metrics {
             $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildCart.h \
             $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildCartNew.h \
             $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildGravWave.h \
-            $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildIsotropic.h \
             $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildTortoise.h \
             $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildWT.h \
             $$M4D_SRC_DIR/metric/m4dMetricStraightSpinningString.h \
@@ -161,7 +162,6 @@ use_all_metrics {
             $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildCart.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildCartNew.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildGravWave.cpp \
-            $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildIsotropic.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildTortoise.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildWT.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricStraightSpinningString.cpp \

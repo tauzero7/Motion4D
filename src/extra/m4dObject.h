@@ -87,20 +87,19 @@
 #ifndef M4D_OBJECT_H
 #define M4D_OBJECT_H
 
-
-#include <iostream>
-#include <fstream>
 #include <cassert>
+#include <fstream>
+#include <iostream>
 
+#include <extra/m4dUtilities.h>
 #include <m4dGlobalDefs.h>
 #include <metric/m4dMetricDatabase.h>
-#include <motion/m4dMotionList.h>
 #include <motion/m4dMotionDatabase.h>
-#include <extra/m4dUtilities.h>
+#include <motion/m4dMotionList.h>
 
 #ifdef _WIN32
 #ifndef __GNUC__
-#pragma warning (disable: 4244 )
+#pragma warning(disable : 4244)
 #endif
 #endif
 
@@ -109,117 +108,115 @@ namespace m4d {
 // ---------------------------------------------------
 //    class definition:   Object
 // ---------------------------------------------------
-class API_M4D_EXPORT Object {
+class API_M4D_EXPORT Object
+{
 public:
     Object();
     ~Object();
 
     // --------- public methods -----------
 public:
-    bool   setMetric(const char* metricName);
-    bool   setMetricParam(const char* paramName, double value);
+    bool setMetric(const char* metricName);
+    bool setMetricParam(const char* paramName, double value);
 
-    bool   setSolver(const char* solverName);
-    bool   setSolverParam(const char* paramName, bool val);    
-    bool   setSolverParam(const char* paramName, double value);
-    bool   setSolverParam(const char* paramName, double v0, double v1, double v2, double v3);
+    bool setSolver(const char* solverName);
+    bool setSolverParam(const char* paramName, bool val);
+    bool setSolverParam(const char* paramName, double value);
+    bool setSolverParam(const char* paramName, double v0, double v1, double v2, double v3);
 
-    bool   setParam(const char* paramName, int val);
+    bool setParam(const char* paramName, int val);
 
-    bool   setInitialPosition(const double* x);
-    bool   setInitialPosition(double x0, double x1, double x2, double x3);
+    bool setInitialPosition(const double* x);
+    bool setInitialPosition(double x0, double x1, double x2, double x3);
 
-    bool   setInitialDirection(const double* v);
-    bool   setInitialDirection(double v0, double v1, double v2, double v3);
+    bool setInitialDirection(const double* v);
+    bool setInitialDirection(double v0, double v1, double v2, double v3);
 
-    bool   setInitialLocalNullDirection(enum_time_direction tdir, const double *l,
-                                        enum_nat_tetrad_type nattype = enum_nat_tetrad_default);
-    bool   setInitialLocalNullDirection(enum_time_direction tdir,
-                                        double l0, double l1, double l2,
-                                        enum_nat_tetrad_type nattype = enum_nat_tetrad_default);
+    bool setInitialLocalNullDirection(
+        enum_time_direction tdir, const double* l, enum_nat_tetrad_type nattype = enum_nat_tetrad_default);
+    bool setInitialLocalNullDirection(enum_time_direction tdir, double l0, double l1, double l2,
+        enum_nat_tetrad_type nattype = enum_nat_tetrad_default);
 
-    bool   setInitialLocalTimeDirection(enum_time_direction tdir,
-                                        double l0, double l1, double l2, double beta,
-                                        enum_nat_tetrad_type natType = enum_nat_tetrad_default);
+    bool setInitialLocalTimeDirection(enum_time_direction tdir, double l0, double l1, double l2, double beta,
+        enum_nat_tetrad_type natType = enum_nat_tetrad_default);
 
-    enum_break_condition  calculateGeodesic();
-    enum_break_condition  calcSachsJacobi();
+    enum_break_condition calculateGeodesic();
+    enum_break_condition calcSachsJacobi();
 
-    void   printStatus();
+    void printStatus();
 
-    unsigned int  getNumPoints();
-    vec4   getPosition(unsigned int num);
+    unsigned int getNumPoints();
+    vec4 getPosition(unsigned int num);
     double getAffineParam(unsigned int num);
 
-    void   clearAll();
-    void   resetAll();
+    void clearAll();
+    void resetAll();
 
-    bool   getParam(const char* paramName, int &paramValue);
-    bool   getParam(const char* paramName, double &paramValue);
-    bool   getParam(const char* paramName, m4d::vec3 &paramValue);
-    bool   getParam(const char* paramName, m4d::vec4 &paramValue);
+    bool getParam(const char* paramName, int& paramValue);
+    bool getParam(const char* paramName, double& paramValue);
+    bool getParam(const char* paramName, m4d::vec3& paramValue);
+    bool getParam(const char* paramName, m4d::vec4& paramValue);
 
+    bool setLorentzTransf(const double chi, const double ksi, const double beta);
+    bool setLorentzTransf(const m4d::vec3 beta);
+    void resetLorentzTransf();
 
-    bool   setLorentzTransf(const double chi, const double ksi, const double beta);
-    bool   setLorentzTransf(const m4d::vec3 beta);
-    void   resetLorentzTransf();
+    bool loadSettings(const char* filename, bool printset = false);
+    bool saveSettings(const char* filename, const char* dat = nullptr);
+    void printSettings(FILE* fptr = stderr);
 
-    bool   loadSettings(const char* filename, bool printset = false);
-    bool   saveSettings(const char* filename, const char* dat = nullptr);
-    void   printSettings(FILE* fptr = stderr);
-
-    bool   makeReport(std::string  &text);
-    void   printReport(FILE* fptr = stdout);
+    bool makeReport(char*& text);
+    void printReport(FILE* fptr = stdout);
 
     // --------- public attributes --------
 public:
-    MetricDatabase        metricDB;
-    Metric*               currMetric;
-    IntegratorDatabase    solverDB;
-    Geodesic*             geodSolver;
-    enum_integrator       geodSolverType;
+    MetricDatabase metricDB;
+    Metric* currMetric;
+    IntegratorDatabase solverDB;
+    Geodesic* geodSolver;
+    enum_integrator geodSolverType;
 
-    enum_geodesic_type    type;
-    bool                  stepsizeControlled;
-    double                stepsize;
-    double                max_stepsize;
-    double                min_stepsize;
-    double                epsAbs;
-    double                epsRel;
-    double                epsConstr;
-    double                epsResize;
+    enum_geodesic_type type;
+    bool stepsizeControlled;
+    double stepsize;
+    double max_stepsize;
+    double min_stepsize;
+    double epsAbs;
+    double epsRel;
+    double epsConstr;
+    double epsResize;
 
-    vec4                  startPos;
-    vec3                  startDir;
-    double                ksi;
-    double                chi;
-    double                vel;
-    vec4                  coordDir;
-    vec4                  base[4];
-    bool                  isBaseInCoords;
+    vec4 startPos;
+    vec3 startDir;
+    double ksi;
+    double chi;
+    double vel;
+    vec4 coordDir;
+    vec4 base[4];
+    bool isBaseInCoords;
 
-    int                   axes_orient;
-    double                boost_ksi;
-    double                boost_chi;
-    double                boost_beta;
-    mat4                  lorentz;
+    int axes_orient;
+    double boost_ksi;
+    double boost_chi;
+    double boost_beta;
+    mat4 lorentz;
 
-    int                   timeDirection;
-    enum_nat_tetrad_type  tetradType;
-    unsigned int          maxNumPoints;   //!< maximum number of points to be calculated
+    int timeDirection;
+    enum_nat_tetrad_type tetradType;
+    unsigned int maxNumPoints; //!< maximum number of points to be calculated
 
-    std::vector<vec4>     points;   //!< trajectory points
-    std::vector<vec4>     dirs;     //!< trajectory coordinate directions
-    std::vector<double>   lambda;   //!< trajectory affine parameter
-    std::vector<vec4>     sachs1;
-    std::vector<vec4>     sachs2;
-    std::vector<vec5>     jacobi;
-    std::vector<vec4>     trans_lt[4];        //!< transported local tetrad vector e0...e3
-    vec5                  maxJacobi;
+    std::vector<vec4> points; //!< trajectory points
+    std::vector<vec4> dirs; //!< trajectory coordinate directions
+    std::vector<double> lambda; //!< trajectory affine parameter
+    std::vector<vec4> sachs1;
+    std::vector<vec4> sachs2;
+    std::vector<vec5> jacobi;
+    std::vector<vec4> trans_lt[4]; //!< transported local tetrad vector e0...e3
+    vec5 maxJacobi;
 
-    double                speed_of_light;
-    double                grav_constant;
-    double                dielectric_perm;
+    double speed_of_light;
+    double grav_constant;
+    double dielectric_perm;
 };
 
 } // end namespace m4d

@@ -21,7 +21,8 @@
 #include "m4dPlatform.h"
 
 #if defined _WIN32 && defined(M4D_LIB)
-#if defined(m4d_EXPORTS) || defined(m4d_lua_EXPORTS) || defined(m4dd_EXPORTS) || defined(m4d_luad_EXPORTS) || defined(_m4d_EXPORTS)
+#if defined(m4d_EXPORTS) || defined(m4d_lua_EXPORTS) || defined(m4dd_EXPORTS) || defined(m4d_luad_EXPORTS)             \
+    || defined(_m4d_EXPORTS)
 #define API_M4D_EXPORT __declspec(dllexport)
 #else
 #define API_M4D_EXPORT __declspec(dllimport)
@@ -36,11 +37,11 @@ namespace m4d {
 
 int64_t get_system_clock();
 
-bool tokenizeFile(const std::string filename, std::vector<std::vector<std::string>>& tokens,
-    bool useStandardIgnoreTokens = true);
+bool tokenizeFile(
+    const std::string filename, std::vector<std::vector<std::string>>& tokens, bool useStandardIgnoreTokens = true);
 
-bool tokenizeFile(const std::string filename, const std::vector<std::string> ignores,
-    std::vector<std::vector<std::string>>& tokens);
+bool tokenizeFile(
+    const std::string filename, const std::vector<std::string> ignores, std::vector<std::vector<std::string>>& tokens);
 
 bool getIntFromTokens(const std::vector<std::string>& tokenRow, std::string name, int& val);
 bool getIntFromTokensV(const std::vector<std::string>& tokenRow, std::string name, int num, int* val);
@@ -57,6 +58,8 @@ API_M4D_EXPORT double degree(double phi);
 
 int API_M4D_EXPORT find_nat_tetrad_type(const char* name);
 
+bool CopyString(const char* src, char*& dest);
+
 /**
  * @brief Safely delete 1D arrays generated with 'new'.
  *
@@ -67,8 +70,7 @@ int API_M4D_EXPORT find_nat_tetrad_type(const char* name);
  *
  * @tparam T  Pointer to data array.
  */
-template <typename T>
-void SafeDelete(T*& ptr)
+template <typename T> void SafeDelete(T*& ptr)
 {
     if (ptr != nullptr) {
         delete[] ptr;

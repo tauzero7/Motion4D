@@ -30,9 +30,9 @@ namespace m4d {
 /**
  * @brief Standard constructor.
  */
-Object::Object() :
-    currMetric(nullptr),
-    geodSolver(nullptr)
+Object::Object()
+    : currMetric(nullptr)
+    , geodSolver(nullptr)
 {
     resetAll();
 }
@@ -40,7 +40,8 @@ Object::Object() :
 /**
  * @brief Standard destructor.
  */
-Object::~Object() {
+Object::~Object()
+{
     clearAll();
 
     if (geodSolver != nullptr) {
@@ -54,8 +55,8 @@ Object::~Object() {
     }
 }
 
-
-bool Object::setMetric(const char *metricName) {
+bool Object::setMetric(const char* metricName)
+{
     if (currMetric != nullptr) {
         delete currMetric;
     }
@@ -63,19 +64,19 @@ bool Object::setMetric(const char *metricName) {
     return (currMetric == nullptr ? false : true);
 }
 
-
-bool Object::setMetricParam(const char *paramName, double value) {
+bool Object::setMetricParam(const char* paramName, double value)
+{
     if (currMetric == nullptr) {
-        fprintf(stderr,"Object::setMetricParam() ... metric is missing!\n");
+        fprintf(stderr, "Object::setMetricParam() ... metric is missing!\n");
         return false;
     }
     return currMetric->setParam(paramName, value);
 }
 
-
-bool Object::setSolver(const char *solverName) {
+bool Object::setSolver(const char* solverName)
+{
     if (currMetric == nullptr) {
-        fprintf(stderr,"Object::setSolver() ... metric is missing!\n");
+        fprintf(stderr, "Object::setSolver() ... metric is missing!\n");
         return false;
     }
 
@@ -88,18 +89,18 @@ bool Object::setSolver(const char *solverName) {
     return (geodSolver == nullptr ? false : true);
 }
 
-
-bool Object::setSolverParam(const char *paramName, bool val) {
+bool Object::setSolverParam(const char* paramName, bool val)
+{
     if (geodSolver == nullptr) {
-        fprintf(stderr,"Object::setSolverParam() ... solver is missing!\n");
+        fprintf(stderr, "Object::setSolverParam() ... solver is missing!\n");
         return false;
     }
-    //M4D_MSG((val ? "yes" : "no"));
+    // M4D_MSG((val ? "yes" : "no"));
     return geodSolver->setParam(paramName, val);
 }
 
-
-bool Object::setSolverParam(const char *paramName, double value) {
+bool Object::setSolverParam(const char* paramName, double value)
+{
     if (strcmp(paramName, "eps_a") == 0) {
         this->epsAbs = value;
     }
@@ -111,41 +112,42 @@ bool Object::setSolverParam(const char *paramName, double value) {
     }
 
     if (geodSolver == nullptr) {
-        fprintf(stderr,"Object::setSolverParam() ... solver is missing!\n");
+        fprintf(stderr, "Object::setSolverParam() ... solver is missing!\n");
         return false;
-    }    
-    //M4D_MSG(std::to_string(value).c_str());
+    }
+    // M4D_MSG(std::to_string(value).c_str());
     return geodSolver->setParam(paramName, value);
 }
 
-
-bool Object::setSolverParam(const char *paramName, double v0, double v1, double v2, double v3) {
+bool Object::setSolverParam(const char* paramName, double v0, double v1, double v2, double v3)
+{
     if (geodSolver == nullptr) {
-        fprintf(stderr,"Object::setSolverParam() ... solver is missing!\n");
+        fprintf(stderr, "Object::setSolverParam() ... solver is missing!\n");
         return false;
     }
     return geodSolver->setParam(paramName, v0, v1, v2, v3);
 }
 
-bool Object::setParam(const char* paramName, int val) {
+bool Object::setParam(const char* paramName, int val)
+{
     if (paramName != nullptr && strcmp(paramName, "maxNumPoints") == 0) {
         maxNumPoints = static_cast<unsigned int>(val);
     }
     return true;
 }
 
-
-bool Object::setInitialPosition(const double* x) {
+bool Object::setInitialPosition(const double* x)
+{
     if (x == nullptr) {
         return false;
     }
     return setInitialPosition(x[0], x[1], x[2], x[3]);
 }
 
-
-bool Object::setInitialPosition(double x0, double x1, double x2, double x3) {
+bool Object::setInitialPosition(double x0, double x1, double x2, double x3)
+{
     if (currMetric == nullptr) {
-        fprintf(stderr,"Object::setInitialPosition() ... metric is missing!\n");
+        fprintf(stderr, "Object::setInitialPosition() ... metric is missing!\n");
         return false;
     }
     this->startPos = vec4(x0, x1, x2, x3);
@@ -155,23 +157,21 @@ bool Object::setInitialPosition(double x0, double x1, double x2, double x3) {
     return (currMetric->breakCondition(this->startPos) == enum_break_none ? true : false);
 }
 
-
-bool Object::setInitialDirection(const double *v) {
+bool Object::setInitialDirection(const double* v)
+{
     if (v == nullptr) {
         return false;
     }
     return setInitialDirection(v[0], v[1], v[2], v[3]);
 }
 
-
-bool Object::setInitialDirection(double v0, double v1, double v2, double v3) {
+bool Object::setInitialDirection(double v0, double v1, double v2, double v3)
+{
     this->coordDir = vec4(v0, v1, v2, v3);
     return true;
 }
 
-
-bool Object::setInitialLocalNullDirection(enum_time_direction tdir, const double *l,
-                                        enum_nat_tetrad_type nattype)
+bool Object::setInitialLocalNullDirection(enum_time_direction tdir, const double* l, enum_nat_tetrad_type nattype)
 {
     if (l == nullptr) {
         return false;
@@ -179,12 +179,11 @@ bool Object::setInitialLocalNullDirection(enum_time_direction tdir, const double
     return setInitialLocalNullDirection(tdir, l[0], l[1], l[2], nattype);
 }
 
-bool Object::setInitialLocalNullDirection(enum_time_direction tdir,
-                                          double l0, double l1, double l2,
-                                          enum_nat_tetrad_type natType)
+bool Object::setInitialLocalNullDirection(
+    enum_time_direction tdir, double l0, double l1, double l2, enum_nat_tetrad_type natType)
 {
     if (currMetric == nullptr) {
-        fprintf(stderr,"Object::setInitialPosition() ... metric is missing!\n");
+        fprintf(stderr, "Object::setInitialPosition() ... metric is missing!\n");
     }
 
     double tf = (tdir == enum_time_backward ? -1.0 : 1.0);
@@ -199,49 +198,47 @@ bool Object::setInitialLocalNullDirection(enum_time_direction tdir,
     return true;
 }
 
-
-bool Object::setInitialLocalTimeDirection(enum_time_direction tdir,
-                                    double l0, double l1, double l2, double beta,
-                                    enum_nat_tetrad_type natType)
+bool Object::setInitialLocalTimeDirection(
+    enum_time_direction tdir, double l0, double l1, double l2, double beta, enum_nat_tetrad_type natType)
 {
     if (currMetric == nullptr) {
-        fprintf(stderr,"Object::setInitialPosition() ... metric is missing!\n");
+        fprintf(stderr, "Object::setInitialPosition() ... metric is missing!\n");
     }
 
     double tf = (tdir == enum_time_backward ? -1.0 : 1.0);
     if (fabs(beta) >= 1.0) {
-        fprintf(stderr,"Object::setInitialPosition() ... velocity too fast!\n");
+        fprintf(stderr, "Object::setInitialPosition() ... velocity too fast!\n");
         return false;
     }
-    double gam = 1.0/sqrt(1.0 - beta*beta);
+    double gam = 1.0 / sqrt(1.0 - beta * beta);
 
     vec4 locDir, coDir;
     vec3 dir = vec3(l0, l1, l2).getNormalized();
 
-    locDir = vec4(tf*gam, gam*beta*dir[0], gam*beta*dir[1], gam*beta*dir[2]);
+    locDir = vec4(tf * gam, gam * beta * dir[0], gam * beta * dir[1], gam * beta * dir[2]);
     currMetric->localToCoord(this->startPos, locDir, coDir, natType);
     this->coordDir = coDir;
     this->type = enum_geodesic_timelike;
     return true;
 }
 
-
-enum_break_condition Object::calculateGeodesic() {
+enum_break_condition Object::calculateGeodesic()
+{
     if (geodSolver == nullptr) {
-        fprintf(stderr,"Object::calculateGeodesic() ... solver is missing!\n");
+        fprintf(stderr, "Object::calculateGeodesic() ... solver is missing!\n");
         return enum_break_other;
     }
     clearAll();
-    geodSolver->setGeodesicType(this->type);   
+    geodSolver->setGeodesicType(this->type);
     geodSolver->setAffineParamStep(this->stepsize);
-    return geodSolver->calculateGeodesic(this->startPos, this->coordDir, this->maxNumPoints,
-                                         this->points, this->dirs, this->lambda);
+    return geodSolver->calculateGeodesic(
+        this->startPos, this->coordDir, this->maxNumPoints, this->points, this->dirs, this->lambda);
 }
 
-
-enum_break_condition  Object::calcSachsJacobi() {
+enum_break_condition Object::calcSachsJacobi()
+{
     if (geodSolver == nullptr) {
-        fprintf(stderr,"Object::calcSachsJacobi() ... solver is missing!\n");
+        fprintf(stderr, "Object::calcSachsJacobi() ... solver is missing!\n");
         return enum_break_other;
     }
     clearAll();
@@ -253,16 +250,13 @@ enum_break_condition  Object::calcSachsJacobi() {
     vec3 locY = vec3(0.0, 1.0, 0.0);
     vec3 locZ = vec3(0.0, 0.0, 1.0);
 
-    return geodSolver->calcSachsJacobi(this->startPos, this->coordDir, 
-        localNullDir, locX, locY, locZ, 
-        this->base[0], this->base[1], this->base[2], this->base[3],
-        this->tetradType, this->maxNumPoints,
-        this->points, this->dirs, this->lambda, this->sachs1, this->sachs2,
-        this->jacobi, this->maxJacobi);
+    return geodSolver->calcSachsJacobi(this->startPos, this->coordDir, localNullDir, locX, locY, locZ, this->base[0],
+        this->base[1], this->base[2], this->base[3], this->tetradType, this->maxNumPoints, this->points, this->dirs,
+        this->lambda, this->sachs1, this->sachs2, this->jacobi, this->maxJacobi);
 }
 
-
-void Object::printStatus() {
+void Object::printStatus()
+{
     if (currMetric != nullptr) {
         currMetric->printF();
     }
@@ -270,41 +264,42 @@ void Object::printStatus() {
         geodSolver->printF();
     }
 
-    fprintf(stderr,"\n");
-    fprintf(stderr,"initial position:  %f %f %f %f\n",
-            this->startPos[0], this->startPos[1], this->startPos[2], this->startPos[3]);
-    fprintf(stderr,"initial direction: %f %f %f %f\n",
-            this->coordDir[0], this->coordDir[1], this->coordDir[2], this->coordDir[3]);
+    fprintf(stderr, "\n");
+    fprintf(stderr, "initial position:  %f %f %f %f\n", this->startPos[0], this->startPos[1], this->startPos[2],
+        this->startPos[3]);
+    fprintf(stderr, "initial direction: %f %f %f %f\n", this->coordDir[0], this->coordDir[1], this->coordDir[2],
+        this->coordDir[3]);
 
-    fprintf(stderr,"\n");
-    fprintf(stderr,"#points: %d\n", (int)this->points.size());
+    fprintf(stderr, "\n");
+    fprintf(stderr, "#points: %d\n", (int)this->points.size());
 }
 
-
-unsigned int Object::getNumPoints() {
+unsigned int Object::getNumPoints()
+{
     return static_cast<unsigned int>(this->points.size());
 }
 
-vec4 Object::getPosition(unsigned int num) {
+vec4 Object::getPosition(unsigned int num)
+{
     if (num >= this->points.size()) {
         return vec4(0);
     }
     return this->points[num];
 }
 
-
-double Object::getAffineParam(unsigned int num) {
+double Object::getAffineParam(unsigned int num)
+{
     if (num >= this->lambda.size()) {
         return 0.0;
     }
     return this->lambda[num];
 }
 
-
 /**
  * @brief Object::clearAll
  */
-void Object::clearAll() {
+void Object::clearAll()
+{
     if (!points.empty()) {
         points.clear();
     }
@@ -324,7 +319,7 @@ void Object::clearAll() {
         jacobi.clear();
     }
 
-    for(unsigned int i=0; i < 4; i++) {
+    for (unsigned int i = 0; i < 4; i++) {
         if (!trans_lt[i].empty()) {
             trans_lt[i].clear();
         }
@@ -334,7 +329,8 @@ void Object::clearAll() {
 /**
  * @brief Reset all parameters.
  */
-void Object::resetAll() {
+void Object::resetAll()
+{
     if (currMetric != NULL) {
         delete currMetric;
         currMetric = NULL;
@@ -346,23 +342,23 @@ void Object::resetAll() {
     geodSolver = NULL;
 
     timeDirection = 1;
-    tetradType    = enum_nat_tetrad_default;
-    maxNumPoints  = 3000;
+    tetradType = enum_nat_tetrad_default;
+    maxNumPoints = 3000;
 
     stepsizeControlled = false;
     stepsize = 0.01;
     max_stepsize = DEF_MAX_STEPSIZE;
     min_stepsize = DEF_MIN_STEPSIZE;
 
-    epsAbs    = 1.0e-6;
-    epsRel    = 0.0;
+    epsAbs = 1.0e-6;
+    epsRel = 0.0;
     epsConstr = DEF_CONSTRAINT_EPSILON;
     epsResize = DEF_RESIZE_EPSILON;
 
     axes_orient = 0;
-    ksi =  0.0;
+    ksi = 0.0;
     chi = 90.0;
-    vel =  0.99;
+    vel = 0.99;
 
     isBaseInCoords = false;
     base[0] = vec4(1, 0, 0, 0);
@@ -370,23 +366,21 @@ void Object::resetAll() {
     base[2] = vec4(0, 0, 1, 0);
     base[3] = vec4(0, 0, 0, 1);
 
-
-    boost_ksi  =  0.0;
-    boost_chi  = 90.0;
-    boost_beta =  0.0;
+    boost_ksi = 0.0;
+    boost_chi = 90.0;
+    boost_beta = 0.0;
     lorentz.setIdent();
 
     geodSolverType = gsIrk4;
-    type =  enum_geodesic_lightlike;
+    type = enum_geodesic_lightlike;
 
     clearAll();
 
     // geometric units
-    speed_of_light  = 1.0;
-    grav_constant   = 1.0;
+    speed_of_light = 1.0;
+    grav_constant = 1.0;
     dielectric_perm = 1.0;
 }
-
 
 /**
  * @brief Get parameter value of Object.
@@ -395,23 +389,23 @@ void Object::resetAll() {
  * @return true : if parameter was found.\n
  *         false : parameter was not found.
  */
-bool Object::getParam(const char* paramName, int &paramValue) {
-    if (strcmp(paramName,"axes_orient") == 0) {
+bool Object::getParam(const char* paramName, int& paramValue)
+{
+    if (strcmp(paramName, "axes_orient") == 0) {
         paramValue = axes_orient;
         return true;
     }
-    else if (strcmp(paramName,"timeDirection") == 0) {
+    else if (strcmp(paramName, "timeDirection") == 0) {
         paramValue = timeDirection;
         return true;
     }
-    else if (strcmp(paramName,"maxNumPoints") == 0) {
+    else if (strcmp(paramName, "maxNumPoints") == 0) {
         paramValue = (int)maxNumPoints;
         return true;
     }
     return false;
 }
 
-
 /**
  * @brief Get parameter value of Object.
  * @param paramName
@@ -419,63 +413,63 @@ bool Object::getParam(const char* paramName, int &paramValue) {
  * @return true : if parameter was found.\n
  *         false : parameter was not found.
  */
-bool Object::getParam(const char* paramName, double &paramValue) {
-    if (strcmp(paramName,"stepsize")==0) {
+bool Object::getParam(const char* paramName, double& paramValue)
+{
+    if (strcmp(paramName, "stepsize") == 0) {
         paramValue = stepsize;
         return true;
     }
-    else if (strcmp(paramName,"max_stepsize")==0) {
+    else if (strcmp(paramName, "max_stepsize") == 0) {
         paramValue = max_stepsize;
         return true;
     }
-    else if (strcmp(paramName,"min_stepsize")==0) {
+    else if (strcmp(paramName, "min_stepsize") == 0) {
         paramValue = min_stepsize;
         return true;
     }
-    else if (strcmp(paramName,"epsAbs")==0 || strcmp(paramName, "eps_a") == 0) {
+    else if (strcmp(paramName, "epsAbs") == 0 || strcmp(paramName, "eps_a") == 0) {
         paramValue = epsAbs;
         return true;
     }
-    else if (strcmp(paramName,"epsRel")==0 || strcmp(paramName, "eps_r") == 0) {
+    else if (strcmp(paramName, "epsRel") == 0 || strcmp(paramName, "eps_r") == 0) {
         paramValue = epsRel;
         return true;
     }
-    else if (strcmp(paramName,"epsConstr")==0) {
+    else if (strcmp(paramName, "epsConstr") == 0) {
         paramValue = epsConstr;
         return true;
     }
-    else if (strcmp(paramName,"epsResize")==0) {
+    else if (strcmp(paramName, "epsResize") == 0) {
         paramValue = epsResize;
         return true;
     }
-    else if (strcmp(paramName,"ksi")==0) {
+    else if (strcmp(paramName, "ksi") == 0) {
         paramValue = ksi;
         return true;
     }
-    else if (strcmp(paramName,"chi")==0) {
+    else if (strcmp(paramName, "chi") == 0) {
         paramValue = chi;
         return true;
     }
-    else if (strcmp(paramName,"vel")==0) {
+    else if (strcmp(paramName, "vel") == 0) {
         paramValue = vel;
         return true;
     }
-    else if (strcmp(paramName,"boost_ksi")==0) {
+    else if (strcmp(paramName, "boost_ksi") == 0) {
         paramValue = boost_ksi;
         return true;
     }
-    else if (strcmp(paramName,"boost_chi")==0) {
+    else if (strcmp(paramName, "boost_chi") == 0) {
         paramValue = boost_chi;
         return true;
     }
-    else if (strcmp(paramName,"boost_beta")==0) {
+    else if (strcmp(paramName, "boost_beta") == 0) {
         paramValue = boost_beta;
         return true;
     }
     return false;
 }
 
-
 /**
  * @brief Get parameter value of Object.
  * @param paramName
@@ -483,15 +477,15 @@ bool Object::getParam(const char* paramName, double &paramValue) {
  * @return true : if parameter was found.\n
  *         false : parameter was not found.
  */
-bool Object::getParam(const char* paramName, m4d::vec3 &paramValue) {
-    if (strcmp(paramName,"startDir")==0) {
+bool Object::getParam(const char* paramName, m4d::vec3& paramValue)
+{
+    if (strcmp(paramName, "startDir") == 0) {
         paramValue = startDir;
         return true;
     }
     return false;
 }
 
-
 /**
  * @brief Get parameter value of Object.
  * @param paramName
@@ -499,34 +493,34 @@ bool Object::getParam(const char* paramName, m4d::vec3 &paramValue) {
  * @return true : if parameter was found.\n
  *         false : parameter was not found.
  */
-bool Object::getParam(const char* paramName, m4d::vec4 &paramValue) {
-    if (strcmp(paramName,"startPos")==0) {
+bool Object::getParam(const char* paramName, m4d::vec4& paramValue)
+{
+    if (strcmp(paramName, "startPos") == 0) {
         paramValue = startPos;
         return true;
     }
-    else if (strcmp(paramName,"base0")==0) {
+    else if (strcmp(paramName, "base0") == 0) {
         paramValue = base[0];
         return true;
     }
-    else if (strcmp(paramName,"base1")==0) {
+    else if (strcmp(paramName, "base1") == 0) {
         paramValue = base[1];
         return true;
     }
-    else if (strcmp(paramName,"base2")==0) {
+    else if (strcmp(paramName, "base2") == 0) {
         paramValue = base[2];
         return true;
     }
-    else if (strcmp(paramName,"base3")==0) {
+    else if (strcmp(paramName, "base3") == 0) {
         paramValue = base[3];
         return true;
     }
-    else if (strcmp(paramName,"coordDir")==0) {
+    else if (strcmp(paramName, "coordDir") == 0) {
         paramValue = coordDir;
         return true;
     }
     return false;
 }
-
 
 /**
  * @brief Set Lorentz transformation.
@@ -535,23 +529,22 @@ bool Object::getParam(const char* paramName, m4d::vec4 &paramValue) {
  *  \param  ksi : angle in deg.
  *  \param  beta : velocity (v/c).
  */
-bool Object::setLorentzTransf(const double chi, const double ksi, const double beta) {
-    boost_ksi  = ksi;
-    boost_chi  = chi;
+bool Object::setLorentzTransf(const double chi, const double ksi, const double beta)
+{
+    boost_ksi = ksi;
+    boost_chi = chi;
     boost_beta = beta;
 
     if (fabs(beta) < 1.0) {
         resetLorentzTransf();
-        double n[3] = {sin(chi * DEG_TO_RAD)*cos(ksi * DEG_TO_RAD),
-                       sin(chi * DEG_TO_RAD)*sin(ksi * DEG_TO_RAD),
-                       cos(chi * DEG_TO_RAD)
-                      };
+        double n[3] = { sin(chi * DEG_TO_RAD) * cos(ksi * DEG_TO_RAD), sin(chi * DEG_TO_RAD) * sin(ksi * DEG_TO_RAD),
+            cos(chi * DEG_TO_RAD) };
         double gamma = 1.0 / sqrt(1.0 - beta * beta);
 
         lorentz.setElem(0, 0, gamma);
         for (int row = 1; row < 4; row++) {
             for (int col = 1; col < 4; col++) {
-                lorentz.setElem(row, col, (gamma - 1.0)*n[row - 1]*n[col - 1] + M4D_DELTA(row, col));
+                lorentz.setElem(row, col, (gamma - 1.0) * n[row - 1] * n[col - 1] + M4D_DELTA(row, col));
             }
             lorentz.setElem(0, row, beta * gamma * n[row - 1]);
             lorentz.setElem(row, 0, beta * gamma * n[row - 1]);
@@ -561,8 +554,8 @@ bool Object::setLorentzTransf(const double chi, const double ksi, const double b
     return false;
 }
 
-
-bool Object::setLorentzTransf(const m4d::vec3 beta) {
+bool Object::setLorentzTransf(const m4d::vec3 beta)
+{
     double bn = beta.getNorm();
     if (bn >= 1.0) {
         return false;
@@ -586,7 +579,8 @@ bool Object::setLorentzTransf(const m4d::vec3 beta) {
 /**
  * @brief Reset Lorentz transformation.
  */
-void Object::resetLorentzTransf() {
+void Object::resetLorentzTransf()
+{
     lorentz.setIdent();
 }
 
@@ -598,9 +592,10 @@ void Object::resetLorentzTransf() {
  *  \return true : success.
  *  \return false : error occured.
  */
-bool Object::loadSettings(const char* filename, bool printset) {
+bool Object::loadSettings(const char* filename, bool printset)
+{
     setlocale(LC_NUMERIC, "C");
-    std::vector<std::vector<std::string> >  tokens;
+    std::vector<std::vector<std::string>> tokens;
     m4d::tokenizeFile(std::string(filename), tokens);
 
     bool ok = true;
@@ -618,9 +613,9 @@ bool Object::loadSettings(const char* filename, bool printset) {
             ok &= true;
         }
         else if (baseString.compare("PARAM") == 0 && tokens[i].size() > 3) {
-            //int    pnum  = atoi(tokens[i][1].c_str());
+            // int    pnum  = atoi(tokens[i][1].c_str());
             std::string pname = tokens[i][2];
-            double val   = atof(tokens[i][3].c_str());
+            double val = atof(tokens[i][3].c_str());
             currMetric->setParam(pname.c_str(), val);
         }
         else if (baseString.compare("INIT_POS") == 0 && tokens[i].size() > 4) {
@@ -662,7 +657,8 @@ bool Object::loadSettings(const char* filename, bool printset) {
             }
             if (j < NUM_ENUM_GEODESIC_TYPE) {
                 type = (enum_geodesic_type)j;
-            } else {
+            }
+            else {
                 fprintf(stderr, "m4dObject::loadSettings() ... geodesic type not recognized! Please check ini-file.");
             }
         }
@@ -681,7 +677,7 @@ bool Object::loadSettings(const char* filename, bool printset) {
         */
         else if (baseString.compare("STEPSIZE_MAX") == 0 && tokens[i].size() > 1) {
             max_stepsize = atof(tokens[i][1].c_str());
-            //min_stepsize = atof(tokens[i][2].c_str());
+            // min_stepsize = atof(tokens[i][2].c_str());
         }
         else if (baseString.compare("EPSILONS") == 0 && tokens[i].size() > 2) {
             epsAbs = atof(tokens[i][1].c_str());
@@ -756,7 +752,8 @@ bool Object::loadSettings(const char* filename, bool printset) {
  *  \return true : success.
  *  \return false : error occured.
  */
-bool Object::saveSettings(const char* filename, const char *dat) {
+bool Object::saveSettings(const char* filename, const char* dat)
+{
     if (currMetric == NULL) {
         return false;
     }
@@ -790,10 +787,11 @@ bool Object::saveSettings(const char* filename, const char *dat) {
         fprintf(fptr, "PARAM  %d  %10s  %16.12f\n", i, pname, val);
     }
     if (pname != nullptr) {
-        delete [] pname;
+        delete[] pname;
     }
-    
-    fprintf(fptr, "INIT_POS         %18.14f %18.14f %18.14f %18.14f\n", startPos[0], startPos[1], startPos[2], startPos[3]);
+
+    fprintf(
+        fptr, "INIT_POS         %18.14f %18.14f %18.14f %18.14f\n", startPos[0], startPos[1], startPos[2], startPos[3]);
     fprintf(fptr, "INIT_DIR         %18.14f %18.14f %18.14f\n", startDir[0], startDir[1], startDir[2]);
     fprintf(fptr, "INIT_ANGLE_VEL   %18.14f %18.14f %18.14f\n", ksi, chi, vel);
     fprintf(fptr, "TIME_DIR          %d\n", timeDirection);
@@ -802,11 +800,12 @@ bool Object::saveSettings(const char* filename, const char *dat) {
     fprintf(fptr, "GEODESIC_TYPE     %s\n", stl_geodesic_type[type]);
     if (stepsizeControlled) {
         fprintf(fptr, "STEPSIZE_CTRL     1\n");
-    } else {
+    }
+    else {
         fprintf(fptr, "STEPSIZE_CTRL     0\n");
     }
     fprintf(fptr, "STEPSIZE          %16.12e\n", stepsize);
-    //fprintf(fptr,"STEPSIZE_MAX_MIN  %16.12e %16.12e\n",max_stepsize,min_stepsize);
+    // fprintf(fptr,"STEPSIZE_MAX_MIN  %16.12e %16.12e\n",max_stepsize,min_stepsize);
     fprintf(fptr, "STEPSIZE_MAX      %16.12e \n", max_stepsize);
     fprintf(fptr, "EPSILONS          %16.12e %16.12e\n", epsAbs, epsRel);
     fprintf(fptr, "CONSTR_EPSILON    %16.12e\n", epsConstr);
@@ -814,7 +813,8 @@ bool Object::saveSettings(const char* filename, const char *dat) {
     fprintf(fptr, "MAX_NUM_POINTS    %d\n", maxNumPoints);
     fprintf(fptr, "TETRAD_TYPE       %d\n", int(tetradType));
     for (int i = 0; i < 4; i++) {
-        fprintf(fptr, "BASE_%d          %16.12f %16.12f %16.12f %16.12f\n", i, base[i][0], base[i][1], base[i][2], base[i][3]);
+        fprintf(fptr, "BASE_%d          %16.12f %16.12f %16.12f %16.12f\n", i, base[i][0], base[i][1], base[i][2],
+            base[i][3]);
     }
     fprintf(fptr, "BOOST           %16.12f %16.12f %16.12f\n", boost_ksi, boost_chi, boost_beta);
     fprintf(fptr, "SPEED_OF_LIGHT    %12.6f\n", speed_of_light);
@@ -830,7 +830,8 @@ bool Object::saveSettings(const char* filename, const char *dat) {
  *
  *  \param fptr : pointer to file.
  */
-void  Object::printSettings(FILE* fptr) {
+void Object::printSettings(FILE* fptr)
+{
     if (currMetric == NULL || geodSolver == NULL) {
         fprintf(fptr, "Error in Object::printSettings() ... no metric or solver set!\n");
         return;
@@ -848,21 +849,23 @@ void  Object::printSettings(FILE* fptr) {
             fprintf(fptr, "PARAM  %d  %10s  %16.12f\n", i, pname, val);
         }
     }
-    fprintf(fptr, "INIT_POS         %16.12f %16.12f %16.12f %16.12f\n", startPos[0], startPos[1], startPos[2], startPos[3]);
+    fprintf(
+        fptr, "INIT_POS         %16.12f %16.12f %16.12f %16.12f\n", startPos[0], startPos[1], startPos[2], startPos[3]);
     fprintf(fptr, "INIT_DIR         %16.12f %16.12f %16.12f\n", startDir[0], startDir[1], startDir[2]);
     fprintf(fptr, "INIT_ANGLE_VEL   %16.12f %16.12f %16.12f\n", ksi, chi, vel);
     fprintf(fptr, "TIME_DIR          %s\n", str_time_dir[(timeDirection + 1) / 2]);
     fprintf(fptr, "AXES_ORIENT       %d\n", axes_orient);
     fprintf(fptr, "GEOD_SOLVER_TYPE  %s\n", stl_solver_names[geodSolverType]);
-    //cerr << kappa << endl;
+    // cerr << kappa << endl;
     fprintf(fptr, "GEODESIC_TYPE     %s\n", stl_geodesic_type[type]);
     if (stepsizeControlled) {
         fprintf(fptr, "STEPSIZE_CTRL     yes\n");
-    } else {
+    }
+    else {
         fprintf(fptr, "STEPSIZE_CTRL     no\n");
     }
     fprintf(fptr, "STEPSIZE          %16.12e\n", stepsize);
-    //fprintf(fptr,"STEPSIZE_MAX_MIN  %16.12e %16.12e\n",max_stepsize,min_stepsize);
+    // fprintf(fptr,"STEPSIZE_MAX_MIN  %16.12e %16.12e\n",max_stepsize,min_stepsize);
     fprintf(fptr, "STEPSIZE_MAX      %16.12e \n", max_stepsize);
     fprintf(fptr, "EPSILONS          %16.12e %16.12e\n", epsAbs, epsRel);
     fprintf(fptr, "CONSTR_EPSILON    %16.12e\n", epsConstr);
@@ -870,7 +873,8 @@ void  Object::printSettings(FILE* fptr) {
     fprintf(fptr, "MAX_NUM_POINTS    %d\n", maxNumPoints);
     fprintf(fptr, "TETRAD_TYPE       %s\n", stl_draw_type[tetradType]);
     for (int i = 0; i < 4; i++) {
-        fprintf(fptr, "BASE_%d          %16.12f %16.12f %16.12f %16.12f\n", i, base[i][0], base[i][1], base[i][2], base[i][3]);
+        fprintf(fptr, "BASE_%d          %16.12f %16.12f %16.12f %16.12f\n", i, base[i][0], base[i][1], base[i][2],
+            base[i][3]);
     }
     fprintf(fptr, "BOOST             %16.12f %16.12f %16.12f\n", boost_ksi, boost_chi, boost_beta);
     fprintf(fptr, "SPEED_OF_LIGHT    %16.12f\n", speed_of_light);
@@ -885,31 +889,31 @@ void  Object::printSettings(FILE* fptr) {
  *  \return true : success.
  *  \return false : no metric available.
  */
-bool Object::makeReport(std::string  &text) {
-    if (currMetric == NULL) {
+bool Object::makeReport(char*& text)
+{
+    if (currMetric == nullptr) {
         return false;
     }
 
     double eta = 1.0;
-    double y0  = 1.0;
+    double y0 = 1.0;
 
     if (type == enum_geodesic_timelike && fabs(vel) < 1.0) {
-        y0  = 1.0 / sqrt(1.0 - vel * vel);
+        y0 = 1.0 / sqrt(1.0 - vel * vel);
         eta = vel * y0;
     }
-    vec4 locDir = M4D_SIGN(timeDirection) * y0 * base[0] + eta * (startDir[0] * base[1] + startDir[1] * base[2] + startDir[2] * base[3]);
+    vec4 locDir = M4D_SIGN(timeDirection) * y0 * base[0]
+        + eta * (startDir[0] * base[1] + startDir[1] * base[2] + startDir[2] * base[3]);
     vec4 coDir;
     currMetric->localToCoord(startPos, locDir, coDir, tetradType);
-
-  //  currMetric->report(startPos, coDir, text);
-    return true;
+    return currMetric->report(startPos, coDir, text);
 }
 
-void Object::printReport(FILE* fptr) {
+void Object::printReport(FILE* fptr)
+{
     std::string text;
-   // makeReport(text);
+    // makeReport(text);
     fprintf(fptr, "%s\n", text.c_str());
 }
 
 } // end namespace m4d
-

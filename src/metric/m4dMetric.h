@@ -319,7 +319,7 @@ public:
 
     bool isChrisDAvailable();
 
-    // virtual bool    report(const vec4 pos, const vec4 cdir, std::string &text);
+    virtual bool report(const vec4 pos, const vec4 cdir, char*& text);
     virtual void printF(FILE* fptr = stderr);
 
 protected:

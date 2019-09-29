@@ -1,42 +1,20 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricSchwarzschildIsotropic.cpp
-
-  Copyright (c) 2010-2014  Thomas Mueller
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricSchwarzschildIsotropic.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dMetricSchwarzschildIsotropic.h"
+#include "extra/m4dUtilities.h"
 
 namespace m4d {
 
 #define eps 1.0e-6
 
-
-/*! Standard constructor for the Schwarzschild metric.
- *
- * \param  mass : mass of the black hole.
- */
-MetricSchwarzschildIsotropic::MetricSchwarzschildIsotropic(double mass) {
-    mMetricName  = "SchwarzschildIsotropic";
-    mCoordType   = enum_coordinate_cartesian;
+MetricSchwarzschildIsotropic::MetricSchwarzschildIsotropic(double mass)
+{
+    mMetricName = "SchwarzschildIsotropic";
+    mCoordType = enum_coordinate_cartesian;
 
     mPhysicalUnits = enum_physical_constants_geom;
     mSpeedOfLight = 1.0;
@@ -53,24 +31,15 @@ MetricSchwarzschildIsotropic::MetricSchwarzschildIsotropic(double mass) {
     setStandardValues();
 }
 
-/*!
- */
-MetricSchwarzschildIsotropic::~MetricSchwarzschildIsotropic() {
-}
+MetricSchwarzschildIsotropic::~MetricSchwarzschildIsotropic() {}
 
-
-// *********************************** public methods ******************************
-
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
-bool MetricSchwarzschildIsotropic::calculateMetric(const double* pos) {
-    double rho   = calc_rho(pos);
+bool MetricSchwarzschildIsotropic::calculateMetric(const double* pos)
+{
+    double rho = calc_rho(pos);
 
     double c = mSpeedOfLight;
 
-    double t1 = rho;           // rho(x,y,z);
+    double t1 = rho; // rho(x,y,z);
     double t3 = rho_s / t1;
     double t5 = pow(1.0 + t3, 2.0);
     double t7 = c * c;
@@ -99,36 +68,32 @@ bool MetricSchwarzschildIsotropic::calculateMetric(const double* pos) {
     g_compts[3][2] = 0.0;
     g_compts[3][3] = t28;
 
-
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
-bool MetricSchwarzschildIsotropic::calculateChristoffels(const double* pos) {
+bool MetricSchwarzschildIsotropic::calculateChristoffels(const double* pos)
+{
     double drdx, drdy, drdz;
     calc_drho(pos, drdx, drdy, drdz);
 
     double c = mSpeedOfLight;
 
-    double t1 = rho;          // rho(x,y,z);
+    double t1 = rho; // rho(x,y,z);
     double t2 = t1 * t1;
     double t3 = t2 * t2;
     double t7 = rho_s * rho_s;
     double t13 = t7 * t7;
     double t17 = c * c;
     double t18 = t3 / (t3 + 4.0 * rho_s * t2 * t1 + 6.0 * t7 * t2 + 4.0 * t7 * rho_s * t1 + t13) * t17;
-    double t19 = drdx;        // diff(rho(x,y,z),x);
+    double t19 = drdx; // diff(rho(x,y,z),x);
     double t20 = rho_s * t19;
     double t21 = t1 - rho_s;
     double t22 = t1 + rho_s;
     double t23 = t22 * t22;
     double t26 = t21 / t23 / t22;
-    double t30 = drdy;        // diff(rho(x,y,z),y);
+    double t30 = drdy; // diff(rho(x,y,z),y);
     double t31 = rho_s * t30;
-    double t35 = drdz;        // diff(rho(x,y,z),z);
+    double t35 = drdz; // diff(rho(x,y,z),z);
     double t36 = rho_s * t35;
     double t40 = 1 / t22;
     double t42 = t40 / t21;
@@ -208,11 +173,8 @@ bool MetricSchwarzschildIsotropic::calculateChristoffels(const double* pos) {
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
-bool MetricSchwarzschildIsotropic::calculateChrisD(const double* pos) {
+bool MetricSchwarzschildIsotropic::calculateChrisD(const double* pos)
+{
     double drdx, drdy, drdz;
     calc_drho(pos, drdx, drdy, drdz);
 
@@ -222,11 +184,11 @@ bool MetricSchwarzschildIsotropic::calculateChrisD(const double* pos) {
     double c = mSpeedOfLight;
 
     double t1 = rho_s * rho_s;
-    double t2 = drdx;         // diff(rho(x,y,z),x);
+    double t2 = drdx; // diff(rho(x,y,z),x);
     double t3 = t2 * t2;
-    double t6 = rho;          // rho(x,y,z);
+    double t6 = rho; // rho(x,y,z);
     double t7 = t1 * t6;
-    double t8 = drdxdx;       // diff(diff(rho(x,y,z),x),x);
+    double t8 = drdxdx; // diff(diff(rho(x,y,z),x),x);
     double t10 = t6 * t3;
     double t13 = t6 * t6;
     double t14 = t13 * t6;
@@ -236,23 +198,26 @@ bool MetricSchwarzschildIsotropic::calculateChrisD(const double* pos) {
     double t35 = pow(t6 + rho_s, 2.0);
     double t36 = t35 * t35;
     double t38 = rho_s / (t22 + 4.0 * rho_s * t14 + 6.0 * t1 * t13 + 4.0 * t1 * rho_s * t6 + t30) / t36;
-    double t41 = drdxdy;      // diff(diff(rho(x,y,z),x),y);
+    double t41 = drdxdy; // diff(diff(rho(x,y,z),x),y);
     double t43 = t2 * t1;
-    double t44 = drdy;        // diff(rho(x,y,z),y);
+    double t44 = drdy; // diff(rho(x,y,z),y);
     double t47 = t6 * t2;
     double t48 = t44 * rho_s;
-    double t59 = 2.0 * (t7 * t41 + 4.0 * t43 * t44 - 8.0 * t47 * t48 + 2.0 * t2 * t44 * t13 - t14 * t41) * t14 * t20 * t38;
-    double t60 = drdxdz;      // diff(diff(rho(x,y,z),x),z);
-    double t62 = drdz;        // diff(rho(x,y,z),z);
+    double t59
+        = 2.0 * (t7 * t41 + 4.0 * t43 * t44 - 8.0 * t47 * t48 + 2.0 * t2 * t44 * t13 - t14 * t41) * t14 * t20 * t38;
+    double t60 = drdxdz; // diff(diff(rho(x,y,z),x),z);
+    double t62 = drdz; // diff(rho(x,y,z),z);
     double t65 = t62 * rho_s;
-    double t76 = 2.0 * (t7 * t60 + 4.0 * t43 * t62 - 8.0 * t47 * t65 + 2.0 * t2 * t62 * t13 - t14 * t60) * t14 * t20 * t38;
-    double t77 = drdydy;      // diff(diff(rho(x,y,z),y),y);
+    double t76
+        = 2.0 * (t7 * t60 + 4.0 * t43 * t62 - 8.0 * t47 * t65 + 2.0 * t2 * t62 * t13 - t14 * t60) * t14 * t20 * t38;
+    double t77 = drdydy; // diff(diff(rho(x,y,z),y),y);
     double t79 = t44 * t44;
     double t82 = t6 * t79;
-    double t93 = drdydz;      // diff(diff(rho(x,y,z),y),z);
+    double t93 = drdydz; // diff(diff(rho(x,y,z),y),z);
     double t98 = t6 * t44;
-    double t109 = 2.0 * (t7 * t93 + 4.0 * t1 * t44 * t62 - 8.0 * t98 * t65 + 2.0 * t44 * t62 * t13 - t14 * t93) * t14 * t20 * t38;
-    double t110 = drdzdz;     // diff(diff(rho(x,y,z),z),z);
+    double t109 = 2.0 * (t7 * t93 + 4.0 * t1 * t44 * t62 - 8.0 * t98 * t65 + 2.0 * t44 * t62 * t13 - t14 * t93) * t14
+        * t20 * t38;
+    double t110 = drdzdz; // diff(diff(rho(x,y,z),z),z);
     double t112 = t62 * t62;
     double t115 = t6 * t112;
     double t126 = t13 * t8;
@@ -290,17 +255,20 @@ bool MetricSchwarzschildIsotropic::calculateChrisD(const double* pos) {
     chrisD[0][0][0][2] = 0.0;
     chrisD[0][0][0][3] = 0.0;
     chrisD[0][0][1][0] = 0.0;
-    chrisD[0][0][1][1] = -2.0 * (4.0 * t1 * t3 + t7 * t8 - 8.0 * t10 * rho_s - t8 * t14 + 2.0 * t3 * t13) * t14 * t20 * t38;
+    chrisD[0][0][1][1]
+        = -2.0 * (4.0 * t1 * t3 + t7 * t8 - 8.0 * t10 * rho_s - t8 * t14 + 2.0 * t3 * t13) * t14 * t20 * t38;
     chrisD[0][0][1][2] = -t59;
     chrisD[0][0][1][3] = -t76;
     chrisD[0][0][2][0] = 0.0;
     chrisD[0][0][2][1] = -t59;
-    chrisD[0][0][2][2] = -2.0 * (t7 * t77 + 4.0 * t1 * t79 - 8.0 * t82 * rho_s + 2.0 * t79 * t13 - t14 * t77) * t14 * t20 * t38;
+    chrisD[0][0][2][2]
+        = -2.0 * (t7 * t77 + 4.0 * t1 * t79 - 8.0 * t82 * rho_s + 2.0 * t79 * t13 - t14 * t77) * t14 * t20 * t38;
     chrisD[0][0][2][3] = -t109;
     chrisD[0][0][3][0] = 0.0;
     chrisD[0][0][3][1] = -t76;
     chrisD[0][0][3][2] = -t109;
-    chrisD[0][0][3][3] = -2.0 * (t7 * t110 + 4.0 * t1 * t112 - 8.0 * t115 * rho_s + 2.0 * t112 * t13 - t14 * t110) * t14 * t20 * t38;
+    chrisD[0][0][3][3]
+        = -2.0 * (t7 * t110 + 4.0 * t1 * t112 - 8.0 * t115 * rho_s + 2.0 * t112 * t13 - t14 * t110) * t14 * t20 * t38;
     chrisD[0][1][0][0] = 0.0;
     chrisD[0][1][0][1] = -t137;
     chrisD[0][1][0][2] = -t145;
@@ -545,15 +513,9 @@ bool MetricSchwarzschildIsotropic::calculateChrisD(const double* pos) {
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of local tetrad.
- */
-void MetricSchwarzschildIsotropic::localToCoord(const double* pos, const double* ldir, double* dir,
-        enum_nat_tetrad_type) {
+void MetricSchwarzschildIsotropic::localToCoord(
+    const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     double rho = calc_rho(pos);
 
     double B = (1.0 + rho_s / rho);
@@ -566,15 +528,9 @@ void MetricSchwarzschildIsotropic::localToCoord(const double* pos, const double*
     dir[3] = ldir[3] * edb2;
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of local tetrad.
- */
-void MetricSchwarzschildIsotropic::coordToLocal(const double* pos, const double* cdir, double* ldir,
-        enum_nat_tetrad_type) {
+void MetricSchwarzschildIsotropic::coordToLocal(
+    const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     double rho = calc_rho(pos);
 
     double B = (1.0 + rho_s / rho);
@@ -587,12 +543,8 @@ void MetricSchwarzschildIsotropic::coordToLocal(const double* pos, const double*
     ldir[3] = cdir[3] * b2;
 }
 
-
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- */
-bool MetricSchwarzschildIsotropic::breakCondition(const double* pos) {
+bool MetricSchwarzschildIsotropic::breakCondition(const double* pos)
+{
     bool br = false;
 
     double rho = calc_rho(pos);
@@ -602,18 +554,8 @@ bool MetricSchwarzschildIsotropic::breakCondition(const double* pos) {
     return br;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  However, take care of the limited double precision.
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
-double MetricSchwarzschildIsotropic::testConstraint(const double y[], const double kappa) {
+double MetricSchwarzschildIsotropic::testConstraint(const double y[], const double kappa)
+{
     double rho = calc_rho(y);
     double cm = 1.0 / mSpeedOfLight;
 
@@ -631,17 +573,8 @@ double MetricSchwarzschildIsotropic::testConstraint(const double y[], const doub
     return sum;
 }
 
-/*! Calculate the scalar product between u and v:  g_{ab}u^a v^b.
- *
- *  \param pos  :  pointer to position.
- *  \param u    :  pointer to vector.
- *  \param v    :  pointer to vector.
- *  \param prod :  reference to scalar product.
- *  \param preCalcMetric : calculate metric coefficients before evaluating the scalar product.
- *  \return true  : success.
- *  \return false : position is not valid.
- */
-bool MetricSchwarzschildIsotropic::calcProduct(const double* pos, const double* u, const double* v, double &prod, bool) {
+bool MetricSchwarzschildIsotropic::calcProduct(const double* pos, const double* u, const double* v, double& prod, bool)
+{
     prod = 0.0;
     if (breakCondition(pos)) {
         return false;
@@ -656,11 +589,8 @@ bool MetricSchwarzschildIsotropic::calcProduct(const double* pos, const double* 
     return true;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
- */
-bool MetricSchwarzschildIsotropic::setParam(const char* pName, double val) {
+bool MetricSchwarzschildIsotropic::setParam(const char* pName, double val)
+{
     if (Metric::setParam(pName, val)) {
         mMass = val;
         rho_s = 0.5 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
@@ -669,10 +599,8 @@ bool MetricSchwarzschildIsotropic::setParam(const char* pName, double val) {
     return true;
 }
 
-
-/*! Generate report.
- */
-bool MetricSchwarzschildIsotropic::report(const vec4 pos, const vec4 , std::string &text) {
+bool MetricSchwarzschildIsotropic::report(const vec4 pos, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Schwarzschild metric\n\t isotropic coordinates : (t,x,y,z)\n";
     ss << "---------------------------------------------------------------\n";
@@ -687,16 +615,13 @@ bool MetricSchwarzschildIsotropic::report(const vec4 pos, const vec4 , std::stri
     double beta;
     calcBetaOfCircOrbit(pos.data(), beta);
     ss << "  velocity for circular orbit .............. beta = " << beta << std::endl;
-    text = ss.str();
-    return true;
+
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
-/*! Calculate beta for circular orbit.
- * \param pos : current position.
- * \param beta : reference to velocity.
- * \return true : if rho>=rho_lso.
- */
-bool MetricSchwarzschildIsotropic::calcBetaOfCircOrbit(const double* pos, double &beta) {
+bool MetricSchwarzschildIsotropic::calcBetaOfCircOrbit(const double* pos, double& beta)
+{
     calc_orbits();
     double rho = sqrt(pos[1] * pos[1] + pos[2] * pos[2] + pos[3] * pos[3]);
     if (rho >= rho_lso) {
@@ -707,10 +632,8 @@ bool MetricSchwarzschildIsotropic::calcBetaOfCircOrbit(const double* pos, double
     return false;
 }
 
-// ********************************* protected methods *****************************
-/*!
- */
-void MetricSchwarzschildIsotropic::setStandardValues() {
+void MetricSchwarzschildIsotropic::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 6.0;
     mInitPos[2] = 0.0;
@@ -725,38 +648,23 @@ void MetricSchwarzschildIsotropic::setStandardValues() {
     mCoordNames[3] = std::string("z");
 }
 
-/*! Calculate rho.
- * \param pos : pointer to position.
- */
-double MetricSchwarzschildIsotropic::calc_rho(const double* pos) {
+double MetricSchwarzschildIsotropic::calc_rho(const double* pos)
+{
     rho = sqrt(pos[1] * pos[1] + pos[2] * pos[2] + pos[3] * pos[3]);
     return rho;
 }
 
-/*! Calculate first derivatives of rho.
-  \param pos : pointer to position.
-  \param drdx : diff(rho,x).
-  \param drdy : diff(rho,y).
-  \param drdz : diff(rho,z).
- */
-void MetricSchwarzschildIsotropic::calc_drho(const double* pos, double &drdx, double &drdy, double &drdz) {
+void MetricSchwarzschildIsotropic::calc_drho(const double* pos, double& drdx, double& drdy, double& drdz)
+{
     rho = calc_rho(pos);
     drdx = pos[1] / rho;
     drdy = pos[2] / rho;
     drdz = pos[3] / rho;
 }
 
-/*! Calculate second derivatives of rho.
-  \param pos : pointer to position.
-  \param drdxdx : diff(rho,x,x).
-  \param drdxdy : diff(rho,x,y).
-  \param drdxdz : diff(rho,x,z).
-  \param drdydy : diff(rho,y,y).
-  \param drdydz : diff(rho,y,z).
-  \param drdzdz : diff(rho,z,z).
- */
-void MetricSchwarzschildIsotropic::calc_d2rho(const double* pos, double &drdxdx, double &drdxdy, double &drdxdz,
-        double &drdydy, double &drdydz, double &drdzdz) {
+void MetricSchwarzschildIsotropic::calc_d2rho(
+    const double* pos, double& drdxdx, double& drdxdy, double& drdxdz, double& drdydy, double& drdydz, double& drdzdz)
+{
     rho = calc_rho(pos);
     double x = pos[1];
     double y = pos[2];
@@ -771,8 +679,9 @@ void MetricSchwarzschildIsotropic::calc_d2rho(const double* pos, double &drdxdx,
     drdzdz = (x * x + y * y) * edrh3;
 }
 
-void MetricSchwarzschildIsotropic::calc_orbits() {
-    rho_po  = (2.0 + sqrt(3.0)) * rho_s;
+void MetricSchwarzschildIsotropic::calc_orbits()
+{
+    rho_po = (2.0 + sqrt(3.0)) * rho_s;
     rho_lso = (5.0 + 2.0 * sqrt(6.0)) * rho_s;
 }
 

@@ -31,6 +31,7 @@
 #include "m4dMetricMinkowski.h"
 #include "m4dMetricMorrisThorne.h"
 #include "m4dMetricSchwarzschild.h"
+#include "m4dMetricSchwarzschildIsotropic.h"
 
 #ifdef ALL_METRICS_AVAILABLE
 #include "m4dMetricAlcubierre.h"
@@ -79,7 +80,6 @@
 #include "m4dMetricSchwarzschildCart.h"
 #include "m4dMetricSchwarzschildCartNew.h"
 #include "m4dMetricSchwarzschildGravWave.h"
-#include "m4dMetricSchwarzschildIsotropic.h"
 #include "m4dMetricSchwarzschildTortoise.h"
 #include "m4dMetricSchwarzschildWT.h"
 #include "m4dMetricStraightSpinningString.h"
@@ -94,12 +94,13 @@
 
 namespace m4d {
 
-class API_M4D_EXPORT MetricList {
+class API_M4D_EXPORT MetricList
+{
 public:
 #ifdef ALL_METRICS_AVAILABLE
     static const int NUM_METRICS = 61;
 #else
-    static const int NUM_METRICS = 5;
+    static const int NUM_METRICS = 6;
 #endif // ALL_METRICS_AVAILABLE
 
 /* --------------------------------------------------------
@@ -111,69 +112,18 @@ public:
  *   given in the constructor of the metric: mMetricName
  * -------------------------------------------------------- */
 #ifdef ALL_METRICS_AVAILABLE
-    static const char stl_metric_names[NUM_METRICS][63] = {
-        "unknown",
-        "Minkowski",
-        "MinkowskiConformal",
-        "MinkowskiRotLattice",
-        "Schwarzschild",
-        "SchwarzschildCart",
-        "SchwarzschildCartNew",
-        "SchwarzschildGravWave",
-        "SchwarzschildIsotropic",
-        "SchwarzschildTortoise",
-        "SchwarzschildWT",
-        "EddFinkIn",
-        "PainleveGullstrand",
-        "AlcubierreWarp",
-        "AlcubierreWarpSimple",
-        "BarriolaVilenkin",
-        "BertottiKasner",
-        "BesselGravWaveCart",
-        "Bonnor",
-        "ChazyCurzonRot",
-        "CosmicStringSchwarzschild",
-        "Curzon",
-        "EinsteinRosenWaveWWB",
-        "ErezRosenVar",
-        "Ernst",
-        "ExtremeReissnerNordstromDihole",
-        "FriedmanNonEmptyNull",
-        "Glampedakis",
-        "Goedel",
-        "GoedelCart",
-        "GoedelScaled",
-        "GoedelScaledCart",
-        "HalilsoyWave",
-        "HartleThorneGB",
-        "JanisNewmanWinicour",
-        "Kasner",
-        "KastorTraschen",
-        "KerrBL",
-        "Kottler",
-        "MorrisThorne",
-        "Petrov_Type_D_AI_ES",
-        "Petrov_Type_D_AII_ES",
-        "Petrov_Type_D_AIII_ES",
-        "Petrov_Type_D_BI_ES",
-        "Petrov_Type_D_BII_ES",
-        "Petrov_Type_D_BIII_ES",
-        "Petrov_Type_D_C_ES",
-        "PlaneGravWave",
-        "Pravda_C-Metric",
-        "Pravda_C-Metric_Canonical_Coords",
-        "ReissnerNordstrom",
-        "RotDihole",
-        "DeSitterUniv",
-        "DeSitterUnivConformal",
-        "StraightSpinningString",
-        "SultanaDyerBlackhole",
-        "TaubNUT",
-        "TeoSimpleWH",
-        "TeoWHl",
-        "TomimatsuSato",
-        "VaidyaIncRad"
-    };
+    static const char stl_metric_names[NUM_METRICS][63] = { "unknown", "Minkowski", "MinkowskiConformal",
+        "MinkowskiRotLattice", "Schwarzschild", "SchwarzschildCart", "SchwarzschildCartNew", "SchwarzschildGravWave",
+        "SchwarzschildTortoise", "SchwarzschildWT", "EddFinkIn", "PainleveGullstrand", "AlcubierreWarp",
+        "AlcubierreWarpSimple", "BarriolaVilenkin", "BertottiKasner", "BesselGravWaveCart", "Bonnor", "ChazyCurzonRot",
+        "CosmicStringSchwarzschild", "Curzon", "EinsteinRosenWaveWWB", "ErezRosenVar", "Ernst",
+        "ExtremeReissnerNordstromDihole", "FriedmanNonEmptyNull", "Glampedakis", "Goedel", "GoedelCart", "GoedelScaled",
+        "GoedelScaledCart", "HalilsoyWave", "HartleThorneGB", "JanisNewmanWinicour", "Kasner", "KastorTraschen",
+        "KerrBL", "Kottler", "MorrisThorne", "Petrov_Type_D_AI_ES", "Petrov_Type_D_AII_ES", "Petrov_Type_D_AIII_ES",
+        "Petrov_Type_D_BI_ES", "Petrov_Type_D_BII_ES", "Petrov_Type_D_BIII_ES", "Petrov_Type_D_C_ES", "PlaneGravWave",
+        "Pravda_C-Metric", "Pravda_C-Metric_Canonical_Coords", "ReissnerNordstrom", "RotDihole", "DeSitterUniv",
+        "DeSitterUnivConformal", "StraightSpinningString", "SultanaDyerBlackhole", "TaubNUT", "TeoSimpleWH", "TeoWHl",
+        "TomimatsuSato", "VaidyaIncRad" };
 
     enum enum_metric {
         enum_metric_unknown = 0,
@@ -245,6 +195,7 @@ public:
         enum_metric_unknown = 0,
         enum_metric_minkowski = 1,
         enum_metric_schwarzschild,
+        enum_metric_schwarzschild_isotropic,
         enum_metric_kerrbl,
         enum_metric_morristhorne
     };

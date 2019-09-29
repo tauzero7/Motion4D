@@ -1676,13 +1676,10 @@ void MetricSchwarzschild::setUnits(const double speed_of_light, const double gra
     rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
 }
 
-/*! Generate report.
- * \param pos : initial position.
- * \param cdir : initial coordinate direction.
- * \param text : reference to report text.
- */
-bool MetricSchwarzschild::report(const vec4 pos, const vec4 cdir, std::string& text)
+bool MetricSchwarzschild::report(const vec4 pos, const vec4 cdir, char*& text)
 {
+    SafeDelete<char>(text);
+
     std::stringstream ss;
     ss << "Report for Schwarzschild metric\n\tcoordinates : (t,r,theta,phi)\n";
     ss << "---------------------------------------------------------------\n";
@@ -1710,8 +1707,9 @@ bool MetricSchwarzschild::report(const vec4 pos, const vec4 cdir, std::string& t
     }
 
     ss << "\nThe effective potential is only valid for geodesics in the theta=pi/2 hypersurface." << std::endl;
-    text = ss.str();
-    return true;
+
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ***************************** specific public methods ***************************

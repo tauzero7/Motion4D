@@ -641,7 +641,7 @@ bool MetricMorrisThorne::totEnergy(const vec4, const vec4 cdir, const double, do
     return true;
 }
 
-bool MetricMorrisThorne::report(const vec4 pos, const vec4 cdir, std::string& text)
+bool MetricMorrisThorne::report(const vec4 pos, const vec4 cdir, char*& text)
 {
     std::stringstream ss;
     ss << "Report for Morris-Thorne metric\n\tcoordinate : (t,l,theta,phi)\n";
@@ -658,8 +658,8 @@ bool MetricMorrisThorne::report(const vec4 pos, const vec4 cdir, std::string& te
     calcKsiCrit(pos, ksicrit);
     ss << "  critical angle .................. ksiCrit(deg) = " << ksicrit * RAD_TO_DEG << std::endl;
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 bool MetricMorrisThorne::calcKsiCrit(const vec4 pos, double& ksicrit)
