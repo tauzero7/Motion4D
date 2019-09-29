@@ -1,72 +1,51 @@
-// --------------------------------------------------------------------------------
-/*
-    m4dMetric.h
+/**
+ * @file    m4dMetric.h
+ * @author  Thomas Mueller
+ *
+ * @brief  Base class for each metric class.
 
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
+     To determine the metric coefficients and the Christoffel
+     symbols one can use e.g. Maple/GrTensorII or maxima:
+     <ul>
+       <li>\f$g_{\mu\nu}\f$  : grcalc(g(dn,dn));
+       <li>\f$\Gamma_{\mu\nu}^{\kappa}\f$ : grcalc(Chr(dn,dn,up)) = grcalc(Chr2);
+       <li>\f$\partial_{\lambda}\Gamma_{\mu\nu}^{\kappa}\f$ : grcalc(Chr(dn,dn,up,pdn));
+     </ul>
 
+     If physical constants (speed of light, Newton's gravitational
+     constant,...) are NOT included in the metric coefficients and the
+     Christoffel symbols, the attribute mPhysicalUnits has to be set to
+     enum_physical_constants_notset. Otherwise, there are several units
+     that can be chosen:
 
-   This file is part of the m4d-library.
+     <ul>
+       <li>enum_physical_constants_geom:  G=c=1<br>
+           Distances are measured in units of \f$M\f$, where \f$1M \approx 4.926938\cdot 10^{-6}~ls\f$.
+       <li>enum_physical_constants_real:<br>
+           Here, the speed of light as well as the gravitational constant are given in SI units: \f$c=299792458~m\f$ and
+ \f$G=6.67428\cdot 10^{-11}~\frac{m^3}{kg\cdot s^2}\f$. <li>enum_physical_constants_proper:<br> The numerical values of
+ all constants can be chosen arbitrarily.
+     </ul>
 
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
+     calcDerivs(), calcDerivsPar(), and testConstraint() can be
+     overloaded in the child classes to perform a faster calculation
+     (mHaveRightSide must be set true!), otherwise they are calculated
+     as in the motion class. For the Fermi-Walker transport, the
+     calcDerivsFW() method can be overloaded in the child classes to
+     perform a faster calculation.
 
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+     Each metric must have a natural local tetrad (default).
 
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
+     Each metric must have a pseudo-cartesian representation.
+     Additionally, the coordinates can be drawn with respect
+     to each other.
 
-*/
-
-/*!  \class  m4d::Metric
-     \brief  Base class for each metric class.
-
-             To determine the metric coefficients and the Christoffel
-             symbols one can use e.g. Maple/GrTensorII or maxima:
-             <ul>
-               <li>\f$g_{\mu\nu}\f$  : grcalc(g(dn,dn));
-               <li>\f$\Gamma_{\mu\nu}^{\kappa}\f$ : grcalc(Chr(dn,dn,up)) = grcalc(Chr2);
-               <li>\f$\partial_{\lambda}\Gamma_{\mu\nu}^{\kappa}\f$ : grcalc(Chr(dn,dn,up,pdn));
-             </ul>
-
-             If physical constants (speed of light, Newton's gravitational
-             constant,...) are NOT included in the metric coefficients and the
-             Christoffel symbols, the attribute mPhysicalUnits has to be set to
-             enum_physical_constants_notset. Otherwise, there are several units
-             that can be chosen:
-
-             <ul>
-               <li>enum_physical_constants_geom:  G=c=1<br>
-                   Distances are measured in units of \f$M\f$, where \f$1M \approx 4.926938\cdot 10^{-6}~ls\f$.
-               <li>enum_physical_constants_real:<br>
-                   Here, the speed of light as well as the gravitational constant are given in SI units: \f$c=299792458~m\f$ and \f$G=6.67428\cdot 10^{-11}~\frac{m^3}{kg\cdot s^2}\f$.
-               <li>enum_physical_constants_proper:<br>
-                   The numerical values of all constants can be chosen arbitrarily.
-             </ul>
-
-             calcDerivs(), calcDerivsPar(), and testConstraint() can be
-             overloaded in the child classes to perform a faster calculation
-             (mHaveRightSide must be set true!), otherwise they are calculated
-             as in the motion class. For the Fermi-Walker transport, the
-             calcDerivsFW() method can be overloaded in the child classes to
-             perform a faster calculation.
-
-             Each metric must have a natural local tetrad (default).
-
-             Each metric must have a pseudo-cartesian representation.
-             Additionally, the coordinates can be drawn with respect
-             to each other.
-
-             The signature of the metric must be adjusted by hand. If not otherwise specified,
-             \f[ \textrm{sign}(\mathbf{g})=+2. \f]
-             Then mSign=1.0, otherwise mSign=-1.0.
-*/
-// --------------------------------------------------------------------------------
-
+     The signature of the metric must be adjusted by hand. If not otherwise specified,
+     \f[ \textrm{sign}(\mathbf{g})=+2. \f]
+     Then mSign=1.0, otherwise mSign=-1.0.
+ *
+ *  This file is part of libMotion4D.
+ */
 #ifndef M4D_METRIC_H
 #define M4D_METRIC_H
 
@@ -95,7 +74,8 @@ namespace m4d {
 // ---------------------------------------------------
 //    class definition:   Metric
 // ---------------------------------------------------
-class API_M4D_EXPORT Metric {
+class API_M4D_EXPORT Metric
+{
 public:
     Metric();
     virtual ~Metric();
@@ -106,52 +86,132 @@ public:
     const char* getMetricCPPfilename();
     enum_coordinate_type getCoordType();
     const char* getCoordName(int num);
+
+    /**
+     * @brief Return the signum of the signature of the metric.
+     * @return +-1.0 : sign(g)=+-2
+     */
     double sign();
 
+    /**
+     * @brief Calculate the contravariant metric components g_ab at position 'pos'.
+     * @param  pos  :  coordinate position where the metric coefficients have to be evaluated.
+     * @return true : successfull
+     */
     virtual bool calculateMetric(const double* pos) = 0;
     virtual bool calculateMetric(const vec4 pos);
+
+    /**
+     * @brief Calculate the Christoffel symbols of the second kind at position 'pos'.
+     * @param  pos  :  coordinate position where the Christoffels have to be evaluated.
+     * @return true :  successfull
+     */
     virtual bool calculateChristoffels(const double* pos) = 0;
     virtual bool calculateChristoffels(const vec4 pos);
+
+    /**
+     * @brief Calculate partial derivatives of the Christoffel symbols.
+     * @param pos : pointer to position.
+     */
     virtual bool calculateChrisD(const double* pos);
     virtual bool calculateChrisD(const vec4 pos);
 
+    /**
+     * @brief Calculate Riemann tensor R^a_bcd
+     * @param pos : pointer to coordinate position where the Riemann tensor have to be evaluated.
+     * @return true : successfull
+     */
     virtual bool calculateRiemann(const double* pos);
     virtual bool calculateRiemann(const vec4 pos);
+
+    /**
+     * @brief Calculate the Weyl tensor at position 'pos'.
+     * @param  pos  :  pointer to coordinate position where the Weyl tensor have to be evaluated.
+     * @return true :  successfull
+     */
     virtual bool calculateWeyl(const double* pos);
     virtual bool calculateWeyl(const vec4 pos);
+
+    /**
+     * @brief Calculate the Ricci at position 'pos'.
+     * @param  pos  :  pointer to coordinate position where the Ricci tensor have to be evaluated.
+     * @return true :  successfull
+     */
     virtual bool calculateRicci(const double* pos);
     virtual bool calculateRicci(const vec4 pos);
+
+    /**
+     * @brief Calculate the Ricci rotation coefficients at position 'pos'.
+     * @param  pos  :  pointer to coordinate position where the Ricci rotation coefficients have to be evaluated.
+     * @return true :  successfull
+     */
     virtual bool calculateRicRotCoeffs(const double* pos);
     virtual bool calculateRicRotCoeffs(const vec4 pos);
+
+    /**
+     * @brief Calculate the contractions of the Ricci rotation coefficients at position 'pos'.
+     * @param  pos  :  pointer to coordinate position where the contractions of the Ricci rotation coefficients have to
+     * be evaluated.
+     * @return true :  successfull
+     */
     virtual bool calculateContrRRC(const double* pos);
     virtual bool calculateContrRRC(const vec4 pos);
 
+    /**
+     * @brief Return the contravariant metric coefficient g_{mu nu}.
+     *    The coefficients have to be calculated with \sa calculateMetric().
+     *  @param  mu : component index.
+     *  @param  nu : component index.
+     */
     double getMetricCoeff(const int mu, const int nu);
+
+    /**
+     * @brief Return the Christoffel symbol Chr_{mu nu}^{kappa} of the second kind.
+     *  The Christoffel symbols have to be calculated with \sa calculateChristoffels().
+     * @param  mu : lower index of Christoffel symbol.
+     * @param  nu : lower index of Christoffel symbol.
+     * @param  kappa : upper index of Christoffel symbol.
+     */
     double getChristoffel(const int mu, const int nu, const int kappa);
+
+    /**
+     * @brief Return the first derivative of the Christoffel symbol.
+     * @param  mu : lower index of Christoffel symbol.
+     * @param  nu : lower index of Christoffel symbol.
+     * @param  kappa : upper index of Christoffel symbol.
+     * @param  tau : partial derivative index of Christoffel symbol.
+     */
     double getChrisD(const int mu, const int nu, const int kappa, const int tau);
 
+    /**
+     * @brief Return a Riemann tensor component.
+     * @param  mu :  first index.
+     * @param  nu :  second index.
+     * @param  rho : third index.
+     * @param  sigma :  fourth index.
+     */
     double getRiemCoeff(const int mu, const int nu, const int rho, const int sigma);
     double getWeylCoeff(const int mu, const int nu, const int rho, const int sigma);
     double getRicciCoeff(const int mu, const int nu);
     double getRicRotCoeff(const int i, const int j, const int k);
     double getContrRRCCoeff(const int j);
 
-    virtual void getNatTetrad(const vec4 pos, vec4& e0, vec4& e1, vec4& e2, vec4& e3,
-        enum_nat_tetrad_type type = enum_nat_tetrad_default);
+    virtual void getNatTetrad(
+        const vec4 pos, vec4& e0, vec4& e1, vec4& e2, vec4& e3, enum_nat_tetrad_type type = enum_nat_tetrad_default);
 
-    virtual void getNatDualTetrad(const vec4 pos, vec4& t0, vec4& t1, vec4& t2, vec4& t3,
-        enum_nat_tetrad_type type = enum_nat_tetrad_default);
+    virtual void getNatDualTetrad(
+        const vec4 pos, vec4& t0, vec4& t1, vec4& t2, vec4& t3, enum_nat_tetrad_type type = enum_nat_tetrad_default);
 
-    virtual void localToCoord(const double* pos, const double* ldir, double* dir,
-        enum_nat_tetrad_type type = enum_nat_tetrad_default)
+    virtual void localToCoord(
+        const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type = enum_nat_tetrad_default)
         = 0;
-    virtual void localToCoord(const vec4 pos, const vec4 ldir, vec4& cdir,
-        enum_nat_tetrad_type type = enum_nat_tetrad_default);
-    virtual void coordToLocal(const double* pos, const double* cdir, double* ldir,
-        enum_nat_tetrad_type type = enum_nat_tetrad_default)
+    virtual void localToCoord(
+        const vec4 pos, const vec4 ldir, vec4& cdir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
+    virtual void coordToLocal(
+        const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type = enum_nat_tetrad_default)
         = 0;
-    virtual void coordToLocal(const vec4 pos, const vec4 cdir, vec4& ldir,
-        enum_nat_tetrad_type type = enum_nat_tetrad_default);
+    virtual void coordToLocal(
+        const vec4 pos, const vec4 cdir, vec4& ldir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
 
     virtual bool breakCondition(const double* pos) = 0;
     virtual bool breakCondition(const vec4 pos);
@@ -169,7 +229,8 @@ public:
     bool localFourVel(const double pm, const double* l3vel, double* l4vel);
     bool localFourVel(const double pm, const vec3 l3dir, vec4& l4dir);
 
-    virtual bool calcProduct(const double* pos, const double* u, const double* v, double& prod, bool preCalcMetric = true);
+    virtual bool calcProduct(
+        const double* pos, const double* u, const double* v, double& prod, bool preCalcMetric = true);
     virtual bool calcProduct(const vec4 pos, const vec4 u, const vec4 v, double& prod, bool preCalcMetric = true);
 
     virtual double coordDiff(const unsigned int coordNum, const double p1, const double p2);
@@ -199,7 +260,7 @@ public:
     virtual bool addParam(const char* pName, double val = 0.0);
     virtual bool setParam(const char* pName, double val);
     virtual bool getParam(const char* pName, double& val);
-    //virtual bool    getParam(int pNr, std::string& pName, double& val);
+    // virtual bool    getParam(int pNr, std::string& pName, double& val);
     virtual bool getParam(int pNr, char*& pName, double& val);
     virtual bool setParam(int pNr, double val);
 
@@ -229,12 +290,22 @@ public:
     virtual void getEmbeddingNames(std::vector<std::string>& names);
     virtual bool getAllEmbeddingParams(std::vector<std::string>& names, std::vector<double>& params);
     virtual bool getEmbeddingMap(std::map<std::string, double>& params);
-    virtual int getEmbeddingVertices(std::vector<vec3>& verts,
-        std::vector<int>& indices, unsigned int& numElems, unsigned int& counter);
+
+    /**
+     * @brief Generate vertices for the embedding diagram.
+     * @param verts : reference to vector of vertices.
+     * @param indices : reference to vector of indices.
+     * @param numElems : number of elements in a strip.
+     * @param counter  : number of strips.
+     * @return int : 0
+     */
+    virtual unsigned int getEmbeddingVertices(
+        float*& verts, unsigned int*& indices, unsigned int& numElems, unsigned int& counter);
 
     virtual bool haveEmbedding();
 
-    virtual bool effPotentialValue(const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double& val);
+    virtual bool effPotentialValue(
+        const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double& val);
     virtual bool totEnergy(const vec4 pos, const vec4 cdir, const double x, double& val);
     virtual bool haveEffPotential();
 
@@ -260,7 +331,8 @@ protected:
      */
     virtual void setStandardValues();
     virtual void contrChrisVecVec(const double* y, const double* v, const double* w, double* z, bool calc = true);
-    virtual void contrChrDVecVecVec(const double* y, const double* u, const double* v, const double* w, double* z, bool calc = true);
+    virtual void contrChrDVecVecVec(
+        const double* y, const double* u, const double* v, const double* w, double* z, bool calc = true);
 
     // -------- protected attribute ---------
 protected:

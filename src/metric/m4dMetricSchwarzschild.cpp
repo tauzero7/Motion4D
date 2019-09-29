@@ -1,44 +1,26 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricSchwarzschild.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricSchwarzschild.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dMetricSchwarzschild.h"
+#include "extra/m4dUtilities.h"
 #include <cmath>
 
-#define sign(x) ( (x>=0) ? 1.0 : -1.0 )
+#define sign(x) ((x >= 0) ? 1.0 : -1.0)
 
 namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the Schwarzschild metric.
  *
  * \param  mass : mass of the black hole.
  */
-MetricSchwarzschild::MetricSchwarzschild(double mass) {
-    mMetricName  = "Schwarzschild";
+MetricSchwarzschild::MetricSchwarzschild(double mass)
+{
+    mMetricName = "Schwarzschild";
     mMetricCPPfilename = "m4dMetricSchwarzschild.cpp";
     setCoordType(enum_coordinate_spherical);
 
@@ -53,12 +35,10 @@ MetricSchwarzschild::MetricSchwarzschild(double mass) {
     /*  Only a static tetrad is defined  */
     mLocTeds.push_back(enum_nat_tetrad_static);
 
-
     mDrawTypes.push_back(enum_draw_embedding);
     mDrawTypes.push_back(enum_draw_twoplusone);
     mDrawTypes.push_back(enum_draw_effpoti);
     mDrawTypes.push_back(enum_draw_custom);
-
 
     /*  parameters for the embedding diagram  */
     if (!mEmbParam.empty()) {
@@ -66,11 +46,11 @@ MetricSchwarzschild::MetricSchwarzschild(double mass) {
     }
     mHaveEmbedding = true;
 
-    mEmb_rmin    = rs;
-    mEmb_rmax    = 5.0 * rs;
-    mEmb_r_num   = 20.0;
-    mEmb_phi_num = 40.0;
-    mEmb_rstep = (mEmb_rmax - mEmb_rmin) / mEmb_r_num;
+    mEmb_rmin = rs;
+    mEmb_rmax = 5.0 * rs;
+    mEmb_r_num = 20;
+    mEmb_phi_num = 40;
+    mEmb_rstep = (mEmb_rmax - mEmb_rmin) / static_cast<double>(mEmb_r_num);
     mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
     addEmbeddingParam("emb_rmin", mEmb_rmin);
     addEmbeddingParam("emb_rmax", mEmb_rmax);
@@ -84,9 +64,7 @@ MetricSchwarzschild::MetricSchwarzschild(double mass) {
 
 /*!
  */
-MetricSchwarzschild::~MetricSchwarzschild() {
-}
-
+MetricSchwarzschild::~MetricSchwarzschild() {}
 
 // *********************************** public methods ******************************
 
@@ -94,8 +72,9 @@ MetricSchwarzschild::~MetricSchwarzschild() {
  *
  *  \param pos : pointer to position.
  */
-bool MetricSchwarzschild::calculateMetric(const double* pos) {
-    double r     = pos[1];
+bool MetricSchwarzschild::calculateMetric(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -131,8 +110,9 @@ bool MetricSchwarzschild::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricSchwarzschild::calculateChristoffels(const double* pos) {
-    double r     = pos[1];
+bool MetricSchwarzschild::calculateChristoffels(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -219,8 +199,9 @@ bool MetricSchwarzschild::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricSchwarzschild::calculateChrisD(const double* pos) {
-    double r     = pos[1];
+bool MetricSchwarzschild::calculateChrisD(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -499,14 +480,14 @@ bool MetricSchwarzschild::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Calculate the Riemann tensor R^a_bcd at position 'pos'.
  *
  *  \param  pos  :  pointer to coordinate position where the Weyl tensor have to be evaluated.
  *  \return true :  successfull
  */
-bool MetricSchwarzschild::calculateRiemann(const double* pos) {
-    double r     = pos[1];
+bool MetricSchwarzschild::calculateRiemann(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -792,8 +773,9 @@ bool MetricSchwarzschild::calculateRiemann(const double* pos) {
  *  \param  pos  :  pointer to coordinate position where the Weyl tensor have to be evaluated.
  *  \return true :  successfull
  */
-bool MetricSchwarzschild::calculateWeyl(const double* pos) {
-    double r     = pos[1];
+bool MetricSchwarzschild::calculateWeyl(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -1078,8 +1060,9 @@ bool MetricSchwarzschild::calculateWeyl(const double* pos) {
  *  \param  pos  :  pointer to coordinate position where the Ricci rotation coefficients have to be evaluated.
  *  \return true :  successfull
  */
-bool MetricSchwarzschild::calculateRicRotCoeffs(const double* pos) {
-    double r     = pos[1];
+bool MetricSchwarzschild::calculateRicRotCoeffs(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double t1 = r - rs;
@@ -1162,11 +1145,12 @@ bool MetricSchwarzschild::calculateRicRotCoeffs(const double* pos) {
 
 /*! Calculate the contractions of the Ricci rotation coefficients at position 'pos'.
  *
- *  \param  pos  :  pointer to coordinate position where the contractions of the Ricci rotation coefficients have to be evaluated.
- *  \return true :  successfull
+ *  \param  pos  :  pointer to coordinate position where the contractions of the Ricci rotation coefficients have to be
+ * evaluated. \return true :  successfull
  */
-bool MetricSchwarzschild::calculateContrRRC(const double* pos) {
-    double r     = pos[1];
+bool MetricSchwarzschild::calculateContrRRC(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     crrc[0] = crrc[3] = 0.0;
@@ -1175,7 +1159,6 @@ bool MetricSchwarzschild::calculateContrRRC(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -1183,9 +1166,9 @@ bool MetricSchwarzschild::calculateContrRRC(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricSchwarzschild::localToCoord(const double* pos, const double* ldir, double* dir,
-                                       enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricSchwarzschild::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
     double w = sqrt(1.0 - rs / r);
 
@@ -1202,9 +1185,9 @@ void MetricSchwarzschild::localToCoord(const double* pos, const double* ldir, do
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricSchwarzschild::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                       enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricSchwarzschild::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
     double w = sqrt(1.0 - rs / r);
 
@@ -1214,17 +1197,17 @@ void MetricSchwarzschild::coordToLocal(const double* pos, const double* cdir, do
     ldir[3] = cdir[3] * r * sin(theta);
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricSchwarzschild::breakCondition(const double* pos) {
+bool MetricSchwarzschild::breakCondition(const double* pos)
+{
     bool br = false;
 
-    if ((pos[1] < 0.0) || (pos[1]*pos[1] <= (1.0 + eps)*rs * rs)) {
+    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + eps) * rs * rs)) {
         br = true;
     }
     return br;
@@ -1235,17 +1218,19 @@ bool MetricSchwarzschild::breakCondition(const double* pos) {
  *  \param  y[]   : pointer to position and direction coordinates.
  *  \param  dydx[] : pointer to right side of geodesic equation.
  */
-bool MetricSchwarzschild::calcDerivs(const double y[], double dydx[]) {
+bool MetricSchwarzschild::calcDerivs(const double y[], double dydx[])
+{
     dydx[0] = y[4];
     dydx[1] = y[5];
     dydx[2] = y[6];
     dydx[3] = y[7];
 
-    double r     = y[1];
+    double r = y[1];
     double theta = y[2];
 
     dydx[4] = -rs / (r * (r - rs)) * y[4] * y[5];
-    dydx[5] = -0.5 * mSpeedOfLight * mSpeedOfLight * rs * (r - rs) / pow(r, 3.0) * y[4] * y[4] + 0.5 * rs / (r * (r - rs)) * y[5] * y[5] + (r - rs) * (y[6] * y[6] + sin(theta) * sin(theta) * y[7] * y[7]);
+    dydx[5] = -0.5 * mSpeedOfLight * mSpeedOfLight * rs * (r - rs) / pow(r, 3.0) * y[4] * y[4]
+        + 0.5 * rs / (r * (r - rs)) * y[5] * y[5] + (r - rs) * (y[6] * y[6] + sin(theta) * sin(theta) * y[7] * y[7]);
     dydx[6] = -2.0 / r * y[5] * y[6] + sin(theta) * cos(theta) * y[7] * y[7];
     dydx[7] = -2.0 / r * y[5] * y[7] - 2.0 * cos(theta) / sin(theta) * y[6] * y[7];
 
@@ -1257,19 +1242,24 @@ bool MetricSchwarzschild::calcDerivs(const double y[], double dydx[]) {
  *  \param  y[]   : pointer to position and direction coordinates.
  *  \param  dydx[] : pointer to right side of parallel transport equation.
  */
-bool MetricSchwarzschild::calcDerivsPar(const double y[], double dydx[]) {
+bool MetricSchwarzschild::calcDerivsPar(const double y[], double dydx[])
+{
     calcDerivs(y, dydx);
 
-    double r     = y[1];
+    double r = y[1];
     double theta = y[2];
 
     int bidx;
     for (int n = 0; n < 4; n++) {
         bidx = 4 * (n + 2);
         dydx[bidx + 0] = -0.5 * rs / (r * (r - rs)) * (y[4] * y[bidx + 1] + y[5] * y[bidx + 0]);
-        dydx[bidx + 1] = -0.5 * rs * (r - rs) / (r * r * r) * mSpeedOfLight * mSpeedOfLight * y[4] * y[bidx + 0] + 0.5 * rs / (r * (r - rs)) * y[5] * y[bidx + 1] + (r - rs) * (y[6] * y[bidx + 2] + pow(sin(theta), 2.0) * y[7] * y[bidx + 3]);
-        dydx[bidx + 2] = -y[5] / r * y[bidx + 2] - y[6] / r * y[bidx + 1] + sin(theta) * cos(theta) * y[7] * y[bidx + 3];
-        dydx[bidx + 3] = -y[5] * y[bidx + 3] / r - y[7] * y[bidx + 1] / r - cos(theta) / sin(theta) * (y[6] * y[bidx + 3] + y[7] * y[bidx + 2]);
+        dydx[bidx + 1] = -0.5 * rs * (r - rs) / (r * r * r) * mSpeedOfLight * mSpeedOfLight * y[4] * y[bidx + 0]
+            + 0.5 * rs / (r * (r - rs)) * y[5] * y[bidx + 1]
+            + (r - rs) * (y[6] * y[bidx + 2] + pow(sin(theta), 2.0) * y[7] * y[bidx + 3]);
+        dydx[bidx + 2]
+            = -y[5] / r * y[bidx + 2] - y[6] / r * y[bidx + 1] + sin(theta) * cos(theta) * y[7] * y[bidx + 3];
+        dydx[bidx + 3] = -y[5] * y[bidx + 3] / r - y[7] * y[bidx + 1] / r
+            - cos(theta) / sin(theta) * (y[6] * y[bidx + 3] + y[7] * y[bidx + 2]);
     }
 
     return true;
@@ -1277,12 +1267,13 @@ bool MetricSchwarzschild::calcDerivsPar(const double y[], double dydx[]) {
 
 /*! Calculate right hand side of parallel transport and Jocobi equation.
  */
-bool MetricSchwarzschild::calcDerivsSachsJacobi(const double y[], double dydx[]) {
-    const double* u    = &y[DEF_TG_IDX];
+bool MetricSchwarzschild::calcDerivsSachsJacobi(const double y[], double dydx[])
+{
+    const double* u = &y[DEF_TG_IDX];
     const double* wSA1 = &y[DEF_SA1_IDX];
     const double* wSA2 = &y[DEF_SA2_IDX];
-    const double* wJ1  = &y[DEF_JAC1_IDX];
-    const double* wJ2  = &y[DEF_JAC2_IDX];
+    const double* wJ1 = &y[DEF_JAC1_IDX];
+    const double* wJ2 = &y[DEF_JAC2_IDX];
     const double* wJ1d = &y[DEF_DJ1_IDX];
     const double* wJ2d = &y[DEF_DJ2_IDX];
 
@@ -1300,20 +1291,19 @@ bool MetricSchwarzschild::calcDerivsSachsJacobi(const double y[], double dydx[])
     contrChrDVecVecVec(y, u, u, wJ2, zJ2b, false);
 
     for (int mu = 0; mu < 4; mu++) {
-        dydx[mu]              = y[DEF_TG_IDX + mu];
-        dydx[DEF_TG_IDX + mu]   = -gd[mu];
+        dydx[mu] = y[DEF_TG_IDX + mu];
+        dydx[DEF_TG_IDX + mu] = -gd[mu];
 
-        dydx[DEF_SA1_IDX + mu]  = -zSA1[mu];
-        dydx[DEF_SA2_IDX + mu]  = -zSA2[mu];
+        dydx[DEF_SA1_IDX + mu] = -zSA1[mu];
+        dydx[DEF_SA2_IDX + mu] = -zSA2[mu];
         dydx[DEF_JAC1_IDX + mu] = y[DEF_DJ1_IDX + mu];
         dydx[DEF_JAC2_IDX + mu] = y[DEF_DJ2_IDX + mu];
 
-        dydx[DEF_DJ1_IDX + mu]  = -2.0 * zJ1a[mu] - zJ1b[mu];
-        dydx[DEF_DJ2_IDX + mu]  = -2.0 * zJ2a[mu] - zJ2b[mu];
+        dydx[DEF_DJ1_IDX + mu] = -2.0 * zJ1a[mu] - zJ1b[mu];
+        dydx[DEF_DJ2_IDX + mu] = -2.0 * zJ2a[mu] - zJ2b[mu];
     }
     return true;
 }
-
 
 /*! Calculate right hand side of the Fermi-Walker transport equation.
  *
@@ -1322,26 +1312,31 @@ bool MetricSchwarzschild::calcDerivsSachsJacobi(const double y[], double dydx[])
  *  \param dydx[] : pointer to right side of Fermi-Walker transport equation.
  *  \return true : always.
  */
-bool MetricSchwarzschild::calcDerivsFW(const double a[], const double y[], double dydx[]) {
-    //return false;
+bool MetricSchwarzschild::calcDerivsFW(const double a[], const double y[], double dydx[])
+{
+    // return false;
     dydx[0] = y[4];
     dydx[1] = y[5];
     dydx[2] = y[6];
     dydx[3] = y[7];
 
-    double r     = y[1];
+    double r = y[1];
     double theta = y[2];
 
     // double edc = 1.0/mSpeedOfLight;
     double edr = 1.0 / r;
 
-    int bidx;  // tetrad index
+    int bidx; // tetrad index
     for (int n = 0; n < 4; n++) {
         bidx = 4 * (n + 2);
-        dydx[bidx + 0] = -0.5 * rs / (r * (r - rs)) * (y[4] * y[bidx + 1] + y[5] * y[bidx + 0])  +  a[n] * y[4];
-        dydx[bidx + 1] = -0.5 * rs * (r - rs) / (r * r * r) * mSpeedOfLight * mSpeedOfLight * y[4] * y[bidx + 0] + 0.5 * rs / (r * (r - rs)) * y[5] * y[bidx + 1] + (r - rs) * (y[6] * y[bidx + 2] + pow(sin(theta), 2.0) * y[7] * y[bidx + 3])  +  a[n] * y[5];
-        dydx[bidx + 2] = -y[5] * y[bidx + 2] * edr - y[6] * y[bidx + 1] * edr + sin(theta) * cos(theta) * y[7] * y[bidx + 3]  +  a[n] * y[6];
-        dydx[bidx + 3] = -y[5] * y[bidx + 3] * edr - y[7] * y[bidx + 1] * edr - cos(theta) / sin(theta) * (y[6] * y[bidx + 3] + y[7] * y[bidx + 2])  +  a[n] * y[7];
+        dydx[bidx + 0] = -0.5 * rs / (r * (r - rs)) * (y[4] * y[bidx + 1] + y[5] * y[bidx + 0]) + a[n] * y[4];
+        dydx[bidx + 1] = -0.5 * rs * (r - rs) / (r * r * r) * mSpeedOfLight * mSpeedOfLight * y[4] * y[bidx + 0]
+            + 0.5 * rs / (r * (r - rs)) * y[5] * y[bidx + 1]
+            + (r - rs) * (y[6] * y[bidx + 2] + pow(sin(theta), 2.0) * y[7] * y[bidx + 3]) + a[n] * y[5];
+        dydx[bidx + 2] = -y[5] * y[bidx + 2] * edr - y[6] * y[bidx + 1] * edr
+            + sin(theta) * cos(theta) * y[7] * y[bidx + 3] + a[n] * y[6];
+        dydx[bidx + 3] = -y[5] * y[bidx + 3] * edr - y[7] * y[bidx + 1] * edr
+            - cos(theta) / sin(theta) * (y[6] * y[bidx + 3] + y[7] * y[bidx + 2]) + a[n] * y[7];
     }
 
     bidx = 8;
@@ -1363,8 +1358,9 @@ bool MetricSchwarzschild::calcDerivsFW(const double a[], const double y[], doubl
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricSchwarzschild::testConstraint(const double y[], const double kappa) {
-    double r     = y[1];
+double MetricSchwarzschild::testConstraint(const double y[], const double kappa)
+{
+    double r = y[1];
     double theta = y[2];
     double cm = 1.0 / mSpeedOfLight;
 
@@ -1375,7 +1371,8 @@ double MetricSchwarzschild::testConstraint(const double y[], const double kappa)
     double dph = y[7] * cm;
 
     double sum = -kappa;
-    sum += -(1.0 - rs / r) * dt * dt + dr * dr / (1.0 - rs / r) + r * r * (dth * dth + sin(theta) * sin(theta) * dph * dph);
+    sum += -(1.0 - rs / r) * dt * dt + dr * dr / (1.0 - rs / r)
+        + r * r * (dth * dth + sin(theta) * sin(theta) * dph * dph);
     return sum;
 }
 
@@ -1389,15 +1386,17 @@ double MetricSchwarzschild::testConstraint(const double y[], const double kappa)
  *  \return true  : success.
  *  \return false : position is not valid.
  */
-bool MetricSchwarzschild::calcProduct(const double* pos, const double* u, const double* v, double &prod, bool) {
+bool MetricSchwarzschild::calcProduct(const double* pos, const double* u, const double* v, double& prod, bool)
+{
     prod = 0.0;
     if (breakCondition(pos)) {
         return false;
     }
 
-    double r     = pos[1];
+    double r = pos[1];
     double theta = pos[2];
-    prod = -mSpeedOfLight * mSpeedOfLight * (1.0 - rs / r) * u[0] * v[0] + u[1] * v[1] / (1.0 - rs / r) + r * r * (u[2] * v[2] + sin(theta) * sin(theta) * u[3] * v[3]);
+    prod = -mSpeedOfLight * mSpeedOfLight * (1.0 - rs / r) * u[0] * v[0] + u[1] * v[1] / (1.0 - rs / r)
+        + r * r * (u[2] * v[2] + sin(theta) * sin(theta) * u[3] * v[3]);
     return true;
 }
 
@@ -1405,8 +1404,9 @@ bool MetricSchwarzschild::calcProduct(const double* pos, const double* u, const 
  *
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  */
-bool MetricSchwarzschild::setParam(const char* pName, double val) {    
-    if (Metric::setParam(pName,val)) {
+bool MetricSchwarzschild::setParam(const char* pName, double val)
+{
+    if (Metric::setParam(pName, val)) {
         mMass = val;
         rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
         return true;
@@ -1422,7 +1422,8 @@ bool MetricSchwarzschild::setParam(const char* pName, double val) {
  *  \return true : success.
  *  \return false : otherwise.
  */
-bool MetricSchwarzschild::transToEmbedding(vec4 p, vec4 &ep) {
+bool MetricSchwarzschild::transToEmbedding(vec4 p, vec4& ep)
+{
     vec4 cp;
     transToPseudoCart(p, cp);
 
@@ -1444,7 +1445,8 @@ bool MetricSchwarzschild::transToEmbedding(vec4 p, vec4 &ep) {
  *  \param  cp : reference to transformed point.
  *  \return true : success.
  */
-bool MetricSchwarzschild::transToTwoPlusOne(vec4 p, vec4 &cp) {
+bool MetricSchwarzschild::transToTwoPlusOne(vec4 p, vec4& cp)
+{
     vec4 tp;
     TransCoordinates::toCartesianCoord(mCoordType, p, tp);
     cp = vec4(tp[0], tp[1], tp[2], tp[0]);
@@ -1457,7 +1459,8 @@ bool MetricSchwarzschild::transToTwoPlusOne(vec4 p, vec4 &cp) {
  *  \param cp : reference to customized point.
  *  \return true : always.
  */
-bool MetricSchwarzschild::transToCustom(vec4 p, vec4 &cp) {
+bool MetricSchwarzschild::transToCustom(vec4 p, vec4& cp)
+{
     double r = p[1];
     double phi = p[3];
 
@@ -1475,20 +1478,21 @@ bool MetricSchwarzschild::transToCustom(vec4 p, vec4 &cp) {
  *  \return true  : success.
  *  \return false : parameter not valid.
  */
-bool MetricSchwarzschild::setEmbeddingParam(const char* name, double val) {
+bool MetricSchwarzschild::setEmbeddingParam(const char* name, double val)
+{
     Metric::setEmbeddingParam(name, val);
 
-    if (strcmp(name,"emb_rmin") == 0) {
+    if (strcmp(name, "emb_rmin") == 0) {
         mEmb_rmin = val;
     }
-    else if (strcmp(name,"emb_rmax") == 0) {
+    else if (strcmp(name, "emb_rmax") == 0) {
         mEmb_rmax = val;
     }
-    else if (strcmp(name,"emb_r_num") == 0) {
-        mEmb_r_num = val;
+    else if (strcmp(name, "emb_r_num") == 0) {
+        mEmb_r_num = static_cast<unsigned int>(val);
     }
-    else if (strcmp(name,"emb_phi_num") == 0) {
-        mEmb_phi_num = val;
+    else if (strcmp(name, "emb_phi_num") == 0) {
+        mEmb_phi_num = static_cast<unsigned int>(val);
     }
     return testEmbeddingParams();
 }
@@ -1497,7 +1501,8 @@ bool MetricSchwarzschild::setEmbeddingParam(const char* name, double val) {
  *  \return  true : all parameters are ok
  *  \return  false : at least one parameter had to be adjusted.
  */
-bool MetricSchwarzschild::testEmbeddingParams() {
+bool MetricSchwarzschild::testEmbeddingParams()
+{
     bool allOk = true;
     if (mEmb_rmin < rs) {
         mEmb_rmin = rs;
@@ -1507,8 +1512,8 @@ bool MetricSchwarzschild::testEmbeddingParams() {
         mEmb_rmax = rs;
         allOk &= false;
     }
-    if (mEmb_r_num < 2.0) {
-        mEmb_r_num = 2.0;
+    if (mEmb_r_num < 2) {
+        mEmb_r_num = 2;
         allOk &= false;
     }
 
@@ -1527,53 +1532,54 @@ bool MetricSchwarzschild::testEmbeddingParams() {
  *  \param counter  : number of strips.
  *  \return int : number of vertices.
  */
-//int MetricSchwarzschild::getEmbeddingVertices(std::vector<vec3> &verts,
-//        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter) {
-//    if (!verts.empty()) {
-//        verts.clear();
-//    }
+unsigned int MetricSchwarzschild::getEmbeddingVertices(
+    float*& verts, unsigned int*& indices, unsigned int& numElems, unsigned int& counter)
+{
+    m4d::SafeDelete<float>(verts);
+    m4d::SafeDelete<unsigned int>(indices);
 
-//    if (!indices.empty()) {
-//        indices.clear();
-//    }
+    testEmbeddingParams();
+    mEmb_rstep = (mEmb_rmax - mEmb_rmin) / static_cast<double>(mEmb_r_num);
+    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
 
-//    testEmbeddingParams();
-//    mEmb_rstep = (mEmb_rmax - mEmb_rmin) / mEmb_r_num;
-//    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
+    numElems = mEmb_r_num;
+    counter = mEmb_phi_num + 1;
 
-//    numElems = int(mEmb_r_num);
-//    counter  = int(mEmb_phi_num) + 1;
+    unsigned int numVerts = numElems * counter;
+    int numInds = static_cast<int>(numElems * counter * 2);
 
-//    int vnum;
+    verts = new float[numVerts * 3];
+    indices = new unsigned int[numInds];
 
-//    double x, y, z, r, phi;
-//    for (unsigned int k = 0; k < counter; k++) {
-//        phi = k * mEmb_phistep;
-//        for (unsigned int j = 0; j < numElems; j++) {
-//            r = mEmb_rmin + j * mEmb_rstep;
-//            x = r * cos(phi);
-//            y = r * sin(phi);
-//            if (r >= rs) {
-//                z = 2.0 * sqrt(rs) * sqrt(fabs(r - rs));
-//                verts.push_back(vec3(x, y, z));
+    float* vptr = verts;
+    unsigned int* iptr = indices;
 
-//                vnum = k * numElems + j;
+    unsigned int vnum;
 
-//                indices.push_back(vnum);
-//                indices.push_back(vnum + numElems);
-//            }
-//        }
-//    }
+    double x, y, z, r, phi;
+    for (unsigned int k = 0; k < counter; k++) {
+        phi = k * mEmb_phistep;
 
-//    int numVerts = (int)verts.size();
-//    int numInds  = (int)indices.size();
+        for (unsigned int j = 0; j < numElems; j++) {
+            r = mEmb_rmin + j * mEmb_rstep;
+            x = r * cos(phi);
+            y = r * sin(phi);
 
-//    if (2 * numVerts == numInds) {
-//        return numVerts;
-//    }
+            if (r >= rs) {
+                z = 2.0 * sqrt(rs) * sqrt(fabs(r - rs));
+                *(vptr++) = static_cast<float>(x);
+                *(vptr++) = static_cast<float>(y);
+                *(vptr++) = static_cast<float>(z);
 
-//    return 0;
-//}
+                vnum = k * numElems + j;
+                *(iptr++) = vnum;
+                *(iptr++) = vnum + numElems;
+            }
+        }
+    }
+
+    return numVerts;
+}
 
 /*! Effective potential.
  *  \param pos : initial position.
@@ -1583,7 +1589,9 @@ bool MetricSchwarzschild::testEmbeddingParams() {
  *  \param val : reference to effective potential value.
  *  \return true : effective potential exists at x.
  */
-bool MetricSchwarzschild::effPotentialValue(const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double &val) {
+bool MetricSchwarzschild::effPotentialValue(
+    const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double& val)
+{
     double kappa = 0.0;
     if (type == enum_geodesic_timelike) {
         kappa = -mSign;
@@ -1605,7 +1613,8 @@ bool MetricSchwarzschild::effPotentialValue(const vec4 pos, const vec4 cdir, enu
  *  \param val : reference to total energy value.
  *  \return true : effective potential exists at x.
  */
-bool MetricSchwarzschild::totEnergy(const vec4 pos, const vec4 cdir, const double , double &val) {
+bool MetricSchwarzschild::totEnergy(const vec4 pos, const vec4 cdir, const double, double& val)
+{
     if (pos[1] < rs + 1e-2) {
         return false;
     }
@@ -1621,7 +1630,8 @@ bool MetricSchwarzschild::totEnergy(const vec4 pos, const vec4 cdir, const doubl
  * \param r  Radial coordinate.
  * \param tedType type of tetrad.
  */
-double MetricSchwarzschild::getCircularVelocity(const double r, const enum_nat_tetrad_type) {
+double MetricSchwarzschild::getCircularVelocity(const double r, const enum_nat_tetrad_type)
+{
     if (r >= 3.0 * rs) {
         return 1.0 / sqrt(2.0 * (r / rs - 1.0));
     }
@@ -1634,8 +1644,8 @@ double MetricSchwarzschild::getCircularVelocity(const double r, const enum_nat_t
  * @param tedType type of tetrad
  * @return
  */
-vec4
-MetricSchwarzschild::getCircularFourVel(const vec4 pos, const enum_nat_tetrad_type) {
+vec4 MetricSchwarzschild::getCircularFourVel(const vec4 pos, const enum_nat_tetrad_type)
+{
     double beta = getCircularVelocity(pos[1]);
     if (beta > 0.0 && beta < 1.0) {
         double gamma = 1.0 / sqrt(1.0 - beta * beta);
@@ -1649,7 +1659,8 @@ MetricSchwarzschild::getCircularFourVel(const vec4 pos, const enum_nat_tetrad_ty
 /*!
  *  \param units : type of physical constants.
  */
-void MetricSchwarzschild::usePhysicalUnits(const enum_physical_constants  units) {
+void MetricSchwarzschild::usePhysicalUnits(const enum_physical_constants units)
+{
     Metric::usePhysicalUnits(units);
     rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
 }
@@ -1659,7 +1670,8 @@ void MetricSchwarzschild::usePhysicalUnits(const enum_physical_constants  units)
  *  \param grav_const : value for gravitational constant.
  *  \param diel_perm : value for dielectric permittivity.
  */
-void MetricSchwarzschild::setUnits(const double speed_of_light, const double grav_const, const double diel_perm) {
+void MetricSchwarzschild::setUnits(const double speed_of_light, const double grav_const, const double diel_perm)
+{
     Metric::setUnits(speed_of_light, grav_const, diel_perm);
     rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
 }
@@ -1669,7 +1681,8 @@ void MetricSchwarzschild::setUnits(const double speed_of_light, const double gra
  * \param cdir : initial coordinate direction.
  * \param text : reference to report text.
  */
-bool MetricSchwarzschild::report(const vec4 pos, const vec4 cdir, std::string &text) {
+bool MetricSchwarzschild::report(const vec4 pos, const vec4 cdir, std::string& text)
+{
     std::stringstream ss;
     ss << "Report for Schwarzschild metric\n\tcoordinates : (t,r,theta,phi)\n";
     ss << "---------------------------------------------------------------\n";
@@ -1690,8 +1703,9 @@ bool MetricSchwarzschild::report(const vec4 pos, const vec4 cdir, std::string &t
 
     double ksicrit;
     if (calcKsiCrit(pos, ksicrit)) {
-        ss << ksicrit*RAD_TO_DEG << std::endl;
-    } else {
+        ss << ksicrit * RAD_TO_DEG << std::endl;
+    }
+    else {
         ss << "not valid here.";
     }
 
@@ -1703,13 +1717,14 @@ bool MetricSchwarzschild::report(const vec4 pos, const vec4 cdir, std::string &t
 // ***************************** specific public methods ***************************
 /*!  Calculate the critical angle.
  *
- *   For an observer at distance \f$x_i=r_s/r_i\f$, r_i=pos[1], the black hole has an angular diameter of \f$\xi_{\mbox{crit}}\f$ with
- *    \f[ \xi_{\mbox{crit}} = \arcsin\sqrt{\frac{27}{4}x_i^2(1-x_i)} \f] .
+ *   For an observer at distance \f$x_i=r_s/r_i\f$, r_i=pos[1], the black hole has an angular diameter of
+ * \f$\xi_{\mbox{crit}}\f$ with \f[ \xi_{\mbox{crit}} = \arcsin\sqrt{\frac{27}{4}x_i^2(1-x_i)} \f] .
  *
  *  \param pos : current position
  *  \param ksicrit : reference to critical angle.
  */
-bool MetricSchwarzschild::calcKsiCrit(const vec4 pos, double &ksicrit) {
+bool MetricSchwarzschild::calcKsiCrit(const vec4 pos, double& ksicrit)
+{
     if (pos[1] < rs) {
         return false;
     }
@@ -1718,7 +1733,8 @@ bool MetricSchwarzschild::calcKsiCrit(const vec4 pos, double &ksicrit) {
 
     if (pos[1] >= 1.5 * rs) {
         ksicrit = asin(sqrt(6.75 * xi * xi * (1.0 - xi)));
-    } else {
+    }
+    else {
         ksicrit = M_PI - asin(sqrt(6.75 * xi * xi * (1.0 - xi)));
     }
 
@@ -1731,19 +1747,22 @@ bool MetricSchwarzschild::calcKsiCrit(const vec4 pos, double &ksicrit) {
  * \param beta
  * \param kappa
  */
-double MetricSchwarzschild::getConstOfMotion_k(const double r, const double beta, const int kappa) {
+double MetricSchwarzschild::getConstOfMotion_k(const double r, const double beta, const int kappa)
+{
     double gamma = 1.0 / sqrt(1.0 - beta * beta);
     double eta = 1.0;
 
     if (kappa == -1) {
         eta = beta * gamma;
-    } else if (kappa == 0) {
+    }
+    else if (kappa == 0) {
         eta = 1.0;
     }
     return sqrt(eta * eta - kappa) * sqrt(1.0 - 2.0 * mMass / r);
 }
 
-double MetricSchwarzschild::calcKsiCrit(const double r) {
+double MetricSchwarzschild::calcKsiCrit(const double r)
+{
     double rs = 2.0 * mMass;
     double rsdri = rs / r;
     double sk = sqrt(6.75 * rsdri * rsdri * (1.0 - rsdri));
@@ -1760,25 +1779,28 @@ double MetricSchwarzschild::calcKsiCrit(const double r) {
  * \param ksi   in rad
  * \param kappa
  */
-double MetricSchwarzschild::getConstOfMotion_h(const double r, const double beta, const double ksi, const int kappa) {
+double MetricSchwarzschild::getConstOfMotion_h(const double r, const double beta, const double ksi, const int kappa)
+{
     double gamma = 1.0 / sqrt(1.0 - beta * beta);
     double eta = 1.0;
 
     if (kappa == -1) {
         eta = beta * gamma;
-    } else if (kappa == 0) {
+    }
+    else if (kappa == 0) {
         eta = 1.0;
     }
     return r * eta * sin(ksi);
 }
 
-
-double MetricSchwarzschild::param_aqua(const double k, const double h, const int kappa) {
+double MetricSchwarzschild::param_aqua(const double k, const double h, const int kappa)
+{
     double rs = 2.0 * mMass;
     return rs * rs * k * k / (h * h) + param_b(k, h, kappa);
 }
 
-double MetricSchwarzschild::param_b(const double , const double h, const int kappa) {
+double MetricSchwarzschild::param_b(const double, const double h, const int kappa)
+{
     if (kappa == 0) {
         return 0.0;
     }
@@ -1786,35 +1808,39 @@ double MetricSchwarzschild::param_b(const double , const double h, const int kap
     return rs * rs * double(kappa) / (h * h);
 }
 
-void MetricSchwarzschild::param_sq(const double k, const double h, const int kappa,
-                                   double &p, double &q, double &D1) {
+void MetricSchwarzschild::param_sq(const double k, const double h, const int kappa, double& p, double& q, double& D1)
+{
     p = -param_b(k, h, kappa) / 3.0 - 1.0 / 9.0;
     q = 0.5 * param_aqua(k, h, kappa) - 1.0 / 27.0 - param_b(k, h, kappa) / 6.0;
     D1 = q * q + p * p * p;
 }
 
-double MetricSchwarzschild::param_psi(const double p, const double q) {
+double MetricSchwarzschild::param_psi(const double p, const double q)
+{
     double psi = 0.0;
     double D1 = q * q + p * p * p;
 
     double rho3 = pow(sign(q) * sqrt(fabs(p)), 3.0);
     if ((p < 0.0) && (D1 <= 0.0)) {
         psi = acos(q / rho3);
-    } else if ((p < 0.0) && (D1 > 0.0)) {
+    }
+    else if ((p < 0.0) && (D1 > 0.0)) {
         psi = acosh(q / rho3);
         //    cerr << "psi=" << psi << endl;
-    } else if (p > 0.0) {
+    }
+    else if (p > 0.0) {
         psi = asinh(q / rho3);
-    } else if (fabs(p) < 1.0e-10) {
+    }
+    else if (fabs(p) < 1.0e-10) {
         psi = 0.0;
     }
     return psi;
 }
 
-double MetricSchwarzschild::param_eps(const double r, const double ksi) {
+double MetricSchwarzschild::param_eps(const double r, const double ksi)
+{
     return r * sin(ksi) / sqrt(1.0 - 2.0 * mMass / r);
 }
-
 
 /*! calculate minimal distance to black hole
  *
@@ -1824,12 +1850,13 @@ double MetricSchwarzschild::param_eps(const double r, const double ksi) {
  * @return true : minimal distance exists\n
  *         false : minimal distance does not exist
  */
-bool MetricSchwarzschild::minDist_r(const double r, const double ksi, double &rMin) {
+bool MetricSchwarzschild::minDist_r(const double r, const double ksi, double& rMin)
+{
     double b = param_eps(r, ksi);
     double sq3 = sqrt(3.0);
     double val = -3.0 * sq3 * mMass / b;
     if (fabs(val) > 1.0) {
-        //std::cerr << "rMin does not exist!" << std::endl;
+        // std::cerr << "rMin does not exist!" << std::endl;
         return false;
     }
 
@@ -1841,7 +1868,8 @@ bool MetricSchwarzschild::minDist_r(const double r, const double ksi, double &rM
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricSchwarzschild::setStandardValues() {
+void MetricSchwarzschild::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 3.0 * rs;
     mInitPos[2] = M_PI_2;
@@ -1865,8 +1893,9 @@ void MetricSchwarzschild::setStandardValues() {
  *
  *  The Christoffel symbols do not have to be calculated before this function can be evaluated!
  */
-void MetricSchwarzschild::contrChrisVecVec(const double y[], const double u[], const double w[], double* z, bool calc) {
-    double r     = y[1];
+void MetricSchwarzschild::contrChrisVecVec(const double y[], const double u[], const double w[], double* z, bool calc)
+{
+    double r = y[1];
     double theta = y[2];
 
     if (calc) {
@@ -1881,7 +1910,8 @@ void MetricSchwarzschild::contrChrisVecVec(const double y[], const double u[], c
     }
 
     z[0] = christoffel[0][1][0] * (u[1] * w[0] + u[0] * w[1]);
-    z[1] = christoffel[0][0][1] * u[0] * w[0] + christoffel[1][1][1] * u[1] * w[1] + christoffel[2][2][1] * u[2] * w[2] + christoffel[3][3][1] * u[3] * w[3];
+    z[1] = christoffel[0][0][1] * u[0] * w[0] + christoffel[1][1][1] * u[1] * w[1] + christoffel[2][2][1] * u[2] * w[2]
+        + christoffel[3][3][1] * u[3] * w[3];
     z[2] = christoffel[1][2][2] * (u[2] * w[1] + u[1] * w[2]) + christoffel[3][3][2] * u[3] * w[3];
     z[3] = christoffel[1][3][3] * (u[3] * w[1] + u[1] * w[3]) + christoffel[2][3][3] * (u[3] * w[2] + u[2] * w[3]);
 }
@@ -1894,10 +1924,13 @@ void MetricSchwarzschild::contrChrisVecVec(const double y[], const double u[], c
  *  \param z : pointer to contraction
  *  \param calc : calculate the Christoffels before using them
  *
- * The partial derivatives of the Christoffel symbols do not have to be calculated before this function can be evaluated!
+ * The partial derivatives of the Christoffel symbols do not have to be calculated before this function can be
+ * evaluated!
  */
-void MetricSchwarzschild::contrChrDVecVecVec(const double y[], const double u[], const double v[], const double w[], double* z, bool calc) {
-    double r     = y[1];
+void MetricSchwarzschild::contrChrDVecVecVec(
+    const double y[], const double u[], const double v[], const double w[], double* z, bool calc)
+{
+    double r = y[1];
     double theta = y[2];
 
     if (calc) {
@@ -1913,9 +1946,12 @@ void MetricSchwarzschild::contrChrDVecVecVec(const double y[], const double u[],
     }
 
     z[0] = chrisD[0][1][0][1] * (u[1] * v[0] * w[1] + u[0] * v[1] * w[1]);
-    z[1] = chrisD[0][0][1][1] * u[0] * v[0] * w[1] + chrisD[1][1][1][1] * u[1] * v[1] * w[1] + chrisD[2][2][1][1] * u[2] * v[2] * w[1] + chrisD[3][3][1][1] * u[3] * v[3] * w[1] + chrisD[3][3][1][2] * u[3] * v[3] * w[2];
+    z[1] = chrisD[0][0][1][1] * u[0] * v[0] * w[1] + chrisD[1][1][1][1] * u[1] * v[1] * w[1]
+        + chrisD[2][2][1][1] * u[2] * v[2] * w[1] + chrisD[3][3][1][1] * u[3] * v[3] * w[1]
+        + chrisD[3][3][1][2] * u[3] * v[3] * w[2];
     z[2] = chrisD[1][2][2][1] * (u[2] * v[1] * w[1] + u[1] * v[2] * w[1]) + chrisD[3][3][2][2] * u[3] * v[3] * w[2];
-    z[3] = chrisD[1][3][3][1] * (u[3] * v[1] * w[1] + u[1] * v[3] * w[1]) + chrisD[2][3][3][2] * (u[3] * v[2] * w[2] + u[2] * v[3] * w[2]);
+    z[3] = chrisD[1][3][3][1] * (u[3] * v[1] * w[1] + u[1] * v[3] * w[1])
+        + chrisD[2][3][3][2] * (u[3] * v[2] * w[2] + u[2] * v[3] * w[2]);
 }
 
 } // end namespace m4d

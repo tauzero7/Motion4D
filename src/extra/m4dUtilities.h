@@ -1,53 +1,31 @@
-// --------------------------------------------------------------------------------
-/*
-    m4dUtilities.h
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-
-/*!  \file   m4dUtilities.h
-     \brief  Utility functions.
-
-*/
-// --------------------------------------------------------------------------------
-
+/**
+ * @file    m4dUtilities.h
+ * @author  Thomas Mueller
+ *
+ * @brief  Utility functions.
+ *
+ *  This file is part of libMotion4D.
+ */
 #ifndef M4D_UTILITIES_H
 #define M4D_UTILITIES_H
 
-#include <iostream>
 #include <cstdlib>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <ctime>
 #include <cstring>
+#include <ctime>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 #include <sys/types.h>
+#include <vector>
 
 #include "m4dPlatform.h"
 
 #if defined _WIN32 && defined(M4D_LIB)
 #if defined(m4d_EXPORTS) || defined(m4d_lua_EXPORTS) || defined(m4dd_EXPORTS) || defined(m4d_luad_EXPORTS) || defined(_m4d_EXPORTS)
 #define API_M4D_EXPORT __declspec(dllexport)
-#else 
+#else
 #define API_M4D_EXPORT __declspec(dllimport)
-#endif 
+#endif
 #define M4D_CALL __stdcall
 #else // _WIN32
 #define M4D_CALL
@@ -56,58 +34,48 @@
 
 namespace m4d {
 
+int64_t get_system_clock();
 
-int64_t  get_system_clock();
-
-
-bool tokenizeFile(const std::string filename, std::vector<std::vector<std::string> > &tokens,
-                  bool useStandardIgnoreTokens = true);
+bool tokenizeFile(const std::string filename, std::vector<std::vector<std::string>>& tokens,
+    bool useStandardIgnoreTokens = true);
 
 bool tokenizeFile(const std::string filename, const std::vector<std::string> ignores,
-                  std::vector<std::vector<std::string> > &tokens);
+    std::vector<std::vector<std::string>>& tokens);
 
-bool getIntFromTokens(const std::vector<std::string> &tokenRow, std::string name, int &val);
-bool getIntFromTokensV(const std::vector<std::string> &tokenRow, std::string name, int num, int* val);
-bool getDoubleFromTokens(const std::vector<std::string> &tokenRow, std::string name, double &val);
-bool getDoubleFromTokensV(const std::vector<std::string> &tokenRow, std::string name, int num, double* val);
-bool getStringFromTokens(const std::vector<std::string> &tokenRow, std::string name, std::string &val);
+bool getIntFromTokens(const std::vector<std::string>& tokenRow, std::string name, int& val);
+bool getIntFromTokensV(const std::vector<std::string>& tokenRow, std::string name, int num, int* val);
+bool getDoubleFromTokens(const std::vector<std::string>& tokenRow, std::string name, double& val);
+bool getDoubleFromTokensV(const std::vector<std::string>& tokenRow, std::string name, int num, double* val);
+bool getStringFromTokens(const std::vector<std::string>& tokenRow, std::string name, std::string& val);
 
-bool     writeFloatArray(std::string filename, const float* array, int x, int y, int c);
-float*   readFloatArray(std::string filename, int &x, int &y, int &c);
-
+bool writeFloatArray(std::string filename, const float* array, int x, int y, int c);
+float* readFloatArray(std::string filename, int& x, int& y, int& c);
 
 // prototype of functions
 double API_M4D_EXPORT radians(double phi);
 API_M4D_EXPORT double degree(double phi);
 
-int API_M4D_EXPORT find_nat_tetrad_type( const char* name);
+int API_M4D_EXPORT find_nat_tetrad_type(const char* name);
+
+/**
+ * @brief Safely delete 1D arrays generated with 'new'.
+ *
+ *  Each pointer to a 1D array should be immediately
+ *  initialized or set to nullptr. This method checks
+ *  if pointer is not 'nullptr', deletes the array,
+ *  and sets the pointer to 'nullptr'.
+ *
+ * @tparam T  Pointer to data array.
+ */
+template <typename T>
+void SafeDelete(T*& ptr)
+{
+    if (ptr != nullptr) {
+        delete[] ptr;
+        ptr = nullptr;
+    }
+}
 
 } // end namespace m4d
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

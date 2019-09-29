@@ -1,41 +1,19 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricMorrisThorne.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricMorrisThorne.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dMetricMorrisThorne.h"
+#include "extra/m4dUtilities.h"
 
 namespace m4d {
 
 #define eps 1.0e-6
 
-
-/*! Standard constructor.
- *
- * \param  b0 : throat size.
- */
-MetricMorrisThorne::MetricMorrisThorne(double b0) {
-    mMetricName  = "MorrisThorne";
+MetricMorrisThorne::MetricMorrisThorne(double b0)
+{
+    mMetricName = "MorrisThorne";
     setCoordType(enum_coordinate_spherical);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -52,10 +30,10 @@ MetricMorrisThorne::MetricMorrisThorne(double b0) {
     }
     mHaveEmbedding = true;
 
-    mEmb_lmin    = -10.0;
-    mEmb_lmax    =  10.0;
-    mEmb_l_num   =  40.0;
-    mEmb_phi_num =  40.0;
+    mEmb_lmin = -10.0;
+    mEmb_lmax = 10.0;
+    mEmb_l_num = 40.0;
+    mEmb_phi_num = 40.0;
     mEmb_lstep = (mEmb_lmax - mEmb_lmin) / mEmb_l_num;
     mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
     addEmbeddingParam("emb_lmin", mEmb_lmin);
@@ -69,17 +47,11 @@ MetricMorrisThorne::MetricMorrisThorne(double b0) {
     setStandardValues();
 }
 
-MetricMorrisThorne::~MetricMorrisThorne() {
-}
+MetricMorrisThorne::~MetricMorrisThorne() {}
 
-
-// *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
-bool MetricMorrisThorne::calculateMetric(const double* pos) {
-    double l     = pos[1];
+bool MetricMorrisThorne::calculateMetric(const double* pos)
+{
+    double l = pos[1];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -110,12 +82,9 @@ bool MetricMorrisThorne::calculateMetric(const double* pos) {
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
-bool MetricMorrisThorne::calculateChristoffels(const double* pos) {
-    double l     = pos[1];
+bool MetricMorrisThorne::calculateChristoffels(const double* pos)
+{
+    double l = pos[1];
     double theta = pos[2];
 
     double t1 = l * l;
@@ -194,12 +163,9 @@ bool MetricMorrisThorne::calculateChristoffels(const double* pos) {
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
-bool MetricMorrisThorne::calculateChrisD(const double* pos) {
-    double l     = pos[1];
+bool MetricMorrisThorne::calculateChrisD(const double* pos)
+{
+    double l = pos[1];
     double theta = pos[2];
 
     double t1 = l * l;
@@ -472,15 +438,8 @@ bool MetricMorrisThorne::calculateChrisD(const double* pos) {
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
-void MetricMorrisThorne::localToCoord(const double* pos, const double* ldir, double* dir,
-                                      enum_nat_tetrad_type) {
+void MetricMorrisThorne::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     double w = sqrt(mb0 * mb0 + pos[1] * pos[1]);
 
     dir[0] = ldir[0] / mSpeedOfLight;
@@ -489,15 +448,8 @@ void MetricMorrisThorne::localToCoord(const double* pos, const double* ldir, dou
     dir[3] = ldir[3] / (w * sin(pos[2]));
 }
 
-/*!  Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
-void MetricMorrisThorne::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                      enum_nat_tetrad_type) {
+void MetricMorrisThorne::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     double w = sqrt(mb0 * mb0 + pos[1] * pos[1]);
 
     ldir[0] = cdir[0] * mSpeedOfLight;
@@ -506,23 +458,14 @@ void MetricMorrisThorne::coordToLocal(const double* pos, const double* cdir, dou
     ldir[3] = cdir[3] * w * sin(pos[2]);
 }
 
-
-/*! Test break condition.
- *
- *  There is no break condition for the Morris-Thorne metric.
- *  \return false  : always.
- */
-bool MetricMorrisThorne::breakCondition(const double*) {
+bool MetricMorrisThorne::breakCondition(const double*)
+{
     bool br = false;
     return br;
 }
 
-/** Transform proper coordinates to pseudo Cartesian coordinates
- * \param p
- * \param cp
- * \return chart ID
- */
-int MetricMorrisThorne::transToPseudoCart(vec4 p, vec4 &cp) {
+int MetricMorrisThorne::transToPseudoCart(vec4 p, vec4& cp)
+{
     TransCoordinates::toCartesianCoord(mCoordType, p, cp);
     if (p[1] > 0) {
         return 0;
@@ -530,18 +473,14 @@ int MetricMorrisThorne::transToPseudoCart(vec4 p, vec4 &cp) {
     return 1;
 }
 
-/*! Calculate the right side of the geodesic equation in first order form.
- *
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  dydx[] : pointer to right side of geodesic equation.
- */
-bool MetricMorrisThorne::calcDerivs(const double y[], double dydx[]) {
+bool MetricMorrisThorne::calcDerivs(const double y[], double dydx[])
+{
     dydx[0] = y[4];
     dydx[1] = y[5];
     dydx[2] = y[6];
     dydx[3] = y[7];
 
-    double l     = y[1];
+    double l = y[1];
     double theta = y[2];
     double st = sin(theta);
     double ct = cos(theta);
@@ -554,19 +493,9 @@ bool MetricMorrisThorne::calcDerivs(const double y[], double dydx[]) {
     return true;
 }
 
-
-/*!  Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
-double MetricMorrisThorne::testConstraint(const double y[], const double kappa) {
-    double l  = y[1];
+double MetricMorrisThorne::testConstraint(const double y[], const double kappa)
+{
+    double l = y[1];
     double cm = 1.0 / mSpeedOfLight;
 
     // Scale the directions with the speed of light before doubling them !!
@@ -582,11 +511,8 @@ double MetricMorrisThorne::testConstraint(const double y[], const double kappa) 
     return sum;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set throat parameter 'b0'.
- */
-bool MetricMorrisThorne::setParam(const char* pName, double val) {
+bool MetricMorrisThorne::setParam(const char* pName, double val)
+{
     if (Metric::setParam(pName, val)) {
         mb0 = val;
     }
@@ -594,14 +520,8 @@ bool MetricMorrisThorne::setParam(const char* pName, double val) {
     return true;
 }
 
-/*! Transform point p to embedding coordinates.
- *
- *  \param p  : point to be transformed.
- *  \param ep : reference to 'embedded' point.
- *  \return true : success.
- *  \return false : otherwise.
- */
-bool MetricMorrisThorne::transToEmbedding(vec4 p, vec4 &ep) {
+bool MetricMorrisThorne::transToEmbedding(vec4 p, vec4& ep)
+{
     if (mb0 <= 0.0) {
         return false;
     }
@@ -625,75 +545,58 @@ bool MetricMorrisThorne::transToEmbedding(vec4 p, vec4 &ep) {
     return true;
 }
 
-/*! Transform point p to custom coordinats.
- *
- *   Transformation to proper radial coordinates.
- */
-bool MetricMorrisThorne::transToCustom(vec4 , vec4&) {
+bool MetricMorrisThorne::transToCustom(vec4, vec4&)
+{
     //  TODO
     return false;
 }
 
-/*! Set embedding parameters.
- *
- *  \param  name : embedding parameter name.
- *  \param  val  : embedding parameter value.
- *  \return true  : success.
- *  \return false : parameter not valid.
- */
-bool MetricMorrisThorne::setEmbeddingParam(const char *name, double val) {
+bool MetricMorrisThorne::setEmbeddingParam(const char* name, double val)
+{
     Metric::setEmbeddingParam(name, val);
 
-    if (strcmp(name,"emb_lmin") == 0) {
+    if (strcmp(name, "emb_lmin") == 0) {
         mEmb_lmin = val;
     }
-    else if (strcmp(name,"emb_lmax") == 0) {
+    else if (strcmp(name, "emb_lmax") == 0) {
         mEmb_lmax = val;
     }
-    else if (strcmp(name,"emb_l_num") == 0) {
-        mEmb_l_num = val;
-        if (mEmb_l_num < 5.0) {
-            mEmb_l_num = 5.0;
-        }
+    else if (strcmp(name, "emb_l_num") == 0) {
+        mEmb_l_num = static_cast<unsigned int>(std::max(val, 5.0));
     }
-    else if (strcmp(name,"emb_phi_num") == 0) {
-        mEmb_phi_num = val;
-        if (mEmb_phi_num < 4) {
-            mEmb_phi_num = 4;
-        }
+    else if (strcmp(name, "emb_phi_num") == 0) {
+        mEmb_phi_num = static_cast<unsigned int>(std::max(val, 4.0));
     }
     return true;
 }
 
-/*! Generate vertices for the embedding diagram.
- *
- *  \param verts : reference to vector of vertices.
- *  \param indices : reference to vector of indices.
- *  \param numElems : number of elements in a strip.
- *  \param counter  : number of strips.
- *  \return int : number of vertices.
- */
-int MetricMorrisThorne::getEmbeddingVertices(std::vector<vec3> &verts,
-        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter) {
-    if (!verts.empty()) {
-        verts.clear();
-    }
+unsigned int MetricMorrisThorne::getEmbeddingVertices(
+    float*& verts, unsigned int*& indices, unsigned int& numElems, unsigned int& counter)
+{
+    m4d::SafeDelete<float>(verts);
+    m4d::SafeDelete<unsigned int>(indices);
 
-    if (!indices.empty()) {
-        indices.clear();
-    }
-
-    mEmb_lstep = (mEmb_lmax - mEmb_lmin) / mEmb_l_num;
+    mEmb_lstep = (mEmb_lmax - mEmb_lmin) / static_cast<double>(mEmb_l_num);
     mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
 
-    numElems = int(mEmb_l_num);
-    counter  = int(mEmb_phi_num) + 1;
+    numElems = mEmb_l_num;
+    counter = mEmb_phi_num + 1;
 
-    int vnum;
+    unsigned int numVerts = numElems * counter;
+    int numInds = static_cast<int>(numElems * counter * 2);
+
+    verts = new float[numVerts * 3];
+    indices = new unsigned int[numInds];
+
+    float* vptr = verts;
+    unsigned int* iptr = indices;
+
+    unsigned int vnum;
 
     double x, y, z, r, phi, l;
     for (unsigned int k = 0; k < counter; k++) {
         phi = k * mEmb_phistep;
+
         for (unsigned int j = 0; j < numElems; j++) {
             l = mEmb_lmin + j * mEmb_lstep;
             r = sqrt(mb0 * mb0 + l * l);
@@ -705,26 +608,22 @@ int MetricMorrisThorne::getEmbeddingVertices(std::vector<vec3> &verts,
                 z *= -1.0;
             }
 
-            verts.push_back(vec3(x, y, z));
-            vnum = k * numElems + j;
+            *(vptr++) = static_cast<float>(x);
+            *(vptr++) = static_cast<float>(y);
+            *(vptr++) = static_cast<float>(z);
 
-            indices.push_back(vnum);
-            indices.push_back(vnum + numElems);
+            vnum = k * numElems + j;
+            *(iptr++) = vnum;
+            *(iptr++) = vnum + numElems;
         }
     }
 
-    return (int)verts.size();
+    return numVerts;
 }
 
-/*! Effective potential.
- *  \param pos : initial position.
- *  \param cdir : initial four-direction.
- *  \param type : geodesic type.
- *  \param x : abscissa value.
- *  \param val : reference to effective potential value.
- *  \return true : effective potential exists at x.
- */
-bool MetricMorrisThorne::effPotentialValue(const vec4 pos, const vec4 cdir , enum_geodesic_type type, const double x, double &val) {
+bool MetricMorrisThorne::effPotentialValue(
+    const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double& val)
+{
     double kappa = 0.0;
     if (type == enum_geodesic_timelike) {
         kappa = -mSign;
@@ -735,22 +634,15 @@ bool MetricMorrisThorne::effPotentialValue(const vec4 pos, const vec4 cdir , enu
     return true;
 }
 
-/*! Totatl energy.
- *  \param pos : initial position.
- *  \param cdir : initial four-direction.
- *  \param x : abscissa value.
- *  \param val : reference to total energy value.
- *  \return true : effective potential exists at x.
- */
-bool MetricMorrisThorne::totEnergy(const vec4 , const vec4 cdir, const double , double &val) {
+bool MetricMorrisThorne::totEnergy(const vec4, const vec4 cdir, const double, double& val)
+{
     // 1/2*k^2/c^2:
     val = 0.5 * mSpeedOfLight * mSpeedOfLight * cdir[0] * cdir[0];
     return true;
 }
 
-/*! Generate report.
- */
-bool MetricMorrisThorne::report(const vec4 pos, const vec4 cdir, std::string &text) {
+bool MetricMorrisThorne::report(const vec4 pos, const vec4 cdir, std::string& text)
+{
     std::stringstream ss;
     ss << "Report for Morris-Thorne metric\n\tcoordinate : (t,l,theta,phi)\n";
     ss << "---------------------------------------------------------------\n";
@@ -764,43 +656,28 @@ bool MetricMorrisThorne::report(const vec4 pos, const vec4 cdir, std::string &te
 
     double ksicrit;
     calcKsiCrit(pos, ksicrit);
-    ss << "  critical angle .................. ksiCrit(deg) = " << ksicrit*RAD_TO_DEG << std::endl;
+    ss << "  critical angle .................. ksiCrit(deg) = " << ksicrit * RAD_TO_DEG << std::endl;
 
     text = ss.str();
     return true;
 }
 
-// ***************************** specific public methods ***************************
-/*!
- *  \param pos : current position.
- *  \param ksicrit : reference to critical angle (rad).
- *  \return true : always.
- */
-bool MetricMorrisThorne::calcKsiCrit(const vec4 pos, double &ksicrit) {
+bool MetricMorrisThorne::calcKsiCrit(const vec4 pos, double& ksicrit)
+{
     double l = pos[1];
     ksicrit = asin(mb0 / sqrt(mb0 * mb0 + l * l));
     return true;
 }
 
-/*!
- *  \param pos : current position.
- *  \param cdir : current coordinate direction.
- *  \param k   : reference to constant of motion k.
- *  \param h   : reference to constant of motion h.
- *  \return true : always.
- */
-bool MetricMorrisThorne::constsOfMotion(const vec4 pos, const vec4 cdir, double &k, double &h) {
+bool MetricMorrisThorne::constsOfMotion(const vec4 pos, const vec4 cdir, double& k, double& h)
+{
     k = mSpeedOfLight * mSpeedOfLight * cdir[0];
     h = (mb0 * mb0 + pos[1] * pos[1]) * cdir[3];
     return true;
 }
 
-
-
-// ********************************* protected methods *****************************
-/*!
- */
-void MetricMorrisThorne::setStandardValues() {
+void MetricMorrisThorne::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 10.0;
     mInitPos[2] = M_PI_2;
@@ -816,4 +693,3 @@ void MetricMorrisThorne::setStandardValues() {
 }
 
 } // end namespace m4d
-

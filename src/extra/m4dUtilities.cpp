@@ -1,28 +1,9 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dUtilities.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dUtilities.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dUtilities.h"
 #include "m4dGlobalDefs.h"
 #ifdef _WIN32
@@ -31,24 +12,23 @@
 
 namespace m4d {
 
-// ---------------------------------------------------
 /*!  Get system clock in micro-seconds.
  */
-int64_t  get_system_clock() {
+int64_t get_system_clock()
+{
     struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return (int64_t)tv.tv_sec * 1000000 + tv.tv_usec;
+    gettimeofday(&tv, nullptr);
+    return static_cast<int64_t>(tv.tv_sec) * 1000000 + tv.tv_usec;
 }
 
-
-// ---------------------------------------------------
 /*!  Tokenize file
  *  \param filename : name of file.
  *  \param tokens   : reference to vector of vector of string.
  *  \param useStandardIgnoreTokens : use standard ignore tokens ("#").
  *  \return  true : success.
  */
-bool tokenizeFile(const std::string filename, std::vector<std::vector<std::string> > &tokens, bool useStandardIgnoreTokens) {
+bool tokenizeFile(const std::string filename, std::vector<std::vector<std::string>>& tokens, bool useStandardIgnoreTokens)
+{
     std::ifstream in(filename.c_str());
 
     if (!in) {
@@ -96,7 +76,8 @@ bool tokenizeFile(const std::string filename, std::vector<std::vector<std::strin
  *  \param tokens   : reference to vector of vector of string.
  *  \return  true : success.
  */
-bool tokenizeFile(const std::string filename, const std::vector<std::string> ignores, std::vector<std::vector<std::string> > &tokens) {
+bool tokenizeFile(const std::string filename, const std::vector<std::string> ignores, std::vector<std::vector<std::string>>& tokens)
+{
     std::ifstream in(filename.c_str());
 
     if (!in) {
@@ -139,7 +120,8 @@ bool tokenizeFile(const std::string filename, const std::vector<std::string> ign
 // ---------------------------------------------------
 /*!  get integer from tokens
  */
-bool  getIntFromTokens(const std::vector<std::string> &tokenRow, std::string name, int &val) {
+bool getIntFromTokens(const std::vector<std::string>& tokenRow, std::string name, int& val)
+{
     std::string baseString = tokenRow[0];
     if (baseString.compare(name) == 0 && tokenRow.size() > 1) {
         val = atoi(tokenRow[1].c_str());
@@ -151,7 +133,8 @@ bool  getIntFromTokens(const std::vector<std::string> &tokenRow, std::string nam
 // ---------------------------------------------------
 /*!  get integer array from tokens
  */
-bool getIntFromTokensV(const std::vector<std::string> &tokenRow, std::string name, int num, int* val) {
+bool getIntFromTokensV(const std::vector<std::string>& tokenRow, std::string name, int num, int* val)
+{
     std::string baseString = tokenRow[0];
     if (baseString.compare(name) == 0 && (int)tokenRow.size() > (num + 1)) {
         for (int i = 0; i < num; i++) {
@@ -165,7 +148,8 @@ bool getIntFromTokensV(const std::vector<std::string> &tokenRow, std::string nam
 // ---------------------------------------------------
 /*!  get double from tokens
  */
-bool getDoubleFromTokens(const std::vector<std::string> &tokenRow, std::string name, double &val) {
+bool getDoubleFromTokens(const std::vector<std::string>& tokenRow, std::string name, double& val)
+{
     std::string baseString = tokenRow[0];
     if (baseString.compare(name) == 0 && tokenRow.size() > 1) {
         val = atof(tokenRow[1].c_str());
@@ -177,7 +161,8 @@ bool getDoubleFromTokens(const std::vector<std::string> &tokenRow, std::string n
 // ---------------------------------------------------
 /*!  get double array from tokens
  */
-bool getDoubleFromTokensV(const std::vector<std::string> &tokenRow, std::string name, int num, double* val) {
+bool getDoubleFromTokensV(const std::vector<std::string>& tokenRow, std::string name, int num, double* val)
+{
     std::string baseString = tokenRow[0];
     if (baseString.compare(name) == 0 && (int)tokenRow.size() > (num + 1)) {
         for (int i = 0; i < num; i++) {
@@ -191,7 +176,8 @@ bool getDoubleFromTokensV(const std::vector<std::string> &tokenRow, std::string 
 // ---------------------------------------------------
 /*!  get string from tokens
  */
-bool getStringFromTokens(const std::vector<std::string> &tokenRow, std::string name, std::string &val) {
+bool getStringFromTokens(const std::vector<std::string>& tokenRow, std::string name, std::string& val)
+{
     std::string baseString = tokenRow[0];
     if (baseString.compare(name) == 0 && tokenRow.size() > 1) {
         val = tokenRow[1];
@@ -209,7 +195,8 @@ bool getStringFromTokens(const std::vector<std::string> &tokenRow, std::string n
  *   \return      true  :  success.
  *   \return     false  :  error occured.
  */
-bool  writeFloatArray(std::string filename, const float* array, int x, int y, int c) {
+bool writeFloatArray(std::string filename, const float* array, int x, int y, int c)
+{
     std::ofstream out(filename.c_str(), std::ios::binary);
     if (!out.is_open()) {
         fprintf(stderr, "Can't open file %s for output.\n", filename.c_str());
@@ -238,7 +225,7 @@ bool  writeFloatArray(std::string filename, const float* array, int x, int y, in
     out.write((char*)&y, sizeof(int));
     out.write((char*)&c, sizeof(int));
     out.write((char*)&bufd[0], sizeof(char) * 4);
-    out.write((char*)&array[0], sizeof(float)*x * y * c);
+    out.write((char*)&array[0], sizeof(float) * x * y * c);
     out.close();
     return true;
 }
@@ -251,7 +238,8 @@ bool  writeFloatArray(std::string filename, const float* array, int x, int y, in
  *   \return      true  :  success.
  *   \return     false  :  error occured.
  */
-float* readFloatArray(std::string filename, int &x, int &y, int &c) {
+float* readFloatArray(std::string filename, int& x, int& y, int& c)
+{
     std::ifstream in(filename.c_str(), std::ios::binary);
     if (!in.is_open()) {
         fprintf(stderr, "Can't open file %s for reading.\n", filename.c_str());
@@ -268,14 +256,14 @@ float* readFloatArray(std::string filename, int &x, int &y, int &c) {
     float* array = NULL;
     if (strncmp(buf, "HEAD", 4) == 0) {
         int hdrSize;
-        in.read((char*)&hdrSize, sizeof(int));  // header size
-        in.read((char*)&x, sizeof(int));        // resX
-        in.read((char*)&y, sizeof(int));        // resY
-        in.read((char*)&c, sizeof(int));        // numChannels
+        in.read((char*)&hdrSize, sizeof(int)); // header size
+        in.read((char*)&x, sizeof(int)); // resX
+        in.read((char*)&y, sizeof(int)); // resY
+        in.read((char*)&c, sizeof(int)); // numChannels
         in.read((char*)&bufd, sizeof(char) * 4);
         if (strncmp(bufd, "DATA", 4) == 0) {
             if (array != NULL) {
-                delete [] array;
+                delete[] array;
             }
             array = new float[x * y * c];
             std::streamsize size = x * y * c * sizeof(float);
@@ -287,19 +275,21 @@ float* readFloatArray(std::string filename, int &x, int &y, int &c) {
     return array;
 }
 
-double M4D_CALL radians(double phi) {
+double M4D_CALL radians(double phi)
+{
     return phi * DEG_TO_RAD;
 }
 
-double M4D_CALL degree(double phi) {
+double M4D_CALL degree(double phi)
+{
     return phi * RAD_TO_DEG;
 }
 
-
-int M4D_CALL find_nat_tetrad_type( const char* name) {
+int M4D_CALL find_nat_tetrad_type(const char* name)
+{
     unsigned int n = 0;
-    while(n < NUM_ENUM_NAT_TETRAD_TYPES) {
-        if (strcmp(name,stl_nat_tetrad_types[n])==0) {
+    while (n < NUM_ENUM_NAT_TETRAD_TYPES) {
+        if (strcmp(name, stl_nat_tetrad_types[n]) == 0) {
             return n;
         }
         n++;
@@ -308,4 +298,3 @@ int M4D_CALL find_nat_tetrad_type( const char* name) {
 }
 
 } // end namespace m4d
-

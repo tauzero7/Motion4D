@@ -15,6 +15,7 @@ src/metric/kickedout
 *.png
 *.pro.user
 *.pyc
+*.user
 
 m4dLua
 m4dLuad

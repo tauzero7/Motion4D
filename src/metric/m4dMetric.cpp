@@ -1,36 +1,15 @@
-// -------------------------------------------------------------------------------
-/*
-    Metric.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetric.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dMetric.h"
 
 namespace m4d {
 
 #define eps 1.0e-6
 
-/*! Standard constructor with no arguments.
- */
 Metric::Metric()
 {
     mMetricName = "noName";
@@ -44,7 +23,7 @@ Metric::Metric()
     // Note that mSign=1.0 for sign(g)=+2 and mSign=-1.0 for sign(g)=-2 !
     mSign = 1.0;
 
-    //init all to 0.0
+    // init all to 0.0
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
             g_compts[i][j] = 0.0;
@@ -56,7 +35,7 @@ Metric::Metric()
             }
         }
     }
-    //init minkowski
+    // init minkowski
     g_compts[0][0] = -1.0;
     g_compts[1][1] = g_compts[2][2] = g_compts[3][3] = 1.0;
 
@@ -88,8 +67,6 @@ Metric::Metric()
     mEnableResize = false;
 }
 
-/*! Standard destructor.
- */
 Metric::~Metric()
 {
     if (!mEmbParam.empty()) {
@@ -106,38 +83,21 @@ Metric::~Metric()
     }
 }
 
-// *********************************** public methods ******************************
-/*! Get the name of the metric.
- *
- */
 const char* Metric::getMetricName()
 {
     return mMetricName.c_str();
 }
 
-/*! Get the filename of the metric.
- *
- */
 const char* Metric::getMetricCPPfilename()
 {
     return mMetricCPPfilename.c_str();
 }
 
-/*! Get the type of the coordinates.
- *
- *  \return coordinate type of the metric.
- *  \sa enum_coordinate_type
- */
-enum_coordinate_type
-Metric::getCoordType()
+enum_coordinate_type Metric::getCoordType()
 {
     return mCoordType;
 }
 
-/*! Get the name of the coordinate 'num'.
- *
- *  \param  num  :  number of coordinate (0,1,2,3).
- */
 const char* Metric::getCoordName(int num)
 {
     if (num >= 0 && num <= 3) {
@@ -147,200 +107,105 @@ const char* Metric::getCoordName(int num)
     return nullptr;
 }
 
-/*! Return the signum of the signature of the metric.
- *  \return +1.0 : sign(g)=+2
- *  \return -1.0 : sign(g)=-2
- */
 double Metric::sign()
 {
     return mSign;
 }
 
-/*! Calculate the contravariant metric components g_ab at position 'pos'.
- *
- *  \param  pos  :  coordinate position where the metric coefficients have to be evaluated.
- *  \return true : successfull
- */
 bool Metric::calculateMetric(const vec4 pos)
 {
     double p[4] = { pos[0], pos[1], pos[2], pos[3] };
     return calculateMetric(p);
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param  pos  :  coordinate position where the Christoffels have to be evaluated.
- *  \return true :  successfull
- */
 bool Metric::calculateChristoffels(const vec4 pos)
 {
     double p[4] = { pos[0], pos[1], pos[2], pos[3] };
     return calculateChristoffels(p);
 }
 
-/*! Calculate partial derivatives of the Christoffel symbols.
- * \param pos : pointer to position.
- */
 bool Metric::calculateChrisD(const double*)
 {
     fprintf(stderr, "Metric::calculateChrisD ( const double* pos ) ... not implemented yet\n");
     return false;
 }
 
-/*! Calculate partial derivatives of the Christoffel symbols.
- * \param pos : coordinate position.
- */
 bool Metric::calculateChrisD(const vec4 pos)
 {
     double p[4] = { pos[0], pos[1], pos[2], pos[3] };
     return calculateChrisD(p);
 }
 
-/*! Calculate Riemann tensor R^a_bcd
- * \param pos : pointer to coordinate position where the Riemann tensor have to be evaluated.
- * \return true : successfull
- */
 bool Metric::calculateRiemann(const double*)
 {
     return false;
 }
 
-/*! Calculate Riemann tensor R^a_bcd
- * \param pos : coordinate position where the Riemann tensor have to be evaluated.
- * \return true : successfull
- */
 bool Metric::calculateRiemann(const vec4 pos)
 {
     double p[4] = { pos[0], pos[1], pos[2], pos[3] };
     return calculateRiemann(p);
 }
 
-/*! Calculate the Weyl tensor at position 'pos'.
- *
- *  \param  pos  :  pointer to coordinate position where the Weyl tensor have to be evaluated.
- *  \return true :  successfull
- */
 bool Metric::calculateWeyl(const double*)
 {
     return false;
 }
 
-/*! Calculate the Weyl tensor at position 'pos'.
- *
- *  \param  pos  :  coordinate position where the Weyl tensor have to be evaluated.
- *  \return true :  successfull
- */
 bool Metric::calculateWeyl(const vec4 pos)
 {
     double p[4] = { pos[0], pos[1], pos[2], pos[3] };
     return calculateWeyl(p);
 }
 
-/*! Calculate the Ricci at position 'pos'.
- *
- *  \param  pos  :  pointer to coordinate position where the Ricci tensor have to be evaluated.
- *  \return true :  successfull
- */
 bool Metric::calculateRicci(const double*)
 {
     return false;
 }
 
-/*! Calculate the Ricci at position 'pos'.
- *
- *  \param  pos  :  coordinate position where the Ricci tensor have to be evaluated.
- *  \return true :  successfull
- */
 bool Metric::calculateRicci(const vec4 pos)
 {
     double p[4] = { pos[0], pos[1], pos[2], pos[3] };
     return calculateRicci(p);
 }
 
-/*! Calculate the Ricci rotation coefficients at position 'pos'.
- *
- *  \param  pos  :  pointer to coordinate position where the Ricci rotation coefficients have to be evaluated.
- *  \return true :  successfull
- */
 bool Metric::calculateRicRotCoeffs(const double*)
 {
     return false;
 }
 
-/*! Calculate the Ricci rotation coefficients at position 'pos'.
- *
- *  \param  pos  :  coordinate position where the Ricci rotation coefficients have to be evaluated.
- *  \return true :  successfull
- */
 bool Metric::calculateRicRotCoeffs(const vec4 pos)
 {
     double p[4] = { pos[0], pos[1], pos[2], pos[3] };
     return calculateRicRotCoeffs(p);
 }
 
-/*! Calculate the contractions of the Ricci rotation coefficients at position 'pos'.
- *
- *  \param  pos  :  pointer to coordinate position where the contractions of the Ricci rotation coefficients have to be evaluated.
- *  \return true :  successfull
- */
 bool Metric::calculateContrRRC(const double*)
 {
     return false;
 }
 
-/*! Calculate the contractions of the Ricci rotation coefficients at position 'pos'.
- *
- *  \param  pos  :  coordinate position where the contractions of the Ricci rotation coefficients have to be evaluated.
- *  \return true :  successfull
- */
 bool Metric::calculateContrRRC(const vec4 pos)
 {
     double p[4] = { pos[0], pos[1], pos[2], pos[3] };
     return calculateContrRRC(p);
 }
 
-/*!  Return the contravariant metric coefficient g_{mu nu}.
- *
- *   The coefficients have to be calculated with \sa calculateMetric().
- *   \param  mu : component index.
- *   \param  nu : component index.
- */
 double Metric::getMetricCoeff(const int mu, const int nu)
 {
     return g_compts[mu][nu];
 }
 
-/*! Return the Christoffel symbol Chr_{mu nu}^{kappa} of the second kind.
- *
- *  The Christoffel symbols have to be calculated with \sa calculateChristoffels().
- *  \param  mu : lower index of Christoffel symbol.
- *  \param  nu : lower index of Christoffel symbol.
- *  \param  kappa : upper index of Christoffel symbol.
- */
 double Metric::getChristoffel(const int mu, const int nu, const int kappa)
 {
     return christoffel[mu][nu][kappa];
 }
 
-/*!   Return the first derivative of the Christoffel symbol.
- *
- *  \param  mu : lower index of Christoffel symbol.
- *  \param  nu : lower index of Christoffel symbol.
- *  \param  kappa : upper index of Christoffel symbol.
- *  \param  tau : partial derivative index of Christoffel symbol.
- */
 double Metric::getChrisD(const int mu, const int nu, const int kappa, const int tau)
 {
     return chrisD[mu][nu][kappa][tau];
 }
 
-/*!   Return a Riemann tensor component.
- *
- *  \param  mu :  first index.
- *  \param  nu :  second index.
- *  \param  rho : third index.
- *  \param  sigma :  fourth index.
- */
 double Metric::getRiemCoeff(const int mu, const int nu, const int rho, const int sigma)
 {
     return riem[mu][nu][rho][sigma];
@@ -398,8 +263,7 @@ double Metric::getContrRRCCoeff(const int j)
  *  \param  type :  type of local tetrad.
  *  \sa enum_nat_tetrad_type
  */
-void Metric::getNatTetrad(const vec4 pos, vec4& e0, vec4& e1, vec4& e2, vec4& e3,
-    enum_nat_tetrad_type type)
+void Metric::getNatTetrad(const vec4 pos, vec4& e0, vec4& e1, vec4& e2, vec4& e3, enum_nat_tetrad_type type)
 {
     vec4 ldir0 = vec4(1.0, 0.0, 0.0, 0.0);
     vec4 ldir1 = vec4(0.0, 1.0, 0.0, 0.0);
@@ -412,8 +276,7 @@ void Metric::getNatTetrad(const vec4 pos, vec4& e0, vec4& e1, vec4& e2, vec4& e3
     localToCoord(pos, ldir3, e3, type);
 }
 
-void Metric::getNatDualTetrad(const vec4 pos, vec4& t0, vec4& t1, vec4& t2, vec4& t3,
-    enum_nat_tetrad_type type)
+void Metric::getNatDualTetrad(const vec4 pos, vec4& t0, vec4& t1, vec4& t2, vec4& t3, enum_nat_tetrad_type type)
 {
     vec4 cdir0 = vec4(1.0, 0.0, 0.0, 0.0);
     vec4 cdir1 = vec4(0.0, 1.0, 0.0, 0.0);
@@ -434,8 +297,7 @@ void Metric::getNatDualTetrad(const vec4 pos, vec4& t0, vec4& t1, vec4& t2, vec4
  *  \param  type :  type of local tetrad.
  *  \sa enum_nat_tetrad_type
  */
-void Metric::localToCoord(const vec4 pos, const vec4 ldir, vec4& cdir,
-    enum_nat_tetrad_type type)
+void Metric::localToCoord(const vec4 pos, const vec4 ldir, vec4& cdir, enum_nat_tetrad_type type)
 {
     localToCoord(pos.data(), ldir.data(), cdir.data(), type);
 }
@@ -448,8 +310,7 @@ void Metric::localToCoord(const vec4 pos, const vec4 ldir, vec4& cdir,
  *  \param  type :  type of local tetrad.
  *  \sa enum_nat_tetrad_type
  */
-void Metric::coordToLocal(const vec4 pos, const vec4 cdir, vec4& ldir,
-    enum_nat_tetrad_type type)
+void Metric::coordToLocal(const vec4 pos, const vec4 cdir, vec4& ldir, enum_nat_tetrad_type type)
 {
     coordToLocal(pos.data(), cdir.data(), ldir.data(), type);
 }
@@ -470,10 +331,10 @@ bool Metric::breakCondition(const vec4 pos)
  */
 bool Metric::calcDerivs(const double* y, double* dydx)
 {
-    //register int mu,j,k,l;
+    // register int mu,j,k,l;
     int mu, k, l;
 
-    //double ch;
+    // double ch;
     calculateChristoffels(y);
 
     for (mu = 0; mu < 4; mu++) {
@@ -595,7 +456,8 @@ void Metric::usePhysicalUnits(const enum_physical_constants units)
         mSpeedOfLight = M4D_SPEED_OF_LIGHT;
         mGravConstant = M4D_GRAV_CONST;
         mDielectricPerm = M4D_DIELECTRIC_PERM;
-    } else if (mPhysicalUnits == enum_physical_constants_geom) {
+    }
+    else if (mPhysicalUnits == enum_physical_constants_geom) {
         mSpeedOfLight = 1.0;
         mGravConstant = 1.0;
         mDielectricPerm = 1.0;
@@ -638,9 +500,9 @@ double Metric::dielectric_perm()
 
 /*!  Generate local null direction out of a three direction.
  *
- *  The local null direction \f$\mathbf{k}=(k_0,k_1,k_2,k_3)^T\f$ follows from the three direction \f$\vec{d} = (d_1,d_2,d_3)^T\f$ via
- *   \f[ \mathbf{k} = \pm \mathbf{e}_{(0)} + \frac{1}{|\vec{d}|}\left(d_1\mathbf{e}_{(1)} + d_2\mathbf{e}_{(2)} + d_3\mathbf{e}_{(3)}\right).\f]
- *  Thus, \f$k_0 = \pm 1\f$, \f$k_1 = d_1/|\vec{d}|,\ldots\f$.
+ *  The local null direction \f$\mathbf{k}=(k_0,k_1,k_2,k_3)^T\f$ follows from the three direction \f$\vec{d} =
+ * (d_1,d_2,d_3)^T\f$ via \f[ \mathbf{k} = \pm \mathbf{e}_{(0)} + \frac{1}{|\vec{d}|}\left(d_1\mathbf{e}_{(1)} +
+ * d_2\mathbf{e}_{(2)} + d_3\mathbf{e}_{(3)}\right).\f] Thus, \f$k_0 = \pm 1\f$, \f$k_1 = d_1/|\vec{d}|,\ldots\f$.
  *
  *  \param  pm : time direction.
  *  \param  l3dir : pointer to local direction which will be normalized.
@@ -685,9 +547,11 @@ bool Metric::localNullDir(const double pm, const vec3 l3dir, vec4& l4dir)
 
 /*!  Generate local four-velocity out of local three velocity.
  *
- *  The local four-velocity \f$\mathbf{u}=(u_0,u_1,u_2,u_3)^T\f$ follows from the three velocity \f$\vec{\beta}=(\beta_1,\beta_2,\beta_3)^T\f$ via
- *   \f[ \mathbf{u} = \pm c\gamma\left(\mathbf{e}_{(0)} + \beta_1\mathbf{e}_{(1)} + \beta_2\mathbf{e}_{(2)} + \beta_3\mathbf{e}_{(3)}\right), \f]
- *  where \f$\gamma=\left(\beta_1^2+\beta_2^2+\beta_3^2\right)^{-1/2}\f$. Thus, \f$u_0=\pm c\gamma\f$, \f$u_1=\pm c\gamma\beta_1,\ldots\f$.
+ *  The local four-velocity \f$\mathbf{u}=(u_0,u_1,u_2,u_3)^T\f$ follows from the three velocity
+ * \f$\vec{\beta}=(\beta_1,\beta_2,\beta_3)^T\f$ via \f[ \mathbf{u} = \pm c\gamma\left(\mathbf{e}_{(0)} +
+ * \beta_1\mathbf{e}_{(1)} + \beta_2\mathbf{e}_{(2)} + \beta_3\mathbf{e}_{(3)}\right), \f] where
+ * \f$\gamma=\left(\beta_1^2+\beta_2^2+\beta_3^2\right)^{-1/2}\f$. Thus, \f$u_0=\pm c\gamma\f$, \f$u_1=\pm
+ * c\gamma\beta_1,\ldots\f$.
  *
  *  \param  pm : time direction.
  *  \param  l3vel : pointer to local three velocity.
@@ -805,24 +669,24 @@ void Metric::setCoordType(enum_coordinate_type coord_type)
     }
     mScoordType[0].character = enum_cchar_timelike;
     switch (mCoordType) {
-    // case enum_coordinate_cartesian: {}
-    case enum_coordinate_spherical: {
-        mScoordType[2].type = enum_scoord_periodic;
-        mScoordType[2].min = 0;
-        mScoordType[2].max = 1.0 * M_PI;
-        mScoordType[3].type = enum_scoord_periodic;
-        mScoordType[3].min = 0;
-        mScoordType[3].max = 2.0 * M_PI;
-        break;
-    }
-    case enum_coordinate_cylinder: {
-        mScoordType[2].type = enum_scoord_periodic;
-        mScoordType[2].min = 0;
-        mScoordType[2].max = 2.0 * M_PI;
-        break;
-    }
-    default: {
-    }
+        // case enum_coordinate_cartesian: {}
+        case enum_coordinate_spherical: {
+            mScoordType[2].type = enum_scoord_periodic;
+            mScoordType[2].min = 0;
+            mScoordType[2].max = 1.0 * M_PI;
+            mScoordType[3].type = enum_scoord_periodic;
+            mScoordType[3].min = 0;
+            mScoordType[3].max = 2.0 * M_PI;
+            break;
+        }
+        case enum_coordinate_cylinder: {
+            mScoordType[2].type = enum_scoord_periodic;
+            mScoordType[2].min = 0;
+            mScoordType[2].max = 2.0 * M_PI;
+            break;
+        }
+        default: {
+        }
     }
 }
 
@@ -843,10 +707,12 @@ double Metric::coordDiff(const unsigned int coordNum, const double p1, const dou
 
         if (diff > 0.5 * mScoordType[coordNum].max) {
             diff = diff - mScoordType[coordNum].max;
-        } else if (diff < -0.5 * mScoordType[coordNum].max) {
+        }
+        else if (diff < -0.5 * mScoordType[coordNum].max) {
             diff = diff + mScoordType[coordNum].max;
         }
-    } else {
+    }
+    else {
         diff = p2 - p1;
     }
     return diff;
@@ -869,16 +735,20 @@ bool Metric::calcSepDist(const vec4 p1, const vec4 p2, double& spaceDist, double
     }
 
     for (size_t i = 0; i < 4; i++) {
+        int ii = static_cast<int>(i);
         for (size_t j = 0; j < 4; j++) {
+            int jj = static_cast<int>(j);
             if ((mScoordType[i].character == enum_cchar_spacelike)
                 || (mScoordType[j].character == enum_cchar_spacelike)) {
-                spaceDist += g_compts[i][j] * coordDiff(static_cast<unsigned int>(i), p1[i], p2[i]) * coordDiff(static_cast<unsigned int>(j), p1[j], p2[j]);
-                //fprintf(stderr,"%f %f ... ",coordDiff(i,p1[i],p2[i]),coordDiff(j,p1[j],p2[j]));
+                spaceDist += g_compts[i][j] * coordDiff(static_cast<unsigned int>(i), p1[ii], p2[ii])
+                    * coordDiff(static_cast<unsigned int>(j), p1[jj], p2[jj]);
+                // fprintf(stderr,"%f %f ... ",coordDiff(i,p1[i],p2[i]),coordDiff(j,p1[j],p2[j]));
             }
 
             if ((mScoordType[i].character == enum_cchar_timelike)
                 || (mScoordType[j].character == enum_cchar_timelike)) {
-                timeDist -= g_compts[i][j] * coordDiff(static_cast<unsigned int>(i), p1[i], p2[i]) * coordDiff(static_cast<unsigned int>(j), p1[j], p2[j]);
+                timeDist -= g_compts[i][j] * coordDiff(static_cast<unsigned int>(i), p1[ii], p2[ii])
+                    * coordDiff(static_cast<unsigned int>(j), p1[jj], p2[jj]);
             }
         }
     }
@@ -915,7 +785,8 @@ bool Metric::calcTidalMatrix(const vec4 pos, const vec4 e0, const vec4 e1, const
                 for (int nu = 0; nu < 4; nu++) {
                     for (int rho = 0; rho < 4; rho++) {
                         for (int sigma = 0; sigma < 4; sigma++) {
-                            sum += tt.getElem(mu, i) * riem[mu][nu][rho][sigma] * e0[nu] * e0[rho] * ee.getElem(j, sigma);
+                            sum += tt.getElem(mu, i) * riem[mu][nu][rho][sigma] * e0[nu] * e0[rho]
+                                * ee.getElem(j, sigma);
                         }
                     }
                 }
@@ -999,7 +870,8 @@ bool Metric::addParam(const char* pName, double val)
         mParam.insert(std::pair<std::string, double>(paramname, val));
         mNumParam++;
         return true;
-    } else {
+    }
+    else {
         fprintf(stderr, "Parameter %s already exists!\n", paramname.c_str());
         return false;
     }
@@ -1019,9 +891,10 @@ bool Metric::setParam(const char* pName, double val)
 
     mParamItr = mParam.find(paramname);
     if (mParamItr == mParam.end()) {
-        //fprintf(stderr, "Parameter %s does not exist!\n", paramname.c_str());
+        // fprintf(stderr, "Parameter %s does not exist!\n", paramname.c_str());
         return false;
-    } else {
+    }
+    else {
         mParamItr->second = val;
         return true;
     }
@@ -1041,9 +914,10 @@ bool Metric::getParam(const char* pName, double& val)
 
     mParamItr = mParam.find(paramname);
     if (mParamItr == mParam.end()) {
-        //fprintf(stderr, "Parameter %s does not exist!\n", paramname.c_str());
+        // fprintf(stderr, "Parameter %s does not exist!\n", paramname.c_str());
         return false;
-    } else {
+    }
+    else {
         val = mParamItr->second;
         return true;
     }
@@ -1057,7 +931,7 @@ bool Metric::getParam(const char* pName, double& val)
  *  \return true  : parameter exists.
  *  \return false : parameter do not exist.
  */
-//bool Metric::getParam(int pNr, std::string& pName, double& val) {
+// bool Metric::getParam(int pNr, std::string& pName, double& val) {
 //    if (pNr >= 0 && pNr < mNumParam) {
 //        std::map<std::string, double>::iterator p_itr = mParam.begin();
 //        for (int i = 0; i < pNr; i++) {
@@ -1182,8 +1056,7 @@ int Metric::getLocTedTypes(std::vector<enum_nat_tetrad_type>& locted)
  *
  * \param  num :  number of local tetrad type.
  */
-enum_nat_tetrad_type
-Metric::getCurrLTtype(int num)
+enum_nat_tetrad_type Metric::getCurrLTtype(int num)
 {
     if (num < 0 || num >= static_cast<int>(mLocTeds.size())) {
         return enum_nat_tetrad_default;
@@ -1245,7 +1118,8 @@ int Metric::transToPseudoCart(vec4 p, vec4& cp)
 {
     if (mCoordType == enum_coordinate_prolatespheroidal) {
         TransCoordinates::transCoordProlSphCart(p, cp, mprolSphfac);
-    } else {
+    }
+    else {
         TransCoordinates::toCartesianCoord(mCoordType, p, cp);
     }
     return 0;
@@ -1319,7 +1193,8 @@ bool Metric::addEmbeddingParam(const char* name, double val)
     if (mEmbParamItr == mEmbParam.end()) {
         mEmbParam.insert(std::pair<std::string, double>(paramname, val));
         return true;
-    } else {
+    }
+    else {
 #if DEF_SHOW_EMB_WARN == 1
         fprintf(stderr, "Embedding parameter %s already exists!\n", paramname.c_str());
 #endif
@@ -1345,7 +1220,8 @@ bool Metric::setEmbeddingParam(const char* name, double val)
         fprintf(stderr, "Embedding parameter %s do no exist!\n", paramname.c_str());
 #endif
         return false;
-    } else {
+    }
+    else {
         mEmbParamItr->second = val;
         return true;
     }
@@ -1369,7 +1245,8 @@ bool Metric::getEmbeddingParam(const char* name, double& val)
         fprintf(stderr, "Embedding parameter %s do no exist!\n", paramname.c_str());
 #endif
         return false;
-    } else {
+    }
+    else {
         val = mEmbParamItr->second;
         return true;
     }
@@ -1442,22 +1319,11 @@ bool Metric::getEmbeddingMap(std::map<std::string, double>& params)
     return true;
 }
 
-/*! Generate vertices for the embedding diagram.
- *
- *  \param verts : reference to vector of vertices.
- *  \param indices : reference to vector of indices.
- *  \param numElems : number of elements in a strip.
- *  \param counter  : number of strips.
- *  \return int : 0
- */
-int Metric::getEmbeddingVertices(std::vector<vec3>&,
-    std::vector<int>&, unsigned int&, unsigned int&)
+unsigned int Metric::getEmbeddingVertices(float*&, unsigned int*&, unsigned int&, unsigned int&)
 {
     return 0;
 }
 
-/*! Have embedding diagram.
- */
 bool Metric::haveEmbedding()
 {
     return mHaveEmbedding;
@@ -1535,7 +1401,7 @@ bool Metric::isChrisDAvailable()
  *  \return true  : success.
  *  \return false : no report available.
  */
-//bool Metric::report(const vec4 , const vec4 , std::string &text) {
+// bool Metric::report(const vec4 , const vec4 , std::string &text) {
 //    text = std::string();
 //    return false;
 //}
@@ -1610,7 +1476,8 @@ void Metric::contrChrisVecVec(const double*, const double* v, const double* w, d
  *  \param z : contraction
  *  \param calc : calculate the Christoffels before using them (only is child classes).
  *
- * Note that the partial derivatives of the Christoffel symbols have to be calculated before this function can be evaluated!
+ * Note that the partial derivatives of the Christoffel symbols have to be calculated before this function can be
+ * evaluated!
  *
  *   \f[z^{\mu} = \Gamma_{\rho\sigma;\lambda}^{\mu} u^{\rho}v^{\sigma}w^{\lambda} \f]
  */
