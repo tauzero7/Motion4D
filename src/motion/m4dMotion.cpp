@@ -31,16 +31,18 @@ namespace m4d {
  *
  *  \param  metric : pointer to metric.
  */
-Motion::Motion(Metric* metric) {
+Motion::Motion(Metric* metric)
+{
     assert(metric != NULL);
     mMetric = metric;
 
-    mLambda     = 0.0;
+    mLambda = 0.0;
     mLambdaStep = mLambdaStepInit = 0.01;
 
+    double DOUBLE_MAX = std::numeric_limits<double>::max();
     for (int i = 0; i < 4; i++) {
-        mBoundBoxMin[i] = -DBL_MAX;
-        mBoundBoxMax[i] = DBL_MAX;
+        mBoundBoxMin[i] = -DOUBLE_MAX;
+        mBoundBoxMax[i] = DOUBLE_MAX;
     }
 
     for (int i = 0; i < DEF_MAX_YS; i++) {
@@ -52,9 +54,7 @@ Motion::Motion(Metric* metric) {
     mMinLambdaStep = DEF_MIN_STEPSIZE;
 }
 
-
-Motion::~Motion() {
-}
+Motion::~Motion() {}
 
 // *********************************** public methods ******************************
 /*! Set initial position in coordinates.
@@ -63,8 +63,8 @@ Motion::~Motion() {
  * \return true : position is valid.
  * \return false : position is not valid.
  */
-bool
-Motion::setInitialPosition(double ipos[4]) {
+bool Motion::setInitialPosition(double ipos[4])
+{
     for (int i = 0; i < 4; i++) {
         y[i] = ipos[i];
     }
@@ -78,8 +78,8 @@ Motion::setInitialPosition(double ipos[4]) {
  * \return true : position is valid.
  * \return false : position is not valid.
  */
-bool
-Motion::setInitialPosition(vec4 ipos) {
+bool Motion::setInitialPosition(vec4 ipos)
+{
     for (int i = 0; i < 4; i++) {
         y[i] = ipos[i];
     }
@@ -97,8 +97,8 @@ Motion::setInitialPosition(vec4 ipos) {
  *  \return true : direction fulfills constraint equation.
  *  \return false : direction does not fulfill constraint equation.
  */
-bool
-Motion::setInitialDirection(double d0, double d1, double d2, double d3) {
+bool Motion::setInitialDirection(double d0, double d1, double d2, double d3)
+{
     y[4] = d0;
     y[5] = d1;
     y[6] = d2;
@@ -116,8 +116,8 @@ Motion::setInitialDirection(double d0, double d1, double d2, double d3) {
  *  \return true : direction fulfills constraint equation.
  *  \return false : direction does not fulfill constraint equation.
  */
-bool
-Motion::setInitialDirection(vec4 dir) {
+bool Motion::setInitialDirection(vec4 dir)
+{
     return setInitialDirection(dir.x(0), dir.x(1), dir.x(2), dir.x(3));
 }
 
@@ -128,8 +128,8 @@ Motion::setInitialDirection(vec4 dir) {
  *  \param e2:  pointer to third tetrad vector.
  *  \param e3:  pointer to fourth tetrad vector.
  */
-void
-Motion::setInitialTetrad(double e0[4], double e1[4], double e2[4], double e3[4]) {
+void Motion::setInitialTetrad(double e0[4], double e1[4], double e2[4], double e3[4])
+{
     for (int i = 0; i < 4; i++) {
         y[DEF_EO_IDX + i] = e0[i];
         y[DEF_E1_IDX + i] = e1[i];
@@ -145,8 +145,8 @@ Motion::setInitialTetrad(double e0[4], double e1[4], double e2[4], double e3[4])
  *  \param e2: third tetrad vector.
  *  \param e3: fourth tetrad vector.
  */
-void
-Motion::setInitialTetrad(vec4 e0, vec4 e1, vec4 e2, vec4 e3) {
+void Motion::setInitialTetrad(vec4 e0, vec4 e1, vec4 e2, vec4 e3)
+{
     for (int i = 0; i < 4; i++) {
         y[DEF_EO_IDX + i] = e0[i];
         y[DEF_E1_IDX + i] = e1[i];
@@ -163,9 +163,10 @@ Motion::setInitialTetrad(vec4 e0, vec4 e1, vec4 e2, vec4 e3) {
  * \param beta : initial velocity.
  * \return false : always.
  */
-bool
-Motion::setLocalInitialDir(double , double , double , double) {
-    fprintf(stderr, "Motion::setLocalInitialDir  ( double d1, double d2, double d3, double beta ) ... not implemented yet!\n");
+bool Motion::setLocalInitialDir(double, double, double, double)
+{
+    fprintf(stderr,
+        "Motion::setLocalInitialDir  ( double d1, double d2, double d3, double beta ) ... not implemented yet!\n");
     return false;
 }
 
@@ -175,8 +176,8 @@ Motion::setLocalInitialDir(double , double , double , double) {
  * \param beta : initial velocity.
  * \return false : always.
  */
-bool
-Motion::setLocalInitialDir(vec3 , double) {
+bool Motion::setLocalInitialDir(vec3, double)
+{
     fprintf(stderr, "Motion::setLocalInitialDir  ( vec3 dir, double beta ) ... not implemented yet!\n");
     return false;
 }
@@ -185,8 +186,8 @@ Motion::setLocalInitialDir(vec3 , double) {
  *
  * \param metric : pointer to metric.
  */
-void
-Motion::setMetric(Metric* metric) {
+void Motion::setMetric(Metric* metric)
+{
     assert(metric != NULL);
     mMetric = metric;
 }
@@ -195,34 +196,34 @@ Motion::setMetric(Metric* metric) {
  *
  * \return pointer to metric.
  */
-Metric*
-Motion::getMetric() {
+Metric* Motion::getMetric()
+{
     return mMetric;
 }
 
-
-bool Motion::setParam(std::string paramName, double val) {
-    if (paramName.compare("lambda")==0) {
+bool Motion::setParam(std::string paramName, double val)
+{
+    if (paramName.compare("lambda") == 0) {
         mLambda = val;
         return true;
     }
-    else if (paramName.compare("minLambdaStep")==0) {
+    else if (paramName.compare("minLambdaStep") == 0) {
         mMinLambdaStep = val;
         return true;
     }
-    else if (paramName.compare("maxLambdaStep")==0) {
+    else if (paramName.compare("maxLambdaStep") == 0) {
         mMaxLambdaStep = val;
         return true;
     }
-    else if (paramName.compare("constr_eps")==0) {
+    else if (paramName.compare("constr_eps") == 0) {
         mConstraintEpsilon = val;
         return true;
     }
     return false;
 }
 
-
-bool Motion::setParam(std::string paramName, double v0, double v1, double v2, double v3) {
+bool Motion::setParam(std::string paramName, double v0, double v1, double v2, double v3)
+{
     /*
     if (paramName.compare("init_position")==0) {
         return setInitialPosition(m4d::vec4(v0, v1, v2, v3));
@@ -235,14 +236,14 @@ bool Motion::setParam(std::string paramName, double v0, double v1, double v2, do
     }
     else
     */
-    if (paramName.compare("lower_bb")==0) {
+    if (paramName.compare("lower_bb") == 0) {
         mBoundBoxMin[0] = v0;
         mBoundBoxMin[1] = v1;
         mBoundBoxMin[2] = v2;
         mBoundBoxMin[3] = v3;
         return true;
     }
-    else if (paramName.compare("upper_bb")==0) {
+    else if (paramName.compare("upper_bb") == 0) {
         mBoundBoxMax[0] = v0;
         mBoundBoxMax[1] = v1;
         mBoundBoxMax[2] = v2;
@@ -252,13 +253,12 @@ bool Motion::setParam(std::string paramName, double v0, double v1, double v2, do
     return false;
 }
 
-
 /*! Get the current position.
  *
  * \param p : pointer to position.
  */
-void
-Motion::getPosition(double* p) {
+void Motion::getPosition(double* p)
+{
     for (int i = 0; i < 4; i++) {
         p[i] = y[i];
     }
@@ -268,8 +268,8 @@ Motion::getPosition(double* p) {
  *
  *  \return position vector.
  */
-vec4
-Motion::getPosition() {
+vec4 Motion::getPosition()
+{
     return vec4(y[0], y[1], y[2], y[3]);
 }
 
@@ -277,8 +277,8 @@ Motion::getPosition() {
  *
  * \param p : pointer to direction.
  */
-void
-Motion::getDirection(double* p) {
+void Motion::getDirection(double* p)
+{
     for (int i = 0; i < 4; i++) {
         p[i] = y[i + 4];
     }
@@ -288,8 +288,8 @@ Motion::getDirection(double* p) {
  *
  *  \return direction vector.
  */
-vec4
-Motion::getDirection() {
+vec4 Motion::getDirection()
+{
     return vec4(y[4], y[5], y[6], y[7]);
 }
 
@@ -297,8 +297,8 @@ Motion::getDirection() {
  *
  *  \param  pt : reset affine parameter to value pt.
  */
-void
-Motion::resetAffineParam(double pt) {
+void Motion::resetAffineParam(double pt)
+{
     mLambda = pt;
 }
 
@@ -306,8 +306,8 @@ Motion::resetAffineParam(double pt) {
  *
  * \return affine parameter.
  */
-double
-Motion::getAffineParam() {
+double Motion::getAffineParam()
+{
     return mLambda;
 }
 
@@ -315,8 +315,8 @@ Motion::getAffineParam() {
  *
  *  \param step : new affine parameter stepsize.
  */
-void
-Motion::setAffineParamStep(double step) {
+void Motion::setAffineParamStep(double step)
+{
     mLambdaStep = step;
     mLambdaStepInit = step;
 }
@@ -325,43 +325,43 @@ Motion::setAffineParamStep(double step) {
  *
  *  \return affine parameter stepsize.
  */
-double
-Motion::getAffineParamStep() {
+double Motion::getAffineParamStep()
+{
     return mLambdaStep;
 }
 
 /*! Reset affine parameter stepsize.
  */
-void
-Motion::resetAffineParamStep() {
+void Motion::resetAffineParamStep()
+{
     mLambdaStep = mLambdaStepInit;
 }
 
 /*! Set maxmimum affine parameter stepsize.
  */
-void
-Motion::setMaxAffineParamStep(double step) {
+void Motion::setMaxAffineParamStep(double step)
+{
     mMaxLambdaStep = step;
 }
 
 /*! Get maximum affine parameter stepsize.
  */
-double
-Motion::getMaxAffineParamStep() {
+double Motion::getMaxAffineParamStep()
+{
     return mMaxLambdaStep;
 }
 
 /*! Set minimum affine parameter stepsize.
  */
-void
-Motion::setMinAffineParamStep(double step) {
+void Motion::setMinAffineParamStep(double step)
+{
     mMinLambdaStep = step;
 }
 
 /*! Get minimum affine parameter stepsize.
  */
-double
-Motion::getMinAffineParamStep() {
+double Motion::getMinAffineParamStep()
+{
     return mMinLambdaStep;
 }
 
@@ -370,8 +370,8 @@ Motion::getMinAffineParamStep() {
  *  param i : number of tetrad vector.
  *  param ee : new tetrad vector.
  */
-void
-Motion::setE(unsigned int i, vec4 ee) {
+void Motion::setE(unsigned int i, vec4 ee)
+{
     for (int j = 0; j < 4; j++) {
         y[i * 4 + 8 + j] = ee[j];
     }
@@ -382,8 +382,8 @@ Motion::setE(unsigned int i, vec4 ee) {
  *  \param i : tetrad index.
  *  \return tetrad vector i.
  */
-vec4
-Motion::getE(unsigned int i) {
+vec4 Motion::getE(unsigned int i)
+{
     if (i > 3) {
         return vec4(0.0, 0.0, 0.0, 0.0);
     }
@@ -399,8 +399,8 @@ Motion::getE(unsigned int i) {
  *
  *  \param p : pointer to e0 tetrad vector.
  */
-void
-Motion::getE0(double* p) {
+void Motion::getE0(double* p)
+{
     for (int i = 0; i < 4; i++) {
         p[i] = y[DEF_EO_IDX + i];
     }
@@ -410,8 +410,8 @@ Motion::getE0(double* p) {
  *
  *  \param p : pointer to e1 tetrad vector.
  */
-void
-Motion::getE1(double* p) {
+void Motion::getE1(double* p)
+{
     for (int i = 0; i < 4; i++) {
         p[i] = y[DEF_E1_IDX + i];
     }
@@ -421,8 +421,8 @@ Motion::getE1(double* p) {
  *
  *  \param p : pointer to e2 tetrad vector.
  */
-void
-Motion::getE2(double* p) {
+void Motion::getE2(double* p)
+{
     for (int i = 0; i < 4; i++) {
         p[i] = y[DEF_E2_IDX + i];
     }
@@ -432,13 +432,12 @@ Motion::getE2(double* p) {
  *
  *  \param p : pointer to e3 tetrad vector.
  */
-void
-Motion::getE3(double* p) {
+void Motion::getE3(double* p)
+{
     for (int i = 0; i < 4; i++) {
         p[i] = y[DEF_E3_IDX + i];
     }
 }
-
 
 /*! Get all tetrad vectors.
  *
@@ -447,8 +446,8 @@ Motion::getE3(double* p) {
  *  \param e2 : pointer to e2 tetrad vector.
  *  \param e3 : pointer to e3 tetrad vector.
  */
-void
-Motion::getTetrad(double* e0, double* e1, double* e2, double* e3) {
+void Motion::getTetrad(double* e0, double* e1, double* e2, double* e3)
+{
     for (int i = 0; i < 4; i++) {
         e0[i] = y[DEF_EO_IDX + i];
         e1[i] = y[DEF_EO_IDX + i];
@@ -464,8 +463,8 @@ Motion::getTetrad(double* e0, double* e1, double* e2, double* e3) {
  *  \param e2 : reference to e2 tetrad vector.
  *  \param e3 : reference to e3 tetrad vector.
  */
-void
-Motion::getTetrad(vec4 &e0, vec4 &e1, vec4 &e2, vec4 &e3) {
+void Motion::getTetrad(vec4& e0, vec4& e1, vec4& e2, vec4& e3)
+{
     e0.set(&y[8]);
     e1.set(&y[12]);
     e2.set(&y[16]);
@@ -476,8 +475,8 @@ Motion::getTetrad(vec4 &e0, vec4 &e1, vec4 &e2, vec4 &e3) {
  *
  *  \param m : reference to tetrad matrix.
  */
-void
-Motion::getTetrad(mat4 &m) {
+void Motion::getTetrad(mat4& m)
+{
     vec4 e0, e1, e2, e3;
     getTetrad(e0, e1, e2, e3);
     m.setCol(0, e0);
@@ -490,8 +489,8 @@ Motion::getTetrad(mat4 &m) {
  *
  *  \param m : reference to inverse tetrad matrix.
  */
-void
-Motion::getTetradInv(mat4 &m) {
+void Motion::getTetradInv(mat4& m)
+{
     getTetrad(m);
     m.invert();
 }
@@ -500,8 +499,8 @@ Motion::getTetradInv(mat4 &m) {
  *
  *  \param m : pointer to tetrad matrix.
  */
-void
-Motion::getTetrad(float* m) {
+void Motion::getTetrad(float* m)
+{
     assert(m != NULL);
     vec4 e0, e1, e2, e3;
     getTetrad(e0, e1, e2, e3);
@@ -518,8 +517,8 @@ Motion::getTetrad(float* m) {
  *
  *  \param m : pointer to inverse tetrad matrix.
  */
-void
-Motion::getTetradInv(float* m) {
+void Motion::getTetradInv(float* m)
+{
     assert(m != NULL);
     mat4 matrix;
     getTetradInv(matrix);
@@ -532,8 +531,8 @@ Motion::getTetradInv(float* m) {
  * \param cv : coordinate vector.
  * \return local vector.
  */
-vec4
-Motion::coordToLocal(vec4 cv) {
+vec4 Motion::coordToLocal(vec4 cv)
+{
     mat4 imat;
     getTetradInv(imat);
 
@@ -545,8 +544,8 @@ Motion::coordToLocal(vec4 cv) {
  *  \return true : local tetrad is orthonormalized.
  *  \return false : local tetrad is not orthonormal.
  */
-bool
-Motion::isOrthonormal() {
+bool Motion::isOrthonormal()
+{
     bool itIs = true;
     double prod;
 
@@ -555,7 +554,8 @@ Motion::isOrthonormal() {
         mMetric->calcProduct(&y[0], &y[8 + 4 * i], &y[8 + 4 * j], prod);
         if (fabs(prod - eta(i, j)) < 1.0e-6) {
             itIs = true;
-        } else {
+        }
+        else {
             itIs = false;
         }
         j++;
@@ -573,13 +573,14 @@ Motion::isOrthonormal() {
  * \param p1 : pointer to bounding box.
  * \param p2 : pointer to bounding box.
  */
-void
-Motion::setBoundingBox(double p1[4], double p2[4]) {
+void Motion::setBoundingBox(double p1[4], double p2[4])
+{
     for (int i = 0; i < 4; i++) {
         if (p1[i] < p2[i]) {
             mBoundBoxMin[i] = p1[i];
             mBoundBoxMax[i] = p2[i];
-        } else {
+        }
+        else {
             mBoundBoxMin[i] = p2[i];
             mBoundBoxMax[i] = p1[i];
         }
@@ -591,13 +592,14 @@ Motion::setBoundingBox(double p1[4], double p2[4]) {
  * \param p1 : vector of bounding box.
  * \param p2 : vector of bounding box.
  */
-void
-Motion::setBoundingBox(vec4 p1, vec4 p2) {
+void Motion::setBoundingBox(vec4 p1, vec4 p2)
+{
     for (int i = 0; i < 4; i++) {
         if (p1[i] < p2[i]) {
             mBoundBoxMin[i] = p1.x(i);
             mBoundBoxMax[i] = p2.x(i);
-        } else {
+        }
+        else {
             mBoundBoxMin[i] = p2.x(i);
             mBoundBoxMax[i] = p1.x(i);
         }
@@ -609,8 +611,8 @@ Motion::setBoundingBox(vec4 p1, vec4 p2) {
  *  \param p1 : reference to bounding box vector.
  *  \param p2 : reference to bounding box vector.
  */
-void
-Motion::getBoundingBox(vec4 &p1, vec4 &p2) {
+void Motion::getBoundingBox(vec4& p1, vec4& p2)
+{
     for (int i = 0; i < 4; i++) {
         p1.setX(i, mBoundBoxMin[i]);
         p2.setX(i, mBoundBoxMax[i]);
@@ -622,27 +624,26 @@ Motion::getBoundingBox(vec4 &p1, vec4 &p2) {
  *  \return true : point y is outside bounding box.
  *  \return false : point lies inside bounding box.
  */
-bool
-Motion::outsideBoundBox() {
-    return ((y[0] < mBoundBoxMin[0]) || (y[0] > mBoundBoxMax[0]) ||
-            (y[1] < mBoundBoxMin[1]) || (y[1] > mBoundBoxMax[1]) ||
-            (y[2] < mBoundBoxMin[2]) || (y[2] > mBoundBoxMax[2]) ||
-            (y[3] < mBoundBoxMin[3]) || (y[3] > mBoundBoxMax[3]));
+bool Motion::outsideBoundBox()
+{
+    return ((y[0] < mBoundBoxMin[0]) || (y[0] > mBoundBoxMax[0]) || (y[1] < mBoundBoxMin[1]) || (y[1] > mBoundBoxMax[1])
+        || (y[2] < mBoundBoxMin[2]) || (y[2] > mBoundBoxMax[2]) || (y[3] < mBoundBoxMin[3])
+        || (y[3] > mBoundBoxMax[3]));
 }
 
 /*! Set epsilon for the constraint equation.
  *
  *  \param eps : constraint epsilon.
  */
-void
-Motion::setConstrEps(double eps) {
+void Motion::setConstrEps(double eps)
+{
     mConstraintEpsilon = fabs(eps);
 }
 
 /*! Get epsilon for the constraint equation.
  */
-double
-Motion::getConstrEps() {
+double Motion::getConstrEps()
+{
     return mConstraintEpsilon;
 }
 
@@ -651,8 +652,8 @@ Motion::getConstrEps() {
  * \return true : local tetrad is right handed.
  * \return false : local tetrad is not right handed.
  */
-bool
-Motion::isRightHanded() {
+bool Motion::isRightHanded()
+{
     gsl_matrix* m = gsl_matrix_alloc(4, 4);
 
     for (int i = 0; i < 4; i++)
@@ -661,7 +662,7 @@ Motion::isRightHanded() {
         }
 
     int signum;
-    gsl_permutation *p = gsl_permutation_alloc(4);
+    gsl_permutation* p = gsl_permutation_alloc(4);
 
     gsl_linalg_LU_decomp(m, p, &signum);
 
@@ -681,13 +682,13 @@ Motion::isRightHanded() {
  *
  *  \return true : always.
  */
-bool
-Motion::gramSchmidtOrth() {
+bool Motion::gramSchmidtOrth()
+{
     vec4 pos = vec4(y[0], y[1], y[2], y[3]);
-    vec4  e0 = vec4(y[8], y[9], y[10], y[11]);
-    vec4  u1 = vec4(y[12], y[13], y[14], y[15]);
-    vec4  u2 = vec4(y[16], y[17], y[18], y[19]);
-    vec4  u3 = vec4(y[20], y[21], y[22], y[23]);
+    vec4 e0 = vec4(y[8], y[9], y[10], y[11]);
+    vec4 u1 = vec4(y[12], y[13], y[14], y[15]);
+    vec4 u2 = vec4(y[16], y[17], y[18], y[19]);
+    vec4 u3 = vec4(y[20], y[21], y[22], y[23]);
 
     vec4 e1, e2, e3;
 
@@ -705,7 +706,7 @@ Motion::gramSchmidtOrth() {
     e3.normalize();
 
     for (int i = 0; i < 4; i++) {
-        y[ 8 + i] = e0[i];
+        y[8 + i] = e0[i];
         y[12 + i] = e1[i];
         y[16 + i] = e2[i];
         y[20 + i] = e3[i];
@@ -718,9 +719,9 @@ Motion::gramSchmidtOrth() {
  *
  * \return 0.0
  */
-double
-Motion::testConstraint() {
-// fprintf(stderr,"Motion::testConstraint ( ) ... does nothing here! Only implemented in m4dGeodesic...\n");
+double Motion::testConstraint()
+{
+    // fprintf(stderr,"Motion::testConstraint ( ) ... does nothing here! Only implemented in m4dGeodesic...\n");
     return 0.0;
 }
 
@@ -728,8 +729,8 @@ Motion::testConstraint() {
  *
  * \param cy : pointer to array (must be of size DEF_MAX_YS).
  */
-void
-Motion::getCurrentArray(double* cy) {
+void Motion::getCurrentArray(double* cy)
+{
     if (cy == NULL) {
         return;
     }
@@ -742,8 +743,8 @@ Motion::getCurrentArray(double* cy) {
  *
  * \param fptr : file pointer.
  */
-void
-Motion::printTetrad(FILE* fptr) {
+void Motion::printTetrad(FILE* fptr)
+{
     for (int i = 0; i < 4; i++) {
         fprintf(fptr, "e[%d]: ", i);
         for (int j = 0; j < 4; j++) {
@@ -754,4 +755,3 @@ Motion::printTetrad(FILE* fptr) {
 }
 
 } // end namespace m4d
-

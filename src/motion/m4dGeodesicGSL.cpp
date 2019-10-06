@@ -25,32 +25,36 @@
 
 #include "m4dGeodesicGSL.h"
 #include "m4dMotionList.h"
+#include <limits>
 
 namespace m4d {
 
 //----------------------------------------------------------------------------
 //         func-,jac-adaptor
 //----------------------------------------------------------------------------
-int func_adaptor_geod(double x, const double y[], double f[], void *params) {
-    GeodesicGSL * obj = reinterpret_cast<GeodesicGSL *>(params);
-    return obj->func_geod(x, y, f, NULL);
+int func_adaptor_geod(double x, const double y[], double f[], void* params)
+{
+    GeodesicGSL* obj = reinterpret_cast<GeodesicGSL*>(params);
+    return obj->func_geod(x, y, f, nullptr);
 }
 
-int jac_adaptor_geod(double x, const double y[], double *dfdy, double dfdt[], void *params) {
-    GeodesicGSL * obj = reinterpret_cast<GeodesicGSL *>(params);
-    return obj->jac_geod(x, y, dfdy, dfdt, NULL);
+int jac_adaptor_geod(double x, const double y[], double* dfdy, double dfdt[], void* params)
+{
+    GeodesicGSL* obj = reinterpret_cast<GeodesicGSL*>(params);
+    return obj->jac_geod(x, y, dfdy, dfdt, nullptr);
 }
 
-int func_adaptor_par(double x, const double y[], double f[], void *params) {
-    GeodesicGSL * obj = reinterpret_cast<GeodesicGSL *>(params);
-    return obj->func_par(x, y, f, NULL);
+int func_adaptor_par(double x, const double y[], double f[], void* params)
+{
+    GeodesicGSL* obj = reinterpret_cast<GeodesicGSL*>(params);
+    return obj->func_par(x, y, f, nullptr);
 }
 
-int func_adaptor_jacobi(double x, const double y[], double f[], void *params) {
-    GeodesicGSL * obj = reinterpret_cast<GeodesicGSL *>(params);
-    return obj->func_jacobi(x, y, f, NULL);
+int func_adaptor_jacobi(double x, const double y[], double f[], void* params)
+{
+    GeodesicGSL* obj = reinterpret_cast<GeodesicGSL*>(params);
+    return obj->func_jacobi(x, y, f, nullptr);
 }
-
 
 /*! Standard constructor for geodesic motion.
  *
@@ -60,16 +64,16 @@ int func_adaptor_jacobi(double x, const double y[], double f[], void *params) {
  *  \param type : type of geodesic.
  *  \sa enum_geodesic_type.
  */
-GeodesicGSL::GeodesicGSL(Metric* metric, const gsl_odeiv_step_type*  step_type, int solver_type,
-                           enum_geodesic_type  type)
-    : Geodesic(metric, type) {
+GeodesicGSL::GeodesicGSL(Metric* metric, const gsl_odeiv_step_type* step_type, int solver_type, enum_geodesic_type type)
+    : Geodesic(metric, type)
+{
     mStepsizeControlled = false;
     epsilon_abs = 1.0e-6;
     epsilon_rel = 0.0;
 
-    mStep = NULL;
-    mControl = NULL;
-    mEvolve  = NULL;
+    mStep = nullptr;
+    mControl = nullptr;
+    mEvolve = nullptr;
 
     mStepType = step_type;
     mSolverType = solver_type;
@@ -77,8 +81,8 @@ GeodesicGSL::GeodesicGSL(Metric* metric, const gsl_odeiv_step_type*  step_type, 
     gsl_set_error_handler_off();
 }
 
-
-GeodesicGSL::~GeodesicGSL() {
+GeodesicGSL::~GeodesicGSL()
+{
     freeMemory();
 }
 
@@ -89,7 +93,8 @@ GeodesicGSL::~GeodesicGSL() {
  * \param initDir : initial coordinate direction.
  * \param cstr
  */
-enum_break_condition GeodesicGSL::initializeGeodesic(const vec4 initPos, const vec4 initDir, double &cstr) {
+enum_break_condition GeodesicGSL::initializeGeodesic(const vec4 initPos, const vec4 initDir, double& cstr)
+{
     resetAffineParam();
     resetAffineParamStep();
 
@@ -102,7 +107,8 @@ enum_break_condition GeodesicGSL::initializeGeodesic(const vec4 initPos, const v
 
     if (mCalcWithParTransport) {
         initialize(mStepType, enum_gslint_partrans);
-    } else {
+    }
+    else {
         initialize(mStepType);
     }
     allocMemory();
@@ -124,9 +130,8 @@ enum_break_condition GeodesicGSL::initializeGeodesic(const vec4 initPos, const v
  *  \return enum_break_condition : break condition.
  *  \sa enum_break_condition
  */
-enum_break_condition GeodesicGSL::calculateGeodesic(const vec4 initPos, const vec4 initDir,
-    const int maxNumPoints,
-    std::vector<vec4> &points , std::vector<vec4> &dirs, std::vector<double> &lambda)
+enum_break_condition GeodesicGSL::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
+    std::vector<vec4>& points, std::vector<vec4>& dirs, std::vector<double>& lambda)
 {
     if (!points.empty()) {
         points.clear();
@@ -138,7 +143,7 @@ enum_break_condition GeodesicGSL::calculateGeodesic(const vec4 initPos, const ve
         lambda.clear();
     }
 
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
     double cstr;
     breakType = initializeGeodesic(initPos, initDir, cstr);
     if (breakType == enum_break_constraint) {
@@ -159,7 +164,8 @@ enum_break_condition GeodesicGSL::calculateGeodesic(const vec4 initPos, const ve
             if (status == GSL_EBADFUNC) {
                 breakType = enum_break_not_implemented;
             }
-        } else {
+        }
+        else {
             if (!outsideBoundBox()) {
                 vec4 p = vec4(y[0], y[1], y[2], y[3]);
                 points.push_back(p);
@@ -173,7 +179,8 @@ enum_break_condition GeodesicGSL::calculateGeodesic(const vec4 initPos, const ve
                     mMetric->resize(y, mKappa, resizeFac);
                     GSL_ODEIV_FN_EVAL(&mSys, mLambda, y, dydt_in);
                 }
-            } else {
+            }
+            else {
                 breakType = enum_break_outside;
             }
         }
@@ -189,22 +196,20 @@ enum_break_condition GeodesicGSL::calculateGeodesic(const vec4 initPos, const ve
     return breakType;
 }
 
-
-enum_break_condition GeodesicGSL ::calculateGeodesic(const vec4 initPos, const vec4 initDir,
-    const int maxNumPoints,
-    vec4 *&points, vec4 *&dirs, int &numPoints)
+enum_break_condition GeodesicGSL ::calculateGeodesic(
+    const vec4 initPos, const vec4 initDir, const int maxNumPoints, vec4*& points, vec4*& dirs, int& numPoints)
 {
-    if (points != NULL) {
-        delete [] points;
+    if (points != nullptr) {
+        delete[] points;
     }
-    if (dirs != NULL) {
-        delete [] dirs;
+    if (dirs != nullptr) {
+        delete[] dirs;
     }
 
     points = new vec4[maxNumPoints];
-    dirs   = new vec4[maxNumPoints];
+    dirs = new vec4[maxNumPoints];
 
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
     double cstr;
     breakType = initializeGeodesic(initPos, initDir, cstr);
     if (breakType == enum_break_constraint) {
@@ -212,7 +217,7 @@ enum_break_condition GeodesicGSL ::calculateGeodesic(const vec4 initPos, const v
     }
 
     points[0] = vec4(y[0], y[1], y[2], y[3]);
-    dirs[0]   = vec4(y[4], y[5], y[6], y[7]);
+    dirs[0] = vec4(y[4], y[5], y[6], y[7]);
 
     int64_t t1 = get_system_clock();
 
@@ -226,10 +231,11 @@ enum_break_condition GeodesicGSL ::calculateGeodesic(const vec4 initPos, const v
             if (status == GSL_EBADFUNC) {
                 breakType = enum_break_not_implemented;
             }
-        } else {
+        }
+        else {
             if (!outsideBoundBox()) {
                 points[numPoints] = vec4(y[0], y[1], y[2], y[3]);
-                dirs[numPoints]   = vec4(y[4], y[5], y[6], y[7]);
+                dirs[numPoints] = vec4(y[4], y[5], y[6], y[7]);
                 numPoints++;
                 if ((tc = fabs(mMetric->testConstraint(y, mKappa))) > mConstraintEpsilon) {
                     breakType = enum_break_constraint;
@@ -239,7 +245,8 @@ enum_break_condition GeodesicGSL ::calculateGeodesic(const vec4 initPos, const v
                     mMetric->resize(y, mKappa, resizeFac);
                     GSL_ODEIV_FN_EVAL(&mSys, mLambda, y, dydt_in);
                 }
-            } else {
+            }
+            else {
                 breakType = enum_break_outside;
             }
         }
@@ -268,10 +275,9 @@ enum_break_condition GeodesicGSL ::calculateGeodesic(const vec4 initPos, const v
  *  \return enum_break_condition : break condition.
  *  \sa enum_break_condition
  */
-enum_break_condition
-GeodesicGSL::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
-                                     std::vector<vec4> &points, std::vector<vec4> &dirs,
-                                     std::vector<double> &epsilons, std::vector<double> &lambda) {
+enum_break_condition GeodesicGSL::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
+    std::vector<vec4>& points, std::vector<vec4>& dirs, std::vector<double>& epsilons, std::vector<double>& lambda)
+{
     if (!points.empty()) {
         points.clear();
     }
@@ -288,7 +294,7 @@ GeodesicGSL::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const
     setInitialPosition(initPos);
     setInitialDirection(initDir);
 
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
 
     double cstr;
     if ((cstr = fabs(testConstraint())) > mConstraintEpsilon) {
@@ -318,7 +324,8 @@ GeodesicGSL::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const
             if (status == GSL_EBADFUNC) {
                 breakType = enum_break_not_implemented;
             }
-        } else {
+        }
+        else {
             if (!outsideBoundBox()) {
                 if ((cstr = fabs(mMetric->testConstraint(y, mKappa))) > mConstraintEpsilon) {
                     breakType = enum_break_constraint;
@@ -335,7 +342,8 @@ GeodesicGSL::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const
                 dirs.push_back(d);
                 epsilons.push_back(cstr);
                 lambda.push_back(mLambda);
-            } else {
+            }
+            else {
                 breakType = enum_break_outside;
             }
         }
@@ -353,14 +361,11 @@ GeodesicGSL::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const
 /*! Calculate a geodesic and the parallel transported local tetrad of the observer.
  *
  */
-enum_break_condition
-GeodesicGSL::calcParTransport(const vec4 initPos, const vec4 initDir,
-                                const vec4 e0, const vec4 e1, const vec4 e2, const vec4 e3,
-                                const int maxNumPoints,
-                                std::vector<vec4> &points,  std::vector<vec4> &dirs,
-                                std::vector<double> &lambda,
-                                std::vector<vec4> &base0, std::vector<vec4> &base1,
-                                std::vector<vec4> &base2, std::vector<vec4> &base3) {
+enum_break_condition GeodesicGSL::calcParTransport(const vec4 initPos, const vec4 initDir, const vec4 e0, const vec4 e1,
+    const vec4 e2, const vec4 e3, const int maxNumPoints, std::vector<vec4>& points, std::vector<vec4>& dirs,
+    std::vector<double>& lambda, std::vector<vec4>& base0, std::vector<vec4>& base1, std::vector<vec4>& base2,
+    std::vector<vec4>& base3)
+{
     setCalcWithParTransport(true);
 
     if (!points.empty()) {
@@ -385,7 +390,7 @@ GeodesicGSL::calcParTransport(const vec4 initPos, const vec4 initDir,
         base3.clear();
     }
 
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
 
     double cstr;
     breakType = initializeGeodesic(initPos, initDir, cstr);
@@ -394,7 +399,6 @@ GeodesicGSL::calcParTransport(const vec4 initPos, const vec4 initDir,
     }
 
     setInitialTetrad(e0, e1, e2, e3);
-
 
     points.push_back(vec4(y[0], y[1], y[2], y[3]));
     dirs.push_back(vec4(y[4], y[5], y[6], y[7]));
@@ -421,7 +425,8 @@ GeodesicGSL::calcParTransport(const vec4 initPos, const vec4 initDir,
             if (status == GSL_EBADFUNC) {
                 breakType = enum_break_not_implemented;
             }
-        } else {
+        }
+        else {
             if (!outsideBoundBox()) {
                 if ((cstr = fabs(mMetric->testConstraint(y, mKappa))) > mConstraintEpsilon) {
                     breakType = enum_break_constraint;
@@ -438,7 +443,8 @@ GeodesicGSL::calcParTransport(const vec4 initPos, const vec4 initDir,
                 base2.push_back(vec4(y[16], y[17], y[18], y[19]));
                 base3.push_back(vec4(y[20], y[21], y[22], y[23]));
                 lambda.push_back(mLambda);
-            } else {
+            }
+            else {
                 breakType = enum_break_outside;
             }
         }
@@ -451,9 +457,8 @@ GeodesicGSL::calcParTransport(const vec4 initPos, const vec4 initDir,
     mCalcTime = (t2 - t1) * 1e-6;
     freeMemory();
 
-    return  breakType;
+    return breakType;
 }
-
 
 /*! Calculate a geodesic and the parallel transported local tetrad of the observer.
  *
@@ -480,16 +485,12 @@ GeodesicGSL::calcParTransport(const vec4 initPos, const vec4 initDir,
  *  \return enum_break_condition : break condition.
  *  \sa enum_break_condition
  */
-enum_break_condition
-GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
-                               const vec3 localNullDir, const vec3 locX, const vec3 locY, const vec3 locZ,
-                               const vec4 b0, const vec4 b1, const vec4 b2, const vec4 b3,
-                               const enum_nat_tetrad_type  tetrad_type,
-                               const int maxNumPoints,
-                               std::vector<vec4> &points,  std::vector<vec4> &dirs,
-                               std::vector<double> &lambda,
-                               std::vector<vec4> &sachs0, std::vector<vec4> &sachs1,
-                               std::vector<vec5> &jacobi, vec5 &maxJacobi) {
+enum_break_condition GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir, const vec3 localNullDir,
+    const vec3 locX, const vec3 locY, const vec3 locZ, const vec4 b0, const vec4 b1, const vec4 b2, const vec4 b3,
+    const enum_nat_tetrad_type tetrad_type, const int maxNumPoints, std::vector<vec4>& points, std::vector<vec4>& dirs,
+    std::vector<double>& lambda, std::vector<vec4>& sachs0, std::vector<vec4>& sachs1, std::vector<vec5>& jacobi,
+    vec5& maxJacobi)
+{
     setCalcWithParTransport(true);
 
     if (!points.empty()) {
@@ -511,7 +512,8 @@ GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
         jacobi.clear();
     }
 
-    maxJacobi = vec5(-DBL_MAX, -DBL_MAX, -DBL_MAX, -DBL_MAX, -DBL_MAX);
+    double DOUBLE_MAX = std::numeric_limits<double>::max();
+    maxJacobi = vec5(-DOUBLE_MAX, -DOUBLE_MAX, -DOUBLE_MAX, -DOUBLE_MAX, -DOUBLE_MAX);
 
     initialize(mStepType, enum_gslint_partrans_jacobi);
     allocMemory();
@@ -535,10 +537,10 @@ GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
 
     for (int i = 0; i < 4; i++) {
         y[DEF_JAC1_IDX + i] = 0.0;
-        y[DEF_DJ1_IDX + i]  = bb1[i];
+        y[DEF_DJ1_IDX + i] = bb1[i];
 
         y[DEF_JAC2_IDX + i] = 0.0;
-        y[DEF_DJ2_IDX + i]  = bb2[i];
+        y[DEF_DJ2_IDX + i] = bb2[i];
     }
 
 #if 0
@@ -548,7 +550,7 @@ GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
     mMetric->calcProduct(initPos,initCoordDir,bb2,prod);  fprintf(stderr,"p: %g\n",prod);  std::cerr << std::endl;
 #endif
 
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
     double cstr;
     if (fabs(testConstraint()) > mConstraintEpsilon) {
         return enum_break_constraint;
@@ -558,7 +560,6 @@ GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
     resetAffineParam();
     resetAffineParamStep();
     GSL_ODEIV_FN_EVAL(&mSys, mLambda, y, dydt_in);
-
 
     vec5 currJacobi;
 
@@ -570,8 +571,6 @@ GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
     jacobi.push_back(vec5(0.0, 0.0, 1.0, 0.0, 0.0));
     maxJacobi = jacobi[0];
 
-
-
     int64_t t1 = get_system_clock();
 
     int status;
@@ -581,7 +580,8 @@ GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
             if (status == GSL_EBADFUNC) {
                 breakType = enum_break_not_implemented;
             }
-        } else {
+        }
+        else {
             if (!outsideBoundBox()) {
                 vec4 p = vec4(y[0], y[1], y[2], y[3]);
                 points.push_back(p);
@@ -620,7 +620,8 @@ GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
                     mMetric->resize(y, mKappa, resizeFac);
                     GSL_ODEIV_FN_EVAL(&mSys, mLambda, y, dydt_in);
                 }
-            } else {
+            }
+            else {
                 breakType = enum_break_outside;
             }
         }
@@ -636,46 +637,41 @@ GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
     return breakType;
 }
 
-
-enum_break_condition
-GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
-                             const vec3 localNullDir, const vec3 locX, const vec3 locY, const vec3 locZ,
-                             const vec4 b0, const vec4 b1, const vec4 b2, const vec4 b3,
-                             const enum_nat_tetrad_type  tetrad_type,
-                             const int maxNumPoints,
-                             vec4 *&points, vec4 *&dirs,
-                             double *&lambda,
-                             vec4 *&sachs0, vec4 *&sachs1,
-                             vec5 *&jacobi, vec5 &maxJacobi, int &numPoints) {
+enum_break_condition GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir, const vec3 localNullDir,
+    const vec3 locX, const vec3 locY, const vec3 locZ, const vec4 b0, const vec4 b1, const vec4 b2, const vec4 b3,
+    const enum_nat_tetrad_type tetrad_type, const int maxNumPoints, vec4*& points, vec4*& dirs, double*& lambda,
+    vec4*& sachs0, vec4*& sachs1, vec5*& jacobi, vec5& maxJacobi, int& numPoints)
+{
     setCalcWithParTransport(true);
 
-    if (points != NULL) {
-        delete [] points;
+    if (points != nullptr) {
+        delete[] points;
     }
-    if (dirs != NULL) {
-        delete [] dirs;
+    if (dirs != nullptr) {
+        delete[] dirs;
     }
-    if (lambda != NULL) {
-        delete [] lambda;
+    if (lambda != nullptr) {
+        delete[] lambda;
     }
-    if (sachs0 != NULL) {
-        delete [] sachs0;
+    if (sachs0 != nullptr) {
+        delete[] sachs0;
     }
-    if (sachs1 != NULL) {
-        delete [] sachs1;
+    if (sachs1 != nullptr) {
+        delete[] sachs1;
     }
-    if (jacobi != NULL) {
-        delete [] jacobi;
+    if (jacobi != nullptr) {
+        delete[] jacobi;
     }
 
     points = new vec4[maxNumPoints];
-    dirs   = new vec4[maxNumPoints];
+    dirs = new vec4[maxNumPoints];
     lambda = new double[maxNumPoints];
     sachs0 = new vec4[maxNumPoints];
     sachs1 = new vec4[maxNumPoints];
     jacobi = new vec5[maxNumPoints];
 
-    maxJacobi = vec5(-DBL_MAX, -DBL_MAX, -DBL_MAX, -DBL_MAX, -DBL_MAX);
+    double DOUBLE_MAX = std::numeric_limits<double>::max();
+    maxJacobi = vec5(-DOUBLE_MAX, -DOUBLE_MAX, -DOUBLE_MAX, -DOUBLE_MAX, -DOUBLE_MAX);
 
     initialize(mStepType, enum_gslint_partrans_jacobi);
     allocMemory();
@@ -699,13 +695,13 @@ GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
 
     for (int i = 0; i < 4; i++) {
         y[DEF_JAC1_IDX + i] = 0.0;
-        y[DEF_DJ1_IDX + i]  = bb1[i];
+        y[DEF_DJ1_IDX + i] = bb1[i];
 
         y[DEF_JAC2_IDX + i] = 0.0;
-        y[DEF_DJ2_IDX + i]  = bb2[i];
+        y[DEF_DJ2_IDX + i] = bb2[i];
     }
 
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
     double cstr;
     if (fabs(testConstraint()) > mConstraintEpsilon) {
         return enum_break_constraint;
@@ -716,17 +712,15 @@ GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
     resetAffineParamStep();
     GSL_ODEIV_FN_EVAL(&mSys, mLambda, y, dydt_in);
 
-
     vec5 currJacobi;
 
     points[0] = vec4(&y[0]);
-    dirs[0]   = vec4(&y[DEF_TG_IDX]);
+    dirs[0] = vec4(&y[DEF_TG_IDX]);
     sachs0[0] = vec4(&y[DEF_SA1_IDX]);
     sachs1[0] = vec4(&y[DEF_SA2_IDX]);
     jacobi[0] = vec5(0.0, 0.0, 1.0, 0.0, 0.0);
     lambda[0] = mLambda;
     maxJacobi = jacobi[0];
-
 
     int64_t t1 = get_system_clock();
 
@@ -739,11 +733,12 @@ GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
             if (status == GSL_EBADFUNC) {
                 breakType = enum_break_not_implemented;
             }
-        } else {
+        }
+        else {
             if (!outsideBoundBox()) {
 
                 points[numPoints] = vec4(&y[0]);
-                dirs[numPoints]   = vec4(&y[DEF_TG_IDX]);
+                dirs[numPoints] = vec4(&y[DEF_TG_IDX]);
                 sachs0[numPoints] = vec4(&y[DEF_SA1_IDX]);
                 sachs1[numPoints] = vec4(&y[DEF_SA2_IDX]);
                 lambda[numPoints] = mLambda;
@@ -754,7 +749,6 @@ GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
 
                 findMaxJacobi(currJacobi, maxJacobi);
 
-
                 if ((cstr = fabs(mMetric->testConstraint(y, mKappa))) > mConstraintEpsilon) {
                     breakType = enum_break_constraint;
                 }
@@ -763,7 +757,8 @@ GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
                     mMetric->resize(y, mKappa, resizeFac);
                     GSL_ODEIV_FN_EVAL(&mSys, mLambda, y, dydt_in);
                 }
-            } else {
+            }
+            else {
                 breakType = enum_break_outside;
             }
         }
@@ -779,15 +774,14 @@ GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
     return breakType;
 }
 
-
 /*! Right-hand-side of the geodesic equation.
  *  \param x
  *  \param y[]
  *  \param f[]
  *  \param params
  */
-int
-GeodesicGSL::func_geod(double , const double y[], double f[], void *) {
+int GeodesicGSL::func_geod(double, const double y[], double f[], void*)
+{
     if (mMetric->calcDerivs(y, f)) {
         return GSL_SUCCESS;
     }
@@ -803,7 +797,7 @@ GeodesicGSL::func_geod(double , const double y[], double f[], void *) {
         f[k + 4] = 0.0;
         for (int i = 0; i < 4; i++)
             for (int j = 0; j < 4; j++) {
-                f[k + 4] += - mMetric->getChristoffel(i, j, k) * y[i + 4] * y[j + 4];
+                f[k + 4] += -mMetric->getChristoffel(i, j, k) * y[i + 4] * y[j + 4];
             }
     }
     return GSL_SUCCESS;
@@ -815,8 +809,8 @@ GeodesicGSL::func_geod(double , const double y[], double f[], void *) {
  *  \param f[]
  *  \param params
  */
-int
-GeodesicGSL::func_par(double , const double y[], double f[], void*) {
+int GeodesicGSL::func_par(double, const double y[], double f[], void*)
+{
     if (mMetric->calcDerivsPar(y, f)) {
         return GSL_SUCCESS;
     }
@@ -827,7 +821,6 @@ GeodesicGSL::func_par(double , const double y[], double f[], void*) {
     return 0;
 }
 
-
 /*!
  *  \param x
  *  \param y[]
@@ -835,8 +828,8 @@ GeodesicGSL::func_par(double , const double y[], double f[], void*) {
  *  \param dfdt
  *  \param params
  */
-int
-GeodesicGSL::jac_geod(double , const double y[], double *dfdy, double dfdt[], void *) {
+int GeodesicGSL::jac_geod(double, const double y[], double* dfdy, double dfdt[], void*)
+{
     int dimension = 8;
 
     if (!mMetric->calculateChrisD(y)) {
@@ -849,10 +842,11 @@ GeodesicGSL::jac_geod(double , const double y[], double *dfdy, double dfdt[], vo
         }
 
         fprintf(stderr, "Spacetime do not have a Jacobi matrix!\n");
-        return GSL_EBADFUNC;  // gsl_errno.h: "problem with user-supplied function"
-    } else {
-        gsl_matrix_view   dfdy_mat = gsl_matrix_view_array(dfdy, dimension, dimension);
-        gsl_matrix              *m = &dfdy_mat.matrix;
+        return GSL_EBADFUNC; // gsl_errno.h: "problem with user-supplied function"
+    }
+    else {
+        gsl_matrix_view dfdy_mat = gsl_matrix_view_array(dfdy, dimension, dimension);
+        gsl_matrix* m = &dfdy_mat.matrix;
 
         mMetric->calculateChrisD(y);
 
@@ -889,12 +883,12 @@ GeodesicGSL::jac_geod(double , const double y[], double *dfdy, double dfdt[], vo
     return GSL_SUCCESS;
 }
 
-int
-GeodesicGSL::func_jacobi(double , const double y[], double dydx[], void*) {
+int GeodesicGSL::func_jacobi(double, const double y[], double dydx[], void*)
+{
     if (!mMetric->calcDerivsSachsJacobi(y, dydx)) {
         mMetric->calculateChristoffels(y);
         if (!mMetric->calculateChrisD(y)) {
-            return GSL_EBADFUNC;    // gsl_errno.h: "problem with user-supplied function"
+            return GSL_EBADFUNC; // gsl_errno.h: "problem with user-supplied function"
         }
 
         vec4 e[4];
@@ -902,29 +896,35 @@ GeodesicGSL::func_jacobi(double , const double y[], double dydx[], void*) {
         mMetric->getNatTetrad(pos, e[0], e[1], e[2], e[3]);
 
         for (int mu = 0; mu < 4; mu++) {
-            dydx[mu]              = y[DEF_TG_IDX + mu];
-            dydx[DEF_TG_IDX + mu]   = 0.0;
+            dydx[mu] = y[DEF_TG_IDX + mu];
+            dydx[DEF_TG_IDX + mu] = 0.0;
 
             dydx[DEF_JAC1_IDX + mu] = y[DEF_DJ1_IDX + mu];
-            dydx[DEF_DJ1_IDX + mu]  = 0.0;
+            dydx[DEF_DJ1_IDX + mu] = 0.0;
             dydx[DEF_JAC2_IDX + mu] = y[DEF_DJ2_IDX + mu];
-            dydx[DEF_DJ2_IDX + mu]  = 0.0;
+            dydx[DEF_DJ2_IDX + mu] = 0.0;
 
-            dydx[DEF_SA1_IDX + mu]  = 0.0;
-            dydx[DEF_SA2_IDX + mu]  = 0.0;
+            dydx[DEF_SA1_IDX + mu] = 0.0;
+            dydx[DEF_SA2_IDX + mu] = 0.0;
 
             for (int k = 0; k < 4; k++)
                 for (int l = 0; l < 4; l++) {
-                    dydx[DEF_TG_IDX + mu]  -= mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_TG_IDX + l];
-                    dydx[DEF_DJ1_IDX + mu] -= 2.0 * mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_DJ1_IDX + l];
-                    dydx[DEF_DJ2_IDX + mu] -= 2.0 * mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_DJ2_IDX + l];
+                    dydx[DEF_TG_IDX + mu] -= mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_TG_IDX + l];
+                    dydx[DEF_DJ1_IDX + mu]
+                        -= 2.0 * mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_DJ1_IDX + l];
+                    dydx[DEF_DJ2_IDX + mu]
+                        -= 2.0 * mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_DJ2_IDX + l];
 
-                    dydx[DEF_SA1_IDX + mu] -= mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_SA1_IDX + l];
-                    dydx[DEF_SA2_IDX + mu] -= mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_SA2_IDX + l];
+                    dydx[DEF_SA1_IDX + mu]
+                        -= mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_SA1_IDX + l];
+                    dydx[DEF_SA2_IDX + mu]
+                        -= mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_SA2_IDX + l];
 
                     for (int n = 0; n < 4; n++) {
-                        dydx[DEF_DJ1_IDX + mu] -= mMetric->getChrisD(k, l, mu, n) * y[DEF_TG_IDX + k] * y[DEF_TG_IDX + l] * y[DEF_JAC1_IDX + n];
-                        dydx[DEF_DJ2_IDX + mu] -= mMetric->getChrisD(k, l, mu, n) * y[DEF_TG_IDX + k] * y[DEF_TG_IDX + l] * y[DEF_JAC2_IDX + n];
+                        dydx[DEF_DJ1_IDX + mu] -= mMetric->getChrisD(k, l, mu, n) * y[DEF_TG_IDX + k]
+                            * y[DEF_TG_IDX + l] * y[DEF_JAC1_IDX + n];
+                        dydx[DEF_DJ2_IDX + mu] -= mMetric->getChrisD(k, l, mu, n) * y[DEF_TG_IDX + k]
+                            * y[DEF_TG_IDX + l] * y[DEF_JAC2_IDX + n];
                     }
                 }
         }
@@ -932,11 +932,11 @@ GeodesicGSL::func_jacobi(double , const double y[], double dydx[], void*) {
     return GSL_SUCCESS;
 }
 
-
 /*! Print geodesic solver properties.
  * \param fptr : file pointer.
  */
-void GeodesicGSL::printF(FILE* fptr) {
+void GeodesicGSL::printF(FILE* fptr)
+{
     fprintf(fptr, "\nGeodesicGSL:\n------------\n");
     fprintf(fptr, "\tstep type           : %s\n", stl_solver_names[mSolverType]);
     fprintf(fptr, "\tstepsize controlled : %s\n", ((mStepsizeControlled) ? "yes" : "no"));
@@ -944,8 +944,10 @@ void GeodesicGSL::printF(FILE* fptr) {
     fprintf(fptr, "\tepsilon_abs         : %12.8e\n", epsilon_abs);
     fprintf(fptr, "\tepsilon_rel         : %12.8e\n", epsilon_rel);
     fprintf(fptr, "\tconstraint epsilon  : %12.8e\n", mConstraintEpsilon);
-    fprintf(fptr, "\tbounding box min    : %14.6e %14.6e %14.6e %14.6e\n", mBoundBoxMin[0], mBoundBoxMin[1], mBoundBoxMin[2], mBoundBoxMin[3]);
-    fprintf(fptr, "\tbounding box max    : %14.6e %14.6e %14.6e %14.6e\n", mBoundBoxMax[0], mBoundBoxMax[1], mBoundBoxMax[2], mBoundBoxMax[3]);
+    fprintf(fptr, "\tbounding box min    : %14.6e %14.6e %14.6e %14.6e\n", mBoundBoxMin[0], mBoundBoxMin[1],
+        mBoundBoxMin[2], mBoundBoxMin[3]);
+    fprintf(fptr, "\tbounding box max    : %14.6e %14.6e %14.6e %14.6e\n", mBoundBoxMax[0], mBoundBoxMax[1],
+        mBoundBoxMax[2], mBoundBoxMax[3]);
     fprintf(fptr, "\tgeodesic type       : %s\n", stl_geodesic_type[mType]);
 }
 
@@ -956,27 +958,27 @@ void GeodesicGSL::printF(FILE* fptr) {
  *  \param  step_type :  constant pointer to a GSL step type.
  *  \param  type : type of gsl integration.
  */
-void
-GeodesicGSL::initialize(const gsl_odeiv_step_type*  step_type,  enum_gslint_type  type) {
+void GeodesicGSL::initialize(const gsl_odeiv_step_type* step_type, enum_gslint_type type)
+{
     mStepType = step_type;
 
     switch (type) {
-    default:
-    case enum_gslint_geodesic:
-        mSys.function = func_adaptor_geod;
-        mSys.jacobian = jac_adaptor_geod;
-        mSys.dimension = 8;
-        break;
-    case enum_gslint_geodesic_data:
-        break;
-    case enum_gslint_partrans:
-        mSys.function = func_adaptor_par;
-        mSys.dimension = DEF_MAX_YS_PAR;
-        break;
-    case enum_gslint_partrans_jacobi:
-        mSys.function  = func_adaptor_jacobi;
-        mSys.dimension = DEF_MAX_YS_JAC;
-        break;
+        default:
+        case enum_gslint_geodesic:
+            mSys.function = func_adaptor_geod;
+            mSys.jacobian = jac_adaptor_geod;
+            mSys.dimension = 8;
+            break;
+        case enum_gslint_geodesic_data:
+            break;
+        case enum_gslint_partrans:
+            mSys.function = func_adaptor_par;
+            mSys.dimension = DEF_MAX_YS_PAR;
+            break;
+        case enum_gslint_partrans_jacobi:
+            mSys.function = func_adaptor_jacobi;
+            mSys.dimension = DEF_MAX_YS_JAC;
+            break;
     }
 
     mSys.params = this;
@@ -984,20 +986,20 @@ GeodesicGSL::initialize(const gsl_odeiv_step_type*  step_type,  enum_gslint_type
 
 /*! Allocate memory for the GSL integration.
  */
-void
-GeodesicGSL::allocMemory() {
+void GeodesicGSL::allocMemory()
+{
     mStep = gsl_odeiv_step_alloc(mStepType, mSys.dimension);
 
     if (mStepsizeControlled) {
         mControl = gsl_odeiv_control_y_new(epsilon_abs, epsilon_rel);
-        mEvolve  = gsl_odeiv_evolve_alloc(mSys.dimension);
+        mEvolve = gsl_odeiv_evolve_alloc(mSys.dimension);
     }
 }
 
 /*! Free memory after GSL integration.
  */
-void
-GeodesicGSL::freeMemory() {
+void GeodesicGSL::freeMemory()
+{
     if (mStepsizeControlled) {
         if (mEvolve != NULL) {
             gsl_odeiv_evolve_free(mEvolve);
@@ -1019,7 +1021,8 @@ GeodesicGSL::freeMemory() {
  *
  *  \param status : gsl status after this step.
  */
-bool GeodesicGSL::nextStep(int &status) {
+bool GeodesicGSL::nextStep(int& status)
+{
     if (mMetric->breakCondition(&y[0])) {
         return false;
     }
@@ -1029,12 +1032,13 @@ bool GeodesicGSL::nextStep(int &status) {
 
     if (mStepsizeControlled) {
         status = gsl_odeiv_evolve_apply(mEvolve, mControl, mStep, &mSys, &mLambda, lambda1, &mLambdaStep, y);
-        //std::cerr << "lambda = " << mLambda << " " << mLambdaStep << " " << status <<  std::endl;
+        // std::cerr << "lambda = " << mLambda << " " << mLambdaStep << " " << status <<  std::endl;
 
         if (mLambdaStep > mMaxLambdaStep) {
             mLambdaStep = mMaxLambdaStep;
         }
-    } else {
+    }
+    else {
         status = gsl_odeiv_step_apply(mStep, mLambda, mLambdaStep, y, y_err, dydt_in, dydt_out, &mSys);
 
         for (i = 0; i < (int)mSys.dimension; i++) {
@@ -1063,8 +1067,8 @@ bool GeodesicGSL::nextStep(int &status) {
     return true;
 }
 
-bool
-GeodesicGSL::nextStepPar(int &status) {
+bool GeodesicGSL::nextStepPar(int& status)
+{
     if (mMetric->breakCondition(&y[0])) {
         return false;
     }
@@ -1074,8 +1078,9 @@ GeodesicGSL::nextStepPar(int &status) {
 
     if (mStepsizeControlled) {
         status = gsl_odeiv_evolve_apply(mEvolve, mControl, mStep, &mSys, &mLambda, lambda1, &mLambdaStep, y);
-        //std::cerr << "lambda = " << mLambda << " " << mLambdaStep << " " << status <<  std::endl;
-    } else {
+        // std::cerr << "lambda = " << mLambda << " " << mLambdaStep << " " << status <<  std::endl;
+    }
+    else {
         status = gsl_odeiv_step_apply(mStep, mLambda, mLambdaStep, y, y_err, dydt_in, dydt_out, &mSys);
 
         for (i = 0; i < (int)mSys.dimension; i++) {
@@ -1095,19 +1100,21 @@ GeodesicGSL::nextStepPar(int &status) {
  *
  *  \param status : gsl status after this step.
  */
-bool GeodesicGSL::nextStepSachsJacobi(int &status) {
+bool GeodesicGSL::nextStepSachsJacobi(int& status)
+{
     if (mMetric->breakCondition(&y[0])) {
         return false;
     }
     register int i;
-    double  y_err[DEF_MAX_YS_JAC];
-    double  lambda1 = DEF_GSL_LAMBDA_MAX;
+    double y_err[DEF_MAX_YS_JAC];
+    double lambda1 = DEF_GSL_LAMBDA_MAX;
 
     if (mStepsizeControlled) {
         status = gsl_odeiv_evolve_apply(mEvolve, mControl, mStep, &mSys, &mLambda, lambda1, &mLambdaStep, y);
-        //fprintf(stderr,"error: %s\n", gsl_strerror (status));
+        // fprintf(stderr,"error: %s\n", gsl_strerror (status));
         // cerr << "lambda = " << mLambda << " " << mLambdaStep << endl;
-    } else {
+    }
+    else {
         status = gsl_odeiv_step_apply(mStep, mLambda, mLambdaStep, y, y_err, dydt_in, dydt_out, &mSys);
 
         for (i = 0; i < DEF_MAX_YS_JAC; i++) {
@@ -1124,4 +1131,3 @@ bool GeodesicGSL::nextStepSachsJacobi(int &status) {
 }
 
 } // end namespace m4d
-

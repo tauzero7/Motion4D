@@ -32,17 +32,16 @@ namespace m4d {
  *  \param  metric : Metric of the spacetime where the geodesic has to be calculated.
  *  \param  type   : Type of geodesic:  kappa=-1 (timelike), kappa=0 (lightlike).
  */
-GeodesicRK4::GeodesicRK4(Metric* metric, enum_geodesic_type  type)
-    : Geodesic(metric, type) {
+GeodesicRK4::GeodesicRK4(Metric* metric, enum_geodesic_type type)
+    : Geodesic(metric, type)
+{
     mCalcWithParTransport = false;
     mNumCoords = 8;
 
     mConstraintEpsilon = DEF_CONSTRAINT_EPSILON;
 }
 
-
-GeodesicRK4::~GeodesicRK4() {
-}
+GeodesicRK4::~GeodesicRK4() {}
 
 // *********************************** public methods ******************************
 
@@ -58,9 +57,9 @@ GeodesicRK4::~GeodesicRK4() {
  *  \return enum_break_condition : break condition.
  *  \sa enum_break_condition
  */
-enum_break_condition
-GeodesicRK4::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
-                                 std::vector<vec4> &points, std::vector<vec4> &dirs, std::vector<double> &lambda) {
+enum_break_condition GeodesicRK4::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
+    std::vector<vec4>& points, std::vector<vec4>& dirs, std::vector<double>& lambda)
+{
     if (!points.empty()) {
         points.clear();
     }
@@ -71,7 +70,7 @@ GeodesicRK4::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int
         lambda.clear();
     }
 
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
     double cstr;
     breakType = initializeGeodesic(initPos, initDir, cstr);
     if (breakType == enum_break_constraint) {
@@ -97,7 +96,8 @@ GeodesicRK4::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int
             if ((cstr = fabs(mMetric->testConstraint(y, mKappa))) > mConstraintEpsilon) {
                 breakType = enum_break_constraint;
             }
-        } else {
+        }
+        else {
             breakType = enum_break_outside;
         }
     }
@@ -110,21 +110,21 @@ GeodesicRK4::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int
     return breakType;
 }
 
-enum_break_condition
-GeodesicRK4::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
-                               vec4 *&points, vec4 *&dirs, int &numPoints) {
+enum_break_condition GeodesicRK4::calculateGeodesic(
+    const vec4 initPos, const vec4 initDir, const int maxNumPoints, vec4*& points, vec4*& dirs, int& numPoints)
+{
 
     if (points != NULL) {
-        delete [] points;
+        delete[] points;
     }
     if (dirs != NULL) {
-        delete [] dirs;
+        delete[] dirs;
     }
 
     points = new vec4[maxNumPoints];
-    dirs   = new vec4[maxNumPoints];
+    dirs = new vec4[maxNumPoints];
 
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
     double cstr;
     breakType = initializeGeodesic(initPos, initDir, cstr);
     if (breakType == enum_break_constraint) {
@@ -132,7 +132,7 @@ GeodesicRK4::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int
     }
 
     points[0] = vec4(y[0], y[1], y[2], y[3]);
-    dirs[0]   = vec4(y[4], y[5], y[6], y[7]);
+    dirs[0] = vec4(y[4], y[5], y[6], y[7]);
 
     int status;
     int64_t t1 = get_system_clock();
@@ -145,13 +145,14 @@ GeodesicRK4::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int
 
         if (!outsideBoundBox()) {
             points[numPoints] = vec4(y[0], y[1], y[2], y[3]);
-            dirs[numPoints]   = vec4(y[4], y[5], y[6], y[7]);
+            dirs[numPoints] = vec4(y[4], y[5], y[6], y[7]);
             numPoints++;
 
             if ((cstr = fabs(mMetric->testConstraint(y, mKappa))) > mConstraintEpsilon) {
                 breakType = enum_break_constraint;
             }
-        } else {
+        }
+        else {
             breakType = enum_break_outside;
         }
     }
@@ -178,10 +179,9 @@ GeodesicRK4::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int
  *  \return enum_break_condition : break condition.
  *  \sa enum_break_condition
  */
-enum_break_condition
-GeodesicRK4::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
-                                     std::vector<vec4> &points, std::vector<vec4> &dirs,
-                                     std::vector<double> &epsilons, std::vector<double> &lambda) {
+enum_break_condition GeodesicRK4::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
+    std::vector<vec4>& points, std::vector<vec4>& dirs, std::vector<double>& epsilons, std::vector<double>& lambda)
+{
     if (!points.empty()) {
         points.clear();
     }
@@ -195,14 +195,13 @@ GeodesicRK4::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const
         lambda.clear();
     }
 
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
 
     double cstr;
     breakType = initializeGeodesic(initPos, initDir, cstr);
     if (breakType == enum_break_constraint) {
         return enum_break_constraint;
     }
-
 
     vec4 p(y, 4);
     vec4 d(&(y[4]), 4);
@@ -228,7 +227,8 @@ GeodesicRK4::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const
             if ((cstr = fabs(mMetric->testConstraint(y, mKappa))) > mConstraintEpsilon) {
                 breakType = enum_break_constraint;
             }
-        } else {
+        }
+        else {
             breakType = enum_break_outside;
         }
     }
@@ -240,7 +240,6 @@ GeodesicRK4::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const
     mCalcTime = (t2 - t1) * 1e-6;
     return breakType;
 }
-
 
 /*! Calculate a geodesic and the parallel transported local tetrad of the observer.
  *
@@ -262,14 +261,11 @@ GeodesicRK4::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const
  *  \return enum_break_condition : break condition.
  *  \sa enum_break_condition
  */
-enum_break_condition
-GeodesicRK4::calcParTransport(const vec4 initPos, const vec4 initDir,
-                                const vec4 e0, const vec4 e1, const vec4 e2, const vec4 e3,
-                                const int maxNumPoints,
-                                std::vector<vec4> &points,  std::vector<vec4> &dirs,
-                                std::vector<double> &lambda,
-                                std::vector<vec4> &base0, std::vector<vec4> &base1,
-                                std::vector<vec4> &base2, std::vector<vec4> &base3) {
+enum_break_condition GeodesicRK4::calcParTransport(const vec4 initPos, const vec4 initDir, const vec4 e0, const vec4 e1,
+    const vec4 e2, const vec4 e3, const int maxNumPoints, std::vector<vec4>& points, std::vector<vec4>& dirs,
+    std::vector<double>& lambda, std::vector<vec4>& base0, std::vector<vec4>& base1, std::vector<vec4>& base2,
+    std::vector<vec4>& base3)
+{
     setCalcWithParTransport(true);
 
     if (!points.empty()) {
@@ -294,7 +290,7 @@ GeodesicRK4::calcParTransport(const vec4 initPos, const vec4 initDir,
         base3.clear();
     }
 
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
 
     double cstr;
     breakType = initializeGeodesic(initPos, initDir, cstr);
@@ -303,7 +299,6 @@ GeodesicRK4::calcParTransport(const vec4 initPos, const vec4 initDir,
     }
 
     setInitialTetrad(e0, e1, e2, e3);
-
 
     //  initPos.print(std::cerr);
     //  initDir.print(std::cerr);
@@ -339,7 +334,8 @@ GeodesicRK4::calcParTransport(const vec4 initPos, const vec4 initDir,
             if ((cstr = fabs(mMetric->testConstraint(y, mKappa))) > mConstraintEpsilon) {
                 breakType = enum_break_constraint;
             }
-        } else {
+        }
+        else {
             breakType = enum_break_outside;
         }
     }
@@ -377,16 +373,12 @@ GeodesicRK4::calcParTransport(const vec4 initPos, const vec4 initDir,
  *  \return enum_break_condition : break condition.
  *  \sa enum_break_condition
  */
-enum_break_condition
-GeodesicRK4::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
-                               const vec3 localNullDir, const vec3 locX, const vec3 locY, const vec3 locZ,
-                               const vec4 b0, const vec4 b1, const vec4 b2, const vec4 b3,
-                               const enum_nat_tetrad_type  tetrad_type,
-                               const int maxNumPoints,
-                               std::vector<vec4> &points,  std::vector<vec4> &dirs,
-                               std::vector<double> &lambda,
-                               std::vector<vec4> &sachs0, std::vector<vec4> &sachs1,
-                               std::vector<vec5> &jacobi, vec5 &maxJacobi) {
+enum_break_condition GeodesicRK4::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir, const vec3 localNullDir,
+    const vec3 locX, const vec3 locY, const vec3 locZ, const vec4 b0, const vec4 b1, const vec4 b2, const vec4 b3,
+    const enum_nat_tetrad_type tetrad_type, const int maxNumPoints, std::vector<vec4>& points, std::vector<vec4>& dirs,
+    std::vector<double>& lambda, std::vector<vec4>& sachs0, std::vector<vec4>& sachs1, std::vector<vec5>& jacobi,
+    vec5& maxJacobi)
+{
     setCalcWithParTransport(true);
 
     if (!points.empty()) {
@@ -408,9 +400,10 @@ GeodesicRK4::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
         jacobi.clear();
     }
 
-    maxJacobi = vec5(-DBL_MAX, -DBL_MAX, -DBL_MAX, -DBL_MAX, -DBL_MAX);
+    double DOUBLE_MAX = std::numeric_limits<double>::max();
+    maxJacobi = vec5(-DOUBLE_MAX, -DOUBLE_MAX, -DOUBLE_MAX, -DOUBLE_MAX, -DOUBLE_MAX);
 
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
 
     double cstr;
     breakType = initializeGeodesic(initPos, initCoordDir, cstr);
@@ -431,10 +424,10 @@ GeodesicRK4::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
     bb2 = mSachsBasisB2[0] * e1 + mSachsBasisB2[1] * e2 + mSachsBasisB2[2] * e3;
     for (int i = 0; i < 4; i++) {
         y[DEF_JAC1_IDX + i] = 0.0;
-        y[DEF_DJ1_IDX + i]  = bb1[i];
+        y[DEF_DJ1_IDX + i] = bb1[i];
 
         y[DEF_JAC2_IDX + i] = 0.0;
-        y[DEF_DJ2_IDX + i]  = bb2[i];
+        y[DEF_DJ2_IDX + i] = bb2[i];
     }
 
     /*
@@ -444,7 +437,6 @@ GeodesicRK4::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
     mMetric->calcProduct(initPos,initCoordDir,bb2,prod);  fprintf(stderr,"%g\n",prod);  std::cerr << std::endl;
     */
     setSachsBasis(bb1, bb2);
-
 
     vec5 currJacobi;
 
@@ -473,7 +465,8 @@ GeodesicRK4::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
             jacobi.push_back(currJacobi);
             lambda.push_back(mLambda);
             findMaxJacobi(currJacobi, maxJacobi);
-        } else {
+        }
+        else {
             breakType = enum_break_outside;
         }
     }
@@ -486,48 +479,43 @@ GeodesicRK4::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
     return breakType;
 }
 
-
-enum_break_condition
-GeodesicRK4::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
-                             const vec3 localNullDir, const vec3 locX, const vec3 locY, const vec3 locZ,
-                             const vec4 b0, const vec4 b1, const vec4 b2, const vec4 b3,
-                             const enum_nat_tetrad_type  tetrad_type,
-                             const int maxNumPoints,
-                             vec4 *&points, vec4 *&dirs,
-                             double *&lambda,
-                             vec4 *&sachs0, vec4 *&sachs1,
-                             vec5 *&jacobi, vec5 &maxJacobi, int &numPoints) {
+enum_break_condition GeodesicRK4::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir, const vec3 localNullDir,
+    const vec3 locX, const vec3 locY, const vec3 locZ, const vec4 b0, const vec4 b1, const vec4 b2, const vec4 b3,
+    const enum_nat_tetrad_type tetrad_type, const int maxNumPoints, vec4*& points, vec4*& dirs, double*& lambda,
+    vec4*& sachs0, vec4*& sachs1, vec5*& jacobi, vec5& maxJacobi, int& numPoints)
+{
     setCalcWithParTransport(true);
 
     if (points != NULL) {
-        delete [] points;
+        delete[] points;
     }
     if (dirs != NULL) {
-        delete [] dirs;
+        delete[] dirs;
     }
     if (lambda != NULL) {
-        delete [] lambda;
+        delete[] lambda;
     }
     if (sachs0 != NULL) {
-        delete [] sachs0;
+        delete[] sachs0;
     }
     if (sachs1 != NULL) {
-        delete [] sachs1;
+        delete[] sachs1;
     }
     if (jacobi != NULL) {
-        delete [] jacobi;
+        delete[] jacobi;
     }
 
     points = new vec4[maxNumPoints];
-    dirs   = new vec4[maxNumPoints];
+    dirs = new vec4[maxNumPoints];
     lambda = new double[maxNumPoints];
     sachs0 = new vec4[maxNumPoints];
     sachs1 = new vec4[maxNumPoints];
     jacobi = new vec5[maxNumPoints];
 
-    maxJacobi = vec5(-DBL_MAX, -DBL_MAX, -DBL_MAX, -DBL_MAX, -DBL_MAX);
+    double DOUBLE_MAX = std::numeric_limits<double>::max();
+    maxJacobi = vec5(-DOUBLE_MAX, -DOUBLE_MAX, -DOUBLE_MAX, -DOUBLE_MAX, -DOUBLE_MAX);
 
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
 
     double cstr;
     breakType = initializeGeodesic(initPos, initCoordDir, cstr);
@@ -548,19 +536,18 @@ GeodesicRK4::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
     bb2 = mSachsBasisB2[0] * e1 + mSachsBasisB2[1] * e2 + mSachsBasisB2[2] * e3;
     for (int i = 0; i < 4; i++) {
         y[DEF_JAC1_IDX + i] = 0.0;
-        y[DEF_DJ1_IDX + i]  = bb1[i];
+        y[DEF_DJ1_IDX + i] = bb1[i];
 
         y[DEF_JAC2_IDX + i] = 0.0;
-        y[DEF_DJ2_IDX + i]  = bb2[i];
+        y[DEF_DJ2_IDX + i] = bb2[i];
     }
 
     setSachsBasis(bb1, bb2);
 
-
     vec5 currJacobi;
 
     points[0] = vec4(&y[0]);
-    dirs[0]   = vec4(&y[DEF_TG_IDX]);
+    dirs[0] = vec4(&y[DEF_TG_IDX]);
     sachs0[0] = vec4(&y[DEF_SA1_IDX]);
     sachs1[0] = vec4(&y[DEF_SA2_IDX]);
     jacobi[0] = vec5(0.0, 0.0, 1.0, 0.0, 0.0);
@@ -578,7 +565,7 @@ GeodesicRK4::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
 
         if (!outsideBoundBox()) {
             points[numPoints] = vec4(&y[0]);
-            dirs[numPoints]   = vec4(&y[DEF_TG_IDX]);
+            dirs[numPoints] = vec4(&y[DEF_TG_IDX]);
             sachs0[numPoints] = vec4(&y[DEF_SA1_IDX]);
             sachs1[numPoints] = vec4(&y[DEF_SA2_IDX]);
             lambda[numPoints] = mLambda;
@@ -588,7 +575,8 @@ GeodesicRK4::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
             numPoints++;
 
             findMaxJacobi(currJacobi, maxJacobi);
-        } else {
+        }
+        else {
             breakType = enum_break_outside;
         }
     }
@@ -602,13 +590,12 @@ GeodesicRK4::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
     return breakType;
 }
 
-
 /*! Calculate next Runge-Kutta step of the geodesic.
  *
  *  \param status
  */
-bool
-GeodesicRK4::nextStep(int &status) {
+bool GeodesicRK4::nextStep(int& status)
+{
     if (mMetric->breakCondition(&y[0])) {
         return false;
     }
@@ -650,14 +637,15 @@ GeodesicRK4::nextStep(int &status) {
  *
  *  \param status
  */
-bool
-GeodesicRK4::nextStepPar(int &status) {
+bool GeodesicRK4::nextStepPar(int& status)
+{
     if (mMetric->breakCondition(&y[0])) {
         return false;
     }
 
     register int i;
-    double yn[DEF_MAX_YS_PAR], dydx[DEF_MAX_YS_PAR], k1[DEF_MAX_YS_PAR], k2[DEF_MAX_YS_PAR], k3[DEF_MAX_YS_PAR], k4[DEF_MAX_YS_PAR];
+    double yn[DEF_MAX_YS_PAR], dydx[DEF_MAX_YS_PAR], k1[DEF_MAX_YS_PAR], k2[DEF_MAX_YS_PAR], k3[DEF_MAX_YS_PAR],
+        k4[DEF_MAX_YS_PAR];
 
     calcDerivsPar(y, dydx);
     for (i = 0; i < DEF_MAX_YS_PAR; i++) {
@@ -693,17 +681,17 @@ GeodesicRK4::nextStepPar(int &status) {
  *
  *  \param status
  */
-bool
-GeodesicRK4::nextStepSachsJacobi(int &status) {
+bool GeodesicRK4::nextStepSachsJacobi(int& status)
+{
     if (mMetric->breakCondition(&y[0])) {
         return false;
     }
     register int i;
     double yn[DEF_MAX_YS_JAC], dydx[DEF_MAX_YS_JAC], k1[DEF_MAX_YS_JAC], k2[DEF_MAX_YS_JAC], k3[DEF_MAX_YS_JAC],
-           k4[DEF_MAX_YS_JAC];
+        k4[DEF_MAX_YS_JAC];
 
     if (!calcDerivsSachsJacobi(y, dydx)) {
-        return false;    //enum_break_not_implemented;
+        return false; // enum_break_not_implemented;
     }
 
     for (i = 0; i < DEF_MAX_YS_JAC; i++) {
@@ -738,15 +726,18 @@ GeodesicRK4::nextStepSachsJacobi(int &status) {
 /*! Print geodesic solver properties.
  * \param fptr : file pointer.
  */
-void GeodesicRK4::printF(FILE* fptr) {
+void GeodesicRK4::printF(FILE* fptr)
+{
     fprintf(fptr, "\nGeodesicRK4:\n------------\n");
     fprintf(fptr, "\tstepsize controlled : %s\n", "no");
     fprintf(fptr, "\tstep size           : %12.8e\n", mLambdaStep);
     fprintf(fptr, "\tepsilon_abs         : %12.8e\n", epsilon_abs);
     fprintf(fptr, "\tepsilon_rel         : %12.8e\n", epsilon_rel);
     fprintf(fptr, "\tconstraint epsilon  : %12.8e\n", mConstraintEpsilon);
-    fprintf(fptr, "\tbounding box min    : %14.6e %14.6e %14.6e %14.6e\n", mBoundBoxMin[0], mBoundBoxMin[1], mBoundBoxMin[2], mBoundBoxMin[3]);
-    fprintf(fptr, "\tbounding box max    : %14.6e %14.6e %14.6e %14.6e\n", mBoundBoxMax[0], mBoundBoxMax[1], mBoundBoxMax[2], mBoundBoxMax[3]);
+    fprintf(fptr, "\tbounding box min    : %14.6e %14.6e %14.6e %14.6e\n", mBoundBoxMin[0], mBoundBoxMin[1],
+        mBoundBoxMin[2], mBoundBoxMin[3]);
+    fprintf(fptr, "\tbounding box max    : %14.6e %14.6e %14.6e %14.6e\n", mBoundBoxMax[0], mBoundBoxMax[1],
+        mBoundBoxMax[2], mBoundBoxMax[3]);
 }
 
 } // end namespace m4d

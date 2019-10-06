@@ -25,8 +25,28 @@ MetricSchwarzschildIsotropic::MetricSchwarzschildIsotropic(double mass)
     rho_s = 0.5 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
     calc_orbits();
 
-    /*  Only a static tetrad is defined  */
+    //  Only a static tetrad is defined
     mLocTeds.push_back(enum_nat_tetrad_static);
+
+    // Have embedding available
+    mDrawTypes.push_back(enum_draw_embedding);
+
+    // parameters for the embedding diagram
+    if (!mEmbParam.empty()) {
+        mEmbParam.clear();
+    }
+    mHaveEmbedding = true;
+
+    mEmb_rmin = rho_s;
+    mEmb_rmax = 5.0 * rho_s;
+    mEmb_r_num = 20;
+    mEmb_phi_num = 40;
+    mEmb_rstep = (mEmb_rmax - mEmb_rmin) / static_cast<double>(mEmb_r_num);
+    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
+    addEmbeddingParam("emb_rmin", mEmb_rmin);
+    addEmbeddingParam("emb_rmax", mEmb_rmax);
+    addEmbeddingParam("emb_r_num", 20.0);
+    addEmbeddingParam("emb_phi_num", 40.0);
 
     setStandardValues();
 }
@@ -597,6 +617,121 @@ bool MetricSchwarzschildIsotropic::setParam(const char* pName, double val)
         calc_orbits();
     }
     return true;
+}
+
+bool MetricSchwarzschildIsotropic::transToEmbedding(vec4 p, vec4& ep)
+{
+    vec4 cp;
+    transToPseudoCart(p, cp);
+
+    // TODO ---------------------
+
+    double rho = p[1];
+    double x = cp[1];
+    double y = cp[2];
+
+    if (rho >= rho_s) {
+        double z = 2.0 * sqrt(rho_s) * sqrt(rho - rho_s);
+        ep = vec4(p[0], x, y, z);
+        return true;
+    }
+    return false;
+}
+
+bool MetricSchwarzschildIsotropic::setEmbeddingParam(const char* name, double val)
+{
+    Metric::setEmbeddingParam(name, val);
+
+    if (strcmp(name, "emb_rmin") == 0) {
+        mEmb_rmin = val;
+    }
+    else if (strcmp(name, "emb_rmax") == 0) {
+        mEmb_rmax = val;
+    }
+    else if (strcmp(name, "emb_r_num") == 0) {
+        mEmb_r_num = static_cast<unsigned int>(val);
+    }
+    else if (strcmp(name, "emb_phi_num") == 0) {
+        mEmb_phi_num = static_cast<unsigned int>(val);
+    }
+    return testEmbeddingParams();
+}
+
+/*! Test embedding parameters
+ *  \return  true : all parameters are ok
+ *  \return  false : at least one parameter had to be adjusted.
+ */
+bool MetricSchwarzschildIsotropic::testEmbeddingParams()
+{
+    bool allOk = true;
+    if (mEmb_rmin < rho_s) {
+        mEmb_rmin = rho_s;
+        allOk &= false;
+    }
+    if (mEmb_rmax < rho_s) {
+        mEmb_rmax = rho_s;
+        allOk &= false;
+    }
+    if (mEmb_r_num < 2) {
+        mEmb_r_num = 2;
+        allOk &= false;
+    }
+
+    if (mEmb_phi_num < 4) {
+        mEmb_phi_num = 4;
+        allOk &= false;
+    }
+    return allOk;
+}
+
+unsigned int MetricSchwarzschildIsotropic::getEmbeddingVertices(
+    float*& verts, unsigned int*& indices, unsigned int& numElems, unsigned int& counter)
+{
+    m4d::SafeDelete<float>(verts);
+    m4d::SafeDelete<unsigned int>(indices);
+
+    testEmbeddingParams();
+    mEmb_rstep = (mEmb_rmax - mEmb_rmin) / static_cast<double>(mEmb_r_num);
+    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
+
+    numElems = mEmb_r_num;
+    counter = mEmb_phi_num + 1;
+
+    unsigned int numVerts = numElems * counter;
+    int numInds = static_cast<int>(numElems * counter * 2);
+
+    verts = new float[numVerts * 3];
+    indices = new unsigned int[numInds];
+
+    float* vptr = verts;
+    unsigned int* iptr = indices;
+
+    unsigned int vnum;
+
+    // TODO ---------------------
+
+    for (unsigned int k = 0; k < counter; k++) {
+        double phi = k * mEmb_phistep;
+
+        for (unsigned int j = 0; j < numElems; j++) {
+            double r = mEmb_rmin + j * mEmb_rstep;
+            double x = r * cos(phi);
+            double y = r * sin(phi);
+
+            if (r >= rho_s) {
+                double z = 2.0 * sqrt(rho_s) * sqrt(fabs(r - rho_s));
+                *(vptr++) = static_cast<float>(x);
+                *(vptr++) = static_cast<float>(y);
+                *(vptr++) = static_cast<float>(z);
+
+                vnum = k * numElems + j;
+                *(iptr++) = vnum;
+                *(iptr++) = vnum + numElems;
+            }
+        }
+    }
+
+    return numVerts;
 }
 
 bool MetricSchwarzschildIsotropic::report(const vec4 pos, const vec4, char*& text)

@@ -59,6 +59,13 @@ public:
 
     virtual bool setParam(const char* pName, double val);
 
+    virtual bool transToEmbedding(vec4 p, vec4& ep);
+    virtual bool setEmbeddingParam(const char* name, double val);
+    virtual bool testEmbeddingParams();
+
+    virtual unsigned int getEmbeddingVertices(
+        float*& verts, unsigned int*& indices, unsigned int& numElems, unsigned int& counter);
+
     virtual bool report(const vec4 pos, const vec4 cdir, char*& text);
 
     bool calcBetaOfCircOrbit(const double* pos, double& beta);
@@ -82,6 +89,13 @@ protected:
     double rho_lso; // last stable timelike circular orbit
 
     double rho;
+
+    double mEmb_rmin;
+    double mEmb_rmax;
+    double mEmb_rstep;
+    double mEmb_phistep;
+    unsigned int mEmb_r_num;
+    unsigned int mEmb_phi_num;
 };
 
 } // end namespace m4d

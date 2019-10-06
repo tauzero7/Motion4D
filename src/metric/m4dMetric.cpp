@@ -660,11 +660,12 @@ bool Metric::calcProduct(const vec4 pos, const vec4 u, const vec4 v, double& pro
  */
 void Metric::setCoordType(enum_coordinate_type coord_type)
 {
+    double DOUBLE_MAX = std::numeric_limits<double>::max();
     mCoordType = coord_type;
     for (unsigned int i = 0; i < 4; i++) {
         mScoordType[i].type = enum_scoord_linear;
-        mScoordType[i].min = -DBL_MAX;
-        mScoordType[i].max = DBL_MAX;
+        mScoordType[i].min = -DOUBLE_MAX;
+        mScoordType[i].max = DOUBLE_MAX;
         mScoordType[i].character = enum_cchar_spacelike;
     }
     mScoordType[0].character = enum_cchar_timelike;
@@ -1429,10 +1430,11 @@ void Metric::setStandardValues()
     mCoordNames[2] = std::string("x2");
     mCoordNames[3] = std::string("x3");
 
+    double DOUBLE_MAX = std::numeric_limits<double>::max();
     for (unsigned int i = 0; i < 4; i++) {
         mScoordType[i].type = enum_scoord_linear;
-        mScoordType[i].min = -DBL_MAX;
-        mScoordType[i].max = DBL_MAX;
+        mScoordType[i].min = -DOUBLE_MAX;
+        mScoordType[i].max = DOUBLE_MAX;
         mScoordType[i].character = enum_cchar_spacelike;
     }
     mScoordType[0].character = enum_cchar_timelike;

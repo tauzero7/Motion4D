@@ -24,6 +24,7 @@
 // -------------------------------------------------------------------------------
 
 #include "m4dGeodesic.h"
+#include <limits>
 
 namespace m4d {
 
@@ -40,10 +41,10 @@ Geodesic::Geodesic(Metric* metric, enum_geodesic_type type)
     setKappa();
 
     for (int i = 0; i < 4; i++) {
-        mBoundBoxMin[i] = -DBL_MAX;
-        mBoundBoxMax[i] = DBL_MAX;
+        mBoundBoxMin[i] = -std::numeric_limits<double>::max();
+        mBoundBoxMax[i] = std::numeric_limits<double>::max();
     }
-    //mBoundBoxMax[0] = 50.0;
+    // mBoundBoxMax[0] = 50.0;
 
     mCalcWithParTransport = false;
     mNumCoords = 8;
@@ -53,9 +54,7 @@ Geodesic::Geodesic(Metric* metric, enum_geodesic_type type)
     resizeFac = DEF_RESIZE_FACTOR;
 }
 
-Geodesic::~Geodesic()
-{
-}
+Geodesic::~Geodesic() {}
 
 // *********************************** public methods ******************************
 
@@ -74,8 +73,7 @@ void Geodesic::setGeodesicType(enum_geodesic_type type)
  *
  * \return type of geodesic.
  */
-enum_geodesic_type
-Geodesic::type()
+enum_geodesic_type Geodesic::type()
 {
     return mType;
 }
@@ -93,10 +91,12 @@ bool Geodesic::setParam(std::string paramName, double value)
 {
     if (paramName.compare("stepctrl") == 0) {
         mStepsizeControlled = (int(value) == 1);
-    } else if (paramName.compare("eps_a") == 0 || paramName.compare("epsilon_abs") == 0) {
+    }
+    else if (paramName.compare("eps_a") == 0 || paramName.compare("epsilon_abs") == 0) {
         epsilon_abs = value;
         return true;
-    } else if (paramName.compare("eps_r") == 0 || paramName.compare("epsilon_rel") == 0) {
+    }
+    else if (paramName.compare("eps_r") == 0 || paramName.compare("epsilon_rel") == 0) {
         epsilon_rel = value;
         return true;
     }
@@ -138,7 +138,8 @@ void Geodesic::setCalcWithParTransport(bool calcwith)
     mCalcWithParTransport = calcwith;
     if (mCalcWithParTransport) {
         mNumCoords = 24;
-    } else {
+    }
+    else {
         mNumCoords = 8;
     }
 }
@@ -175,8 +176,7 @@ void Geodesic::getResize(double& eps, double& fac)
  * \param initDir : initial coordinate direction.
  * \param cstr
  */
-enum_break_condition
-Geodesic::initializeGeodesic(const vec4 initPos, const vec4 initDir, double& cstr)
+enum_break_condition Geodesic::initializeGeodesic(const vec4 initPos, const vec4 initDir, double& cstr)
 {
     resetAffineParam();
     resetAffineParamStep();
@@ -213,22 +213,22 @@ void Geodesic::printF(FILE* fptr)
 void Geodesic::setKappa()
 {
     switch (mType) {
-    case enum_geodesic_lightlike: {
-        mKappa = 0.0;
-        break;
-    }
-    case enum_geodesic_lightlike_sachs: {
-        mKappa = 0.0;
-        break;
-    }
-    case enum_geodesic_timelike: {
-        mKappa = -1.0;
-        break;
-    }
-    case enum_geodesic_spacelike: {
-        mKappa = 1.0;
-        break;
-    }
+        case enum_geodesic_lightlike: {
+            mKappa = 0.0;
+            break;
+        }
+        case enum_geodesic_lightlike_sachs: {
+            mKappa = 0.0;
+            break;
+        }
+        case enum_geodesic_timelike: {
+            mKappa = -1.0;
+            break;
+        }
+        case enum_geodesic_spacelike: {
+            mKappa = 1.0;
+            break;
+        }
     }
 }
 
@@ -239,11 +239,11 @@ void Geodesic::setKappa()
  */
 bool Geodesic::calcDerivs(const double y[], double dydx[])
 {
-    //register int mu,j,k,l;
+    // register int mu,j,k,l;
     int mu, k, l;
 
     if (!mMetric->calcDerivs(y, dydx)) {
-        //double ch;
+        // double ch;
         mMetric->calculateChristoffels(y);
 
         for (mu = 0; mu < 4; mu++) {
@@ -326,15 +326,21 @@ bool Geodesic::calcDerivsSachsJacobi(const double y[], double dydx[])
             for (int k = 0; k < 4; k++)
                 for (int l = 0; l < 4; l++) {
                     dydx[DEF_TG_IDX + mu] -= mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_TG_IDX + l];
-                    dydx[DEF_DJ1_IDX + mu] -= 2.0 * mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_DJ1_IDX + l];
-                    dydx[DEF_DJ2_IDX + mu] -= 2.0 * mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_DJ2_IDX + l];
+                    dydx[DEF_DJ1_IDX + mu]
+                        -= 2.0 * mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_DJ1_IDX + l];
+                    dydx[DEF_DJ2_IDX + mu]
+                        -= 2.0 * mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_DJ2_IDX + l];
 
-                    dydx[DEF_SA1_IDX + mu] -= mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_SA1_IDX + l];
-                    dydx[DEF_SA2_IDX + mu] -= mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_SA2_IDX + l];
+                    dydx[DEF_SA1_IDX + mu]
+                        -= mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_SA1_IDX + l];
+                    dydx[DEF_SA2_IDX + mu]
+                        -= mMetric->getChristoffel(k, l, mu) * y[DEF_TG_IDX + k] * y[DEF_SA2_IDX + l];
 
                     for (int n = 0; n < 4; n++) {
-                        dydx[DEF_DJ1_IDX + mu] -= mMetric->getChrisD(k, l, mu, n) * y[DEF_TG_IDX + k] * y[DEF_TG_IDX + l] * y[DEF_JAC1_IDX + n];
-                        dydx[DEF_DJ2_IDX + mu] -= mMetric->getChrisD(k, l, mu, n) * y[DEF_TG_IDX + k] * y[DEF_TG_IDX + l] * y[DEF_JAC2_IDX + n];
+                        dydx[DEF_DJ1_IDX + mu] -= mMetric->getChrisD(k, l, mu, n) * y[DEF_TG_IDX + k]
+                            * y[DEF_TG_IDX + l] * y[DEF_JAC1_IDX + n];
+                        dydx[DEF_DJ2_IDX + mu] -= mMetric->getChrisD(k, l, mu, n) * y[DEF_TG_IDX + k]
+                            * y[DEF_TG_IDX + l] * y[DEF_JAC2_IDX + n];
                     }
                 }
         }
@@ -355,13 +361,14 @@ void Geodesic::calcSachsBasis(const vec3 localNullDir, const vec3 locX, const ve
     if ((locZ ^ localNullDir).isZero()) {
         b1 = locY;
         b2 = locX;
-    } else {
+    }
+    else {
         b1 = (locZ ^ localNullDir).getNormalized();
         b2 = (b1 ^ localNullDir).getNormalized();
     }
-    //k.print(std::cerr,"k:  ");
-    //b1.print(std::cerr,"b1: ");
-    //b2.print(std::cerr,"b2: ");
+    // k.print(std::cerr,"k:  ");
+    // b1.print(std::cerr,"b1: ");
+    // b2.print(std::cerr,"b2: ");
     mSachsBasisB1 = vec3(b1[0], b1[1], b1[2]);
     mSachsBasisB2 = vec3(b2[0], b2[1], b2[2]);
 }
@@ -397,7 +404,8 @@ void Geodesic::calcJacobiParams(const double lambda, const double y[], vec5& cur
     mMetric->calcProduct(pos, jdir1, cb2, sj12, false);
     mMetric->calcProduct(pos, jdir2, cb1, sj21, false);
     mMetric->calcProduct(pos, jdir2, cb2, sj22, false);
-    // fprintf(stdout,"%f %f %f %f   %f %f %f %f\n",y[DEF_JAC1_IDX+0],y[DEF_JAC1_IDX+1],y[DEF_JAC1_IDX+2],y[DEF_JAC1_IDX+3],sj11,sj12,sj21,sj22);
+    // fprintf(stdout,"%f %f %f %f   %f %f %f
+    // %f\n",y[DEF_JAC1_IDX+0],y[DEF_JAC1_IDX+1],y[DEF_JAC1_IDX+2],y[DEF_JAC1_IDX+3],sj11,sj12,sj21,sj22);
 
     double j11, j12, j21, j22;
     j11 = -sj11;
