@@ -271,7 +271,7 @@ void Object::printStatus()
         this->coordDir[3]);
 
     fprintf(stderr, "\n");
-    fprintf(stderr, "#points: %d\n", (int)this->points.size());
+    fprintf(stderr, "#points: %d\n", static_cast<int>(this->points.size()));
 }
 
 unsigned int Object::getNumPoints()
@@ -282,7 +282,7 @@ unsigned int Object::getNumPoints()
 vec4 Object::getPosition(unsigned int num)
 {
     if (num >= this->points.size()) {
-        return vec4(0);
+        return vec4();
     }
     return this->points[num];
 }
@@ -331,15 +331,15 @@ void Object::clearAll()
  */
 void Object::resetAll()
 {
-    if (currMetric != NULL) {
+    if (currMetric != nullptr) {
         delete currMetric;
-        currMetric = NULL;
+        currMetric = nullptr;
     }
 
-    if (geodSolver != NULL) {
+    if (geodSolver != nullptr) {
         delete geodSolver;
     }
-    geodSolver = NULL;
+    geodSolver = nullptr;
 
     timeDirection = 1;
     tetradType = enum_nat_tetrad_default;
@@ -358,7 +358,7 @@ void Object::resetAll()
     axes_orient = 0;
     ksi = 0.0;
     chi = 90.0;
-    vel = 0.99;
+    vel = 0.5;
 
     isBaseInCoords = false;
     base[0] = vec4(1, 0, 0, 0);
@@ -607,7 +607,7 @@ bool Object::loadSettings(const char* filename, bool printset)
         std::string baseString = tokens[i][0];
         if (baseString.compare("METRIC") == 0 && tokens[i].size() > 1) {
             currMetric = metricDB.getMetric(tokens[i][1].c_str());
-            if (currMetric == NULL) {
+            if (currMetric == nullptr) {
                 return false;
             }
             ok &= true;
@@ -645,7 +645,7 @@ bool Object::loadSettings(const char* filename, bool printset)
         }
         else if (baseString.compare("GEOD_SOLVER_TYPE") == 0 && tokens[i].size() > 1) {
             geodSolverType = enum_integrator(atoi(tokens[i][1].c_str()));
-            if (currMetric != NULL) {
+            if (currMetric != nullptr) {
                 geodSolver = solverDB.getIntegrator(currMetric, geodSolverType);
             }
         }
@@ -736,7 +736,7 @@ bool Object::loadSettings(const char* filename, bool printset)
         currMetric->printF();
     }
 
-    if (geodSolver != NULL) {
+    if (geodSolver != nullptr) {
         geodSolver->setGeodesicType(type);
         geodSolver->setEpsilons(epsAbs, epsRel);
         geodSolver->setStepSizeControlled(stepsizeControlled);
@@ -754,7 +754,7 @@ bool Object::loadSettings(const char* filename, bool printset)
  */
 bool Object::saveSettings(const char* filename, const char* dat)
 {
-    if (currMetric == NULL) {
+    if (currMetric == nullptr) {
         return false;
     }
 
@@ -764,7 +764,7 @@ bool Object::saveSettings(const char* filename, const char* dat)
 #else
     fptr = fopen(filename, "w");
 #endif
-    if (fptr == NULL) {
+    if (fptr == nullptr) {
         fprintf(stderr, "Cannot open %s for output!\n", filename);
         return false;
     }
@@ -832,7 +832,7 @@ bool Object::saveSettings(const char* filename, const char* dat)
  */
 void Object::printSettings(FILE* fptr)
 {
-    if (currMetric == NULL || geodSolver == NULL) {
+    if (currMetric == nullptr || geodSolver == nullptr) {
         fprintf(fptr, "Error in Object::printSettings() ... no metric or solver set!\n");
         return;
     }

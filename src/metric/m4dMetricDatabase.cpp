@@ -131,7 +131,7 @@ void MetricDatabase::init()
 // ---------------------------------------------------
 Metric* MetricDatabase::initializeMetric(MetricList::enum_metric num)
 {
-    Metric* currMetric;
+    Metric* currMetric = nullptr;
 
     switch (num) {
 

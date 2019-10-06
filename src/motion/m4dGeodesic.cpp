@@ -430,12 +430,10 @@ void Geodesic::calcJacobiParams(const double lambda, const double y[], vec5& cur
     double dm = sqrt(2.0 * alpha * sz * cz - beta * sz * sz + R);
     double dp = sqrt(2.0 * alpha * szp * czp - beta * szp * szp + R);
 
-    double z1p, z2p, z1m, z2m;
-
-    z1p = j11 * czp + j12 * szp;
-    z2p = j21 * czp + j22 * szp;
-    z1m = j11 * cz + j12 * sz;
-    z2m = j21 * cz + j22 * sz;
+    double z1p = j11 * czp + j12 * szp;
+    double z2p = j21 * czp + j22 * szp;
+    // double z1m = j11 * cz + j12 * sz;
+    // double z2m = j21 * cz + j22 * sz;
 
 #if 0
     fprintf(stderr, "%12.8f %12.8f %12.8f %12.8f\n", z1p, z2p, z1m, z2m);

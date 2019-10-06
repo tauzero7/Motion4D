@@ -33,7 +33,7 @@ namespace m4d {
  */
 Motion::Motion(Metric* metric)
 {
-    assert(metric != NULL);
+    assert(metric != nullptr);
     mMetric = metric;
 
     mLambda = 0.0;
@@ -188,7 +188,7 @@ bool Motion::setLocalInitialDir(vec3, double)
  */
 void Motion::setMetric(Metric* metric)
 {
-    assert(metric != NULL);
+    assert(metric != nullptr);
     mMetric = metric;
 }
 
@@ -501,7 +501,7 @@ void Motion::getTetradInv(mat4& m)
  */
 void Motion::getTetrad(float* m)
 {
-    assert(m != NULL);
+    assert(m != nullptr);
     vec4 e0, e1, e2, e3;
     getTetrad(e0, e1, e2, e3);
 
@@ -519,7 +519,7 @@ void Motion::getTetrad(float* m)
  */
 void Motion::getTetradInv(float* m)
 {
-    assert(m != NULL);
+    assert(m != nullptr);
     mat4 matrix;
     getTetradInv(matrix);
 
@@ -731,7 +731,7 @@ double Motion::testConstraint()
  */
 void Motion::getCurrentArray(double* cy)
 {
-    if (cy == NULL) {
+    if (cy == nullptr) {
         return;
     }
     for (unsigned int i = 0; i < DEF_MAX_YS; i++) {

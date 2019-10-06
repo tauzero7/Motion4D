@@ -114,10 +114,10 @@ enum_break_condition GeodesicRK4::calculateGeodesic(
     const vec4 initPos, const vec4 initDir, const int maxNumPoints, vec4*& points, vec4*& dirs, int& numPoints)
 {
 
-    if (points != NULL) {
+    if (points != nullptr) {
         delete[] points;
     }
-    if (dirs != NULL) {
+    if (dirs != nullptr) {
         delete[] dirs;
     }
 
@@ -486,22 +486,22 @@ enum_break_condition GeodesicRK4::calcSachsJacobi(const vec4 initPos, const vec4
 {
     setCalcWithParTransport(true);
 
-    if (points != NULL) {
+    if (points != nullptr) {
         delete[] points;
     }
-    if (dirs != NULL) {
+    if (dirs != nullptr) {
         delete[] dirs;
     }
-    if (lambda != NULL) {
+    if (lambda != nullptr) {
         delete[] lambda;
     }
-    if (sachs0 != NULL) {
+    if (sachs0 != nullptr) {
         delete[] sachs0;
     }
-    if (sachs1 != NULL) {
+    if (sachs1 != nullptr) {
         delete[] sachs1;
     }
-    if (jacobi != NULL) {
+    if (jacobi != nullptr) {
         delete[] jacobi;
     }
 

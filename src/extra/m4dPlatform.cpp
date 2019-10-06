@@ -31,12 +31,13 @@
 // ---------------------------------------------------
 //    gettimeofday
 // ---------------------------------------------------
-int gettimeofday(struct timeval *tv, struct timezone *tz) {
+int gettimeofday(struct timeval* tv, struct timezone* tz)
+{
     FILETIME ft;
     unsigned __int64 tmpres = 0;
     static int tzflag;
 
-    if (NULL != tv) {
+    if (tv != nullptr) {
         GetSystemTimeAsFileTime(&ft);
 
         tmpres |= ft.dwHighDateTime;
@@ -44,13 +45,13 @@ int gettimeofday(struct timeval *tv, struct timezone *tz) {
         tmpres |= ft.dwLowDateTime;
 
         /*converting file time to unix epoch*/
-        tmpres /= 10;  /*convert into microseconds*/
+        tmpres /= 10; /*convert into microseconds*/
         tmpres -= DELTA_EPOCH_IN_MICROSECS;
         tv->tv_sec = (long)(tmpres / 1000000UL);
         tv->tv_usec = (long)(tmpres % 1000000UL);
     }
 
-    if (NULL != tz) {
+    if (tz != nullptr) {
         if (!tzflag) {
             _tzset();
             tzflag++;
@@ -59,10 +60,10 @@ int gettimeofday(struct timeval *tv, struct timezone *tz) {
         tz->tz_minuteswest = _timezone / 60;
         tz->tz_dsttime = _daylight;
 #else
-		tz->tz_minuteswest = _timezone / 60;
-		tz->tz_dsttime = _daylight;
-		//tz->tz_minuteswest = _get_timezone / 60;
-		//tz->tz_dsttime = _get_daylight;
+        tz->tz_minuteswest = _timezone / 60;
+        tz->tz_dsttime = _daylight;
+        // tz->tz_minuteswest = _get_timezone / 60;
+        // tz->tz_dsttime = _get_daylight;
 #endif
     }
 

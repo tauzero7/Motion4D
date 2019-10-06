@@ -60,7 +60,7 @@ GeodesicBS::~GeodesicBS()
         delete[] dd[i];
     }
     delete[] dd;
-    dd = NULL;
+    dd = nullptr;
 }
 
 // *********************************** public methods ******************************
@@ -181,12 +181,12 @@ enum_break_condition GeodesicBS::calculateGeodesic(const vec4 initPos, const vec
 enum_break_condition GeodesicBS::calculateGeodesic(
     const vec4 initPos, const vec4 initDir, const int maxNumPoints, vec4*& points, vec4*& dirs, int& numPoints)
 {
-    register int i;
+    int i;
 
-    if (points != NULL) {
+    if (points != nullptr) {
         delete[] points;
     }
-    if (dirs != NULL) {
+    if (dirs != nullptr) {
         delete[] dirs;
     }
 

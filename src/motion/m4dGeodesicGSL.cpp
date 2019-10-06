@@ -1001,20 +1001,20 @@ void GeodesicGSL::allocMemory()
 void GeodesicGSL::freeMemory()
 {
     if (mStepsizeControlled) {
-        if (mEvolve != NULL) {
+        if (mEvolve != nullptr) {
             gsl_odeiv_evolve_free(mEvolve);
         }
-        mEvolve = NULL;
-        if (mControl != NULL) {
+        mEvolve = nullptr;
+        if (mControl != nullptr) {
             gsl_odeiv_control_free(mControl);
         }
-        mControl = NULL;
+        mControl = nullptr;
     }
 
-    if (mStep != NULL) {
+    if (mStep != nullptr) {
         gsl_odeiv_step_free(mStep);
     }
-    mStep = NULL;
+    mStep = nullptr;
 }
 
 /*! Calculate next step of the geodesic.

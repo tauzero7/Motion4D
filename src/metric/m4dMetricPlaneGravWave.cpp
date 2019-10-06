@@ -31,7 +31,8 @@ namespace m4d {
 
 /*! Standard constructor for the PlaneGravWave metric.
  */
-MetricPlaneGravWave::MetricPlaneGravWave(double longExt, double degree) {
+MetricPlaneGravWave::MetricPlaneGravWave(double longExt, double degree)
+{
     mMetricName = "PlaneGravWave";
     setCoordType(enum_coordinate_cartesian);
 
@@ -39,7 +40,7 @@ MetricPlaneGravWave::MetricPlaneGravWave(double longExt, double degree) {
     mSpeedOfLight = 1.0;
     mGravConstant = 1.0;
 
-    uData = dmData = NULL;
+    uData = dmData = nullptr;
 
     addParam("long_ext", longExt);
     setParam("long_ext", longExt);
@@ -56,16 +57,17 @@ MetricPlaneGravWave::MetricPlaneGravWave(double longExt, double degree) {
     setStandardValues();
 }
 
-MetricPlaneGravWave::~MetricPlaneGravWave() {
-    if (uData != NULL) {
-        delete [] uData;
+MetricPlaneGravWave::~MetricPlaneGravWave()
+{
+    if (uData != nullptr) {
+        delete[] uData;
     }
-    uData = NULL;
+    uData = nullptr;
 
-    if (dmData != NULL) {
-        delete [] dmData;
+    if (dmData != nullptr) {
+        delete[] dmData;
     }
-    dmData = NULL;
+    dmData = nullptr;
 }
 
 // *********************************** public methods ******************************
@@ -73,7 +75,8 @@ MetricPlaneGravWave::~MetricPlaneGravWave() {
  *
  *  \param pos : pointer to position.
  */
-bool MetricPlaneGravWave::calculateMetric(const double* pos) {
+bool MetricPlaneGravWave::calculateMetric(const double* pos)
+{
     double c = mSpeedOfLight;
     double p = getValP(pos);
     double q = getValQ(pos);
@@ -102,12 +105,13 @@ bool MetricPlaneGravWave::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricPlaneGravWave::calculateChristoffels(const double* pos) {
+bool MetricPlaneGravWave::calculateChristoffels(const double* pos)
+{
     double c = mSpeedOfLight;
     double p = getValP(pos);
     double q = getValQ(pos);
-    double dp = getValDP(pos);		// diff(p,u)
-    double dq = getValDQ(pos);		// diff(q,u)
+    double dp = getValDP(pos); // diff(p,u)
+    double dq = getValDQ(pos); // diff(q,u)
 
     double t1 = p;
     double t2 = 1.0 / t1;
@@ -196,8 +200,9 @@ bool MetricPlaneGravWave::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricPlaneGravWave::calculateChrisD(const double* pos) {
-//	double c = mSpeedOfLight;
+bool MetricPlaneGravWave::calculateChrisD(const double* pos)
+{
+    //	double c = mSpeedOfLight;
 
     double p = getValP(pos);
     double q = getValQ(pos);
@@ -206,9 +211,8 @@ bool MetricPlaneGravWave::calculateChrisD(const double* pos) {
     double ddp = getValDDP(pos);
     double ddq = getValDDQ(pos);
 
-
     double t1 = dp * dp;
-    //double t2 = t - x;
+    // double t2 = t - x;
     double t3 = p;
     double t4 = ddp * t3;
     double t6 = t3 * t3;
@@ -481,7 +485,6 @@ bool MetricPlaneGravWave::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -489,8 +492,8 @@ bool MetricPlaneGravWave::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricPlaneGravWave::localToCoord(const double* pos, const double* ldir, double* dir,
-                                       enum_nat_tetrad_type) {
+void MetricPlaneGravWave::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     double c = mSpeedOfLight;
     double p = getValP(pos);
     double q = getValQ(pos);
@@ -509,8 +512,8 @@ void MetricPlaneGravWave::localToCoord(const double* pos, const double* ldir, do
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricPlaneGravWave::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                       enum_nat_tetrad_type) {
+void MetricPlaneGravWave::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     double c = mSpeedOfLight;
     double p = getValP(pos);
     double q = getValQ(pos);
@@ -527,7 +530,8 @@ void MetricPlaneGravWave::coordToLocal(const double* pos, const double* cdir, do
  *  \param pos    : pointer to position array.
  *  \return false : position is always valid.
  */
-bool MetricPlaneGravWave::breakCondition(const double* pos) {
+bool MetricPlaneGravWave::breakCondition(const double* pos)
+{
     bool br = false;
     double c = mSpeedOfLight;
     double t = pos[0];
@@ -545,31 +549,34 @@ bool MetricPlaneGravWave::breakCondition(const double* pos) {
  *	the degree 'mDegree' of the Fourier polynomial and reset the state of
  *	'dataCalculated'.
  */
-bool MetricPlaneGravWave::setParam(const char* pName, double val) {
+bool MetricPlaneGravWave::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
-    if (strcmp(pName,"long_ext") == 0) {
+    if (strcmp(pName, "long_ext") == 0) {
         if (val < eps) {
             mLongExt = eps;
             dataCalculated = false;
-        } else {
+        }
+        else {
             mLongExt = val;
             dataCalculated = false;
         }
     }
-    else if (strcmp(pName,"degree") == 0) {
+    else if (strcmp(pName, "degree") == 0) {
         if (val < 1.0) {
             mDegree = 1.0;
             dataCalculated = false;
-        } else {
+        }
+        else {
             mDegree = val;
             dataCalculated = false;
         }
 
-        if (uData != NULL) {
-            delete [] uData;
+        if (uData != nullptr) {
+            delete[] uData;
         }
-        if (dmData != NULL) {
-            delete [] dmData;
+        if (dmData != nullptr) {
+            delete[] dmData;
         }
 
         int n = static_cast<int>(mDegree);
@@ -581,7 +588,8 @@ bool MetricPlaneGravWave::setParam(const char* pName, double val) {
     return true;
 }
 
-bool MetricPlaneGravWave::transToTwoPlusOne(vec4 p, vec4 & cp) {
+bool MetricPlaneGravWave::transToTwoPlusOne(vec4 p, vec4& cp)
+{
     vec4 tp;
     TransCoordinates::toCartesianCoord(mCoordType, p, tp);
     cp = vec4(tp[0], tp[1], tp[2], tp[0]);
@@ -599,7 +607,8 @@ bool MetricPlaneGravWave::transToTwoPlusOne(vec4 p, vec4 & cp) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricPlaneGravWave::testConstraint(const double y[], const double kappa) {
+double MetricPlaneGravWave::testConstraint(const double y[], const double kappa)
+{
     double c = mSpeedOfLight;
     double cm = 1.0 / c;
     double p = getValP(y);
@@ -620,7 +629,8 @@ double MetricPlaneGravWave::testConstraint(const double y[], const double kappa)
 
 /*! Generate report.
  */
-bool MetricPlaneGravWave::report(const vec4, const vec4, std::string &text) {
+bool MetricPlaneGravWave::report(const vec4, const vec4, std::string& text)
+{
     std::stringstream ss;
     ss << "Report for PlaneGravWave metric\n\tcoordinate : (t,x,y,z)\n";
     ss << "---------------------------------------------------------------\n";
@@ -628,8 +638,7 @@ bool MetricPlaneGravWave::report(const vec4, const vec4, std::string &text) {
     ss.precision(DEF_FIXED_REPORT_PRECISION);
     ss.setf(std::ios::fixed);
     ss << "  Longitudinal Extension ............. a = " << mLongExt << std::endl;
-    ss << "  Degree of the Fourier polynomial ... n = "
-       << static_cast<int>(mDegree) << std::endl;
+    ss << "  Degree of the Fourier polynomial ... n = " << static_cast<int>(mDegree) << std::endl;
 
     text = ss.str();
     return true;
@@ -638,7 +647,8 @@ bool MetricPlaneGravWave::report(const vec4, const vec4, std::string &text) {
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricPlaneGravWave::setStandardValues() {
+void MetricPlaneGravWave::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 2.0;
     mInitPos[2] = 0.0;
@@ -653,11 +663,12 @@ void MetricPlaneGravWave::setStandardValues() {
     mCoordNames[3] = std::string("z");
 }
 
-//TODO: Methoden getValP usw. noch anschaulicher gestalten.
+// TODO: Methoden getValP usw. noch anschaulicher gestalten.
 // ********************************* specific protected methods *****************************
 /*! Calculate the value of function p(u) at 'pos'.
  */
-double MetricPlaneGravWave::getValP(const double* pos) {
+double MetricPlaneGravWave::getValP(const double* pos)
+{
     double c = mSpeedOfLight;
     double t = pos[0];
     double x = pos[1];
@@ -676,15 +687,13 @@ double MetricPlaneGravWave::getValP(const double* pos) {
         double L = 0.0;
         double m = intConst;
 
-        L = 1.0 - u + 1.0 / pow(mLongExt, 2) * pow(u, 3) + 1.0 / (2.0
-                * pow(mLongExt, 3)) * pow(u, 4);
+        L = 1.0 - u + 1.0 / pow(mLongExt, 2) * pow(u, 3) + 1.0 / (2.0 * pow(mLongExt, 3)) * pow(u, 4);
 
         // Calculate Fourier polynomial for m(u).
         for (int k = 1; k < n; k++) {
             double k_d = static_cast<double>(k);
 
-            m += -fCoeffB[k] * mLongExt / (k_d * M_PI) * cos(k_d * M_PI / mLongExt
-                    * u);
+            m += -fCoeffB[k] * mLongExt / (k_d * M_PI) * cos(k_d * M_PI / mLongExt * u);
         }
 
         p = L * exp(m);
@@ -698,7 +707,8 @@ double MetricPlaneGravWave::getValP(const double* pos) {
 
 /*! Calculate the value of function q(u) at 'pos'.
  */
-double MetricPlaneGravWave::getValQ(const double* pos) {
+double MetricPlaneGravWave::getValQ(const double* pos)
+{
     double c = mSpeedOfLight;
     double t = pos[0];
     double x = pos[1];
@@ -717,15 +727,13 @@ double MetricPlaneGravWave::getValQ(const double* pos) {
         double L = 0.0;
         double m = intConst;
 
-        L = 1.0 - u + 1.0 / pow(mLongExt, 2) * pow(u, 3) + 1.0 / (2.0
-                * pow(mLongExt, 3)) * pow(u, 4);
+        L = 1.0 - u + 1.0 / pow(mLongExt, 2) * pow(u, 3) + 1.0 / (2.0 * pow(mLongExt, 3)) * pow(u, 4);
 
         // Calculate Fourier polynomial for m(u).
         for (int k = 1; k < n; k++) {
             double k_d = static_cast<double>(k);
 
-            m += -fCoeffB[k] * mLongExt / (k_d * M_PI) * cos(k_d * M_PI / mLongExt
-                    * u);
+            m += -fCoeffB[k] * mLongExt / (k_d * M_PI) * cos(k_d * M_PI / mLongExt * u);
         }
 
         q = L * exp(-m);
@@ -739,7 +747,8 @@ double MetricPlaneGravWave::getValQ(const double* pos) {
 
 /*! Calculate the value of function diff(p(u),u) at 'pos'.
  */
-double MetricPlaneGravWave::getValDP(const double* pos) {
+double MetricPlaneGravWave::getValDP(const double* pos)
+{
     double c = mSpeedOfLight;
     double t = pos[0];
     double x = pos[1];
@@ -760,17 +769,14 @@ double MetricPlaneGravWave::getValDP(const double* pos) {
         double m = intConst;
         double dm = 0.0;
 
-        L = 1.0 - u + 1.0 / pow(mLongExt, 2) * pow(u, 3) + 1.0 / (2.0
-                * pow(mLongExt, 3)) * pow(u, 4);
-        dL = -1.0 + 3.0 / pow(mLongExt, 2) * pow(u, 2) + 2.0 / pow(mLongExt, 3)
-             * pow(u, 3);
+        L = 1.0 - u + 1.0 / pow(mLongExt, 2) * pow(u, 3) + 1.0 / (2.0 * pow(mLongExt, 3)) * pow(u, 4);
+        dL = -1.0 + 3.0 / pow(mLongExt, 2) * pow(u, 2) + 2.0 / pow(mLongExt, 3) * pow(u, 3);
 
         // Calculate Fourier polynomial for m(u).
         for (int k = 1; k < n; k++) {
             double k_d = static_cast<double>(k);
 
-            m += -fCoeffB[k] * mLongExt / (k_d * M_PI) * cos(k_d * M_PI / mLongExt
-                    * u);
+            m += -fCoeffB[k] * mLongExt / (k_d * M_PI) * cos(k_d * M_PI / mLongExt * u);
         }
         // Calculate Fourier polynomial for dm/du.
         for (int k = 1; k < n; k++) {
@@ -790,7 +796,8 @@ double MetricPlaneGravWave::getValDP(const double* pos) {
 
 /*! Calculate the value of function diff(q(u),u) at 'pos'.
  */
-double MetricPlaneGravWave::getValDQ(const double* pos) {
+double MetricPlaneGravWave::getValDQ(const double* pos)
+{
     double c = mSpeedOfLight;
     double t = pos[0];
     double x = pos[1];
@@ -811,17 +818,14 @@ double MetricPlaneGravWave::getValDQ(const double* pos) {
         double m = intConst;
         double dm = 0.0;
 
-        L = 1.0 - u + 1.0 / pow(mLongExt, 2) * pow(u, 3) + 1.0 / (2.0
-                * pow(mLongExt, 3)) * pow(u, 4);
-        dL = -1.0 + 3.0 / pow(mLongExt, 2) * pow(u, 2) + 2.0 / pow(mLongExt, 3)
-             * pow(u, 3);
+        L = 1.0 - u + 1.0 / pow(mLongExt, 2) * pow(u, 3) + 1.0 / (2.0 * pow(mLongExt, 3)) * pow(u, 4);
+        dL = -1.0 + 3.0 / pow(mLongExt, 2) * pow(u, 2) + 2.0 / pow(mLongExt, 3) * pow(u, 3);
 
         // Calculate Fourier polynomial for m(u).
         for (int k = 1; k < n; k++) {
             double k_d = static_cast<double>(k);
 
-            m += -fCoeffB[k] * mLongExt / (k_d * M_PI) * cos(k_d * M_PI / mLongExt
-                    * u);
+            m += -fCoeffB[k] * mLongExt / (k_d * M_PI) * cos(k_d * M_PI / mLongExt * u);
         }
         // Calculate Fourier polynomial for dm/du.
         for (int k = 1; k < n; k++) {
@@ -841,7 +845,8 @@ double MetricPlaneGravWave::getValDQ(const double* pos) {
 
 /*! Calculate the value of function diff(diff(p(u),u),u) at 'pos'.
  */
-double MetricPlaneGravWave::getValDDP(const double* pos) {
+double MetricPlaneGravWave::getValDDP(const double* pos)
+{
     double c = mSpeedOfLight;
     double t = pos[0];
     double x = pos[1];
@@ -873,19 +878,19 @@ double MetricPlaneGravWave::getValDDP(const double* pos) {
         double dm = 0.0;
         double ddm = 0.0;
 
-        L = 1.0 - u + u3 / mLongExt2   +  u4 / (2.0 * mLongExt3);
+        L = 1.0 - u + u3 / mLongExt2 + u4 / (2.0 * mLongExt3);
         dL = -1.0 + 3.0 * u2 / mLongExt2 + 2.0 * u3 / mLongExt3;
         ddL = 6.0 * (u / mLongExt2 + u2 / mLongExt3);
-        ddm = -sqrt(3.0 / (u2 + u * mLongExt)) * (-2.0 * mLongExt3 * u2 - 5.0 * mLongExt * u4
-                - 2.0 * u5 + 4.0 * mLongExt3 * u - 4.0 * mLongExt2 * u3 + mLongExt4) /
-              pow((2.0 * mLongExt3 * u - 2.0 * mLongExt * u3 - u4 - 2.0 * mLongExt3), 1.5);
+        ddm = -sqrt(3.0 / (u2 + u * mLongExt))
+            * (-2.0 * mLongExt3 * u2 - 5.0 * mLongExt * u4 - 2.0 * u5 + 4.0 * mLongExt3 * u - 4.0 * mLongExt2 * u3
+                + mLongExt4)
+            / pow((2.0 * mLongExt3 * u - 2.0 * mLongExt * u3 - u4 - 2.0 * mLongExt3), 1.5);
 
         // Calculate Fourier polynomial for m(u).
         for (int k = 1; k < n; k++) {
             double k_d = static_cast<double>(k);
 
-            m += -fCoeffB[k] * mLongExt / (k_d * M_PI) * cos(k_d * M_PI / mLongExt
-                    * u);
+            m += -fCoeffB[k] * mLongExt / (k_d * M_PI) * cos(k_d * M_PI / mLongExt * u);
         }
         // Calculate Fourier polynomial for dm/du.
         for (int k = 1; k < n; k++) {
@@ -905,7 +910,8 @@ double MetricPlaneGravWave::getValDDP(const double* pos) {
 
 /*! Calculate the value of function diff(diff(q(u),u),u) at 'pos'.
  */
-double MetricPlaneGravWave::getValDDQ(const double* pos) {
+double MetricPlaneGravWave::getValDDQ(const double* pos)
+{
     double c = mSpeedOfLight;
     double t = pos[0];
     double x = pos[1];
@@ -937,19 +943,19 @@ double MetricPlaneGravWave::getValDDQ(const double* pos) {
         double dm = 0.0;
         double ddm = 0.0;
 
-        L = 1.0 - u + u3 / mLongExt2   +  u4 / (2.0 * mLongExt3);
+        L = 1.0 - u + u3 / mLongExt2 + u4 / (2.0 * mLongExt3);
         dL = -1.0 + 3.0 * u2 / mLongExt2 + 2.0 * u3 / mLongExt3;
         ddL = 6.0 * (u / mLongExt2 + u2 / mLongExt3);
-        ddm = -sqrt(3.0 / (u2 + u * mLongExt)) * (-2.0 * mLongExt3 * u2 - 5.0 * mLongExt * u4
-                - 2.0 * u5 + 4.0 * mLongExt3 * u - 4.0 * mLongExt2 * u3 + mLongExt4) /
-              pow((2.0 * mLongExt3 * u - 2.0 * mLongExt * u3 - u4 - 2.0 * mLongExt3), 1.5);
+        ddm = -sqrt(3.0 / (u2 + u * mLongExt))
+            * (-2.0 * mLongExt3 * u2 - 5.0 * mLongExt * u4 - 2.0 * u5 + 4.0 * mLongExt3 * u - 4.0 * mLongExt2 * u3
+                + mLongExt4)
+            / pow((2.0 * mLongExt3 * u - 2.0 * mLongExt * u3 - u4 - 2.0 * mLongExt3), 1.5);
 
         // Calculate Fourier polynomial for m(u).
         for (int k = 1; k < n; k++) {
             double k_d = static_cast<double>(k);
 
-            m += -fCoeffB[k] * mLongExt / (k_d * M_PI) * cos(k_d * M_PI / mLongExt
-                    * u);
+            m += -fCoeffB[k] * mLongExt / (k_d * M_PI) * cos(k_d * M_PI / mLongExt * u);
         }
         // Calculate Fourier polynomial for dm/du.
         for (int k = 1; k < n; k++) {
@@ -978,14 +984,14 @@ double MetricPlaneGravWave::getValDDQ(const double* pos) {
  *  						 coefficients \f$ a_k \f$ vanish and only the coefficients
  *  						 \f$ b_k \f$ have to be calculated.
  */
-void MetricPlaneGravWave::calcFourierCoeff() {
-    assert(uData != NULL);
-    assert(dmData != NULL);
+void MetricPlaneGravWave::calcFourierCoeff()
+{
+    assert(uData != nullptr);
+    assert(dmData != nullptr);
     int n = static_cast<int>(mDegree);
     int N = 2 * n;
-    //double uData[N + 1];
-    //double dmData[N + 1];
-
+    // double uData[N + 1];
+    // double dmData[N + 1];
 
     intConst = 0.0;
     fCoeffB.clear();
@@ -1002,14 +1008,15 @@ void MetricPlaneGravWave::calcFourierCoeff() {
 
     // Create an odd continued data set of dm/du.
     for (int i = 0; i <= n; i++) {
-        dmData[i] = -2.0 * sqrt(3.0) * sqrt((uData[i] * uData[i] + mLongExt
-                                             * uData[i]) / (2.0 * pow(mLongExt, 3) * uData[i] - 2.0 * mLongExt
-                                                     * pow(uData[i], 3) - pow(uData[i], 4) - 2.0 * pow(mLongExt, 3)));
+        dmData[i] = -2.0 * sqrt(3.0)
+            * sqrt((uData[i] * uData[i] + mLongExt * uData[i])
+                / (2.0 * pow(mLongExt, 3) * uData[i] - 2.0 * mLongExt * pow(uData[i], 3) - pow(uData[i], 4)
+                    - 2.0 * pow(mLongExt, 3)));
 
-        dmData[n + i] = 2.0 * sqrt(3.0) * sqrt((uData[n + i] * uData[n + i]
-                                                - mLongExt * uData[n + i]) / (-2.0 * pow(mLongExt, 3) * uData[n + i]
-                                                        + 2.0 * mLongExt * pow(uData[n + i], 3) - pow(uData[n + i], 4) - 2.0
-                                                        * pow(mLongExt, 3)));
+        dmData[n + i] = 2.0 * sqrt(3.0)
+            * sqrt((uData[n + i] * uData[n + i] - mLongExt * uData[n + i])
+                / (-2.0 * pow(mLongExt, 3) * uData[n + i] + 2.0 * mLongExt * pow(uData[n + i], 3) - pow(uData[n + i], 4)
+                    - 2.0 * pow(mLongExt, 3)));
     }
 
     // Note: The variable u must be multiplied with the factor M_PI/mLongExt
@@ -1019,8 +1026,7 @@ void MetricPlaneGravWave::calcFourierCoeff() {
             double k_d = static_cast<double>(k);
             double N_d = static_cast<double>(N);
 
-            fCoeffB[k] += 2.0 / N_d * dmData[i] * sin(k_d * M_PI / mLongExt
-                          * uData[i]);
+            fCoeffB[k] += 2.0 / N_d * dmData[i] * sin(k_d * M_PI / mLongExt * uData[i]);
         }
     }
 

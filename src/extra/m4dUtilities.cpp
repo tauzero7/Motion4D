@@ -255,7 +255,7 @@ float* readFloatArray(std::string filename, int& x, int& y, int& c)
         in.seekg(i + 1);
     }
 
-    float* array = NULL;
+    float* array = nullptr;
     if (strncmp(buf, "HEAD", 4) == 0) {
         int hdrSize;
         in.read((char*)&hdrSize, sizeof(int)); // header size
@@ -264,7 +264,7 @@ float* readFloatArray(std::string filename, int& x, int& y, int& c)
         in.read((char*)&c, sizeof(int)); // numChannels
         in.read((char*)&bufd, sizeof(char) * 4);
         if (strncmp(bufd, "DATA", 4) == 0) {
-            if (array != NULL) {
+            if (array != nullptr) {
                 delete[] array;
             }
             array = new float[x * y * c];
@@ -313,7 +313,7 @@ bool CopyString(const char* src, char*& dest)
     bool isOkay = true;
 #ifdef _WIN32
     dest = new char[len + 4];
-    isOkay &= (strncpy_s(dest, len + 4, src, len) == NULL);
+    isOkay &= (strncpy_s(dest, len + 4, src, len) == nullptr);
 #else
     dest = new char[len + 2];
     isOkay &= (strcpy(dest, src) != nullptr);
