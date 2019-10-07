@@ -313,7 +313,7 @@ bool CopyString(const char* src, char*& dest)
     bool isOkay = true;
 #ifdef _WIN32
     dest = new char[len + 4];
-    isOkay &= (strncpy_s(dest, len + 4, src, len) == nullptr);
+    isOkay &= (strncpy_s(dest, len + 4, src, len) == 0);
 #else
     dest = new char[len + 2];
     isOkay &= (strcpy(dest, src) != nullptr);
