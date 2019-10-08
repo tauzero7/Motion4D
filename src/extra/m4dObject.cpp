@@ -232,7 +232,7 @@ enum_break_condition Object::calculateGeodesic()
     geodSolver->setGeodesicType(this->type);
     geodSolver->setAffineParamStep(this->stepsize);
     return geodSolver->calculateGeodesic(
-        this->startPos, this->coordDir, this->maxNumPoints, this->points, this->dirs, this->lambda);
+        this->startPos, this->coordDir, static_cast<int>(this->maxNumPoints), this->points, this->dirs, this->lambda);
 }
 
 enum_break_condition Object::calcSachsJacobi()
@@ -251,7 +251,7 @@ enum_break_condition Object::calcSachsJacobi()
     vec3 locZ = vec3(0.0, 0.0, 1.0);
 
     return geodSolver->calcSachsJacobi(this->startPos, this->coordDir, localNullDir, locX, locY, locZ, this->base[0],
-        this->base[1], this->base[2], this->base[3], this->tetradType, this->maxNumPoints, this->points, this->dirs,
+        this->base[1], this->base[2], this->base[3], this->tetradType, static_cast<int>(this->maxNumPoints), this->points, this->dirs,
         this->lambda, this->sachs1, this->sachs2, this->jacobi, this->maxJacobi);
 }
 
@@ -400,7 +400,7 @@ bool Object::getParam(const char* paramName, int& paramValue)
         return true;
     }
     else if (strcmp(paramName, "maxNumPoints") == 0) {
-        paramValue = (int)maxNumPoints;
+        paramValue = static_cast<int>(maxNumPoints);
         return true;
     }
     return false;
@@ -620,12 +620,12 @@ bool Object::loadSettings(const char* filename, bool printset)
         }
         else if (baseString.compare("INIT_POS") == 0 && tokens[i].size() > 4) {
             for (int j = 0; j < 4; j++) {
-                startPos[j] = atof(tokens[i][j + 1].c_str());
+                startPos[j] = atof(tokens[i][static_cast<size_t>(j + 1)].c_str());
             }
         }
         else if (baseString.compare("INIT_DIR") == 0 && tokens[i].size() > 3) {
             for (int j = 0; j < 3; j++) {
-                startDir[j] = atof(tokens[i][j + 1].c_str());
+                startDir[j] = atof(tokens[i][static_cast<size_t>(j + 1)].c_str());
             }
         }
         else if (baseString.compare("INIT_ANGLE_VEL") == 0 && tokens[i].size() > 3) {
@@ -656,7 +656,7 @@ bool Object::loadSettings(const char* filename, bool printset)
                 j++;
             }
             if (j < NUM_ENUM_GEODESIC_TYPE) {
-                type = (enum_geodesic_type)j;
+                type = static_cast<enum_geodesic_type>(j);
             }
             else {
                 fprintf(stderr, "m4dObject::loadSettings() ... geodesic type not recognized! Please check ini-file.");
@@ -689,29 +689,29 @@ bool Object::loadSettings(const char* filename, bool printset)
         // else if (baseString.compare("RESIZE_EPSILON")==0 && tokens[i].size()>1)
         //   epsResize = atof(tokens[i][1].c_str());
         else if (baseString.compare("MAX_NUM_POINTS") == 0 && tokens[i].size() > 1) {
-            maxNumPoints = atoi(tokens[i][1].c_str());
+            maxNumPoints = static_cast<unsigned int>(std::stoi(tokens[i][1].c_str()));
         }
         else if (baseString.compare("TETRAD_TYPE") == 0 && tokens[i].size() > 1) {
             tetradType = enum_nat_tetrad_type(atoi(tokens[i][1].c_str()));
         }
         else if (baseString.compare("BASE_0") == 0 && tokens[i].size() > 4) {
             for (int j = 0; j < 4; j++) {
-                base[0][j] = atof(tokens[i][j + 1].c_str());
+                base[0][j] = atof(tokens[i][static_cast<size_t>(j + 1)].c_str());
             }
         }
         else if (baseString.compare("BASE_1") == 0 && tokens[i].size() > 4) {
             for (int j = 0; j < 4; j++) {
-                base[1][j] = atof(tokens[i][j + 1].c_str());
+                base[1][j] = atof(tokens[i][static_cast<size_t>(j + 1)].c_str());
             }
         }
         else if (baseString.compare("BASE_2") == 0 && tokens[i].size() > 4) {
             for (int j = 0; j < 4; j++) {
-                base[2][j] = atof(tokens[i][j + 1].c_str());
+                base[2][j] = atof(tokens[i][static_cast<size_t>(j + 1)].c_str());
             }
         }
         else if (baseString.compare("BASE_3") == 0 && tokens[i].size() > 4) {
             for (int j = 0; j < 4; j++) {
-                base[3][j] = atof(tokens[i][j + 1].c_str());
+                base[3][j] = atof(tokens[i][static_cast<size_t>(j + 1)].c_str());
             }
         }
         else if (baseString.compare("BOOST") == 0 && tokens[i].size() > 3) {
@@ -796,7 +796,7 @@ bool Object::saveSettings(const char* filename, const char* dat)
     fprintf(fptr, "INIT_ANGLE_VEL   %18.14f %18.14f %18.14f\n", ksi, chi, vel);
     fprintf(fptr, "TIME_DIR          %d\n", timeDirection);
     fprintf(fptr, "AXES_ORIENT       %d\n", axes_orient);
-    fprintf(fptr, "GEOD_SOLVER_TYPE  %d\n", int(geodSolverType));
+    fprintf(fptr, "GEOD_SOLVER_TYPE  %d\n", static_cast<int>(geodSolverType));
     fprintf(fptr, "GEODESIC_TYPE     %s\n", stl_geodesic_type[type]);
     if (stepsizeControlled) {
         fprintf(fptr, "STEPSIZE_CTRL     1\n");
