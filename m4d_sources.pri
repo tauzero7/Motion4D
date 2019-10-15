@@ -40,14 +40,16 @@ M4D_METRIC_HEADERS += \
         $$M4D_SRC_DIR/metric/m4dMetricMinkowski.h \
         $$M4D_SRC_DIR/metric/m4dMetricMorrisThorne.h \
         $$M4D_SRC_DIR/metric/m4dMetricSchwarzschild.h \
-        $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildIsotropic.h
+        $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildIsotropic.h \
+        $$M4D_SRC_DIR/metric/m4dMetricCosmicStringSchwarzschild.h
 
 M4D_METRIC_SOURCES +=  \
         $$M4D_SRC_DIR/metric/m4dMetricKerrBL.cpp \
         $$M4D_SRC_DIR/metric/m4dMetricMinkowski.cpp \
         $$M4D_SRC_DIR/metric/m4dMetricSchwarzschild.cpp \
         $$M4D_SRC_DIR/metric/m4dMetricMorrisThorne.cpp \
-        $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildIsotropic.cpp
+        $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildIsotropic.cpp \
+        $$M4D_SRC_DIR/metric/m4dMetricCosmicStringSchwarzschild.cpp
 
 #
 #  Further metrics
@@ -64,7 +66,6 @@ use_all_metrics {
             $$M4D_SRC_DIR/metric/m4dMetricBesselGravWaveCart.h \
             $$M4D_SRC_DIR/metric/m4dMetricBonnor.h \
             $$M4D_SRC_DIR/metric/m4dMetricChazyCurzonRot.h \
-            $$M4D_SRC_DIR/metric/m4dMetricCosmicStringSchwarzschild.h \
             $$M4D_SRC_DIR/metric/m4dMetricCurzon.h \
             $$M4D_SRC_DIR/metric/m4dMetricDeSitterUniv.h \
             $$M4D_SRC_DIR/metric/m4dMetricDeSitterUnivConf.h \
@@ -122,7 +123,6 @@ use_all_metrics {
             $$M4D_SRC_DIR/metric/m4dMetricBesselGravWaveCart.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricBonnor.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricChazyCurzonRot.cpp \
-            $$M4D_SRC_DIR/metric/m4dMetricCosmicStringSchwarzschild.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricCurzon.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricDeSitterUniv.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricDeSitterUnivConf.cpp \

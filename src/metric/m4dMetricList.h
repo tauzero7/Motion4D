@@ -27,6 +27,7 @@
 #define M4D_METRIC_LIST_H
 
 #include "m4dMetric.h"
+#include "m4dMetricCosmicStringSchwarzschild.h"
 #include "m4dMetricKerrBL.h"
 #include "m4dMetricMinkowski.h"
 #include "m4dMetricMorrisThorne.h"
@@ -41,7 +42,6 @@
 #include "m4dMetricBesselGravWaveCart.h"
 #include "m4dMetricBonnor.h"
 #include "m4dMetricChazyCurzonRot.h"
-#include "m4dMetricCosmicStringSchwarzschild.h"
 #include "m4dMetricCurzon.h"
 #include "m4dMetricDeSitterUniv.h"
 #include "m4dMetricDeSitterUnivConf.h"
@@ -98,9 +98,9 @@ class API_M4D_EXPORT MetricList
 {
 public:
 #ifdef ALL_METRICS_AVAILABLE
-    static const int NUM_METRICS = 61;
+    static const int NUM_METRICS = 60;
 #else
-    static const int NUM_METRICS = 6;
+    static const int NUM_METRICS = 7;
 #endif // ALL_METRICS_AVAILABLE
 
 /* --------------------------------------------------------
@@ -146,7 +146,6 @@ public:
         enum_metric_bessel_grav_wave_cart,
         enum_metric_bonnor,
         enum_metric_chazy_curzon_rot,
-        enum_metric_cosmic_string_schwarzschild,
         enum_metric_curzon,
         enum_metric_einstein_rosen_wave_wwb,
         enum_metric_erezrosenvar,
@@ -197,7 +196,8 @@ public:
         enum_metric_schwarzschild,
         enum_metric_schwarzschild_isotropic,
         enum_metric_kerrbl,
-        enum_metric_morristhorne
+        enum_metric_morristhorne,
+        enum_metric_cosmic_string_schwarzschild
     };
 
 #endif // ALL_METRICS_AVAILABLE

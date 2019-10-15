@@ -1,42 +1,19 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricCosmicStringSchwarzschild.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricCosmicStringSchwarzschild.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dMetricCosmicStringSchwarzschild.h"
+#include "extra/m4dUtilities.h"
 
 namespace m4d {
 
 #define eps 1.0e-6
 
-
-/*! Standard constructor for the Schwarzschild metric.
- *
- * \param  mass : mass of the black hole.
- * \param  beta : string parameter.
- */
-MetricCosmicStringSchwarzschild::MetricCosmicStringSchwarzschild(double mass, double beta) {
-    mMetricName  = "CosmicStringSchwarzschild";
+MetricCosmicStringSchwarzschild::MetricCosmicStringSchwarzschild(double mass, double beta)
+{
+    mMetricName = "CosmicStringSchwarzschild";
     setCoordType(enum_coordinate_spherical);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -60,9 +37,9 @@ MetricCosmicStringSchwarzschild::MetricCosmicStringSchwarzschild(double mass, do
     }
     mHaveEmbedding = true;
 
-    mEmb_rmin    = rs;
-    mEmb_rmax    = 5.0 * rs;
-    mEmb_r_num   = 20.0;
+    mEmb_rmin = rs;
+    mEmb_rmax = 5.0 * rs;
+    mEmb_r_num = 20.0;
     mEmb_phi_num = 40.0;
     mEmb_rstep = (mEmb_rmax - mEmb_rmin) / mEmb_r_num;
     mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
@@ -74,20 +51,13 @@ MetricCosmicStringSchwarzschild::MetricCosmicStringSchwarzschild(double mass, do
     setStandardValues();
 }
 
-/*!
- */
-MetricCosmicStringSchwarzschild::~MetricCosmicStringSchwarzschild() {
-}
-
+MetricCosmicStringSchwarzschild::~MetricCosmicStringSchwarzschild() {}
 
 // *********************************** public methods ******************************
 
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
-bool MetricCosmicStringSchwarzschild::calculateMetric(const double* pos) {
-    double r     = pos[1];
+bool MetricCosmicStringSchwarzschild::calculateMetric(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -119,12 +89,9 @@ bool MetricCosmicStringSchwarzschild::calculateMetric(const double* pos) {
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
-bool MetricCosmicStringSchwarzschild::calculateChristoffels(const double* pos) {
-    double r     = pos[1];
+bool MetricCosmicStringSchwarzschild::calculateChristoffels(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -208,12 +175,9 @@ bool MetricCosmicStringSchwarzschild::calculateChristoffels(const double* pos) {
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
-bool MetricCosmicStringSchwarzschild::calculateChrisD(const double* pos) {
-    double r     = pos[1];
+bool MetricCosmicStringSchwarzschild::calculateChrisD(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -494,16 +458,10 @@ bool MetricCosmicStringSchwarzschild::calculateChrisD(const double* pos) {
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
-void MetricCosmicStringSchwarzschild::localToCoord(const double* pos, const double* ldir, double* dir,
-        enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricCosmicStringSchwarzschild::localToCoord(
+    const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
     double w = sqrt(1.0 - rs / r);
 
@@ -513,16 +471,10 @@ void MetricCosmicStringSchwarzschild::localToCoord(const double* pos, const doub
     dir[3] = ldir[3] / (r * mBeta * sin(theta));
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
-void MetricCosmicStringSchwarzschild::coordToLocal(const double* pos, const double* cdir, double* ldir,
-        enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricCosmicStringSchwarzschild::coordToLocal(
+    const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
     double w = sqrt(1.0 - rs / r);
 
@@ -532,29 +484,19 @@ void MetricCosmicStringSchwarzschild::coordToLocal(const double* pos, const doub
     ldir[3] = cdir[3] * r * mBeta * sin(theta);
 }
 
-
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
- *  \return false : position is valid.
- */
-bool MetricCosmicStringSchwarzschild::breakCondition(const double* pos) {
+bool MetricCosmicStringSchwarzschild::breakCondition(const double* pos)
+{
     bool br = false;
 
-    if ((pos[1] < 0.0) || (pos[1]*pos[1] <= (1.0 + eps)*rs * rs)) {
+    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + eps) * rs * rs)) {
         br = true;
     }
     return br;
 }
 
-/*! Calculate right hand side of the geodesic equation in first order form.
- *
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  dydx[] : pointer to right side of geodesic equation.
- */
-bool MetricCosmicStringSchwarzschild::calcDerivs(const double y[], double dydx[]) {
-    double r     = y[1];
+bool MetricCosmicStringSchwarzschild::calcDerivs(const double y[], double dydx[])
+{
+    double r = y[1];
     double theta = y[2];
 
     double c = mSpeedOfLight;
@@ -585,8 +527,6 @@ bool MetricCosmicStringSchwarzschild::calcDerivs(const double y[], double dydx[]
     return true;
 }
 
-
-
 /*! Tests whether the constraint equation is fulfilled.
  *
  *  The constraint equation for lightlike and timelike geodesics reads:
@@ -598,8 +538,9 @@ bool MetricCosmicStringSchwarzschild::calcDerivs(const double y[], double dydx[]
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricCosmicStringSchwarzschild::testConstraint(const double y[], const double kappa) {
-    double r     = y[1];
+double MetricCosmicStringSchwarzschild::testConstraint(const double y[], const double kappa)
+{
+    double r = y[1];
     double theta = y[2];
     double cm = 1.0 / mSpeedOfLight;
 
@@ -610,7 +551,8 @@ double MetricCosmicStringSchwarzschild::testConstraint(const double y[], const d
     double dph = y[7] * cm;
 
     double sum = -kappa;
-    sum += -(1.0 - rs / r) * dt * dt + dr * dr / (1.0 - rs / r) + r * r * (dth * dth + mBeta * mBeta * sin(theta) * sin(theta) * dph * dph);
+    sum += -(1.0 - rs / r) * dt * dt + dr * dr / (1.0 - rs / r)
+        + r * r * (dth * dth + mBeta * mBeta * sin(theta) * sin(theta) * dph * dph);
     return sum;
 }
 
@@ -624,15 +566,18 @@ double MetricCosmicStringSchwarzschild::testConstraint(const double y[], const d
  *  \return true  : success.
  *  \return false : position is not valid.
  */
-bool MetricCosmicStringSchwarzschild::calcProduct(const double* pos, const double* u, const double* v, double &prod, bool) {
+bool MetricCosmicStringSchwarzschild::calcProduct(
+    const double* pos, const double* u, const double* v, double& prod, bool)
+{
     prod = 0.0;
     if (breakCondition(pos)) {
         return false;
     }
 
-    double r     = pos[1];
+    double r = pos[1];
     double theta = pos[2];
-    prod = -mSpeedOfLight * mSpeedOfLight * (1.0 - rs / r) * u[0] * v[0] + u[1] * v[1] / (1.0 - rs / r) + r * r * (u[2] * v[2] + mBeta * mBeta * sin(theta) * sin(theta) * u[3] * v[3]);
+    prod = -mSpeedOfLight * mSpeedOfLight * (1.0 - rs / r) * u[0] * v[0] + u[1] * v[1] / (1.0 - rs / r)
+        + r * r * (u[2] * v[2] + mBeta * mBeta * sin(theta) * sin(theta) * u[3] * v[3]);
     return true;
 }
 
@@ -640,13 +585,14 @@ bool MetricCosmicStringSchwarzschild::calcProduct(const double* pos, const doubl
  *
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  */
-bool MetricCosmicStringSchwarzschild::setParam(const char* pName, double val) {
+bool MetricCosmicStringSchwarzschild::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
-    if (strcmp(pName,"mass") == 0) {
+    if (strcmp(pName, "mass") == 0) {
         mMass = val;
         rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
     }
-    else if (strcmp(pName,"beta") == 0) {
+    else if (strcmp(pName, "beta") == 0) {
         mBeta = val;
     }
     return true;
@@ -658,7 +604,8 @@ bool MetricCosmicStringSchwarzschild::setParam(const char* pName, double val) {
  *  \param  cp : reference to transformed point.
  *  \return true : success.
  */
-bool MetricCosmicStringSchwarzschild::transToTwoPlusOne(vec4 p, vec4 &cp) {
+bool MetricCosmicStringSchwarzschild::transToTwoPlusOne(vec4 p, vec4& cp)
+{
     vec4 tp;
     TransCoordinates::toCartesianCoord(mCoordType, p, tp);
     cp = vec4(tp[0], tp[1], tp[2], tp[0]);
@@ -672,7 +619,8 @@ bool MetricCosmicStringSchwarzschild::transToTwoPlusOne(vec4 p, vec4 &cp) {
  *  \return true : success.
  *  \return false : otherwise.
  */
-bool MetricCosmicStringSchwarzschild::transToEmbedding(vec4 p, vec4 &ep) {
+bool MetricCosmicStringSchwarzschild::transToEmbedding(vec4 p, vec4& ep)
+{
     vec4 cp;
     transToPseudoCart(p, cp);
 
@@ -695,19 +643,20 @@ bool MetricCosmicStringSchwarzschild::transToEmbedding(vec4 p, vec4 &ep) {
  *  \return true  : success.
  *  \return false : parameter not valid.
  */
-bool MetricCosmicStringSchwarzschild::setEmbeddingParam(const char* name, double val) {
+bool MetricCosmicStringSchwarzschild::setEmbeddingParam(const char* name, double val)
+{
     Metric::setEmbeddingParam(name, val);
 
-    if (strcmp(name,"emb_rmin") == 0) {
+    if (strcmp(name, "emb_rmin") == 0) {
         mEmb_rmin = val;
     }
-    else if (strcmp(name,"emb_rmax") == 0) {
+    else if (strcmp(name, "emb_rmax") == 0) {
         mEmb_rmax = val;
     }
-    else if (strcmp(name,"emb_r_num") == 0) {
+    else if (strcmp(name, "emb_r_num") == 0) {
         mEmb_r_num = val;
     }
-    else if (strcmp(name,"emb_phi_num") == 0) {
+    else if (strcmp(name, "emb_phi_num") == 0) {
         mEmb_phi_num = val;
     }
     return testEmbeddingParams();
@@ -717,7 +666,8 @@ bool MetricCosmicStringSchwarzschild::setEmbeddingParam(const char* name, double
  *  \return  true : all parameters are ok
  *  \return  false : at least one parameter had to be adjusted.
  */
-bool MetricCosmicStringSchwarzschild::testEmbeddingParams() {
+bool MetricCosmicStringSchwarzschild::testEmbeddingParams()
+{
     bool allOk = true;
     if (mEmb_rmin < rs) {
         mEmb_rmin = rs;
@@ -739,62 +689,54 @@ bool MetricCosmicStringSchwarzschild::testEmbeddingParams() {
     return allOk;
 }
 
-/*! Generate vertices for the embedding diagram.
- *
- *  \param verts : reference to vector of vertices.
- *  \param indices : reference to vector of indices.
- *  \param numElems : number of elements in a strip.
- *  \param counter  : number of strips.
- *  \return int : number of vertices.
- */
-//int MetricCosmicStringSchwarzschild::getEmbeddingVertices(std::vector<vec3> &verts,
-//        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter) {
-//    if (!verts.empty()) {
-//        verts.clear();
-//    }
+unsigned int MetricCosmicStringSchwarzschild::getEmbeddingVertices(
+    float*& verts, unsigned int*& indices, unsigned int& numElems, unsigned int& counter)
+{
+    m4d::SafeDelete<float>(verts);
+    m4d::SafeDelete<unsigned int>(indices);
 
-//    if (!indices.empty()) {
-//        indices.clear();
-//    }
+    testEmbeddingParams();
+    mEmb_rstep = (mEmb_rmax - mEmb_rmin) / mEmb_r_num;
+    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
 
-//    testEmbeddingParams();
-//    mEmb_rstep = (mEmb_rmax - mEmb_rmin) / mEmb_r_num;
-//    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
+    numElems = mEmb_r_num;
+    counter = mEmb_phi_num + 1;
 
-//    numElems = int(mEmb_r_num);
-//    counter  = int(mEmb_phi_num) + 1;
+    unsigned int numVerts = numElems * counter;
+    int numInds = static_cast<int>(numElems * counter * 2);
 
-//    int vnum;
+    verts = new float[numVerts * 3];
+    indices = new unsigned int[numInds];
 
-//    double x, y, z, r, phi;
-//    for (unsigned int k = 0; k < counter; k++) {
-//        phi = k * mEmb_phistep;
-//        for (unsigned int j = 0; j < numElems; j++) {
-//            r = mEmb_rmin + j * mEmb_rstep;
-//            x = r * cos(phi);
-//            y = r * sin(phi);
-//            if (r >= rs) {
-//                z = embFunc(r);
-//                verts.push_back(vec3(x, y, z));
+    float* vptr = verts;
+    unsigned int* iptr = indices;
 
-//                vnum = k * numElems + j;
+    unsigned int vnum;
 
-//                indices.push_back(vnum);
-//                indices.push_back(vnum + numElems);
-//            }
-//        }
-//    }
+    double x, y, z, r, phi;
+    for (unsigned int k = 0; k < counter; k++) {
+        phi = k * mEmb_phistep;
 
-//    int numVerts = (int)verts.size();
-//    int numInds  = (int)indices.size();
+        for (unsigned int j = 0; j < numElems; j++) {
+            r = mEmb_rmin + j * mEmb_rstep;
+            x = r * cos(phi);
+            y = r * sin(phi);
 
-//    if (2 * numVerts == numInds) {
-//        return numVerts;
-//    }
+            if (r >= rs) {
+                z = embFunc(r);
+                *(vptr++) = static_cast<float>(x);
+                *(vptr++) = static_cast<float>(y);
+                *(vptr++) = static_cast<float>(z);
 
-//    return 0;
-//}
+                vnum = k * numElems + j;
+                *(iptr++) = vnum;
+                *(iptr++) = vnum + numElems;
+            }
+        }
+    }
 
+    return numVerts;
+}
 
 /*! Effective potential.
  *  \param pos : initial position.
@@ -804,7 +746,9 @@ bool MetricCosmicStringSchwarzschild::testEmbeddingParams() {
  *  \param val : reference to effective potential value.
  *  \return true : effective potential exists at x.
  */
-bool MetricCosmicStringSchwarzschild::effPotentialValue(const vec4 pos, const vec4 cdir , enum_geodesic_type type, const double x, double &val) {
+bool MetricCosmicStringSchwarzschild::effPotentialValue(
+    const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double& val)
+{
     double kappa = 0.0;
     if (type == enum_geodesic_timelike) {
         kappa = -mSign;
@@ -826,7 +770,8 @@ bool MetricCosmicStringSchwarzschild::effPotentialValue(const vec4 pos, const ve
  *  \param val : reference to total energy value.
  *  \return true : effective potential exists at x.
  */
-bool MetricCosmicStringSchwarzschild::totEnergy(const vec4 pos, const vec4 cdir, const double , double &val) {
+bool MetricCosmicStringSchwarzschild::totEnergy(const vec4 pos, const vec4 cdir, const double, double& val)
+{
     if (pos[1] < rs + 1e-2) {
         return false;
     }
@@ -836,9 +781,10 @@ bool MetricCosmicStringSchwarzschild::totEnergy(const vec4 pos, const vec4 cdir,
     return true;
 }
 
-/*! Generate report.
- */
-bool MetricCosmicStringSchwarzschild::report(const vec4 pos, const vec4 cdir, std::string &text) {
+bool MetricCosmicStringSchwarzschild::report(const vec4 pos, const vec4 cdir, char*& text)
+{
+    SafeDelete<char>(text);
+
     std::stringstream ss;
     ss << "Report for SchwarzschildString metric\n\tcoordinates : (t,r,theta,phi)\n";
     ss << "------------------------------       ---------------------------------\n";
@@ -859,25 +805,27 @@ bool MetricCosmicStringSchwarzschild::report(const vec4 pos, const vec4 cdir, st
     ss << "  critical angle for null geodesic ..... ksiCrit = ";
     double ksicrit;
     if (calcKsiCrit(pos, ksicrit)) {
-        ss << ksicrit*RAD_TO_DEG << std::endl;
-    } else {
+        ss << ksicrit * RAD_TO_DEG << std::endl;
+    }
+    else {
         ss << "not valid here.";
     }
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ***************************** specific public methods ***************************
 /*!  Calculate the critical angle.
  *
- *   For an observer at distance \f$x_i=r_s/r_i\f$, r_i=pos[1], the black hole has an angular diameter of \f$\xi_{\mbox{crit}}\f$ with
- *    \f[ \xi_{\mbox{crit}} = \arcsin\sqrt{\frac{27}{4}x_i^2(1-x_i)} \f] .
+ *   For an observer at distance \f$x_i=r_s/r_i\f$, r_i=pos[1], the black hole has an angular diameter of
+ * \f$\xi_{\mbox{crit}}\f$ with \f[ \xi_{\mbox{crit}} = \arcsin\sqrt{\frac{27}{4}x_i^2(1-x_i)} \f] .
  *
  *  \param pos : current position
  *  \param ksicrit : reference to critical angle.
  */
-bool MetricCosmicStringSchwarzschild::calcKsiCrit(const vec4 pos, double &ksicrit) {
+bool MetricCosmicStringSchwarzschild::calcKsiCrit(const vec4 pos, double& ksicrit)
+{
     if (pos[1] < rs) {
         return false;
     }
@@ -888,9 +836,9 @@ bool MetricCosmicStringSchwarzschild::calcKsiCrit(const vec4 pos, double &ksicri
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
-void MetricCosmicStringSchwarzschild::setStandardValues() {
+
+void MetricCosmicStringSchwarzschild::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 3.0 * rs;
     mInitPos[2] = M_PI_2;
@@ -905,10 +853,8 @@ void MetricCosmicStringSchwarzschild::setStandardValues() {
     mCoordNames[3] = std::string("phi");
 }
 
-/*! Calculate embedding function
- *  \param r : radius.
- */
-double MetricCosmicStringSchwarzschild::embFunc(const double r) {
+double MetricCosmicStringSchwarzschild::embFunc(const double r)
+{
     double z = 0.0;
     if (mBeta * mBeta < 1.0 && (r - rs >= 0.0)) {
         double w = sqrt(r / (r - rs) - mBeta * mBeta);

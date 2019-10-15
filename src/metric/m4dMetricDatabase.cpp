@@ -159,6 +159,10 @@ Metric* MetricDatabase::initializeMetric(MetricList::enum_metric num)
             currMetric = new MetricMorrisThorne;
             break;
 
+        case MetricList::enum_metric_cosmic_string_schwarzschild:
+            currMetric = new MetricCosmicStringSchwarzschild;
+            break;
+
 #ifdef ALL_METRICS_AVAILABLE
         case enum_metric_alcubierre:
             currMetric = new MetricAlcubierre;
@@ -180,9 +184,6 @@ Metric* MetricDatabase::initializeMetric(MetricList::enum_metric num)
             break;
         case enum_metric_chazy_curzon_rot:
             currMetric = new MetricChazyCurzonRot;
-            break;
-        case enum_metric_cosmic_string_schwarzschild:
-            currMetric = new MetricCosmicStringSchwarzschild;
             break;
         case enum_metric_curzon:
             currMetric = new MetricCurzon;
