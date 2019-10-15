@@ -38,7 +38,7 @@ MetricSchwarzschildIsotropic::MetricSchwarzschildIsotropic(double mass)
     mHaveEmbedding = true;
 
     mEmb_rmin = rho_s;
-    mEmb_rmax = 5.0 * rho_s;
+    mEmb_rmax = 30.0 * rho_s;
     mEmb_r_num = 20;
     mEmb_phi_num = 40;
     mEmb_rstep = (mEmb_rmax - mEmb_rmin) / static_cast<double>(mEmb_r_num);
@@ -621,17 +621,15 @@ bool MetricSchwarzschildIsotropic::setParam(const char* pName, double val)
 
 bool MetricSchwarzschildIsotropic::transToEmbedding(vec4 p, vec4& ep)
 {
-    vec4 cp;
-    transToPseudoCart(p, cp);
-
-    // TODO ---------------------
-
-    double rho = p[1];
-    double x = cp[1];
-    double y = cp[2];
+    double x = p[1];
+    double y = p[2];
+    double z = p[3];
+    double rho = sqrt(x * x + y * y + z * z);
+    double rs = 4.0 * rho_s;
 
     if (rho >= rho_s) {
-        double z = 2.0 * sqrt(rho_s) * sqrt(rho - rho_s);
+        double r = rho * pow(1.0 + rho_s / rho, 2.0);
+        double z = 2.0 * sqrt(rs) * sqrt(r - rs);
         ep = vec4(p[0], x, y, z);
         return true;
     }
@@ -708,18 +706,19 @@ unsigned int MetricSchwarzschildIsotropic::getEmbeddingVertices(
 
     unsigned int vnum;
 
-    // TODO ---------------------
+    double rs = 4.0 * rho_s;
 
     for (unsigned int k = 0; k < counter; k++) {
         double phi = k * mEmb_phistep;
 
         for (unsigned int j = 0; j < numElems; j++) {
-            double r = mEmb_rmin + j * mEmb_rstep;
-            double x = r * cos(phi);
-            double y = r * sin(phi);
+            double rho = mEmb_rmin + j * mEmb_rstep;
+            double x = rho * cos(phi);
+            double y = rho * sin(phi);
+            double r = rho * pow(1.0 + rho_s / rho, 2.0);
 
-            if (r >= rho_s) {
-                double z = 2.0 * sqrt(rho_s) * sqrt(fabs(r - rho_s));
+            if (rho >= rho_s) {
+                double z = 2.0 * sqrt(rs) * sqrt(fabs(r - rs));
                 *(vptr++) = static_cast<float>(x);
                 *(vptr++) = static_cast<float>(y);
                 *(vptr++) = static_cast<float>(z);

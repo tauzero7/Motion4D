@@ -381,12 +381,12 @@ const unsigned int NUM_ENUM_GEODESIC_TYPE = 4;
 
 enum enum_geodesic_type {
     enum_geodesic_lightlike = 0,
-    enum_geodesic_lightlike_sachs,
     enum_geodesic_timelike,
-    enum_geodesic_spacelike
+    enum_geodesic_spacelike,
+    enum_geodesic_lightlike_sachs
 };
 
-const char stl_geodesic_type[NUM_ENUM_GEODESIC_TYPE][16] = { "lightlike", "lightlike_sachs", "timelike", "spacelike" };
+const char stl_geodesic_type[NUM_ENUM_GEODESIC_TYPE][16] = { "lightlike", "timelike", "spacelike", "lightlike_sachs" };
 
 /* --------------------------------------------------------
  *   Time direction
