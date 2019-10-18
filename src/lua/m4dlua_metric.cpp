@@ -51,7 +51,7 @@ void lua_reg_metric(lua_State* L) {
 
 
 int printMetricDB(lua_State* ) {
-    mObject.metricDB->printMetricList();
+    mObject.metricDB.printMetricList();
     return 0;
 }
 
@@ -85,7 +85,7 @@ int setMetric(lua_State* L) {
 
             for(unsigned int i=0; i<paramNames.size(); i++) {
                 if (getfield(L,paramNames[i].c_str(),paramVal))
-                    mObject.currMetric->setParam(paramNames[i],paramVal);
+                    mObject.currMetric->setParam(paramNames[i].c_str(),paramVal);
             }
         }
     }
@@ -121,7 +121,7 @@ int setMetricParam(lua_State* L) {
     }
 
     if (mObject.currMetric!=NULL) {
-        mObject.currMetric->setParam(paramName,paramValue);
+        mObject.currMetric->setParam(paramName.c_str(),paramValue);
     }
     return 0;
 }
@@ -146,7 +146,7 @@ int setMetricParams(lua_State* L) {
         if (lua_istable(L,-1)) {
             for(unsigned int i=0; i<paramNames.size(); i++) {
                 if (getfield(L,paramNames[i].c_str(),paramVal))
-                    mObject.currMetric->setParam(paramNames[i],paramVal);
+                    mObject.currMetric->setParam(paramNames[i].c_str(),paramVal);
             }
         }
     }
@@ -172,7 +172,7 @@ int getMetricParam(lua_State *L) {
         if (lua_isstring(L,-1)) {
             std::string paramName = lua_tostring(L,-1);
             double paramValue;
-            if (mObject.currMetric->getParam(paramName,paramValue)) {
+            if (mObject.currMetric->getParam(paramName.c_str(),paramValue)) {
                 lua_pushnumber(L,paramValue);
                 return 1;
             }

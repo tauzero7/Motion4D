@@ -109,11 +109,11 @@ bool MetricSchwarzschildWT::calculateChristoffels(const double* pos) {
     double r     = pos[1];
     double theta = pos[2];
 
-    double c = mSpeedOfLight;
+    //double c = mSpeedOfLight;
     
     double t1 = r - rs;
-    double t2 = r * r;
-    double t6 = c * c;
+  //  double t2 = r * r;
+    //double t6 = c * c;
     double t10 = 1.0 / r;
     //  double t14 = t10/t1*rs/2.0;
     double t14 = t10 / t1 * rs * 0.5;

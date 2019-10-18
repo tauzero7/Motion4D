@@ -49,4 +49,4 @@ for i=0, numPoints-1, 1 do
         newpos[1],newpos[2],newpos[3],newpos[4]))
 end
 
-fptr.close()
+io.close(fptr)

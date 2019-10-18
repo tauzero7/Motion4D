@@ -585,7 +585,7 @@ bool MetricGlampedakis::calculateRiemann(const double* pos) {
 void MetricGlampedakis::localToCoord(const double* pos, const double* ldir, double* dir,
                                      enum_nat_tetrad_type) {
     calcgComps(pos);
-    double omega = -gtph / gphph;
+//    double omega = -gtph / gphph;
     double zeta = 0.0;
 
     double gam = 1.0 / sqrt(-(gtt + 2.0 * zeta * gtph + zeta * zeta * gphph));

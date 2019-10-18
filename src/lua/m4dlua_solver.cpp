@@ -98,8 +98,8 @@ int setGeodSolver(lua_State* L) {
         if (lua_isstring(L,-numParams)) {
             std::string solverName = std::string(lua_tostring(L,-numParams));
             //std::cerr << solverName << std::endl;
-            mObject.geodSolver = mObject.solverDB->getIntegrator(mObject.currMetric, solverName.c_str());
-            mObject.geodSolverType = mObject.solverDB->getIntegratorNr(solverName.c_str());
+            mObject.geodSolver = mObject.solverDB.getIntegrator(mObject.currMetric, solverName.c_str());
+            mObject.geodSolverType = mObject.solverDB.getIntegratorNr(solverName.c_str());
         }
     }
     lua_pop(L,lua_gettop(L));

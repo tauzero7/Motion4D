@@ -52,7 +52,7 @@ for i=0, numPoints-1, 1 do
     --fptr.write(fptr,string.format("%14.6f %14.6f %14.6f %14.6f\n",newpos[1],newpos[2],newpos[3],newpos[4]))
 end
 
-fptr.close()
+io.close(fptr)
 
 
 mat = CalcTidalMatrix({pos = {0.0, 3.0, math.pi*0.5, 0.0}})
