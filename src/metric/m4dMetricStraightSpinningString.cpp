@@ -29,14 +29,14 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the Kottler metric.
  *
  * \param  a : parameter.
  * \param  k : parameter.
  */
-MetricStraightSpinningString::MetricStraightSpinningString(double a, double k) {
-    mMetricName  = "StraightSpinningString";
+MetricStraightSpinningString::MetricStraightSpinningString(double a, double k)
+{
+    mMetricName = "StraightSpinningString";
     setCoordType(enum_coordinate_cylinder);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -59,16 +59,15 @@ MetricStraightSpinningString::MetricStraightSpinningString(double a, double k) {
     setStandardValues();
 }
 
-MetricStraightSpinningString::~MetricStraightSpinningString() {
-}
-
+MetricStraightSpinningString::~MetricStraightSpinningString() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricStraightSpinningString::calculateMetric(const double* pos) {
+bool MetricStraightSpinningString::calculateMetric(const double* pos)
+{
     double rho = pos[1];
 
     double a = mA;
@@ -105,7 +104,8 @@ bool MetricStraightSpinningString::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricStraightSpinningString::calculateChristoffels(const double* pos) {
+bool MetricStraightSpinningString::calculateChristoffels(const double* pos)
+{
     double rho = pos[1];
 
     double a = mA;
@@ -188,7 +188,8 @@ bool MetricStraightSpinningString::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricStraightSpinningString::calculateChrisD(const double* pos) {
+bool MetricStraightSpinningString::calculateChrisD(const double* pos)
+{
     double rho = pos[1];
 
     double a = mA;
@@ -460,7 +461,6 @@ bool MetricStraightSpinningString::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -468,8 +468,9 @@ bool MetricStraightSpinningString::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricStraightSpinningString::localToCoord(const double* pos, const double* ldir, double* dir,
-        enum_nat_tetrad_type  type) {
+void MetricStraightSpinningString::localToCoord(
+    const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type)
+{
     double rho = pos[1];
 
     double a = mA;
@@ -482,7 +483,8 @@ void MetricStraightSpinningString::localToCoord(const double* pos, const double*
         dir[1] = ldir[1];
         dir[2] = -a / (w * k * rho) * ldir[0] + ldir[2] / w;
         dir[3] = ldir[3];
-    } else {
+    }
+    else {
         dir[0] = ldir[0] / c + a / (k * rho * c) * ldir[2];
         dir[1] = ldir[1];
         dir[2] = ldir[2] / (k * rho);
@@ -498,11 +500,10 @@ void MetricStraightSpinningString::localToCoord(const double* pos, const double*
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricStraightSpinningString::coordToLocal(const double* , const double* , double* ,
-        enum_nat_tetrad_type) {
+void MetricStraightSpinningString::coordToLocal(const double*, const double*, double*, enum_nat_tetrad_type)
+{
     // TODO
 }
-
 
 /*! Test break condition.
  *
@@ -510,7 +511,8 @@ void MetricStraightSpinningString::coordToLocal(const double* , const double* , 
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricStraightSpinningString::breakCondition(const double*) {
+bool MetricStraightSpinningString::breakCondition(const double*)
+{
     bool br = false;
     return br;
 }
@@ -542,18 +544,18 @@ bool MetricStraightSpinningString::calcDerivs(const double y[], double dydx[]) {
  *  \param pName : parameter name.
  *  \param val : parameter value.
  */
-bool MetricStraightSpinningString::setParam(const char* pName, double val) {
+bool MetricStraightSpinningString::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"a") == 0) {
+    if (strcmp(pName, "a") == 0) {
         mA = val;
     }
-    else if (strcmp(pName,"k") == 0) {
+    else if (strcmp(pName, "k") == 0) {
         mK = val;
     }
     return true;
 }
-
 
 /*! Effective potential.
  *  \param pos : initial position.
@@ -563,7 +565,9 @@ bool MetricStraightSpinningString::setParam(const char* pName, double val) {
  *  \param val : reference to effective potential value.
  *  \return true : effective potential exists at x.
  */
-bool MetricStraightSpinningString::effPotentialValue(const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double &val) {
+bool MetricStraightSpinningString::effPotentialValue(
+    const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double& val)
+{
     double kappa = 0.0;
     if (type == enum_geodesic_timelike) {
         kappa = -mSign;
@@ -588,7 +592,8 @@ bool MetricStraightSpinningString::effPotentialValue(const vec4 pos, const vec4 
  *  \param val : reference to total energy value.
  *  \return true : effective potential exists at x.
  */
-bool MetricStraightSpinningString::totEnergy(const vec4 , const vec4 cdir, const double , double &val) {
+bool MetricStraightSpinningString::totEnergy(const vec4, const vec4 cdir, const double, double& val)
+{
     double c = mSpeedOfLight;
     double h1 = c * (c * cdir[0] - mA * cdir[2]);
 
@@ -596,10 +601,10 @@ bool MetricStraightSpinningString::totEnergy(const vec4 , const vec4 cdir, const
     return true;
 }
 
-
 /*! Generate report.
  */
-bool MetricStraightSpinningString::report(const vec4 pos, const vec4 cdir, std::string &text) {
+bool MetricStraightSpinningString::report(const vec4 pos, const vec4 cdir, char*& text)
+{
     std::stringstream ss;
     ss << "Report for StraightSpinningString metric\n\tcoordinate : (t,rho,phi,z)\n";
     ss << "---------------------------------------------------------\n";
@@ -613,15 +618,15 @@ bool MetricStraightSpinningString::report(const vec4 pos, const vec4 cdir, std::
     ss << "  constant of motion ........................ h2 = " << h2 << std::endl;
 
     ss << "\n  point of closest approach ..............rho_ca = " << rho_ca << std::endl;
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
-
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricStraightSpinningString::setStandardValues() {
+void MetricStraightSpinningString::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 6.0;
     mInitPos[2] = 0.0;
@@ -636,7 +641,8 @@ void MetricStraightSpinningString::setStandardValues() {
     mCoordNames[3] = std::string("z");
 }
 
-void MetricStraightSpinningString::calcClosestApproach(const double* pos, const double* ldir) {
+void MetricStraightSpinningString::calcClosestApproach(const double* pos, const double* ldir)
+{
     double g = ldir[0] / mSpeedOfLight;
     double sk = ldir[2];
     if (g > 1.0) {

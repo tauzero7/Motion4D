@@ -29,7 +29,8 @@ namespace m4d {
 
 /*! Standard constructor for the Minkowski metric.
  */
-MetricMinkowski::MetricMinkowski() {
+MetricMinkowski::MetricMinkowski()
+{
     mMetricName = "Minkowski";
     setCoordType(enum_coordinate_cartesian);
 
@@ -42,15 +43,15 @@ MetricMinkowski::MetricMinkowski() {
     setStandardValues();
 }
 
-MetricMinkowski::~MetricMinkowski() {
-}
+MetricMinkowski::~MetricMinkowski() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricMinkowski::calculateMetric(const double*) {
+bool MetricMinkowski::calculateMetric(const double*)
+{
     double c = mSpeedOfLight;
 
     g_compts[0][0] = -c * c;
@@ -77,7 +78,8 @@ bool MetricMinkowski::calculateMetric(const double*) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricMinkowski::calculateChristoffels(const double*) {
+bool MetricMinkowski::calculateChristoffels(const double*)
+{
     christoffel[0][0][0] = 0.0;
     christoffel[0][0][1] = 0.0;
     christoffel[0][0][2] = 0.0;
@@ -146,12 +148,12 @@ bool MetricMinkowski::calculateChristoffels(const double*) {
     return true;
 }
 
-
 /*! Calculate Jacobi matrix.
  *
  *  \param pos : pointer to position.
  */
-bool MetricMinkowski::calculateChrisD(const double*) {
+bool MetricMinkowski::calculateChrisD(const double*)
+{
     chrisD[0][0][0][0] = 0.0;
     chrisD[0][0][0][1] = 0.0;
     chrisD[0][0][0][2] = 0.0;
@@ -419,8 +421,8 @@ bool MetricMinkowski::calculateChrisD(const double*) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricMinkowski::localToCoord(const double* , const double* ldir, double* dir,
-                                   enum_nat_tetrad_type) {
+void MetricMinkowski::localToCoord(const double*, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     dir[0] = ldir[0] / mSpeedOfLight;
     dir[1] = ldir[1];
     dir[2] = ldir[2];
@@ -434,8 +436,8 @@ void MetricMinkowski::localToCoord(const double* , const double* ldir, double* d
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricMinkowski::coordToLocal(const double* , const double* cdir, double* ldir,
-                                   enum_nat_tetrad_type) {
+void MetricMinkowski::coordToLocal(const double*, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     ldir[0] = cdir[0] * mSpeedOfLight;
     ldir[1] = cdir[1];
     ldir[2] = cdir[2];
@@ -447,7 +449,8 @@ void MetricMinkowski::coordToLocal(const double* , const double* cdir, double* l
  *  \param pos    : pointer to position array.
  *  \return false : position is always valid.
  */
-bool MetricMinkowski::breakCondition(const double*) {
+bool MetricMinkowski::breakCondition(const double*)
+{
     return false;
 }
 
@@ -456,7 +459,8 @@ bool MetricMinkowski::breakCondition(const double*) {
  *  \param  y[]   : pointer to position and direction coordinates.
  *  \param  dydx[] : pointer to right side of geodesic equation.
  */
-bool MetricMinkowski::calcDerivs(const double y[], double dydx[]) {
+bool MetricMinkowski::calcDerivs(const double y[], double dydx[])
+{
     dydx[0] = y[4];
     dydx[1] = y[5];
     dydx[2] = y[6];
@@ -475,7 +479,8 @@ bool MetricMinkowski::calcDerivs(const double y[], double dydx[]) {
  *  \param  y[]   : pointer to position and direction coordinates.
  *  \param  dydx[] : pointer to right side of parallel transport equation.
  */
-bool MetricMinkowski::calcDerivsPar(const double y[], double dydx[]) {
+bool MetricMinkowski::calcDerivsPar(const double y[], double dydx[])
+{
     dydx[0] = y[4];
     dydx[1] = y[5];
     dydx[2] = y[6];
@@ -506,8 +511,9 @@ bool MetricMinkowski::calcDerivsPar(const double y[], double dydx[]) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricMinkowski::testConstraint(const double y[], const double kappa) {
-    double cm  = 1.0 / mSpeedOfLight;
+double MetricMinkowski::testConstraint(const double y[], const double kappa)
+{
+    double cm = 1.0 / mSpeedOfLight;
 
     // Scale the directions with the speed of light before doubling them !!
     double dt = y[4];
@@ -520,34 +526,36 @@ double MetricMinkowski::testConstraint(const double y[], const double kappa) {
     return sum;
 }
 
-
 /*! Transform point p to 2+1 coordinates.
  *
  *  \param  p  : point in proper metric coordinates.
  *  \param  cp : reference to transformed point.
  *  \return true : success.
  */
-bool MetricMinkowski::transToTwoPlusOne(vec4 p, vec4 &cp) {
+bool MetricMinkowski::transToTwoPlusOne(vec4 p, vec4& cp)
+{
     cp = vec4(p[0], p[1], p[2], p[0]);
     return true;
 }
 
 /*! Generate report.
  */
-bool MetricMinkowski::report(const vec4 , const vec4 , std::string &text) {
+bool MetricMinkowski::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Minkowski metric\n\tcoordinate : (t,x,y,z)\n";
     ss << "---------------------------------------------------------------\n";
     ss << "  physical units ................................. yes\n";
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricMinkowski::setStandardValues() {
+void MetricMinkowski::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 10.0;
     mInitPos[2] = 0.0;

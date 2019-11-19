@@ -31,7 +31,8 @@ namespace m4d {
  *
  * \param  k : monopol parameter.
  */
-MetricBarriolaVilenkin::MetricBarriolaVilenkin(double k) {
+MetricBarriolaVilenkin::MetricBarriolaVilenkin(double k)
+{
     mMetricName = "BarriolaVilenkin";
     setCoordType(enum_coordinate_spherical);
 
@@ -53,9 +54,9 @@ MetricBarriolaVilenkin::MetricBarriolaVilenkin(double k) {
     }
     mHaveEmbedding = true;
 
-    mEmb_rmin    = 0.0;
-    mEmb_rmax    = 10.0;
-    mEmb_r_num   = 20.0;
+    mEmb_rmin = 0.0;
+    mEmb_rmax = 10.0;
+    mEmb_r_num = 20.0;
     mEmb_phi_num = 40.0;
     mEmb_rstep = (mEmb_rmax - mEmb_rmin) / mEmb_r_num;
     mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
@@ -67,16 +68,15 @@ MetricBarriolaVilenkin::MetricBarriolaVilenkin(double k) {
     setStandardValues();
 }
 
-MetricBarriolaVilenkin::~MetricBarriolaVilenkin() {
-}
-
+MetricBarriolaVilenkin::~MetricBarriolaVilenkin() {}
 
 // *********************************** public methods ******************************
 /*!  Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricBarriolaVilenkin::calculateMetric(const double* pos) {
+bool MetricBarriolaVilenkin::calculateMetric(const double* pos)
+{
     double r = pos[1];
     double theta = pos[2];
     double c = mSpeedOfLight;
@@ -112,7 +112,8 @@ bool MetricBarriolaVilenkin::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricBarriolaVilenkin::calculateChristoffels(const double* pos) {
+bool MetricBarriolaVilenkin::calculateChristoffels(const double* pos)
+{
     double r = pos[1];
     double theta = pos[2];
 
@@ -192,12 +193,12 @@ bool MetricBarriolaVilenkin::calculateChristoffels(const double* pos) {
     return true;
 }
 
-
 /*! Calculate Jacobi matrix.
  *
  *  \param pos : pointer to position.
  */
-bool MetricBarriolaVilenkin::calculateChrisD(const double* pos) {
+bool MetricBarriolaVilenkin::calculateChrisD(const double* pos)
+{
     double r = pos[1];
     double theta = pos[2];
 
@@ -477,9 +478,9 @@ bool MetricBarriolaVilenkin::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricBarriolaVilenkin::localToCoord(const double* pos, const double* ldir, double* dir,
-        enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricBarriolaVilenkin::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     dir[0] = ldir[0] / mSpeedOfLight;
@@ -495,9 +496,9 @@ void MetricBarriolaVilenkin::localToCoord(const double* pos, const double* ldir,
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricBarriolaVilenkin::coordToLocal(const double* pos, const double* cdir, double* ldir,
-        enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricBarriolaVilenkin::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     ldir[0] = cdir[0] * mSpeedOfLight;
@@ -511,7 +512,8 @@ void MetricBarriolaVilenkin::coordToLocal(const double* pos, const double* cdir,
  *  \param pos    : pointer to position array.
  *  \return false : position is valid.
  */
-bool MetricBarriolaVilenkin::breakCondition(const double*) {
+bool MetricBarriolaVilenkin::breakCondition(const double*)
+{
     return false;
 }
 
@@ -520,7 +522,8 @@ bool MetricBarriolaVilenkin::breakCondition(const double*) {
  *  \param  y[]   : pointer to position and direction coordinates.
  *  \param  dydx[] : pointer to right side of geodesic equation.
  */
-bool MetricBarriolaVilenkin::calcDerivs(const double y[], double dydx[]) {
+bool MetricBarriolaVilenkin::calcDerivs(const double y[], double dydx[])
+{
     dydx[0] = y[4];
     dydx[1] = y[5];
     dydx[2] = y[6];
@@ -539,7 +542,6 @@ bool MetricBarriolaVilenkin::calcDerivs(const double y[], double dydx[]) {
     return true;
 }
 
-
 /*! Tests whether the constraint equation is fulfilled.
  *
  *  The constraint equation for lightlike and timelike geodesics reads:
@@ -550,14 +552,15 @@ bool MetricBarriolaVilenkin::calcDerivs(const double y[], double dydx[]) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricBarriolaVilenkin::testConstraint(const double y[], const double kappa) {
-    double r     = y[1];
+double MetricBarriolaVilenkin::testConstraint(const double y[], const double kappa)
+{
+    double r = y[1];
     double theta = y[2];
     double cm = 1.0 / mSpeedOfLight;
 
     // Scale the directions with the speed of light before doubling them !!
-    double dt  = y[4];
-    double dr  = y[5] * cm;
+    double dt = y[4];
+    double dr = y[5] * cm;
     double dth = y[6] * cm;
     double dph = y[7] * cm;
 
@@ -566,19 +569,18 @@ double MetricBarriolaVilenkin::testConstraint(const double y[], const double kap
     return sum;
 }
 
-
 /*! Set parameter 'pName' to 'val'.
  *
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  */
-bool MetricBarriolaVilenkin::setParam(const char* pName, double val) {
+bool MetricBarriolaVilenkin::setParam(const char* pName, double val)
+{
     if (Metric::setParam(pName, val)) {
         mk = val;
     }
 
     return true;
 }
-
 
 /*! Transform point p to embedding coordinates.
  *
@@ -587,7 +589,8 @@ bool MetricBarriolaVilenkin::setParam(const char* pName, double val) {
  *  \return true : success.
  *  \return false : otherwise.
  */
-bool MetricBarriolaVilenkin::transToEmbedding(vec4 p, vec4 &ep) {
+bool MetricBarriolaVilenkin::transToEmbedding(vec4 p, vec4& ep)
+{
     vec4 cp;
     transToPseudoCart(p, cp);
 
@@ -611,19 +614,20 @@ bool MetricBarriolaVilenkin::transToEmbedding(vec4 p, vec4 &ep) {
  *  \return true  : success.
  *  \return false : parameter not valid.
  */
-bool MetricBarriolaVilenkin::setEmbeddingParam(const char* name, double val) {
+bool MetricBarriolaVilenkin::setEmbeddingParam(const char* name, double val)
+{
     Metric::setEmbeddingParam(name, val);
 
-    if (strcmp(name,"emb_rmin") == 0) {
+    if (strcmp(name, "emb_rmin") == 0) {
         mEmb_rmin = val;
     }
-    else if (strcmp(name,"emb_rmax") == 0) {
+    else if (strcmp(name, "emb_rmax") == 0) {
         mEmb_rmax = val;
     }
-    else if (strcmp(name,"emb_r_num") == 0) {
+    else if (strcmp(name, "emb_r_num") == 0) {
         mEmb_r_num = val;
     }
-    else if (strcmp(name,"emb_phi_num") == 0) {
+    else if (strcmp(name, "emb_phi_num") == 0) {
         mEmb_phi_num = val;
     }
     return testEmbeddingParams();
@@ -633,7 +637,8 @@ bool MetricBarriolaVilenkin::setEmbeddingParam(const char* name, double val) {
  *  \return  true : all parameters are ok
  *  \return  false : at least one parameter had to be adjusted.
  */
-bool MetricBarriolaVilenkin::testEmbeddingParams() {
+bool MetricBarriolaVilenkin::testEmbeddingParams()
+{
     bool allOk = true;
     if (mEmb_rmin < 0.0) {
         mEmb_rmin = 0.0;
@@ -663,7 +668,7 @@ bool MetricBarriolaVilenkin::testEmbeddingParams() {
  *  \param counter  : number of strips.
  *  \return int : number of vertices.
  */
-//int MetricBarriolaVilenkin::getEmbeddingVertices(std::vector<vec3> &verts,
+// int MetricBarriolaVilenkin::getEmbeddingVertices(std::vector<vec3> &verts,
 //        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter) {
 //    if (!verts.empty()) {
 //        verts.clear();
@@ -723,7 +728,9 @@ bool MetricBarriolaVilenkin::testEmbeddingParams() {
  *  \param val : reference to effective potential value.
  *  \return true : effective potential exists at x.
  */
-bool MetricBarriolaVilenkin::effPotentialValue(const vec4 pos, const vec4 cdir , enum_geodesic_type type, const double x, double &val) {
+bool MetricBarriolaVilenkin::effPotentialValue(
+    const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double& val)
+{
     double kappa = 0.0;
     if (type == enum_geodesic_timelike) {
         kappa = -mSign;
@@ -745,7 +752,8 @@ bool MetricBarriolaVilenkin::effPotentialValue(const vec4 pos, const vec4 cdir ,
  *  \param val : reference to total energy value.
  *  \return true : effective potential exists at x.
  */
-bool MetricBarriolaVilenkin::totEnergy(const vec4 , const vec4 cdir, const double , double &val) {
+bool MetricBarriolaVilenkin::totEnergy(const vec4, const vec4 cdir, const double, double& val)
+{
     // 1/2*k^2/c^2:
     val = 0.5 * mSpeedOfLight * mSpeedOfLight * cdir[0] * cdir[0];
     return true;
@@ -753,7 +761,8 @@ bool MetricBarriolaVilenkin::totEnergy(const vec4 , const vec4 cdir, const doubl
 
 /*!  Generate report.
  */
-bool MetricBarriolaVilenkin::report(const vec4 pos, const vec4 cdir, std::string &text) {
+bool MetricBarriolaVilenkin::report(const vec4 pos, const vec4 cdir, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Barriola-Vilenkin metric\n\tcoordinate : (t,r,theta,phi)\n";
     ss << "---------------------------------------------------------------\n";
@@ -768,14 +777,15 @@ bool MetricBarriolaVilenkin::report(const vec4 pos, const vec4 cdir, std::string
 
     double r = closestApproach(pos, cdir);
     ss << "  closest approach ....... r_pca = " << r << std::endl;
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricBarriolaVilenkin::setStandardValues() {
+void MetricBarriolaVilenkin::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 10.0;
     mInitPos[2] = M_PI_2;
@@ -795,7 +805,8 @@ void MetricBarriolaVilenkin::setStandardValues() {
  * \param cdir : initial direction.
  * \return radius.
  */
-double MetricBarriolaVilenkin::closestApproach(const vec4 pos, const vec4 cdir) {
+double MetricBarriolaVilenkin::closestApproach(const vec4 pos, const vec4 cdir)
+{
     double h2 = mk * mk * pos[1] * pos[1] * cdir[3];
     double h1 = mSpeedOfLight * mSpeedOfLight * cdir[0];
 

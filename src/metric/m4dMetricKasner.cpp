@@ -29,13 +29,13 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the Kottler metric.
  *
  * \param  u : Khalatnikov-Lifshitz parameter.
  */
-MetricKasner::MetricKasner(double u) {
-    mMetricName  = "Kasner";
+MetricKasner::MetricKasner(double u)
+{
+    mMetricName = "Kasner";
     setCoordType(enum_coordinate_cartesian);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -49,16 +49,15 @@ MetricKasner::MetricKasner(double u) {
     setStandardValues();
 }
 
-MetricKasner::~MetricKasner() {
-}
-
+MetricKasner::~MetricKasner() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricKasner::calculateMetric(const double* pos) {
+bool MetricKasner::calculateMetric(const double* pos)
+{
     double t = pos[0];
 
     double t1 = pow(t, p1);
@@ -92,7 +91,8 @@ bool MetricKasner::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricKasner::calculateChristoffels(const double* pos) {
+bool MetricKasner::calculateChristoffels(const double* pos)
+{
     double t = pos[0];
 
     double t1 = 1 / t;
@@ -178,7 +178,8 @@ bool MetricKasner::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricKasner::calculateChrisD(const double* pos) {
+bool MetricKasner::calculateChrisD(const double* pos)
+{
     double t = pos[0];
 
     double t1 = t * t;
@@ -460,8 +461,8 @@ bool MetricKasner::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricKasner::localToCoord(const double* pos, const double* ldir, double* dir,
-                                enum_nat_tetrad_type) {
+void MetricKasner::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     double t = pos[0];
 
     dir[0] = ldir[0];
@@ -477,8 +478,8 @@ void MetricKasner::localToCoord(const double* pos, const double* ldir, double* d
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricKasner::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                enum_nat_tetrad_type) {
+void MetricKasner::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     double t = pos[0];
 
     ldir[0] = cdir[0];
@@ -487,14 +488,14 @@ void MetricKasner::coordToLocal(const double* pos, const double* cdir, double* l
     ldir[3] = cdir[3] * pow(t, p3);
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricKasner::breakCondition(const double* pos) {
+bool MetricKasner::breakCondition(const double* pos)
+{
     bool br = false;
 
     double t = pos[0];
@@ -504,15 +505,15 @@ bool MetricKasner::breakCondition(const double* pos) {
     return br;
 }
 
-
 /*! Set parameter 'pName' to 'val'.
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricKasner::setParam(const char* pName, double val) {
+bool MetricKasner::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"u") == 0) {
+    if (strcmp(pName, "u") == 0) {
         mU = val;
         calc_parameters();
     }
@@ -521,7 +522,8 @@ bool MetricKasner::setParam(const char* pName, double val) {
 
 /*! Generate report.
  */
-bool MetricKasner::report(const vec4 , const vec4 , std::string &text) {
+bool MetricKasner::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Kasner metric\n\tcoordinate : (t,x,y,z)\n";
     ss << "---------------------------------------------------------------\n";
@@ -533,13 +535,14 @@ bool MetricKasner::report(const vec4 , const vec4 , std::string &text) {
     ss << "  param .............................. p_2 = " << p2 << std::endl;
     ss << "  param .............................. p_3 = " << p3 << std::endl;
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 /*! Calculate parameters p1,p2,p3 out of Khalatnikov-Lifshitz parameter u.
  */
-void MetricKasner::calc_parameters() {
+void MetricKasner::calc_parameters()
+{
     double edHN = 1.0 / (1.0 + mU + mU * mU);
     p1 = -mU * edHN;
     p2 = (1.0 + mU) * edHN;
@@ -549,7 +552,8 @@ void MetricKasner::calc_parameters() {
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricKasner::setStandardValues() {
+void MetricKasner::setStandardValues()
+{
     mInitPos[0] = 1.0;
     mInitPos[1] = 0.0;
     mInitPos[2] = 0.0;

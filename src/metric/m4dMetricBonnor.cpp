@@ -29,18 +29,18 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor.
  *
  * \param  mass : mass of the black hole.
  */
-MetricBonnor::MetricBonnor(double mass, double b) {
-    mMetricName  = "Bonnor";
+MetricBonnor::MetricBonnor(double mass, double b)
+{
+    mMetricName = "Bonnor";
     setCoordType(enum_coordinate_spherical);
 
     mPhysicalUnits = enum_physical_constants_geom;
-    mSpeedOfLight   = 1.0;
-    mGravConstant   = 1.0;
+    mSpeedOfLight = 1.0;
+    mGravConstant = 1.0;
     mDielectricPerm = 1.0;
 
     addParam("mass", mass);
@@ -56,9 +56,7 @@ MetricBonnor::MetricBonnor(double mass, double b) {
 
 /*!
  */
-MetricBonnor::~MetricBonnor() {
-}
-
+MetricBonnor::~MetricBonnor() {}
 
 // *********************************** public methods ******************************
 
@@ -66,19 +64,20 @@ MetricBonnor::~MetricBonnor() {
  *
  *  \param pos : pointer to position.
  */
-bool MetricBonnor::calculateMetric(const double* pos) {
+bool MetricBonnor::calculateMetric(const double* pos)
+{
     double theta = pos[2];
     calcPotentials(pos);
 
-    double t1 = P;     // P(r,theta);
+    double t1 = P; // P(r,theta);
     double t2 = t1 * t1;
-    double t3 = Y;     // Y(r,theta);
+    double t3 = Y; // Y(r,theta);
     double t4 = t3 * t3;
     double t7 = t4 * t2;
-    double t8 = Q;     // Q(r,theta);
+    double t8 = Q; // Q(r,theta);
     double t9 = t8 * t8;
     double t11 = 1 / t9 / t8;
-    double t12 = Z;    // Z(r);
+    double t12 = Z; // Z(r);
     double t19 = sin(theta);
     double t20 = t19 * t19;
 
@@ -105,28 +104,29 @@ bool MetricBonnor::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricBonnor::calculateChristoffels(const double* pos) {
+bool MetricBonnor::calculateChristoffels(const double* pos)
+{
     double theta = pos[2];
     calcPotiDiffs(pos);
 
-    double t1 = P;     // P(r,theta);
+    double t1 = P; // P(r,theta);
     double t2 = 1 / t1;
-    double t3 = Y;     // Y(r,theta);
+    double t3 = Y; // Y(r,theta);
     double t4 = t3 * t3;
     double t5 = t4 * t4;
     double t8 = t2 / t5 / t3;
-    double t9 = Q;     // Q(r,theta);
+    double t9 = Q; // Q(r,theta);
     double t10 = t9 * t9;
     double t11 = t10 * t9;
-    double t12 = Z;    // Z(r);
-    double t14 = dPdr;     // diff(P(r,theta),r);
+    double t12 = Z; // Z(r);
+    double t14 = dPdr; // diff(P(r,theta),r);
     double t15 = t14 * t3;
-    double t16 = dYdr;     // diff(Y(r,theta),r);
+    double t16 = dYdr; // diff(Y(r,theta),r);
     double t17 = t1 * t16;
     double t18 = -t15 + t17;
-    double t21 = dPdtheta;     // diff(P(r,theta),theta);
+    double t21 = dPdtheta; // diff(P(r,theta),theta);
     double t22 = t21 * t3;
-    double t23 = dYdtheta;     // diff(Y(r,theta),theta);
+    double t23 = dYdtheta; // diff(Y(r,theta),theta);
     double t24 = t1 * t23;
     double t25 = -t22 + t24;
     double t28 = 1 / t3;
@@ -137,9 +137,9 @@ bool MetricBonnor::calculateChristoffels(const double* pos) {
     double t33 = 1 / t12;
     double t35 = t9 * t12;
     double t40 = t3 * t1;
-    double t41 = dQdr;         // diff(Q(r,theta),r);
-    double t45 = dZdr;         // diff(Z(r),r);
-    double t56 = dQdtheta;     // diff(Q(r,theta),theta);
+    double t41 = dQdr; // diff(Q(r,theta),r);
+    double t45 = dZdr; // diff(Z(r),r);
+    double t56 = dQdtheta; // diff(Q(r,theta),theta);
     double t60 = t32 * (-2.0 * t24 * t9 - 2.0 * t22 * t9 + 3.0 * t40 * t56);
     double t65 = t29 * t60 / 2.0;
     double t72 = -2.0 * t17 * t9 - 2.0 * t15 * t9 + 3.0 * t40 * t41;
@@ -176,7 +176,8 @@ bool MetricBonnor::calculateChristoffels(const double* pos) {
     christoffel[1][0][2] = 0.0;
     christoffel[1][0][3] = 0.0;
     christoffel[1][1][0] = 0.0;
-    christoffel[1][1][1] = -t29 * t32 * t33 * (-2.0 * t17 * t35 - 2.0 * t15 * t35 + 3.0 * t40 * t41 * t12 + t40 * t45 * t9) / 2.0;
+    christoffel[1][1][1]
+        = -t29 * t32 * t33 * (-2.0 * t17 * t35 - 2.0 * t15 * t35 + 3.0 * t40 * t41 * t12 + t40 * t45 * t9) / 2.0;
     christoffel[1][1][2] = t29 * t60 * t33 / 2.0;
     christoffel[1][1][3] = 0.0;
     christoffel[1][2][0] = 0.0;
@@ -227,10 +228,10 @@ bool MetricBonnor::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricBonnor::calculateChrisD(const double* ) {
+bool MetricBonnor::calculateChrisD(const double*)
+{
     return false;
 }
-
 
 /*! Transform local 4-direction to coordinate 4-direction.
  *
@@ -239,8 +240,8 @@ bool MetricBonnor::calculateChrisD(const double* ) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricBonnor::localToCoord(const double* pos, const double* ldir, double* dir,
-                                enum_nat_tetrad_type) {
+void MetricBonnor::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     calcPotentials(pos);
     double theta = pos[2];
 
@@ -257,11 +258,7 @@ void MetricBonnor::localToCoord(const double* pos, const double* ldir, double* d
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricBonnor::coordToLocal(const double* , const double* , double* ,
-                                enum_nat_tetrad_type) {
-
-}
-
+void MetricBonnor::coordToLocal(const double*, const double*, double*, enum_nat_tetrad_type) {}
 
 /*! Test break condition.
  *
@@ -269,7 +266,8 @@ void MetricBonnor::coordToLocal(const double* , const double* , double* ,
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricBonnor::breakCondition(const double* pos) {
+bool MetricBonnor::breakCondition(const double* pos)
+{
     bool br = false;
     double r = pos[1];
     if (r <= mMass + sqrt(mMass * mMass + mB * mB)) {
@@ -277,7 +275,6 @@ bool MetricBonnor::breakCondition(const double* pos) {
     }
     return br;
 }
-
 
 /*! Tests whether the constraint equation is fulfilled.
  *
@@ -310,37 +307,38 @@ double MetricBonnor::testConstraint ( const double y[], const double kappa )
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  *  'charge' represents the charge of the black hole.
  */
-bool MetricBonnor::setParam(const char* pName, double val) {
+bool MetricBonnor::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"mass") == 0) {
+    if (strcmp(pName, "mass") == 0) {
         mMass = val;
     }
-    else if (strcmp(pName,"b") == 0) {
+    else if (strcmp(pName, "b") == 0) {
         mB = val;
     }
     return true;
 }
 
-
 /*! Generate report.
  */
-bool MetricBonnor::report(const vec4 , const vec4 , std::string &text) {
+bool MetricBonnor::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for the  Bonnor metric\n\tcoordinate : (t,r,theta,phi)\n";
     ss << "---------------------------------------------------------------\n";
     ss.precision(DEF_FIXED_REPORT_PRECISION);
     ss.setf(std::ios::fixed);
 
-
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricBonnor::setStandardValues() {
+void MetricBonnor::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 10.0;
     mInitPos[2] = M_PI_2;
@@ -355,7 +353,8 @@ void MetricBonnor::setStandardValues() {
     mCoordNames[3] = std::string("phi");
 }
 
-void MetricBonnor::calcPotentials(const double* pos) {
+void MetricBonnor::calcPotentials(const double* pos)
+{
     double r = pos[1];
     double theta = pos[2];
     double ct = cos(theta);
@@ -366,7 +365,8 @@ void MetricBonnor::calcPotentials(const double* pos) {
     Z = r * r - 2 * mMass * r - mB * mB;
 }
 
-void MetricBonnor::calcPotiDiffs(const double* pos) {
+void MetricBonnor::calcPotiDiffs(const double* pos)
+{
     double r = pos[1];
     double theta = pos[2];
     double ct = cos(theta);

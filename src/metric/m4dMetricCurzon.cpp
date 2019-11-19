@@ -29,18 +29,18 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor.
  *
  * \param  mass : mass of the black hole.
  */
-MetricCurzon::MetricCurzon(double mass) {
-    mMetricName  = "Curzon";
+MetricCurzon::MetricCurzon(double mass)
+{
+    mMetricName = "Curzon";
     setCoordType(enum_coordinate_cylinder);
 
     mPhysicalUnits = enum_physical_constants_geom;
-    mSpeedOfLight   = 1.0;
-    mGravConstant   = 1.0;
+    mSpeedOfLight = 1.0;
+    mGravConstant = 1.0;
     mDielectricPerm = 1.0;
 
     addParam("mass", mass);
@@ -54,9 +54,7 @@ MetricCurzon::MetricCurzon(double mass) {
 
 /*!
  */
-MetricCurzon::~MetricCurzon() {
-}
-
+MetricCurzon::~MetricCurzon() {}
 
 // *********************************** public methods ******************************
 
@@ -64,7 +62,8 @@ MetricCurzon::~MetricCurzon() {
  *
  *  \param pos : pointer to position.
  */
-bool MetricCurzon::calculateMetric(const double* pos) {
+bool MetricCurzon::calculateMetric(const double* pos)
+{
     double r = pos[1];
     double lambda, nu;
     calcLambdaNu(pos, lambda, nu);
@@ -134,7 +133,8 @@ bool MetricCurzon::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricCurzon::calculateChristoffels(const double* pos) {
+bool MetricCurzon::calculateChristoffels(const double* pos)
+{
     double r = pos[1];
     double lambda, nu, dldr, dldz, dndr, dndz;
     calcDLN(pos, lambda, nu, dldr, dldz, dndr, dndz);
@@ -329,8 +329,9 @@ bool MetricCurzon::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricCurzon::calculateChrisD(const double* pos) {
-    double r     = pos[1];
+bool MetricCurzon::calculateChrisD(const double* pos)
+{
+    double r = pos[1];
     double m = mMass;
     double z = pos[3];
 
@@ -372,7 +373,8 @@ bool MetricCurzon::calculateChrisD(const double* pos) {
     double t54 = t16 * t1;
     double t59 = t23 * t2;
     double t69 = t31 * t4;
-    double t71 = 4.0 * m * t47 - 4.0 * t50 - 12.0 * t18 * t4 - 12.0 * t54 * t20 - 4.0 * t3 * t29 - 3.0 * t59 - 15.0 * t23 * t4 - 30.0 * t17 * t20 - 30.0 * t16 * t29 - 15.0 * t2 * t31 - 3.0 * t69;
+    double t71 = 4.0 * m * t47 - 4.0 * t50 - 12.0 * t18 * t4 - 12.0 * t54 * t20 - 4.0 * t3 * t29 - 3.0 * t59
+        - 15.0 * t23 * t4 - 30.0 * t17 * t20 - 30.0 * t16 * t29 - 15.0 * t2 * t31 - 3.0 * t69;
     double t73 = t6 * t5;
     double t76 = 1 / t12 / t40 / t73;
     double t80 = m * t13;
@@ -383,7 +385,8 @@ bool MetricCurzon::calculateChrisD(const double* pos) {
     double t89 = 9.0 * t88;
     double t90 = 3.0 * t29;
     double t107 = m * t4;
-    double t118 = -2.0 * t31 * t20 - 12.0 * t54 * t29 + t23 * t16 - 12.0 * t18 * t20 - 4.0 * t3 * t31 - 4.0 * t50 * t4 + 4.0 * t107 * t47 + 3.0 * t59 * t4 - 10.0 * t17 * t29 - 15.0 * t16 * t31 - 9.0 * t2 * t69;
+    double t118 = -2.0 * t31 * t20 - 12.0 * t54 * t29 + t23 * t16 - 12.0 * t18 * t20 - 4.0 * t3 * t31 - 4.0 * t50 * t4
+        + 4.0 * t107 * t47 + 3.0 * t59 * t4 - 10.0 * t17 * t29 - 15.0 * t16 * t31 - 9.0 * t2 * t69;
     double t125 = 1 / t13;
     double t126 = m * (2.0 * t2 - t4) * t125;
     double t130 = 3.0 * m * t125 * r * z;
@@ -410,8 +413,11 @@ bool MetricCurzon::calculateChrisD(const double* pos) {
     double t195 = t1 * m;
     double t205 = t195 * t16;
     double t208 = t17 * m;
-    double t215 = 3.0 * t13 * t16 * t4 + 3.0 * t13 * t2 * t20 - 3.0 * t192 * t4 + 2.0 * t195 * t23 + t13 * t17 + t13 * t29 - 2.0 * t54 * t13 + 2.0 * t3 * t13 * t4 - 2.0 * t205 * t20 - 9.0 * t208 * t20 - 9.0 * t170 * t29 - 3.0 * t11 * t31;
-    double t239 = -4.0 * t54 * t137 - 4.0 * t3 * t177 + 4.0 * t195 * t17 + 4.0 * t205 * t4 + 3.0 * t47 - 3.0 * t181 * t2 - 3.0 * t181 * t4 + 3.0 * t192 + 9.0 * t208 * t4 + 9.0 * t170 * t20 + 3.0 * t11 * t29;
+    double t215 = 3.0 * t13 * t16 * t4 + 3.0 * t13 * t2 * t20 - 3.0 * t192 * t4 + 2.0 * t195 * t23 + t13 * t17
+        + t13 * t29 - 2.0 * t54 * t13 + 2.0 * t3 * t13 * t4 - 2.0 * t205 * t20 - 9.0 * t208 * t20 - 9.0 * t170 * t29
+        - 3.0 * t11 * t31;
+    double t239 = -4.0 * t54 * t137 - 4.0 * t3 * t177 + 4.0 * t195 * t17 + 4.0 * t205 * t4 + 3.0 * t47 - 3.0 * t181 * t2
+        - 3.0 * t181 * t4 + 3.0 * t192 + 9.0 * t208 * t4 + 9.0 * t170 * t20 + 3.0 * t11 * t29;
 
     chrisD[0][0][0][0] = 0.0;
     chrisD[0][0][0][1] = 0.0;
@@ -673,7 +679,6 @@ bool MetricCurzon::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -681,14 +686,14 @@ bool MetricCurzon::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricCurzon::localToCoord(const double* pos, const double* ldir, double* dir,
-                                enum_nat_tetrad_type) {
+void MetricCurzon::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     double r = pos[1];
 
     double lambda, nu;
     calcLambdaNu(pos, lambda, nu);
 
-    double el  = exp(lambda);
+    double el = exp(lambda);
     double eln = exp(lambda - nu);
     dir[0] = 1.0 / el * ldir[0];
     dir[1] = eln * ldir[1];
@@ -703,8 +708,8 @@ void MetricCurzon::localToCoord(const double* pos, const double* ldir, double* d
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricCurzon::coordToLocal(const double* , const double* , double* ,
-                                enum_nat_tetrad_type) {
+void MetricCurzon::coordToLocal(const double*, const double*, double*, enum_nat_tetrad_type)
+{
     // double r     = pos[1];
     // double theta = pos[2];
 
@@ -717,14 +722,14 @@ void MetricCurzon::coordToLocal(const double* , const double* , double* ,
     //  ldir[3] = cdir[3]*r*sin(theta)/L;
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricCurzon::breakCondition(const double* pos) {
+bool MetricCurzon::breakCondition(const double* pos)
+{
     bool br = false;
 
     double r = pos[1];
@@ -736,7 +741,6 @@ bool MetricCurzon::breakCondition(const double* pos) {
     return br;
 }
 
-
 /*! Tests whether the constraint equation is fulfilled.
  *
  *  double the constraint equation for lightlike and timelike geodesics reads:
@@ -747,20 +751,22 @@ bool MetricCurzon::breakCondition(const double* pos) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricCurzon::testConstraint(const double y[], const double kappa) {
-    double r     = y[1];
+double MetricCurzon::testConstraint(const double y[], const double kappa)
+{
+    double r = y[1];
 
     // Scale the directions with the speed of light before doubling them !!
-    double dt     = y[4];
-    double dr     = y[5];
-    double dphi   = y[6];
-    double dz     = y[7];
+    double dt = y[4];
+    double dr = y[5];
+    double dphi = y[6];
+    double dz = y[7];
 
     double lambda, nu;
     calcLambdaNu(y, lambda, nu);
 
     double sum = -kappa * mSign;
-    sum += -exp(2.0 * lambda) * dt * dt + exp(2.0 * (nu - lambda)) * (dr * dr + dz * dz) + r * r * exp(-2.0 * lambda) * dphi * dphi;
+    sum += -exp(2.0 * lambda) * dt * dt + exp(2.0 * (nu - lambda)) * (dr * dr + dz * dz)
+        + r * r * exp(-2.0 * lambda) * dphi * dphi;
 
     //  double k = exp(2.0*lambda)*dt;
     //  double h = r*r*exp(-2.0*lambda)*dphi;
@@ -773,34 +779,35 @@ double MetricCurzon::testConstraint(const double y[], const double kappa) {
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  *  'charge' represents the charge of the black hole.
  */
-bool MetricCurzon::setParam(const char* pName, double val) {
+bool MetricCurzon::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"mass") == 0) {
+    if (strcmp(pName, "mass") == 0) {
         mMass = val;
     }
     return true;
 }
 
-
 /*! Generate report.
  */
-bool MetricCurzon::report(const vec4 , const vec4 , std::string &text) {
+bool MetricCurzon::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for the  Curzon metric\n\tcoordinate : (t,r,phi,z)\n";
     ss << "---------------------------------------------------------------\n";
     ss.precision(DEF_FIXED_REPORT_PRECISION);
     ss.setf(std::ios::fixed);
 
-
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricCurzon::setStandardValues() {
+void MetricCurzon::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 6.0;
     mInitPos[2] = 0.0;
@@ -817,7 +824,8 @@ void MetricCurzon::setStandardValues() {
 
 /*!
  */
-double MetricCurzon::calcR(const double* pos) {
+double MetricCurzon::calcR(const double* pos)
+{
     double r = pos[1];
     double z = pos[3];
     return sqrt(r * r + z * z);
@@ -825,7 +833,8 @@ double MetricCurzon::calcR(const double* pos) {
 
 /*!
  */
-void   MetricCurzon::calcDR(const double* pos, double &R, double &dRdr, double &dRdz) {
+void MetricCurzon::calcDR(const double* pos, double& R, double& dRdr, double& dRdz)
+{
     double r = pos[1];
     double z = pos[3];
     R = calcR(pos);
@@ -835,8 +844,9 @@ void   MetricCurzon::calcDR(const double* pos, double &R, double &dRdr, double &
 
 /*!
  */
-void   MetricCurzon::calcD2R(const double* pos, double &R, double &dRdr, double &dRdz,
-                             double &dRdrdr, double &dRdrdz, double &dRdzdz) {
+void MetricCurzon::calcD2R(
+    const double* pos, double& R, double& dRdr, double& dRdz, double& dRdrdr, double& dRdrdz, double& dRdzdz)
+{
     double r = pos[1];
     double z = pos[3];
     calcDR(pos, R, dRdr, dRdz);
@@ -849,7 +859,8 @@ void   MetricCurzon::calcD2R(const double* pos, double &R, double &dRdr, double 
 
 /*!
  */
-void MetricCurzon::calcLambdaNu(const double* pos, double &lambda, double &nu) {
+void MetricCurzon::calcLambdaNu(const double* pos, double& lambda, double& nu)
+{
     double r = pos[1];
     double R = calcR(pos);
 
@@ -857,13 +868,13 @@ void MetricCurzon::calcLambdaNu(const double* pos, double &lambda, double &nu) {
     R4 *= R4;
 
     lambda = -mMass / R;
-    nu     = -0.5 * mMass * mMass * r * r / R4;
+    nu = -0.5 * mMass * mMass * r * r / R4;
 }
 
-void MetricCurzon::calcDLN(const double* pos, double &lambda, double &nu, double &,
-                           double &, double &dndr, double &dndz) {
+void MetricCurzon::calcDLN(const double* pos, double& lambda, double& nu, double&, double&, double& dndr, double& dndz)
+{
     double r = pos[1];
-    //double z = pos[3];
+    // double z = pos[3];
     double R = calcR(pos);
 
     double dRdr, dRdz;
@@ -871,18 +882,17 @@ void MetricCurzon::calcDLN(const double* pos, double &lambda, double &nu, double
     calcLambdaNu(pos, lambda, nu);
 
     double edR2 = 1.0 / (R * R);
-    //dldr = mMass*dRdr*edR2;
-    //dldz = mMass*dRdz*edR2;
+    // dldr = mMass*dRdr*edR2;
+    // dldz = mMass*dRdz*edR2;
 
     double edR5 = edR2 / (R * R * R);
     dndr = mMass * mMass * r * (-R + 2.0 * r * dRdr) * edR5;
     dndz = 2.0 * mMass * mMass * r * r * dRdz * edR5;
 }
 
-void MetricCurzon::calcD2LN(const double* pos, double &, double &,
-                            double &, double &, double &, double &,
-                            double &dldrdr, double &dldrdz, double &dldzdz,
-                            double &dndrdr, double &dndrdz, double &dndzdz) {
+void MetricCurzon::calcD2LN(const double* pos, double&, double&, double&, double&, double&, double&, double& dldrdr,
+    double& dldrdz, double& dldzdz, double& dndrdr, double& dndrdz, double& dndzdz)
+{
     double r = pos[1];
 
     double R, dRdr, dRdz, dRdrdr, dRdrdz, dRdzdz;
@@ -894,7 +904,8 @@ void MetricCurzon::calcD2LN(const double* pos, double &, double &,
     dldzdz = -mMass * (2.0 * dRdz * dRdz - dRdzdz * R) * edR3;
 
     double edR6 = edR3 * edR3;
-    dndrdr = mMass * mMass * (-R * R + 8.0 * r * dRdr * R - 10.0 * r * r * dRdr * dRdr + 2.0 * r * r * dRdrdr * R) * edR6;
+    dndrdr
+        = mMass * mMass * (-R * R + 8.0 * r * dRdr * R - 10.0 * r * r * dRdr * dRdr + 2.0 * r * r * dRdrdr * R) * edR6;
     dndrdz = -2.0 * mMass * mMass * r * (-2 * dRdz * r + 5.0 * r * dRdr * dRdz - r * dRdrdz * R) * edR6;
     dndzdz = -2.0 * mMass * mMass * r * r * (5.0 * dRdz * dRdz - dRdzdz * R) / edR6;
 }

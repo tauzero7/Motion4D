@@ -31,7 +31,8 @@ namespace m4d {
 
 /*! Standard constructor for the GravWave metric.
  */
-MetricSultanaDyer::MetricSultanaDyer(double mass) {
+MetricSultanaDyer::MetricSultanaDyer(double mass)
+{
     mMetricName = "SultanaDyerBlackhole";
     setCoordType(enum_coordinate_spherical);
 
@@ -50,17 +51,17 @@ MetricSultanaDyer::MetricSultanaDyer(double mass) {
     setStandardValues();
 }
 
-MetricSultanaDyer::~MetricSultanaDyer() {
-}
+MetricSultanaDyer::~MetricSultanaDyer() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricSultanaDyer::calculateMetric(const double* pos) {
-    double t     = pos[0];
-    double r     = pos[1];
+bool MetricSultanaDyer::calculateMetric(const double* pos)
+{
+    double t = pos[0];
+    double r = pos[1];
     double theta = pos[2];
 
     double m = mMass;
@@ -97,9 +98,10 @@ bool MetricSultanaDyer::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricSultanaDyer::calculateChristoffels(const double* pos) {
-    double t     = pos[0];
-    double r     = pos[1];
+bool MetricSultanaDyer::calculateChristoffels(const double* pos)
+{
+    double t = pos[0];
+    double r = pos[1];
     double theta = pos[2];
 
     double m = mMass;
@@ -200,9 +202,10 @@ bool MetricSultanaDyer::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricSultanaDyer::calculateChrisD(const double* pos) {
-    double t     = pos[0];
-    double r     = pos[1];
+bool MetricSultanaDyer::calculateChrisD(const double* pos)
+{
+    double t = pos[0];
+    double r = pos[1];
     double theta = pos[2];
 
     double m = mMass;
@@ -500,7 +503,6 @@ bool MetricSultanaDyer::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -508,10 +510,10 @@ bool MetricSultanaDyer::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricSultanaDyer::localToCoord(const double* pos, const double* ldir, double* dir,
-                                     enum_nat_tetrad_type type) {
-    double t     = pos[0];
-    double r     = pos[1];
+void MetricSultanaDyer::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type)
+{
+    double t = pos[0];
+    double r = pos[1];
     double theta = pos[2];
 
     double dtt = 1.0 / (t * t);
@@ -525,7 +527,8 @@ void MetricSultanaDyer::localToCoord(const double* pos, const double* ldir, doub
         dir[1] = ldir[0] * B + ldir[1] * C;
         dir[2] = ldir[2] / r * dtt;
         dir[3] = ldir[3] / (r * sin(theta)) * dtt;
-    } else {
+    }
+    else {
         double A = 1.0 / sqrt(1.0 - 2.0 * mMass / r) * dtt;
         double B = 2.0 * mMass / (r * sqrt(1.0 - 2.0 * mMass / r)) * dtt;
         double C = sqrt(1.0 - 2.0 * mMass / r) * dtt;
@@ -544,10 +547,10 @@ void MetricSultanaDyer::localToCoord(const double* pos, const double* ldir, doub
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricSultanaDyer::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                     enum_nat_tetrad_type type) {
-    double t     = pos[0];
-    double r     = pos[1];
+void MetricSultanaDyer::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type)
+{
+    double t = pos[0];
+    double r = pos[1];
     double theta = pos[2];
 
     double dtt = 1.0 / (t * t);
@@ -561,7 +564,8 @@ void MetricSultanaDyer::coordToLocal(const double* pos, const double* cdir, doub
         ldir[1] = (cdir[1] - B / A * cdir[0]) / C;
         ldir[2] = cdir[2] * r * t * t;
         ldir[3] = cdir[3] * r * sin(theta) * t * t;
-    } else {
+    }
+    else {
         double A = 1.0 / sqrt(1.0 - 2.0 * mMass / r) * dtt;
         double B = 2.0 * mMass / (r * sqrt(1.0 - 2.0 * mMass / r)) * dtt;
         double C = sqrt(1.0 - 2.0 * mMass / r) * dtt;
@@ -578,11 +582,12 @@ void MetricSultanaDyer::coordToLocal(const double* pos, const double* cdir, doub
  *  \param pos    : pointer to position array.
  *  \return false : position is always valid.
  */
-bool MetricSultanaDyer::breakCondition(const double* pos) {
+bool MetricSultanaDyer::breakCondition(const double* pos)
+{
     bool br = false;
 
     double rs = 2.0 * mMass;
-    if ((pos[1] < 0.0) || (pos[1]*pos[1] <= (1.0 + eps)*rs * rs)) {
+    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + eps) * rs * rs)) {
         br = true;
     }
     return br;
@@ -591,9 +596,10 @@ bool MetricSultanaDyer::breakCondition(const double* pos) {
 /*! Set parameter 'pName' to 'val'.
  *
  */
-bool MetricSultanaDyer::setParam(const char* pName, double val) {
+bool MetricSultanaDyer::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
-    if (strcmp(pName,"mass") == 0) {
+    if (strcmp(pName, "mass") == 0) {
         mMass = val;
     }
     return true;
@@ -609,23 +615,27 @@ bool MetricSultanaDyer::setParam(const char* pName, double val) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricSultanaDyer::testConstraint(const double y[], const double kappa) {
-    double t      = y[0];
-    double r      = y[1];
-    double theta  = y[2];
-    double dt     = y[4];
-    double dr     = y[5];
+double MetricSultanaDyer::testConstraint(const double y[], const double kappa)
+{
+    double t = y[0];
+    double r = y[1];
+    double theta = y[2];
+    double dt = y[4];
+    double dr = y[5];
     double dtheta = y[6];
-    double dphi   = y[7];
+    double dphi = y[7];
 
     double sum = -kappa * mSign;
-    sum += t * t * t * t * ((1.0 - 2.0 * mMass / r) * dt * dt - 4.0 * mMass / r * dt * dr - (1.0 + 2.0 * mMass / r) * dr * dr - r * r * (dtheta * dtheta + sin(theta) * sin(theta) * dphi * dphi));
+    sum += t * t * t * t
+        * ((1.0 - 2.0 * mMass / r) * dt * dt - 4.0 * mMass / r * dt * dr - (1.0 + 2.0 * mMass / r) * dr * dr
+            - r * r * (dtheta * dtheta + sin(theta) * sin(theta) * dphi * dphi));
     return sum;
 }
 
 /*! Generate report.
  */
-bool MetricSultanaDyer::report(const vec4, const vec4, std::string &text) {
+bool MetricSultanaDyer::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for SultanaDyer cosmological black hole\n\tcoordinates : (t,r,theta,phi)\n";
     ss << "---------------------------------------------------------------\n";
@@ -633,14 +643,16 @@ bool MetricSultanaDyer::report(const vec4, const vec4, std::string &text) {
     ss.precision(DEF_FIXED_REPORT_PRECISION);
     ss.setf(std::ios::fixed);
     ss << "  mass ........................................ = " << mMass << std::endl;
-    text = ss.str();
-    return true;
+
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricSultanaDyer::setStandardValues() {
+void MetricSultanaDyer::setStandardValues()
+{
     mInitPos[0] = 1.0;
     mInitPos[1] = 6.0;
     mInitPos[2] = M_PI_2;

@@ -62,7 +62,7 @@ public:
     virtual double getCircularVelocity(const double r, const enum_nat_tetrad_type  tedType = enum_nat_tetrad_default);
     virtual vec4   getCircularFourVel(const vec4 pos, const enum_nat_tetrad_type  tedType = enum_nat_tetrad_default);
 
-    virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
+    virtual bool   report(const vec4 pos, const vec4 cdir, char*&text);
 
     // --------- protected methods -----------
 protected:

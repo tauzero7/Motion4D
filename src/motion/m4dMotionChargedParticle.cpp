@@ -28,14 +28,13 @@
 namespace m4d {
 
 MotionChargedParticle::MotionChargedParticle(Metric* metric)
-    : Motion(metric) {
+    : Motion(metric)
+{
 
     mLambda = 0.0;
 }
 
-
-MotionChargedParticle::~MotionChargedParticle() {
-}
+MotionChargedParticle::~MotionChargedParticle() {}
 
 // *********************************** public methods ******************************
 
@@ -48,7 +47,9 @@ MotionChargedParticle::~MotionChargedParticle() {
  *  \param type  : type of natural local tetrad.
  *  \sa enum_nat_tetrad_type.
  */
-bool MotionChargedParticle::setInitialVelocity(double fm, double v, double theta, double phi, double q_over_m, enum_nat_tetrad_type  type) {
+bool MotionChargedParticle::setInitialVelocity(
+    double fm, double v, double theta, double phi, double q_over_m, enum_nat_tetrad_type type)
+{
     if (fabs(v) >= 1.0 || fm == 0.0) {
         return false;
     }
@@ -74,8 +75,8 @@ bool MotionChargedParticle::setInitialVelocity(double fm, double v, double theta
     return true;
 }
 
-
-void MotionChargedParticle::getInitialVelocity(double &v, double &theta, double &phi) {
+void MotionChargedParticle::getInitialVelocity(double& v, double& theta, double& phi)
+{
     v = mVel;
     theta = mTheta;
     phi = mPhi;
@@ -88,7 +89,7 @@ void MotionChargedParticle::getInitialVelocity(double &v, double &theta, double 
  *  \param v :  velocity.
  *  \param theta_v : theta-direction of velocity-
  *  \param phi_v : phi-direction of velocity.
-  *  \param e0 : local tetrad vector.
+ *  \param e0 : local tetrad vector.
  *  \param e1 : local tetrad vector.
  *  \param e2 : local tetrad vector.
  *  \param e3 : local tetrad vector.
@@ -99,17 +100,15 @@ void MotionChargedParticle::getInitialVelocity(double &v, double &theta, double 
  *  \param base2 : reference to base vector.
  *  \param base3 : reference to base vector.
  */
-enum_break_condition
-MotionChargedParticle::calculateMotion(const vec4 initPos, double fm, double v, double theta_v, double phi_v,
-                               const double q_over_m,
-                               const vec4 e0, const vec4 e1, const vec4 e2, const vec4 e3,
-                               const int maxNumPoints,
-                               std::vector<vec4> &points,
-                               std::vector<vec4> &base0, std::vector<vec4> &base1, std::vector<vec4> &base2, std::vector<vec4> &base3) {
+enum_break_condition MotionChargedParticle::calculateMotion(const vec4 initPos, double fm, double v, double theta_v,
+    double phi_v, const double q_over_m, const vec4 e0, const vec4 e1, const vec4 e2, const vec4 e3,
+    const int maxNumPoints, std::vector<vec4>& points, std::vector<vec4>& base0, std::vector<vec4>& base1,
+    std::vector<vec4>& base2, std::vector<vec4>& base3)
+{
     if (fm == 0.0) {
         return enum_break_constraint;
     }
-    fm = fm / fabs(fm); //normalize to 1.0
+    fm = fm / fabs(fm); // normalize to 1.0
 
     if (!points.empty()) {
         points.clear();
@@ -137,9 +136,8 @@ MotionChargedParticle::calculateMotion(const vec4 initPos, double fm, double v, 
     base2.push_back(e2);
     base3.push_back(e3);
 
-
-    enum_break_condition  breakType = enum_break_none;
-    register int i = 0;
+    enum_break_condition breakType = enum_break_none;
+    int i = 0;
 
     while (i < maxNumPoints && (breakType == enum_break_none)) {
         breakType = nextStep();
@@ -150,25 +148,25 @@ MotionChargedParticle::calculateMotion(const vec4 initPos, double fm, double v, 
         base3.push_back(getE(3));
         i++;
     }
-    if ((int)points.size() >= maxNumPoints) {
+
+    if (static_cast<int>(points.size()) >= maxNumPoints) {
         breakType = enum_break_num_exceed;
     }
 
     return breakType;
 }
 
-
-
 /*! Calculate the next step of the Fermi-Walker transport.
  *
  *  \return enum_break_condition.
  */
-enum_break_condition
-MotionChargedParticle::nextStep() {
+enum_break_condition MotionChargedParticle::nextStep()
+{
     if (mMetric->breakCondition(&y[0])) {
         return enum_break_cond;
     }
-    register int i;
+
+    int i;
     double yn[DEF_MAX_YS], dydx[DEF_MAX_YS], k1[DEF_MAX_YS], k2[DEF_MAX_YS], k3[DEF_MAX_YS], k4[DEF_MAX_YS];
 
     calcDerivs(y, dydx);
@@ -196,7 +194,6 @@ MotionChargedParticle::nextStep() {
         y[i] = yn[i];
     }
 
-
     if (fabs(mMetric->testConstraint(y, -1.0)) > mConstraintEpsilon) {
         return enum_break_constraint;
     }
@@ -205,23 +202,21 @@ MotionChargedParticle::nextStep() {
     return enum_break_none;
 }
 
-
-
 // ********************************* protected methods *****************************
 /*! Calculate right hand side of
  *
  * \param y[] : pointer to y.
  * \param dydx[] : pointer to right hand side of geodesic equation.
  */
-bool
-MotionChargedParticle::calcDerivs(const double y[], double dydx[]) {
-    register int mu, k, l;
+bool MotionChargedParticle::calcDerivs(const double y[], double dydx[])
+{
+    int mu, k, l;
 
     mMetric->calculateChristoffels(y);
     mMetric->calcFmu_nu(y);
 
     for (mu = 0; mu < 4; mu++) {
-        dydx[mu]     = y[4 + mu];
+        dydx[mu] = y[4 + mu];
         dydx[mu + 4] = 0.0;
 
         for (k = 0; k < 4; k++) {
@@ -234,6 +229,5 @@ MotionChargedParticle::calcDerivs(const double y[], double dydx[]) {
 
     return true;
 }
-
 
 } // end namespace m4d

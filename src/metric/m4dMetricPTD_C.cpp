@@ -29,20 +29,19 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the metric.
  *
  * \param  a : parameter "a" for the metric
  * \param  b : parameter "b" for the metric
  */
-MetricPTD_C::MetricPTD_C(double a, double b) {
-    mMetricName  = "Petrov_Type_D_C_ES";
+MetricPTD_C::MetricPTD_C(double a, double b)
+{
+    mMetricName = "Petrov_Type_D_C_ES";
     setCoordType(enum_coordinate_custom);
 
     mPhysicalUnits = enum_physical_constants_geom;
     mSpeedOfLight = 1.0;
     mGravConstant = 1.0;
-
 
     Par_a = a;
     Par_b = b;
@@ -51,24 +50,20 @@ MetricPTD_C::MetricPTD_C(double a, double b) {
     addParam("b", Par_b);
 
     setStandardValues();
-
-
 }
 
 /*! Standard destructor for the metric.
  *
  */
-MetricPTD_C::~MetricPTD_C() {
-
-}
-
+MetricPTD_C::~MetricPTD_C() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricPTD_C::calculateMetric(const double* pos) {
+bool MetricPTD_C::calculateMetric(const double* pos)
+{
     double x = pos[2];
     double y = pos[3];
     double a = Par_a;
@@ -104,7 +99,8 @@ bool MetricPTD_C::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricPTD_C::calculateChristoffels(const double* pos) {
+bool MetricPTD_C::calculateChristoffels(const double* pos)
+{
     double x = pos[2];
     double y = pos[3];
     double a = Par_a;
@@ -205,8 +201,8 @@ bool MetricPTD_C::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool
-MetricPTD_C::calculateChrisD(const double* pos) {
+bool MetricPTD_C::calculateChrisD(const double* pos)
+{
     double x = pos[2];
     double y = pos[3];
     double a = Par_a;
@@ -277,8 +273,8 @@ MetricPTD_C::calculateChrisD(const double* pos) {
     double t82 = 4.0 * t24;
     double t83 = 3.0 * t33;
     double t84 = 6.0 * t38;
-    double t86 = t9 - t14 + t18 - t75 + t76 - t28 + t77 + t79 + t6 - t11 + 16.0 * t80 - t82 - t83 - t37 - t84 + t40 +
-                 t41 - 3.0 * t42;
+    double t86 = t9 - t14 + t18 - t75 + t76 - t28 + t77 + t79 + t6 - t11 + 16.0 * t80 - t82 - t83 - t37 - t84 + t40
+        + t41 - 3.0 * t42;
     double t87 = t86 * t46;
     double t91 = t67 * t57 * t46 / 2.0;
     double t92 = t63 * t46;
@@ -301,8 +297,8 @@ MetricPTD_C::calculateChrisD(const double* pos) {
     double t121 = 12.0 * t22;
     double t122 = 18.0 * t36;
     double t123 = 3.0 * t41;
-    double t125 = t6 + t9 - t11 + 16.0 * t13 + t18 - t75 + t120 + t121 - t25 + t28 + t34 + t122 - t39 + t40 - t123
-                  + 5.0 * t42;
+    double t125
+        = t6 + t9 - t11 + 16.0 * t13 + t18 - t75 + t120 + t121 - t25 + t28 + t34 + t122 - t39 + t40 - t123 + 5.0 * t42;
     double t127 = t125 * t46 / 4.0;
     double t128 = 8.0 * t8;
     double t129 = t1 * t1;
@@ -315,13 +311,12 @@ MetricPTD_C::calculateChrisD(const double* pos) {
     double t137 = t129 * t1;
     double t138 = 4.0 * t13;
     double t139 = 4.0 * t80;
-    double t140 = -t128 - t18 + t20 - t23 + t28 - t79 + t25 + t40 + t41 - t131 + t134 + t136 + t137 - t6 - t138 -
-                  t139;
+    double t140 = -t128 - t18 + t20 - t23 + t28 - t79 + t25 + t40 + t41 - t131 + t134 + t136 + t137 - t6 - t138 - t139;
     double t143 = 24.0 * t78;
     double t145 = 6.0 * t130;
     double t146 = 3.0 * t135;
-    double t148 = -t128 + t138 + t18 - t75 + t76 - t28 - t31 - t143 + t6 - 16.0 * t10 + t139 - t82 + t40 + t41 -
-                  t145 - t134 - t146 - 3.0 * t137;
+    double t148 = -t128 + t138 + t18 - t75 + t76 - t28 - t31 - t143 + t6 - 16.0 * t10 + t139 - t82 + t40 + t41 - t145
+        - t134 - t146 - 3.0 * t137;
     double t149 = t148 * t46;
     double t151 = -t2 + t12 + t62 - t54 - t49;
     double t156 = 3.0 * t4;
@@ -335,8 +330,8 @@ MetricPTD_C::calculateChrisD(const double* pos) {
     double t170 = 12.0 * t10;
     double t171 = 3.0 * t40;
     double t172 = 18.0 * t133;
-    double t174 = -16.0 * t8 - t18 + t169 - t28 + t170 + t25 + t171 - t41 + t131 - t172 - t136 - 5.0 * t137 - t6
-                  - t138 - t139 - t76;
+    double t174 = -16.0 * t8 - t18 + t169 - t28 + t170 + t25 + t171 - t41 + t131 - t172 - t136 - 5.0 * t137 - t6 - t138
+        - t139 - t76;
     double t176 = t174 * t46 / 4.0;
     double t178 = 3.0 * t1 + a;
     double t181 = t106 * t178 * t50 / 2.0;
@@ -348,20 +343,20 @@ MetricPTD_C::calculateChrisD(const double* pos) {
     double t193 = t67 * (t2 - t52 + t54 + t188 + t189 + t56) * t46 / 2.0;
     double t194 = t57 * t46;
     double t197 = 18.0 * t27;
-    double t201 = t138 + t18 - t75 + t121 - t197 + t143 + t6 + t170 + t139 - t25 + t40 - t123 + t145 - 30.0 *
-                  t133 - 27.0 * t135 - 7.0 * t137;
-    double t210 = 32.0 * t8 + t138 + t18 + t23 + t28 + t31 + 36.0 * t78 + t6 + 20.0 * t10 + t139 - t82 + t171 -
-                  t41 + 22.0 * t130 + t172 + t146 + 15.0 * t137;
+    double t201 = t138 + t18 - t75 + t121 - t197 + t143 + t6 + t170 + t139 - t25 + t40 - t123 + t145 - 30.0 * t133
+        - 27.0 * t135 - 7.0 * t137;
+    double t210 = 32.0 * t8 + t138 + t18 + t23 + t28 + t31 + 36.0 * t78 + t6 + 20.0 * t10 + t139 - t82 + t171 - t41
+        + 22.0 * t130 + t172 + t146 + 15.0 * t137;
     double t217 = t165 * (t100 + 3.0 * t12 + t62 + t54 + t49) / 2.0;
     double t226 = t106 * t96 * t109 / 2.0;
     double t229 = t106 * t93 * t178 / 2.0;
     double t233 = (t156 + t55 + t62 + t100 + t101 + t54 + t56) * t46 * t96 / 2.0;
     double t237 = (t61 + t51 - t62 + t54 + t188 + t189 + t56) * t46 * t93 / 2.0;
     double t241 = t97 * (t189 + 3.0 * t49 - t62 + t56 + t12) / 2.0;
-    double t245 = -t9 - t18 + t169 - t76 + t197 + t77 - t6 + t11 + t120 + t25 + 27.0 * t33 + 30.0 * t36 - t84 +
-                  t171 - t41 + 7.0 * t42;
+    double t245 = -t9 - t18 + t169 - t76 + t197 + t77 - t6 + t11 + t120 + t25 + 27.0 * t33 + 30.0 * t36 - t84 + t171
+        - t41 + 7.0 * t42;
     double t262 = -t9 - 32.0 * t13 - t18 + t20 - t28 + 36.0 * t30 + t79 - t6 + t11 + 20.0 * t80 + t82 - t83 - t122
-                  - 22.0 * t38 + t40 - t123 - 15.0 * t42;
+        - 22.0 * t38 + t40 - t123 - 15.0 * t42;
     chrisD[0][0][0][0] = -t43 * t46 / 4.0;
     chrisD[0][0][0][1] = 0.0;
     chrisD[0][0][0][2] = 0.0;
@@ -619,7 +614,6 @@ MetricPTD_C::calculateChrisD(const double* pos) {
     chrisD[3][3][3][2] = -t241;
     chrisD[3][3][3][3] = t262 * t46 * t113 / 4.0;
 
-
     return true;
 }
 
@@ -630,8 +624,8 @@ MetricPTD_C::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricPTD_C::localToCoord(const double* pos, const double* ldir, double* dir,
-                               enum_nat_tetrad_type) {
+void MetricPTD_C::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     double x = pos[2];
     double y = pos[3];
     double a = Par_a;
@@ -650,8 +644,8 @@ void MetricPTD_C::localToCoord(const double* pos, const double* ldir, double* di
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricPTD_C::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                               enum_nat_tetrad_type) {
+void MetricPTD_C::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     double x = pos[2];
     double y = pos[3];
     double a = Par_a;
@@ -667,7 +661,8 @@ void MetricPTD_C::coordToLocal(const double* pos, const double* cdir, double* ld
  *
  * Deleted.
  */
-int MetricPTD_C::transToPseudoCart(vec4 p, vec4& cp) {
+int MetricPTD_C::transToPseudoCart(vec4 p, vec4& cp)
+{
     cp[0] = p[0];
     cp[1] = p[2];
     cp[2] = p[3];
@@ -680,7 +675,8 @@ int MetricPTD_C::transToPseudoCart(vec4 p, vec4& cp) {
  *
  * not implemented.
  */
-bool MetricPTD_C::breakCondition(const double*) {
+bool MetricPTD_C::breakCondition(const double*)
+{
     bool br = false;
     /*
       double x = pos[2];
@@ -699,7 +695,6 @@ bool MetricPTD_C::breakCondition(const double*) {
     return br;
 }
 
-
 /*! Tests whether the constraint equation is fulfilled.
  *
  *  The constraint equation for lightlike and timelike geodesics reads:
@@ -710,37 +705,37 @@ bool MetricPTD_C::breakCondition(const double*) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricPTD_C::testConstraint(const double y[], const double kappa) {
+double MetricPTD_C::testConstraint(const double y[], const double kappa)
+{
     calculateMetric(y);
     double sum = -mSign * kappa;
     for (int i = 0; i < 4; i++) {
         sum += g_compts[i][i] * y[4 + i] * y[4 + i];
     }
     return sum;
-    //return 0;
+    // return 0;
 }
 
 /*! Set parameter 'pName' to 'val'.
  *
  *
  */
-bool MetricPTD_C::setParam(const char* pName, double val) {
+bool MetricPTD_C::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
-    if (strcmp(pName,"b") == 0) {
+    if (strcmp(pName, "b") == 0) {
         Par_b = val;
     }
-    else if (strcmp(pName,"a") == 0) {
+    else if (strcmp(pName, "a") == 0) {
         Par_a = val;
     }
     return true;
 }
 
-
-
-
 /*! Generate report.
  */
-bool MetricPTD_C::report(const vec4 , const vec4 , std::string &text) {
+bool MetricPTD_C::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for C metric\n\tcoordinates : (t,phi,x,y)\n";
     ss << "---------------------------------------------------------------\n";
@@ -756,7 +751,6 @@ bool MetricPTD_C::report(const vec4 , const vec4 , std::string &text) {
     ss << "---------------------------------------------------------------\n";
     ss.precision(DEF_FIXED_REPORT_PRECISION);
     ss.setf(std::ios::fixed);
-
 
     vec3 roots;
 
@@ -774,17 +768,19 @@ bool MetricPTD_C::report(const vec4 , const vec4 , std::string &text) {
     ss << "    f positive between... y2 and y3 = " << -roots[0] << std::endl;
     ss << "    f negative after y3." << std::endl;
     ss << "---------------------------------------------------------------\n";
-    ss << "quad2d    " << roots[1] << " " << -roots[1] << " " << roots[1] << " " << -roots[0] << " " << roots[2] << " " << -roots[0] << " " << roots[2] << " " << -roots[1] << " 3.0   0.5 1.0 0.5" << std::endl;
+    ss << "quad2d    " << roots[1] << " " << -roots[1] << " " << roots[1] << " " << -roots[0] << " " << roots[2] << " "
+       << -roots[0] << " " << roots[2] << " " << -roots[1] << " 3.0   0.5 1.0 0.5" << std::endl;
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // *************************** specific  public methods ****************************
 /*! Returns the sign of real number.
  *
  */
-double sgn(double value) {
+double sgn(double value)
+{
     if (value > 0) {
         return 1.0;
     }
@@ -800,8 +796,8 @@ double sgn(double value) {
  *\param   q     : y-axes offset
  *\param roots : reference to Roots of the polynom sorted ascending.
  */
-void
-MetricPTD_C::calculateRoots(vec3 & roots, double p, double q) {
+void MetricPTD_C::calculateRoots(vec3& roots, double p, double q)
+{
     double d = q * q / 4.0 - p * p * p / 27.0;
     double z1 = 0;
     double z2 = 0;
@@ -817,19 +813,21 @@ MetricPTD_C::calculateRoots(vec3 & roots, double p, double q) {
         if (p == 0) {
             z1 = 0.0;
             z2 = 0.0;
-        } else {
+        }
+        else {
             z1 = -3 * q / p;
             z2 = 1.5 * q / p;
         }
         z3 = z2;
     }
     if (d > 0) {
-        z1 = sgn(-q * 0.5 + sqrt(d)) * pow(fabs(-q * 0.5 + sqrt(d)), 1 / 3.0) -  sgn(q * 0.5 + sqrt(d)) * pow(fabs(q * 0.5 + sqrt(d)), 1 / 3.0);
+        z1 = sgn(-q * 0.5 + sqrt(d)) * pow(fabs(-q * 0.5 + sqrt(d)), 1 / 3.0)
+            - sgn(q * 0.5 + sqrt(d)) * pow(fabs(q * 0.5 + sqrt(d)), 1 / 3.0);
         z3 = z2 = z1;
     }
 
     double tmp;
-    //sort
+    // sort
     if (z2 < z1) {
         tmp = z1;
         z1 = z2;
@@ -853,7 +851,8 @@ MetricPTD_C::calculateRoots(vec3 & roots, double p, double q) {
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricPTD_C::setStandardValues() {
+void MetricPTD_C::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 0.0;
     mInitPos[2] = 1.0;
@@ -868,6 +867,4 @@ void MetricPTD_C::setStandardValues() {
     mCoordNames[3] = std::string("y");
 }
 
-
 } // end namespace m4d
-

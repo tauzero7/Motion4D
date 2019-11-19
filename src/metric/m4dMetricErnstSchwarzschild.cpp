@@ -29,19 +29,19 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the Ernst-Schwarzschild metric.
  *
  * \param  mass : mass of the black hole.
  * \param  B : magnetic field
  */
-MetricErnstSchwarzschild::MetricErnstSchwarzschild(double mass, double B) {
-    mMetricName  = "ErnstSchwarzschild";
+MetricErnstSchwarzschild::MetricErnstSchwarzschild(double mass, double B)
+{
+    mMetricName = "ErnstSchwarzschild";
     setCoordType(enum_coordinate_spherical);
 
     mPhysicalUnits = enum_physical_constants_geom;
-    mSpeedOfLight   = 1.0;
-    mGravConstant   = 1.0;
+    mSpeedOfLight = 1.0;
+    mGravConstant = 1.0;
     mDielectricPerm = 1.0;
 
     addParam("mass", mass);
@@ -56,9 +56,7 @@ MetricErnstSchwarzschild::MetricErnstSchwarzschild(double mass, double B) {
 
 /*!
  */
-MetricErnstSchwarzschild::~MetricErnstSchwarzschild() {
-}
-
+MetricErnstSchwarzschild::~MetricErnstSchwarzschild() {}
 
 // *********************************** public methods ******************************
 
@@ -66,8 +64,9 @@ MetricErnstSchwarzschild::~MetricErnstSchwarzschild() {
  *
  *  \param pos : pointer to position.
  */
-bool MetricErnstSchwarzschild::calculateMetric(const double* pos) {
-    double r     = pos[1];
+bool MetricErnstSchwarzschild::calculateMetric(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double m = mMass;
@@ -111,8 +110,9 @@ bool MetricErnstSchwarzschild::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricErnstSchwarzschild::calculateChristoffels(const double* pos) {
-    double r     = pos[1];
+bool MetricErnstSchwarzschild::calculateChristoffels(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double m = mMass;
@@ -223,8 +223,9 @@ bool MetricErnstSchwarzschild::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricErnstSchwarzschild::calculateChrisD(const double* pos) {
-    double r     = pos[1];
+bool MetricErnstSchwarzschild::calculateChrisD(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double m = mMass;
@@ -547,7 +548,6 @@ bool MetricErnstSchwarzschild::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -555,9 +555,9 @@ bool MetricErnstSchwarzschild::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricErnstSchwarzschild::localToCoord(const double* pos, const double* ldir, double* dir,
-        enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricErnstSchwarzschild::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double w = sqrt(1.0 - 2.0 * mMass / r);
@@ -576,9 +576,9 @@ void MetricErnstSchwarzschild::localToCoord(const double* pos, const double* ldi
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricErnstSchwarzschild::coordToLocal(const double* pos, const double* cdir, double* ldir,
-        enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricErnstSchwarzschild::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double w = sqrt(1.0 - 2.0 * mMass / r);
@@ -590,22 +590,21 @@ void MetricErnstSchwarzschild::coordToLocal(const double* pos, const double* cdi
     ldir[3] = cdir[3] * r * sin(theta) / L;
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricErnstSchwarzschild::breakCondition(const double* pos) {
+bool MetricErnstSchwarzschild::breakCondition(const double* pos)
+{
     bool br = false;
-    if ((pos[1] < 0.0) || (pos[1]*pos[1] <= (1.0 + eps) * 4.0 * mMass * mMass)) {
+    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + eps) * 4.0 * mMass * mMass)) {
         br = true;
     }
 
     return br;
 }
-
 
 /*! Tests whether the constraint equation is fulfilled.
  *
@@ -617,21 +616,23 @@ bool MetricErnstSchwarzschild::breakCondition(const double* pos) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricErnstSchwarzschild::testConstraint(const double y[], const double kappa) {
-    double r     = y[1];
+double MetricErnstSchwarzschild::testConstraint(const double y[], const double kappa)
+{
+    double r = y[1];
     double theta = y[2];
 
     double w2 = 1.0 - 2.0 * mMass / r;
-    double L  = 1.0 + mB * mB * r * r * sin(theta) * sin(theta);
+    double L = 1.0 + mB * mB * r * r * sin(theta) * sin(theta);
 
     // Scale the directions with the speed of light before doubling them !!
-    double dt     = y[4];
-    double dr     = y[5];
+    double dt = y[4];
+    double dr = y[5];
     double dtheta = y[6];
-    double dphi   = y[7];
+    double dphi = y[7];
 
     double sum = -kappa * mSign;
-    sum += L * L * (w2 * dt * dt - dr * dr / w2 - r * r * dtheta * dtheta) - r * r * sin(theta) * sin(theta) / (L * L) * dphi * dphi;
+    sum += L * L * (w2 * dt * dt - dr * dr / w2 - r * r * dtheta * dtheta)
+        - r * r * sin(theta) * sin(theta) / (L * L) * dphi * dphi;
     return sum;
 }
 
@@ -640,13 +641,14 @@ double MetricErnstSchwarzschild::testConstraint(const double y[], const double k
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  *  'charge' represents the charge of the black hole.
  */
-bool MetricErnstSchwarzschild::setParam(const char* pName, double val) {
+bool MetricErnstSchwarzschild::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"mass") == 0) {
+    if (strcmp(pName, "mass") == 0) {
         mMass = val;
     }
-    else if (strcmp(pName,"b") == 0) {
+    else if (strcmp(pName, "b") == 0) {
         mB = val;
     }
 
@@ -655,7 +657,8 @@ bool MetricErnstSchwarzschild::setParam(const char* pName, double val) {
 
 /*! Generate report.
  */
-bool MetricErnstSchwarzschild::report(const vec4 , const vec4 , std::string &text) {
+bool MetricErnstSchwarzschild::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Ernst-Schwarzschild metric\n\tcoordinate : (t,r,theta,phi)\n";
     ss << "---------------------------------------------------------------\n";
@@ -663,14 +666,15 @@ bool MetricErnstSchwarzschild::report(const vec4 , const vec4 , std::string &tex
     ss.setf(std::ios::fixed);
     ss << "  mass ........................... " << mMass << std::endl;
     ss << "  B .............................. " << mB << std::endl;
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricErnstSchwarzschild::setStandardValues() {
+void MetricErnstSchwarzschild::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 6.0;
     mInitPos[2] = M_PI_2;

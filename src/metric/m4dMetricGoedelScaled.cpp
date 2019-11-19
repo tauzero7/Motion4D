@@ -30,8 +30,9 @@ namespace m4d {
 // ---------------------------------------------------
 //    constructur/destructor
 // ---------------------------------------------------
-MetricGoedelScaled::MetricGoedelScaled(double rG, double zeta) {
-    mMetricName  = "Goedel scaled";
+MetricGoedelScaled::MetricGoedelScaled(double rG, double zeta)
+{
+    mMetricName = "Goedel scaled";
     setCoordType(enum_coordinate_cylinder);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -51,19 +52,17 @@ MetricGoedelScaled::MetricGoedelScaled(double rG, double zeta) {
     setStandardValues();
 }
 
-MetricGoedelScaled::~MetricGoedelScaled() {
-
-}
-
+MetricGoedelScaled::~MetricGoedelScaled() {}
 
 // *********************************** public methods ******************************
 // ---------------------------------------------------
 //    public::calculateMetric
 // ---------------------------------------------------
-bool MetricGoedelScaled::calculateMetric(const double* pos) {
+bool MetricGoedelScaled::calculateMetric(const double* pos)
+{
     double r_G = mRG;
-    double R   = pos[1];
-    double c   = mSpeedOfLight;
+    double R = pos[1];
+    double c = mSpeedOfLight;
 
     double t1 = r_G * r_G;
     double t2 = c * c;
@@ -95,7 +94,8 @@ bool MetricGoedelScaled::calculateMetric(const double* pos) {
 // ---------------------------------------------------
 //    public::calculateChristoffels
 // ---------------------------------------------------
-bool MetricGoedelScaled::calculateChristoffels(const double* pos) {
+bool MetricGoedelScaled::calculateChristoffels(const double* pos)
+{
     double R = pos[1];
     double c = mSpeedOfLight;
 
@@ -178,15 +178,14 @@ bool MetricGoedelScaled::calculateChristoffels(const double* pos) {
     return true;
 }
 
-
 // ---------------------------------------------------
 //    public::localToCoord
 // ---------------------------------------------------
-void MetricGoedelScaled::localToCoord(const double* pos, const double* ldir, double* dir,
-                                      enum_nat_tetrad_type) {
-    double R  = pos[1];
+void MetricGoedelScaled::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
+    double R = pos[1];
     double R2 = R * R;
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
     double c2 = c * c;
 
     double A = R2 * (-sqrt(2.0) * c + (1.0 - R2) * mZeta);
@@ -194,21 +193,20 @@ void MetricGoedelScaled::localToCoord(const double* pos, const double* ldir, dou
     double Gamma = 1.0 / sqrt(c2 + 2.0 * sqrt(2.0) * R2 * c * mZeta - R2 * (1.0 - R2) * mZeta * mZeta);
     double Delta = 1.0 / (R * c * sqrt(1.0 + R2));
 
-    dir[0] = Gamma / mRG * ldir[0]       + Delta * Gamma * A / mRG * ldir[2];
+    dir[0] = Gamma / mRG * ldir[0] + Delta * Gamma * A / mRG * ldir[2];
     dir[1] = 1.0 / mRG * sqrt(1.0 + R2) * ldir[1];
     dir[2] = Gamma * mZeta / mRG * ldir[0] + Delta * Gamma * B / mRG * ldir[2];
     dir[3] = 1.0 / mRG * ldir[3];
-
 }
 
 // ---------------------------------------------------
 //    public::coordToLocal
 // ---------------------------------------------------
-void MetricGoedelScaled::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                      enum_nat_tetrad_type) {
-    double R  = pos[1];
+void MetricGoedelScaled::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
+    double R = pos[1];
     double R2 = R * R;
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
     double c2 = c * c;
 
     double A = R2 * (-sqrt(2.0) * c + (1.0 - R2) * mZeta);
@@ -218,26 +216,27 @@ void MetricGoedelScaled::coordToLocal(const double* pos, const double* cdir, dou
 
     double nenner = B - mZeta * A;
 
-    ldir[0] = mRG / Gamma         * (B * cdir[0] - A * cdir[2]) / nenner;
+    ldir[0] = mRG / Gamma * (B * cdir[0] - A * cdir[2]) / nenner;
     ldir[1] = mRG / sqrt(1.0 + R2) * cdir[1];
     ldir[2] = mRG / (Gamma * Delta) * (cdir[2] - mZeta * cdir[0]) / nenner;
     ldir[3] = mRG * cdir[3];
 }
 
-
 // ---------------------------------------------------
 //    public::breakCondition
 // ---------------------------------------------------
-bool MetricGoedelScaled::breakCondition(const double*) {
+bool MetricGoedelScaled::breakCondition(const double*)
+{
     return false;
 }
 
 // ---------------------------------------------------
 //    public::setParam
 // ---------------------------------------------------
-bool MetricGoedelScaled::setParam(const char* pName, double val) {
+bool MetricGoedelScaled::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
-    if (strcmp(pName,"rG") == 0) {
+    if (strcmp(pName, "rG") == 0) {
         mRG = val;
     }
     else if (strcmp(pName, "zeta") == 0) {
@@ -253,18 +252,18 @@ bool MetricGoedelScaled::setParam(const char* pName, double val) {
  *  \param  cp : reference to transformed point.
  *  \return true : success.
  */
-bool MetricGoedelScaled::transToTwoPlusOne(vec4 p, vec4 &cp) {
+bool MetricGoedelScaled::transToTwoPlusOne(vec4 p, vec4& cp)
+{
     vec4 tp;
     TransCoordinates::toCartesianCoord(mCoordType, p, tp);
     cp = vec4(tp[0], tp[1], tp[2], tp[0]);
     return true;
 }
 
-
-
 /*! Generate report.
  */
-bool MetricGoedelScaled::report(const vec4 pos, const vec4 cdir, std::string &text) {
+bool MetricGoedelScaled::report(const vec4 pos, const vec4 cdir, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Goedel metric\n\tcoordinate : (T,R,Phi,Z)\n";
     ss << "\tScaled coordinates, geodesical shape independent of rG\n";
@@ -276,24 +275,25 @@ bool MetricGoedelScaled::report(const vec4 pos, const vec4 cdir, std::string &te
     ss.setf(std::ios::fixed);
     vec4 locStartDir;
     coordToLocal(pos.data(), cdir.data(), locStartDir.data());
-    double k0  = -locStartDir[0] / mRG;
-    double k2  = (pos[1] * sqrt(1.0 + pos[1] * pos[1]) * locStartDir[2] - sqrt(2.0) * pos[1] * pos[1] * locStartDir[0]) / mRG;
-    double k3  = locStartDir[3] / mRG;
+    double k0 = -locStartDir[0] / mRG;
+    double k2
+        = (pos[1] * sqrt(1.0 + pos[1] * pos[1]) * locStartDir[2] - sqrt(2.0) * pos[1] * pos[1] * locStartDir[0]) / mRG;
+    double k3 = locStartDir[3] / mRG;
     ss << "  Goedel radius ............ rG = 2a = " << mRG << std::endl;
     ss << "  constant of motion ....... k_0 = " << k0 << std::endl;
     ss << "  constant of motion ....... k_2 = " << k2 << std::endl;
     ss << "  constant of motion ....... k_3 = " << k3;
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
-
 
 // ********************************* protected methods *****************************
 // ---------------------------------------------------
 //    protected::setViewerVal
 // ---------------------------------------------------
-void MetricGoedelScaled::setStandardValues() {
+void MetricGoedelScaled::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 0.1;
     mInitPos[2] = 0.0;

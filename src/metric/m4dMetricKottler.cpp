@@ -25,10 +25,11 @@
 
 #include "m4dMetricKottler.h"
 
-double dzdr_kottler(double x, void* params) {
+double dzdr_kottler(double x, void* params)
+{
     struct_kottler_params* par = (struct_kottler_params*)params;
     double rs = par->rs;
-    double l  = par->lambda;
+    double l = par->lambda;
 
     double w = rs / x + l * x * x / 3.0;
     double dzdr2 = w / (1.0 - w);
@@ -38,14 +39,14 @@ double dzdr_kottler(double x, void* params) {
 namespace m4d {
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the Kottler metric.
  *
  * \param  mass : mass of the black hole.
  * \param  lambda : cosmological constant.
  */
-MetricKottler::MetricKottler(double mass, double lambda) {
-    mMetricName  = "Kottler";
+MetricKottler::MetricKottler(double mass, double lambda)
+{
+    mMetricName = "Kottler";
     setCoordType(enum_coordinate_spherical);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -75,9 +76,9 @@ MetricKottler::MetricKottler(double mass, double lambda) {
     }
     mHaveEmbedding = true;
 
-    mEmb_rmin    = rp + eps;
-    mEmb_rmax    = rm - eps;
-    mEmb_r_num   = 20.0;
+    mEmb_rmin = rp + eps;
+    mEmb_rmax = rm - eps;
+    mEmb_r_num = 20.0;
     mEmb_phi_num = 40.0;
     mEmb_rstep = (mEmb_rmax - mEmb_rmin) / mEmb_r_num;
     mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
@@ -91,18 +92,19 @@ MetricKottler::MetricKottler(double mass, double lambda) {
     setStandardValues();
 }
 
-MetricKottler::~MetricKottler() {
+MetricKottler::~MetricKottler()
+{
     gsl_integration_workspace_free(w);
 }
-
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricKottler::calculateMetric(const double* pos) {
-    double r     = pos[1];
+bool MetricKottler::calculateMetric(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -130,7 +132,6 @@ bool MetricKottler::calculateMetric(const double* pos) {
     g_compts[3][2] = 0.0;
     g_compts[3][3] = t6 * t16;
 
-
     return true;
 }
 
@@ -138,8 +139,9 @@ bool MetricKottler::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricKottler::calculateChristoffels(const double* pos) {
-    double r     = pos[1];
+bool MetricKottler::calculateChristoffels(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -230,8 +232,9 @@ bool MetricKottler::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricKottler::calculateChrisD(const double* pos) {
-    double r     = pos[1];
+bool MetricKottler::calculateChrisD(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -517,7 +520,6 @@ bool MetricKottler::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -525,9 +527,9 @@ bool MetricKottler::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricKottler::localToCoord(const double* pos, const double* ldir, double* dir,
-                                 enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricKottler::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
     double alpha = sqrt(1.0 - rs / r - mLambda / 3.0 * r * r);
 
@@ -544,9 +546,9 @@ void MetricKottler::localToCoord(const double* pos, const double* ldir, double* 
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricKottler::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                 enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricKottler::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
     double alpha = sqrt(1.0 - rs / r - mLambda / 3.0 * r * r);
 
@@ -556,14 +558,14 @@ void MetricKottler::coordToLocal(const double* pos, const double* cdir, double* 
     ldir[3] = cdir[3] * r * sin(theta);
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricKottler::breakCondition(const double* pos) {
+bool MetricKottler::breakCondition(const double* pos)
+{
     bool br = false;
 
     double r = pos[1];
@@ -583,12 +585,13 @@ bool MetricKottler::breakCondition(const double* pos) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricKottler::testConstraint(const double y[], const double kappa) {
+double MetricKottler::testConstraint(const double y[], const double kappa)
+{
     double r = y[1];
     double theta = y[2];
 
     double alpha = 1.0 - rs / r - mLambda / 3.0 * r * r;
-    double cm    = 1.0 / mSpeedOfLight;
+    double cm = 1.0 / mSpeedOfLight;
 
     // Scale the directions with the speed of light before doubling them !!
     double dt = y[4];
@@ -605,21 +608,23 @@ double MetricKottler::testConstraint(const double y[], const double kappa) {
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricKottler::setParam(const char* pName, double val) {
+bool MetricKottler::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"mass") == 0) {
+    if (strcmp(pName, "mass") == 0) {
         mMass = val;
         rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
     }
-    else if (strcmp(pName,"lambda") == 0) {
+    else if (strcmp(pName, "lambda") == 0) {
         mLambda = val;
     }
 
     calcCriticalPoints();
     if (mLambda < 0.0) {
         mEmb_rmin = r1 + eps;
-    } else {
+    }
+    else {
         mEmb_rmin = rp + eps;
     }
     testEmbeddingParams();
@@ -633,7 +638,8 @@ bool MetricKottler::setParam(const char* pName, double val) {
  *  \return true : success.
  *  \return false : otherwise.
  */
-bool MetricKottler::transToEmbedding(vec4 p, vec4 &ep) {
+bool MetricKottler::transToEmbedding(vec4 p, vec4& ep)
+{
     vec4 cp;
     transToPseudoCart(p, cp);
 
@@ -648,7 +654,8 @@ bool MetricKottler::transToEmbedding(vec4 p, vec4 &ep) {
             ep = vec4(p[0], x, y, z);
             return true;
         }
-    } else {
+    }
+    else {
         if (r > rp + eps && r < rm - eps) {
             calcEmbeddingZ(r, z);
             ep = vec4(p[0], x, y, z);
@@ -665,19 +672,20 @@ bool MetricKottler::transToEmbedding(vec4 p, vec4 &ep) {
  *  \return true  : success.
  *  \return false : parameter not valid.
  */
-bool MetricKottler::setEmbeddingParam(const char* name, double val) {
+bool MetricKottler::setEmbeddingParam(const char* name, double val)
+{
     Metric::setEmbeddingParam(name, val);
 
-    if (strcmp(name,"emb_rmin") == 0) {
+    if (strcmp(name, "emb_rmin") == 0) {
         mEmb_rmin = val;
     }
-    else if (strcmp(name,"emb_rmax") == 0) {
+    else if (strcmp(name, "emb_rmax") == 0) {
         mEmb_rmax = val;
     }
-    else if (strcmp(name,"emb_r_num") == 0) {
+    else if (strcmp(name, "emb_r_num") == 0) {
         mEmb_r_num = val;
     }
-    else if (strcmp(name,"emb_phi_num") == 0) {
+    else if (strcmp(name, "emb_phi_num") == 0) {
         mEmb_phi_num = val;
     }
     return testEmbeddingParams();
@@ -687,7 +695,8 @@ bool MetricKottler::setEmbeddingParam(const char* name, double val) {
  *  \return  true : all parameters are ok
  *  \return  false : at least one parameter had to be adjusted.
  */
-bool MetricKottler::testEmbeddingParams() {
+bool MetricKottler::testEmbeddingParams()
+{
     bool allOk = true;
 
     if (mLambda < 0.0) {
@@ -699,7 +708,8 @@ bool MetricKottler::testEmbeddingParams() {
             mEmb_rmax = r1 + eps;
             allOk &= false;
         }
-    } else {
+    }
+    else {
         if (mEmb_rmin < rp + eps) {
             mEmb_rmin = rp + eps;
             allOk &= false;
@@ -738,7 +748,7 @@ bool MetricKottler::testEmbeddingParams() {
  *  \param counter  : number of strips.
  *  \return int : number of vertices.
  */
-//int MetricKottler::getEmbeddingVertices(std::vector<vec3> &verts,
+// int MetricKottler::getEmbeddingVertices(std::vector<vec3> &verts,
 //                                        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter) {
 //    if (!verts.empty()) {
 //        verts.clear();
@@ -788,7 +798,8 @@ bool MetricKottler::testEmbeddingParams() {
 /*!
  *  \param units : type of physical constants.
  */
-void MetricKottler::usePhysicalUnits(const enum_physical_constants  units) {
+void MetricKottler::usePhysicalUnits(const enum_physical_constants units)
+{
     Metric::usePhysicalUnits(units);
     rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
 }
@@ -798,11 +809,11 @@ void MetricKottler::usePhysicalUnits(const enum_physical_constants  units) {
  *  \param grav_const : value for gravitational constant.
  *  \param diel_perm : value for dielectric permittivity.
  */
-void MetricKottler::setUnits(const double speed_of_light, const double grav_const, const double diel_perm) {
+void MetricKottler::setUnits(const double speed_of_light, const double grav_const, const double diel_perm)
+{
     Metric::setUnits(speed_of_light, grav_const, diel_perm);
     rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
 }
-
 
 /*! Effective potential.
  *  \param pos : initial position.
@@ -812,7 +823,9 @@ void MetricKottler::setUnits(const double speed_of_light, const double grav_cons
  *  \param val : reference to effective potential value.
  *  \return true : effective potential exists at x.
  */
-bool MetricKottler::effPotentialValue(const vec4 pos, const vec4 cdir , enum_geodesic_type type, const double x, double &val) {
+bool MetricKottler::effPotentialValue(
+    const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double& val)
+{
     double kappa = 0.0;
     if (type == enum_geodesic_timelike) {
         kappa = -mSign;
@@ -822,7 +835,8 @@ bool MetricKottler::effPotentialValue(const vec4 pos, const vec4 cdir , enum_geo
         if (pos[1] < r1 + eps || x < r1 + eps) {
             return false;
         }
-    } else {
+    }
+    else {
         if (pos[1] < rp + eps || x < rp + eps || pos[1] > rm - eps || x > rm - eps) {
             return false;
         }
@@ -840,25 +854,29 @@ bool MetricKottler::effPotentialValue(const vec4 pos, const vec4 cdir , enum_geo
  *  \param val : reference to total energy value.
  *  \return true : effective potential exists at x.
  */
-bool MetricKottler::totEnergy(const vec4 pos, const vec4 cdir, const double , double &val) {
+bool MetricKottler::totEnergy(const vec4 pos, const vec4 cdir, const double, double& val)
+{
     if (mLambda < 0.0) {
         if (pos[1] < r1 + eps) {
             return false;
         }
-    } else {
+    }
+    else {
         if (pos[1] < rp + eps || pos[1] > rm - eps) {
             return false;
         }
     }
 
     // 1/2*k^2/c^2:
-    val = 0.5 * pow(1.0 - rs / pos[1] - mLambda * pos[1] * pos[1] / 3.0, 2.0) * mSpeedOfLight * mSpeedOfLight * cdir[0] * cdir[0];
+    val = 0.5 * pow(1.0 - rs / pos[1] - mLambda * pos[1] * pos[1] / 3.0, 2.0) * mSpeedOfLight * mSpeedOfLight * cdir[0]
+        * cdir[0];
     return true;
 }
 
 /*! Generate report.
  */
-bool MetricKottler::report(const vec4 pos, const vec4 cdir, std::string &text) {
+bool MetricKottler::report(const vec4 pos, const vec4 cdir, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Kottler metric\n\tcoordinate : (t,r,theta,phi)\n";
     ss << "---------------------------------------------------------------\n";
@@ -875,18 +893,18 @@ bool MetricKottler::report(const vec4 pos, const vec4 cdir, std::string &text) {
 
     double h = pos[1] * pos[1] * cdir[3];
     double k = (1.0 - rs / pos[1] - mLambda * pos[1] * pos[1] / 3.0) * mSpeedOfLight * mSpeedOfLight * cdir[0];
-    ss << "  constant of motion ............... k = " << k << " " << k*k * 0.5 << std::endl;
+    ss << "  constant of motion ............... k = " << k << " " << k * k * 0.5 << std::endl;
     ss << "  constant of motion ............... h = " << h << std::endl;
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
-
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricKottler::setStandardValues() {
+void MetricKottler::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 3.0 * rs;
     mInitPos[2] = M_PI_2;
@@ -903,37 +921,41 @@ void MetricKottler::setStandardValues() {
 
 /*! Calculate critical points.
  */
-void MetricKottler::calcCriticalPoints() {
+void MetricKottler::calcCriticalPoints()
+{
     if (mLambda < 0.0) {
         double wl = sqrt(-mLambda);
         r1 = 2.0 / wl * sinh(1.0 / 3.0 * asinh(1.5 * rs * wl));
         rp = rm = 0.0;
-    } else {
+    }
+    else {
         r1 = 0.0;
         double wl = sqrt(mLambda);
         double diskr = 2.25 * rs * rs / (mLambda * mLambda) - pow(mLambda, -3.0);
         if (diskr > 0.0) {
             rp = rm = 0.0;
-        } else {
+        }
+        else {
             rp = 2.0 / wl * cos(M_PI / 3.0 + acos(1.5 * rs * wl) / 3.0);
             rm = 2.0 / wl * cos(M_PI / 3.0 - acos(1.5 * rs * wl) / 3.0);
         }
     }
 }
 
-
-bool MetricKottler::calcEmbeddingZ(const double r, double &z) {
-    struct_kottler_params par = {rs, mLambda};
+bool MetricKottler::calcEmbeddingZ(const double r, double& z)
+{
+    struct_kottler_params par = { rs, mLambda };
     F.params = &par;
 
     size_t limit = 1000;
-    int    key   = GSL_INTEG_GAUSS15;
+    int key = GSL_INTEG_GAUSS15;
     double error;
 
     gsl_set_error_handler_off();
     if (mLambda < 0.0) {
         gsl_integration_qag(&F, r1, r, 0.0, 1e-6, limit, key, w, &z, &error);
-    } else {
+    }
+    else {
         gsl_integration_qag(&F, rp, r, 0.0, 1e-6, limit, key, w, &z, &error);
     }
     return true;

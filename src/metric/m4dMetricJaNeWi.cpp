@@ -25,10 +25,11 @@
 
 #include "m4dMetricJaNeWi.h"
 
-double dzdr_janewi(double x, void* params) {
+double dzdr_janewi(double x, void* params)
+{
     struct_janewi_params* par = (struct_janewi_params*)params;
     double rs = par->rs;
-    double g  = par->gamma;
+    double g = par->gamma;
 
     double alpha = 1.0 - rs / (x * g);
     double dzdr2 = rs * (4.0 * x * g * g - rs * (1.0 + g) * (1.0 + g)) / (4.0 * x * x * g * g * pow(alpha, g + 1.0));
@@ -43,8 +44,9 @@ namespace m4d {
  * \param  mass : mass of the black hole.
  * \param  gamma : gamma factor.
  */
-MetricJaNeWi::MetricJaNeWi(double mass, double gamma) {
-    mMetricName  = "JanisNewmanWinicour";
+MetricJaNeWi::MetricJaNeWi(double mass, double gamma)
+{
+    mMetricName = "JanisNewmanWinicour";
     setCoordType(enum_coordinate_spherical);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -70,9 +72,9 @@ MetricJaNeWi::MetricJaNeWi(double mass, double gamma) {
     }
     mHaveEmbedding = true;
 
-    mEmb_rmin    = mCritPoint;
-    mEmb_rmax    = 5.0 * mCritPoint;
-    mEmb_r_num   = 20.0;
+    mEmb_rmin = mCritPoint;
+    mEmb_rmax = 5.0 * mCritPoint;
+    mEmb_r_num = 20.0;
     mEmb_phi_num = 40.0;
     mEmb_rstep = (mEmb_rmax - mEmb_rmin) / mEmb_r_num;
     mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
@@ -85,18 +87,19 @@ MetricJaNeWi::MetricJaNeWi(double mass, double gamma) {
     F.function = &dzdr_janewi;
 }
 
-MetricJaNeWi::~MetricJaNeWi() {
+MetricJaNeWi::~MetricJaNeWi()
+{
     gsl_integration_workspace_free(w);
 }
-
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricJaNeWi::calculateMetric(const double* pos) {
-    double r     = pos[1];
+bool MetricJaNeWi::calculateMetric(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -136,8 +139,9 @@ bool MetricJaNeWi::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricJaNeWi::calculateChristoffels(const double* pos) {
-    double r     = pos[1];
+bool MetricJaNeWi::calculateChristoffels(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -232,8 +236,9 @@ bool MetricJaNeWi::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricJaNeWi::calculateChrisD(const double* pos) {
-    double r     = pos[1];
+bool MetricJaNeWi::calculateChrisD(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -520,7 +525,6 @@ bool MetricJaNeWi::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -528,19 +532,18 @@ bool MetricJaNeWi::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricJaNeWi::localToCoord(const double* pos, const double* ldir, double* dir,
-                                enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricJaNeWi::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
     double alpha = 1.0 - rs / (mGamma * r);
-    double ag2   = pow(alpha, 0.5 * mGamma);
-    double agm2  = pow(alpha, 0.5 * mGamma - 0.5);
+    double ag2 = pow(alpha, 0.5 * mGamma);
+    double agm2 = pow(alpha, 0.5 * mGamma - 0.5);
 
     dir[0] = ldir[0] / ag2 / mSpeedOfLight;
     dir[1] = ldir[1] * ag2;
     dir[2] = ldir[2] * agm2 / r;
     dir[3] = ldir[3] * agm2 / (r * sin(theta));
-
 }
 
 /*! Transform coordinate 4-direction to local 4-direction.
@@ -550,13 +553,13 @@ void MetricJaNeWi::localToCoord(const double* pos, const double* ldir, double* d
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricJaNeWi::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricJaNeWi::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
     double alpha = 1.0 - rs / (mGamma * r);
-    double ag2   = pow(alpha, 0.5 * mGamma);
-    double agm2  = pow(alpha, 0.5 * mGamma - 0.5);
+    double ag2 = pow(alpha, 0.5 * mGamma);
+    double agm2 = pow(alpha, 0.5 * mGamma - 0.5);
 
     ldir[0] = cdir[0] * ag2 * mSpeedOfLight;
     ldir[1] = cdir[1] / ag2;
@@ -564,35 +567,35 @@ void MetricJaNeWi::coordToLocal(const double* pos, const double* cdir, double* l
     ldir[3] = cdir[3] * r * sin(theta) / agm2;
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricJaNeWi::breakCondition(const double* pos) {
+bool MetricJaNeWi::breakCondition(const double* pos)
+{
     bool br = false;
 
-    if ((pos[1] < 0.0) || (mGamma * mGamma * pos[1]*pos[1] <= (1.0 + eps)*rs * rs) || pos[1] < mCritPoint) {
+    if ((pos[1] < 0.0) || (mGamma * mGamma * pos[1] * pos[1] <= (1.0 + eps) * rs * rs) || pos[1] < mCritPoint) {
         br = true;
     }
     return br;
 }
 
-
 /*! Set parameter 'pName' to 'val'.
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricJaNeWi::setParam(const char* pName, double val) {
+bool MetricJaNeWi::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"mass") == 0) {
+    if (strcmp(pName, "mass") == 0) {
         mMass = val;
         rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
     }
-    else if (strcmp(pName,"gamma") == 0) {
+    else if (strcmp(pName, "gamma") == 0) {
         mGamma = val;
     }
     calcCriticalPoint();
@@ -606,7 +609,8 @@ bool MetricJaNeWi::setParam(const char* pName, double val) {
  *  \return true : success.
  *  \return false : otherwise.
  */
-bool MetricJaNeWi::transToEmbedding(vec4 p, vec4 &ep) {
+bool MetricJaNeWi::transToEmbedding(vec4 p, vec4& ep)
+{
     vec4 cp;
     transToPseudoCart(p, cp);
 
@@ -629,19 +633,20 @@ bool MetricJaNeWi::transToEmbedding(vec4 p, vec4 &ep) {
  *  \return true  : success.
  *  \return false : parameter not valid.
  */
-bool MetricJaNeWi::setEmbeddingParam(const char* name, double val) {
+bool MetricJaNeWi::setEmbeddingParam(const char* name, double val)
+{
     Metric::setEmbeddingParam(name, val);
 
-    if (strcmp(name,"emb_rmin") == 0) {
+    if (strcmp(name, "emb_rmin") == 0) {
         mEmb_rmin = val;
     }
-    else if (strcmp(name,"emb_rmax") == 0) {
+    else if (strcmp(name, "emb_rmax") == 0) {
         mEmb_rmax = val;
     }
-    else if (strcmp(name,"emb_r_num") == 0) {
+    else if (strcmp(name, "emb_r_num") == 0) {
         mEmb_r_num = val;
     }
-    else if (strcmp(name,"emb_phi_num") == 0) {
+    else if (strcmp(name, "emb_phi_num") == 0) {
         mEmb_phi_num = val;
     }
     return testEmbeddingParams();
@@ -651,7 +656,8 @@ bool MetricJaNeWi::setEmbeddingParam(const char* name, double val) {
  *  \return  true : all parameters are ok
  *  \return  false : at least one parameter had to be adjusted.
  */
-bool MetricJaNeWi::testEmbeddingParams() {
+bool MetricJaNeWi::testEmbeddingParams()
+{
     bool allOk = true;
     if (mEmb_rmin < mCritPoint) {
         mEmb_rmin = mCritPoint;
@@ -681,7 +687,7 @@ bool MetricJaNeWi::testEmbeddingParams() {
  *  \param counter  : number of strips.
  *  \return int : number of vertices.
  */
-//int MetricJaNeWi::getEmbeddingVertices(std::vector<vec3> &verts,
+// int MetricJaNeWi::getEmbeddingVertices(std::vector<vec3> &verts,
 //                                       std::vector<int> &indices, unsigned int &numElems, unsigned int &counter) {
 //    if (!verts.empty()) {
 //        verts.clear();
@@ -737,7 +743,9 @@ bool MetricJaNeWi::testEmbeddingParams() {
  *  \param val : reference to effective potential value.
  *  \return true : effective potential exists at x.
  */
-bool MetricJaNeWi::effPotentialValue(const vec4 pos, const vec4 cdir , enum_geodesic_type type, const double x, double &val) {
+bool MetricJaNeWi::effPotentialValue(
+    const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double& val)
+{
     double kappa = 0.0;
     if (type == enum_geodesic_timelike) {
         kappa = -mSign;
@@ -748,9 +756,10 @@ bool MetricJaNeWi::effPotentialValue(const vec4 pos, const vec4 cdir , enum_geod
     }
 
     double alphaInit = 1.0 - rs / (pos[1] * mGamma);
-    double alpha     = 1.0 - rs / (x * mGamma);
-    double h         = pos[1] * pos[1] * pow(alphaInit, 1.0 - mGamma) * cdir[3];
-    val = 0.5 * pow(alpha, mGamma) * (h * h / (x * x) * pow(alpha, mGamma - 1.0) - kappa * mSpeedOfLight * mSpeedOfLight);
+    double alpha = 1.0 - rs / (x * mGamma);
+    double h = pos[1] * pos[1] * pow(alphaInit, 1.0 - mGamma) * cdir[3];
+    val = 0.5 * pow(alpha, mGamma)
+        * (h * h / (x * x) * pow(alpha, mGamma - 1.0) - kappa * mSpeedOfLight * mSpeedOfLight);
     return true;
 }
 
@@ -761,7 +770,8 @@ bool MetricJaNeWi::effPotentialValue(const vec4 pos, const vec4 cdir , enum_geod
  *  \param val : reference to total energy value.
  *  \return true : effective potential exists at x.
  */
-bool MetricJaNeWi::totEnergy(const vec4 pos, const vec4 cdir, const double , double &val) {
+bool MetricJaNeWi::totEnergy(const vec4 pos, const vec4 cdir, const double, double& val)
+{
     if (pos[1] < mCritPoint + 1e-2) {
         return false;
     }
@@ -774,7 +784,8 @@ bool MetricJaNeWi::totEnergy(const vec4 pos, const vec4 cdir, const double , dou
 
 /*! Generate report.
  */
-bool MetricJaNeWi::report(const vec4 pos, const vec4 cdir, std::string &text) {
+bool MetricJaNeWi::report(const vec4 pos, const vec4 cdir, char*& text)
+{
     std::stringstream ss;
     ss << "Report for JaNeWi metric\n\tcoordinates : (t,r,theta,phi)\n";
     ss << "---------------------------------------------------------------\n";
@@ -783,40 +794,44 @@ bool MetricJaNeWi::report(const vec4 pos, const vec4 cdir, std::string &text) {
     ss.setf(std::ios::fixed);
     ss << "  Schwarzschild radius ... r_s  = 2GM/c^2 = " << rs << std::endl;
     ss << "  Photon orbit ........... r_ph = rs*(1+2*gamma)/(2*gamma)\n";
-    ss << "                                = " << 0.5 * rs*(1.0 + 2.0 * mGamma) / mGamma << std::endl;
+    ss << "                                = " << 0.5 * rs * (1.0 + 2.0 * mGamma) / mGamma << std::endl;
     calcCriticalPoint();
     ss << "  Critical point ......... r_cr = rs*(1+gamma)^2/(2*gamma)^2\n";
     ss << "                                = " << mCritPoint << std::endl;
 
     double alphaInit = 1.0 - rs / (pos[1] * mGamma);
-    double h         = pos[1] * pos[1] * pow(alphaInit, 1.0 - mGamma) * cdir[3];
-    double k         = pow(alphaInit, mGamma) * mSpeedOfLight * mSpeedOfLight * cdir[0];
+    double h = pos[1] * pos[1] * pow(alphaInit, 1.0 - mGamma) * cdir[3];
+    double k = pow(alphaInit, mGamma) * mSpeedOfLight * mSpeedOfLight * cdir[0];
 
     ss << "  constant of motion ........ k = " << k << std::endl;
     ss << "  constant of motion ........ h = " << h << std::endl;
 
     ss << "  Velocity for circular orbits: beta = sqrt[(r/rs)/(2*(r/rs)^2-(1+1/gamma)*(r/rs))]" << std::endl;
     ss << "                                     = " << getCircularVelocity(pos[1]) << std::endl;
-    ss << "  Last innermost stable circular orbit: r_iszo=rs/(2gamma)+3/2*rs+rs/(2*gamma)*sqrt(5*gamma^2-1)" << std::endl;
-    ss << "                                     = " << rs / (2.0 * mGamma) + 3.0 / 2.0 * rs + rs / (2.0 * mGamma)*sqrt(5.0 * mGamma * mGamma - 1) << std::endl;
+    ss << "  Last innermost stable circular orbit: r_iszo=rs/(2gamma)+3/2*rs+rs/(2*gamma)*sqrt(5*gamma^2-1)"
+       << std::endl;
+    ss << "                                     = "
+       << rs / (2.0 * mGamma) + 3.0 / 2.0 * rs + rs / (2.0 * mGamma) * sqrt(5.0 * mGamma * mGamma - 1) << std::endl;
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 /*! Calculate critical point.
  */
-void MetricJaNeWi::calcCriticalPoint() {
+void MetricJaNeWi::calcCriticalPoint()
+{
     double f = 0.5 * (1.0 + mGamma) / mGamma;
     mCritPoint = rs * f * f;
 }
 
-bool MetricJaNeWi::calcEmbeddingZ(const double r, double &z) {
-    struct_janewi_params par = {rs, mGamma};
+bool MetricJaNeWi::calcEmbeddingZ(const double r, double& z)
+{
+    struct_janewi_params par = { rs, mGamma };
     F.params = &par;
 
     size_t limit = 1000;
-    int    key   = GSL_INTEG_GAUSS15;
+    int key = GSL_INTEG_GAUSS15;
     double error;
 
     gsl_set_error_handler_off();
@@ -824,23 +839,22 @@ bool MetricJaNeWi::calcEmbeddingZ(const double r, double &z) {
     return true;
 }
 
-
-
 /*! Determine the velocity for a closed circular orbit if it exists.
  *   A circular timelike geodesic with respect to r-coordinate does exist
  *   only for r>=3rs (last timelike circular orbit).
  * \param r  Radial coordinate.
  * \param tedType type of tetrad.
  */
-double MetricJaNeWi::getCircularVelocity(const double r, const enum_nat_tetrad_type) {
+double MetricJaNeWi::getCircularVelocity(const double r, const enum_nat_tetrad_type)
+{
     if (r >= rs / 2.0 * ((1.0 / mGamma + 3.0) + sqrt(5.0 * mGamma * mGamma - 1.0) / mGamma)) {
         return sqrt((r / rs) / (2.0 * pow((r / rs), 2.0) - (1.0 + 1.0 / mGamma) * (r / rs)));
     }
     return 0.0;
 }
 
-vec4
-MetricJaNeWi::getCircularFourVel(const vec4 pos, const enum_nat_tetrad_type) {
+vec4 MetricJaNeWi::getCircularFourVel(const vec4 pos, const enum_nat_tetrad_type)
+{
     double beta = getCircularVelocity(pos[1]);
     if (beta > 0.0 && beta < 1.0) {
         double gamma = 1.0 / sqrt(1.0 - beta * beta);
@@ -854,7 +868,8 @@ MetricJaNeWi::getCircularFourVel(const vec4 pos, const enum_nat_tetrad_type) {
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricJaNeWi::setStandardValues() {
+void MetricJaNeWi::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 3.0 * rs;
     mInitPos[2] = M_PI_2;

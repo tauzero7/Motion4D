@@ -35,13 +35,20 @@
 
 namespace m4d {
 
+/// Get system clock in micro-seconds.
 int64_t get_system_clock();
 
+/*!  Tokenize file
+ *  \param filename : name of file.
+ *  \param tokens   : reference to vector of vector of string.
+ *  \param useStandardIgnoreTokens : use standard ignore tokens ("#").
+ *  \return  true : success.
+ */
 bool tokenizeFile(
-    const std::string filename, std::vector<std::vector<std::string>>& tokens, bool useStandardIgnoreTokens = true);
+    const std::string& filename, std::vector<std::vector<std::string>>& tokens, bool useStandardIgnoreTokens = true);
 
-bool tokenizeFile(
-    const std::string filename, const std::vector<std::string> ignores, std::vector<std::vector<std::string>>& tokens);
+bool tokenizeFile(const std::string& filename, const std::vector<std::string>& ignores,
+    std::vector<std::vector<std::string>>& tokens);
 
 bool getIntFromTokens(const std::vector<std::string>& tokenRow, std::string name, int& val);
 bool getIntFromTokensV(const std::vector<std::string>& tokenRow, std::string name, int num, int* val);
@@ -49,6 +56,15 @@ bool getDoubleFromTokens(const std::vector<std::string>& tokenRow, std::string n
 bool getDoubleFromTokensV(const std::vector<std::string>& tokenRow, std::string name, int num, double* val);
 bool getStringFromTokens(const std::vector<std::string>& tokenRow, std::string name, std::string& val);
 
+/*! Write a binary float array.
+ *   \param   filename  :  name of the file.
+ *   \param      array  :  pointer to float array.
+ *   \param          x  :  width of array.
+ *   \param          y  :  height of array.
+ *   \param          c  :  number of channels.
+ *   \return      true  :  success.
+ *   \return     false  :  error occured.
+ */
 bool writeFloatArray(std::string filename, const float* array, int x, int y, int c);
 float* readFloatArray(std::string filename, int& x, int& y, int& c);
 

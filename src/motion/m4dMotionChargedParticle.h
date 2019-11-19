@@ -42,44 +42,34 @@ namespace m4d {
 // ---------------------------------------------------
 //    class definition:   MotionChargedParticle
 // ---------------------------------------------------
-class API_M4D_EXPORT MotionChargedParticle : public Motion {
+class API_M4D_EXPORT MotionChargedParticle : public Motion
+{
 public:
-    MotionChargedParticle(Metric* metric);
+    explicit MotionChargedParticle(Metric* metric);
     virtual ~MotionChargedParticle();
 
-// --------- public methods -----------
 public:
+    bool setInitialVelocity(double fm, double v, double theta, double phi, double q_over_m,
+        enum_nat_tetrad_type type = enum_nat_tetrad_default);
+    void getInitialVelocity(double& v, double& theta, double& phi);
 
-    bool  setInitialVelocity(double fm, double v, double theta, double phi, double q_over_m,
-                             enum_nat_tetrad_type  type = enum_nat_tetrad_default);
-    void  getInitialVelocity(double &v, double &theta, double &phi);
+    virtual enum_break_condition calculateMotion(const vec4 initPos, double fm, double v, double theta_v, double phi_v,
+        const double q_over_m, const vec4 e0, const vec4 e1, const vec4 e2, const vec4 e3, const int maxNumPoints,
+        std::vector<vec4>& points, std::vector<vec4>& base0, std::vector<vec4>& base1, std::vector<vec4>& base2,
+        std::vector<vec4>& base3);
 
+    enum_break_condition nextStep();
 
-    virtual enum_break_condition  calculateMotion(const vec4 initPos, double fm, double v, double theta_v, double phi_v,
-            const double q_over_m,
-            const vec4 e0, const vec4 e1, const vec4 e2, const vec4 e3,
-            const int maxNumPoints,
-            std::vector<vec4> &points,
-            std::vector<vec4> &base0, std::vector<vec4> &base1, std::vector<vec4> &base2, std::vector<vec4> &base3);
-
-
-    enum_break_condition  nextStep();
-
-
-// --------- protected methods -----------
 protected:
-    bool  calcDerivs(const double y[], double dydx[]);
+    bool calcDerivs(const double y[], double dydx[]);
 
-
-// -------- protected attribute ---------
 protected:
-
     //! Current four-velocity in coordinates.
     double mInitVel[4];
 
-    double  mVel;
-    double  mTheta;
-    double  mPhi;
+    double mVel;
+    double mTheta;
+    double mPhi;
 
     double mQoverM;
 };
@@ -87,4 +77,3 @@ protected:
 } // end namespace m4d
 
 #endif
-

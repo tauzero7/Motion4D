@@ -41,7 +41,7 @@ namespace m4d {
 class MetricSchwarzschild : public Metric
 {
 public:
-    MetricSchwarzschild(double mass = 1.0);
+    explicit MetricSchwarzschild(double mass = 1.0);
     virtual ~MetricSchwarzschild();
 
 public:

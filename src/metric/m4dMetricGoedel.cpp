@@ -30,8 +30,9 @@ namespace m4d {
 // ---------------------------------------------------
 //    constructur/destructor
 // ---------------------------------------------------
-MetricGoedel::MetricGoedel(double a, double zeta) {
-    mMetricName  = "Goedel";
+MetricGoedel::MetricGoedel(double a, double zeta)
+{
+    mMetricName = "Goedel";
     setCoordType(enum_coordinate_cylinder);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -51,17 +52,14 @@ MetricGoedel::MetricGoedel(double a, double zeta) {
     setStandardValues();
 }
 
-MetricGoedel::~MetricGoedel() {
-
-}
-
+MetricGoedel::~MetricGoedel() {}
 
 // *********************************** public methods ******************************
 // ---------------------------------------------------
 //    public::calculateMetric
 // ---------------------------------------------------
-bool MetricGoedel
-::calculateMetric(const double* pos) {
+bool MetricGoedel ::calculateMetric(const double* pos)
+{
     double a = mA;
     double r = pos[1];
 
@@ -95,8 +93,8 @@ bool MetricGoedel
 // ---------------------------------------------------
 //    public::calculateChristoffels
 // ---------------------------------------------------
-bool MetricGoedel
-::calculateChristoffels(const double* pos) {
+bool MetricGoedel ::calculateChristoffels(const double* pos)
+{
     double a = mA;
     double r = pos[1];
 
@@ -181,27 +179,25 @@ bool MetricGoedel
     return true;
 }
 
-
 // ---------------------------------------------------
 //    public::localToCoord
 // ---------------------------------------------------
-void MetricGoedel
-::localToCoord(const double* pos, const double* ldir, double* dir,
-               enum_nat_tetrad_type) {
+void MetricGoedel ::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     double r = pos[1];
-    double r2a  = r / (2.0 * mA);
+    double r2a = r / (2.0 * mA);
     if (r > m4dGoedelEps) {
-        //full metric
+        // full metric
         calcVars(pos);
 
-        //local to coord to cylindrical coordinates  (direction)
-        dir[0] = ldir[0] * Gamma      + ldir[2] * Gamma * Xi * A;
+        // local to coord to cylindrical coordinates  (direction)
+        dir[0] = ldir[0] * Gamma + ldir[2] * Gamma * Xi * A;
         dir[1] = ldir[1] * sqrt(1.0 + r2a * r2a);
         dir[2] = ldir[0] * Gamma * mZeta + ldir[2] * Gamma * Xi * B;
         dir[3] = ldir[3];
-
-    } else {
-        //metric converges to minkowski metric
+    }
+    else {
+        // metric converges to minkowski metric
         dir[0] = ldir[0];
         dir[1] = ldir[1];
         dir[2] = ldir[2];
@@ -212,53 +208,51 @@ void MetricGoedel
 // ---------------------------------------------------
 //    public::coordToLocal
 // ---------------------------------------------------
-void MetricGoedel
-::coordToLocal(const double* pos, const double* cdir, double* ldir,
-               enum_nat_tetrad_type) {
+void MetricGoedel ::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     double r = pos[1];
-    //double r2 = r*r;
-    double r2a  = r / (2.0 * mA);
+    // double r2 = r*r;
+    double r2a = r / (2.0 * mA);
     if (r > m4dGoedelEps) {
-        //full metric
+        // full metric
         calcVars(pos);
 
-        //local to coord to cylindrical coordinates  (direction)
+        // local to coord to cylindrical coordinates  (direction)
 
         ldir[0] = (cdir[0] * B - cdir[2] * A) / (Gamma * (B - mZeta * A));
         ldir[1] = cdir[1] / sqrt(1.0 + r2a * r2a);
         ldir[2] = (mZeta * cdir[0] - cdir[2]) / (Gamma * Xi * (mZeta * A - B));
         ldir[3] = cdir[3];
 
-//     printf("Gamma Delta F1 F2: %f %f %f %f\n",Gamma,Delta,F1,F2);
-    } else {
-        //metric converges to minkowski metric
+        //     printf("Gamma Delta F1 F2: %f %f %f %f\n",Gamma,Delta,F1,F2);
+    }
+    else {
+        // metric converges to minkowski metric
         ldir[0] = cdir[0];
         ldir[1] = cdir[1];
         ldir[2] = cdir[2];
         ldir[3] = cdir[3];
     }
-
 }
-
 
 // ---------------------------------------------------
 //    public::breakCondition
 // ---------------------------------------------------
-bool MetricGoedel
-::breakCondition(const double*) {
+bool MetricGoedel ::breakCondition(const double*)
+{
     return false;
 }
 
 // ---------------------------------------------------
 //    public::setParam
 // ---------------------------------------------------
-bool MetricGoedel
-::setParam(const char* pName, double val) {
+bool MetricGoedel ::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
-    if (strcmp(pName,"a") == 0) {
+    if (strcmp(pName, "a") == 0) {
         mA = val;
     }
-    else if (strcmp(pName,"zeta") == 0) {
+    else if (strcmp(pName, "zeta") == 0) {
         mZeta = val;
     }
 
@@ -271,18 +265,18 @@ bool MetricGoedel
  *  \param  cp : reference to transformed point.
  *  \return true : success.
  */
-bool MetricGoedel::transToTwoPlusOne(vec4 p, vec4 &cp) {
+bool MetricGoedel::transToTwoPlusOne(vec4 p, vec4& cp)
+{
     vec4 tp;
     TransCoordinates::toCartesianCoord(mCoordType, p, tp);
     cp = vec4(tp[0], tp[1], tp[2], tp[0]);
     return true;
 }
 
-
-
 /*! Generate report.
  */
-bool MetricGoedel::report(const vec4 pos, const vec4 cdir, std::string &text) {
+bool MetricGoedel::report(const vec4 pos, const vec4 cdir, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Goedel metric\n\tcoordinate : (t,r,phi,z)\n";
     ss << "\tIncreasing parameter a -> straight geodesics\n";
@@ -294,22 +288,25 @@ bool MetricGoedel::report(const vec4 pos, const vec4 cdir, std::string &text) {
     ss.setf(std::ios::fixed);
     vec4 locStartDir;
     coordToLocal(pos.data(), cdir.data(), locStartDir.data());
-    double k0  = -locStartDir[0];
-    double k2  = (pos[1] * sqrt(1.0 + pos[1] * pos[1] / 4.0 / mA / mA) * locStartDir[2] - sqrt(2.0) * pos[1] * pos[1] * locStartDir[0]) / 2.0 / mA;
-    double k3  = locStartDir[3];
+    double k0 = -locStartDir[0];
+    double k2 = (pos[1] * sqrt(1.0 + pos[1] * pos[1] / 4.0 / mA / mA) * locStartDir[2]
+                    - sqrt(2.0) * pos[1] * pos[1] * locStartDir[0])
+        / 2.0 / mA;
+    double k3 = locStartDir[3];
     ss << "  Goedel radius ............ rG = 2a = " << 2.0 * mA << std::endl;
     ss << "  constant of motion ....... k_0 = " << k0 << std::endl;
     ss << "  constant of motion ....... k_2 = " << k2 << std::endl;
     ss << "  constant of motion ....... k_3 = " << k3;
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 // ---------------------------------------------------
 //    protected::setViewerVal
 // ---------------------------------------------------
-void MetricGoedel::setStandardValues() {
+void MetricGoedel::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 0.05;
     mInitPos[2] = 0.0;
@@ -327,18 +324,16 @@ void MetricGoedel::setStandardValues() {
 // ---------------------------------------------------
 //    protected::calcVars
 // ---------------------------------------------------
-void MetricGoedel::calcVars(const double* pos) {
+void MetricGoedel::calcVars(const double* pos)
+{
     double r = pos[1];
     double r2 = r * r;
-    double r2a  = r / (2.0 * mA);
+    double r2a = r / (2.0 * mA);
 
     if (r > m4dGoedelEps) {
-        //full metric
-        Gamma = sqrt(
-                    + mSpeedOfLight * mSpeedOfLight
-                    + mZeta * r2 * mSpeedOfLight * sqrt(2.0) / mA
-                    - mZeta * mZeta * r2 * (1.0 - r2a * r2a)
-                );
+        // full metric
+        Gamma = sqrt(+mSpeedOfLight * mSpeedOfLight + mZeta * r2 * mSpeedOfLight * sqrt(2.0) / mA
+            - mZeta * mZeta * r2 * (1.0 - r2a * r2a));
         Gamma = 1.0 / Gamma;
 
         Xi = r * mSpeedOfLight * sqrt(1.0 + r2a * r2a);
@@ -346,10 +341,10 @@ void MetricGoedel::calcVars(const double* pos) {
 
         A = (-r2 * mSpeedOfLight / (sqrt(2.0) * mA) + mZeta * r2 * (1.0 - r2a * r2a));
         B = (mSpeedOfLight * mSpeedOfLight + mZeta * r2 * mSpeedOfLight / (sqrt(2.0) * mA));
-    } else {
+    }
+    else {
         printf("error in MetricGoedelCart::setStandardValues -> r too small\n");
     }
-
 }
 
 } // end namespace m4d

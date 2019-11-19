@@ -1,28 +1,9 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dFermiWalker.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dFermiWalker.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dFermiWalker.h"
 
 #define DEF_DIFF_H 1e-7
@@ -51,13 +32,6 @@ FermiWalker::FermiWalker(Metric* metric)
 
 FermiWalker::~FermiWalker() {}
 
-// *********************************** public methods ******************************
-/*! Set acceleration with respect to local tetrad.
- *
- *  \param a1 : proper acceleration in e1-direction.
- *  \param a2 : proper acceleration in e2-direction.
- *  \param a3 : proper acceleration in e3-direction.
- */
 void FermiWalker::setCurrPropAccel(double a1, double a2, double a3)
 {
     mPropAcc[1] = a1;
@@ -65,12 +39,6 @@ void FermiWalker::setCurrPropAccel(double a1, double a2, double a3)
     mPropAcc[3] = a3;
 }
 
-/*! Get acceleration with respect to local tetrad.
- *
- *  \param a1 : reference to proper acceleration in e1-direction.
- *  \param a2 : reference to proper acceleration in e2-direction.
- *  \param a3 : reference to proper acceleration in e3-direction.
- */
 void FermiWalker::getCurrPropAccel(double& a1, double& a2, double& a3)
 {
     a1 = mPropAcc[1];
@@ -78,15 +46,6 @@ void FermiWalker::getCurrPropAccel(double& a1, double& a2, double& a3)
     a3 = mPropAcc[3];
 }
 
-/*! Set initial velocity with respect to natural local tetrad.
- *
- *  \param fm : time direction (>0 : future, <0 : past).
- *  \param v  : absolute value of velocity with respect to natural local tetrad.
- *  \param theta :  angle
- *  \param phi   :  angle
- *  \param type  : type of natural local tetrad.
- *  \sa enum_nat_tetrad_type.
- */
 bool FermiWalker::setInitialVelocity(double fm, double v, double theta, double phi, enum_nat_tetrad_type type)
 {
     if (fabs(v) >= 1.0 || fm == 0.0) {
@@ -112,9 +71,6 @@ bool FermiWalker::setInitialVelocity(double fm, double v, double theta, double p
     return true;
 }
 
-/*! Get initial velocity with respect to natural local tetrad.
- *
- */
 // TODO Parallel gibt es problem !!
 void FermiWalker::getInitialVelocity(double& v, double& theta, double& phi)
 {
@@ -123,27 +79,6 @@ void FermiWalker::getInitialVelocity(double& v, double& theta, double& phi)
     phi = mPhi;
 }
 
-/*! Calculate motion with at most 'maxNumPoints' points.
- *
- *  \param initPos : initial position.
- *  \param fm : time direction (fm>0: future, fm<0: past).
- *  \param v :  velocity.
- *  \param theta_v : theta-direction of velocity-
- *  \param phi_v : phi-direction of velocity.
- *  \param a :  acceleration.
- *  \param theta_a :  theta-direction of acceleration.
- *  \param phi_a :  phi-direction of acceleration.
- *  \param e0 : local tetrad vector.
- *  \param e1 : local tetrad vector.
- *  \param e2 : local tetrad vector.
- *  \param e3 : local tetrad vector.
- *  \param maxNumPoints : maximum number of points.
- *  \param points :  reference to points.
- *  \param base0 : reference to base vector.
- *  \param base1 : reference to base vector.
- *  \param base2 : reference to base vector.
- *  \param base3 : reference to base vector.
- */
 enum_break_condition FermiWalker::calculateMotion(const vec4 initPos, double fm, double v, double theta_v, double phi_v,
     double a, double theta_a, double phi_a, const vec4 e0, const vec4 e1, const vec4 e2, const vec4 e3,
     const int maxNumPoints, std::vector<vec4>& points, std::vector<vec4>& base0, std::vector<vec4>& base1,
@@ -193,66 +128,39 @@ enum_break_condition FermiWalker::calculateMotion(const vec4 initPos, double fm,
         base3.push_back(getE(3));
         i++;
     }
-    if ((int)points.size() >= maxNumPoints) {
+
+    if (static_cast<int>(points.size()) >= maxNumPoints) {
         breakType = enum_break_num_exceed;
     }
 
     return breakType;
 }
 
-/*! Set 'true' if the Fermi-Walker transport is along a given worldline.
- *
- *  \param withworldline : (true:) calculate Fermi-Walker transport with a predefined wordline, (false:) acceleration
- * with respect to the local tetrad.
- */
 void FermiWalker::setCalcWithWorldline(bool withworldline)
 {
     mCalcWithWorldline = withworldline;
 }
 
-/*! Set the worldline function.
- *
- *  \param func : function pointer to the worldline x=x(tau).
- */
 void FermiWalker::set_x_tau(vec4 (*func)(double, void*))
 {
     x_tau = func;
 }
 
-/*! Set the tangent to the worldline function.
- *
- *  \param func : function pointer to the four-velocity of the worldline x=x(tau).
- */
 void FermiWalker::set_u_tau(vec4 (*func)(double, void*))
 {
     u_tau = func;
 }
 
-/*!  Set the acceleration to the worldline function.
- *
- *  \param func : function pointer to the four-acceleration of the worldline x=x(tau).
- */
 void FermiWalker::set_a_tau(vec4 (*func)(double, void*))
 {
     a_tau = func;
 }
 
-/*!  Set the parameters to the worldline function.
- *
- *  \param params : pointer to parameters.
- */
 void FermiWalker::set_params(void* params)
 {
     mParams = params;
 }
 
-/*!  Evaluate the worldline for proper time tau.
- *
- *  \param tau : proper time.
- *  \param x   : reference to current position.
- *  \return true : worldline x=x(tau) is given.
- *  \return false : worlined is not defined.
- */
 bool FermiWalker::get_x_tau(double tau, vec4& x)
 {
     if (x_tau == nullptr) {
@@ -263,13 +171,6 @@ bool FermiWalker::get_x_tau(double tau, vec4& x)
     return true;
 }
 
-/*!   Evaluate tangent to the worldline for proper time tau.
- *
- *  \param tau : proper time.
- *  \param u   : reference to current four-velocity.
- *  \return true : worldline x=x(tau) is given.
- *  \return false : worlined is not defined.
- */
 bool FermiWalker::get_u_tau(double tau, vec4& u)
 {
     if (x_tau == nullptr) {
@@ -290,13 +191,6 @@ bool FermiWalker::get_u_tau(double tau, vec4& u)
     return true;
 }
 
-/*!  Evaluate acceleration to the worldline for proper time tau.
- *
- *  \param tau : proper time.
- *  \param a   : reference to current four-acceleration.
- *  \return true : worldline x=x(tau) is given.
- *  \return false : worlined is not defined.
- */
 bool FermiWalker::get_a_tau(double tau, vec4& a)
 {
     if (x_tau == nullptr) {
@@ -342,10 +236,6 @@ bool FermiWalker::get_a_tau(double tau, vec4& a)
     return true;
 }
 
-/*! Initialize worldline.
- *
- *  \param tauStart : initial proper time.
- */
 bool FermiWalker::initWorldline(double tauStart)
 {
     if (x_tau == nullptr) {
@@ -356,10 +246,6 @@ bool FermiWalker::initWorldline(double tauStart)
     return updateWorldline(mLambda);
 }
 
-/*!  Update worldline to current time tau.
- *
- * \param tau : current proper time.
- */
 bool FermiWalker::updateWorldline(double)
 {
     if (x_tau == nullptr) {
@@ -378,10 +264,6 @@ bool FermiWalker::updateWorldline(double)
     return true;
 }
 
-/*! Calculate the next step of the Fermi-Walker transport.
- *
- *  \return enum_break_condition.
- */
 enum_break_condition FermiWalker::nextStep()
 {
     if (mMetric->breakCondition(&y[0])) {
@@ -428,10 +310,6 @@ enum_break_condition FermiWalker::nextStep()
     return enum_break_none;
 }
 
-/*! Calculate the next step of the Fermi-Walker transport along the worldline.
- *
- *  \return enum_break_condition.
- */
 enum_break_condition FermiWalker::nextStepWL()
 {
     if (mMetric->breakCondition(&y[0])) {
@@ -478,16 +356,11 @@ enum_break_condition FermiWalker::nextStepWL()
 }
 
 // ********************************* protected methods *****************************
-/*! Calculate right hand side of Fermi-Walker transport.
- *
- * \param y[] : pointer to y.
- * \param dydx[] : pointer to right hand side of geodesic equation.
- */
+
 bool FermiWalker::calcDerivs(const double y[], double dydx[])
 {
-    int mu, j, k, l, bidx;
-
     if (!mMetric->calcDerivsFW(mPropAcc, y, dydx)) {
+        int mu, j, k, l, bidx;
         double c = mMetric->speed_of_light();
 
         mMetric->calculateChristoffels(y);
@@ -513,11 +386,6 @@ bool FermiWalker::calcDerivs(const double y[], double dydx[])
     return true;
 }
 
-/*! Calculate right hand side of Fermi-Walker transport for a given worldline.
- *
- * \param y[] : pointer to y.
- * \param dydx[] : pointer to right hand side of geodesic equation.
- */
 bool FermiWalker::calcDerivsWL(const double y[], double dydx[])
 {
     int mu, j, k, l, bidx;

@@ -29,21 +29,20 @@ namespace m4d {
 
 #define eps 1.0e-9
 
-
 /*! Standard constructor for the metric.
  *
  * \param  m : mass of the black holes.
  * \param  A : acceleration constant of the black holes.
  */
-MetricPravda_C::MetricPravda_C(double A, double m) {
-    mMetricName  = "Pravda_C-Metric";
-    //setCoordType(enum_coordinate_custom);
+MetricPravda_C::MetricPravda_C(double A, double m)
+{
+    mMetricName = "Pravda_C-Metric";
+    // setCoordType(enum_coordinate_custom);
     setCoordType(enum_coordinate_cartesian);
 
     mPhysicalUnits = enum_physical_constants_geom;
     mSpeedOfLight = 1.0;
     mGravConstant = 1.0;
-
 
     Par_A = A;
     Par_m = m;
@@ -52,37 +51,33 @@ MetricPravda_C::MetricPravda_C(double A, double m) {
     addParam("m", Par_m);
 
     setStandardValues();
-
-
 }
 
 /*! Standard destructor for the metric.
  *
  */
-MetricPravda_C::~MetricPravda_C() {
-
-}
-
+MetricPravda_C::~MetricPravda_C() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricPravda_C::calculateMetric(const double* pos) {
+bool MetricPravda_C::calculateMetric(const double* pos)
+{
     double x = pos[1];
     double y = pos[2];
     double A = Par_A;
     double m = Par_m;
 
     double t1 = A * A;
-    double  t4 = pow(x + y, 2.0);
-    double  t6 = 1 / t1 / t4;
-    double  t7 = y * y;
-    double  t8 = m * A;
-    double  t12 = -1.0 + t7 - 2.0 * t8 * t7 * y;
-    double  t14 = x * x;
-    double  t18 = 1.0 - t14 - 2.0 * t8 * t14 * x;
+    double t4 = pow(x + y, 2.0);
+    double t6 = 1 / t1 / t4;
+    double t7 = y * y;
+    double t8 = m * A;
+    double t12 = -1.0 + t7 - 2.0 * t8 * t7 * y;
+    double t14 = x * x;
+    double t18 = 1.0 - t14 - 2.0 * t8 * t14 * x;
     g_compts[0][0] = -t6 * t12;
     g_compts[0][1] = 0.0;
     g_compts[0][2] = 0.0;
@@ -100,10 +95,6 @@ bool MetricPravda_C::calculateMetric(const double* pos) {
     g_compts[3][2] = 0.0;
     g_compts[3][3] = t6 * t18;
 
-
-
-
-
     return true;
 }
 
@@ -111,34 +102,35 @@ bool MetricPravda_C::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricPravda_C::calculateChristoffels(const double* pos) {
+bool MetricPravda_C::calculateChristoffels(const double* pos)
+{
     double x = pos[1];
     double y = pos[2];
     double A = Par_A;
     double m = Par_m;
 
-    double  t2 = 1 / (x + y);
-    double  t3 = x * x;
-    double  t4 = m * A;
-    double  t6 = t4 * t3 * x;
-    double  t8 = -1.0 + t3 + 2.0 * t6;
-    double  t9 = t2 * t8;
-    double  t10 = y * y;
-    double  t12 = t4 * t10 * y;
-    double  t14 = 1.0 - t10 + 2.0 * t12;
-    double  t15 = t9 * t14;
-    double  t16 = t2 * t14;
-    double  t17 = y * x;
-    double  t20 = 3.0 * t4 * t10 * x;
-    double  t21 = -1.0 + t12 - t17 + t20;
-    double  t23 = 1 / t14;
-    double  t24 = t2 * t23;
-    double  t25 = t24 * t21;
-    double  t26 = 1 / t8;
-    double  t27 = t2 * t26;
-    double  t32 = 3.0 * t4 * y * t3;
-    double  t36 = 1.0 + t6 + t17 + t32;
-    double  t37 = t27 * t36;
+    double t2 = 1 / (x + y);
+    double t3 = x * x;
+    double t4 = m * A;
+    double t6 = t4 * t3 * x;
+    double t8 = -1.0 + t3 + 2.0 * t6;
+    double t9 = t2 * t8;
+    double t10 = y * y;
+    double t12 = t4 * t10 * y;
+    double t14 = 1.0 - t10 + 2.0 * t12;
+    double t15 = t9 * t14;
+    double t16 = t2 * t14;
+    double t17 = y * x;
+    double t20 = 3.0 * t4 * t10 * x;
+    double t21 = -1.0 + t12 - t17 + t20;
+    double t23 = 1 / t14;
+    double t24 = t2 * t23;
+    double t25 = t24 * t21;
+    double t26 = 1 / t8;
+    double t27 = t2 * t26;
+    double t32 = 3.0 * t4 * y * t3;
+    double t36 = 1.0 + t6 + t17 + t32;
+    double t37 = t27 * t36;
     christoffel[0][0][0] = 0.0;
     christoffel[0][0][1] = -t15;
     christoffel[0][0][2] = t16 * t21;
@@ -211,84 +203,88 @@ bool MetricPravda_C::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool
-MetricPravda_C::calculateChrisD(const double* pos) {
+bool MetricPravda_C::calculateChrisD(const double* pos)
+{
     double x = pos[1];
     double y = pos[2];
     double A = Par_A;
     double m = Par_m;
 
     double t1 = y * y;
-    double  t2 = m * A;
-    double  t3 = t1 * y;
-    double  t4 = t2 * t3;
-    double  t5 = 2.0 * t4;
-    double  t6 = 1.0 - t1 + t5;
-    double  t7 = x * x;
-    double  t8 = t7 * x;
-    double  t9 = t2 * t8;
-    double  t12 = 2.0 * y * x;
-    double  t14 = t2 * y * t7;
-    double  t15 = 6.0 * t14;
-    double  t16 = 1.0 + t7 + 4.0 * t9 + t12 + t15;
-    double  t19 = pow(x + y, 2.0);
-    double  t20 = 1 / t19;
-    double  t21 = t6 * t16 * t20;
-    double  t22 = 2.0 * t9;
-    double  t23 = -1.0 + t7 + t22;
-    double  t26 = t2 * t1 * x;
-    double  t27 = 6.0 * t26;
-    double  t28 = -1.0 - t1 + 4.0 * t4 - t12 + t27;
-    double  t30 = t23 * t28 * t20;
-    double  t31 = t6 * t6;
-    double  t33 = m * m;
-    double  t34 = A * A;
-    double  t35 = t33 * t34;
-    double  t36 = t1 * t1;
-    double  t38 = t35 * t36 * t1;
-    double  t39 = 10.0 * t38;
-    double  t40 = t36 * y;
-    double  t42 = t40 * m * A;
-    double  t46 = t36 * m * A * x;
-    double  t49 = t35 * t40 * x;
-    double  t52 = t2 * t3 * t7;
-    double  t55 = t35 * t36 * t7;
-    double  t58 = 2.0 * t3 * x;
-    double  t59 = t1 * t7;
-    double  t60 = 3.0 * t59;
-    double  t61 = 1.0 + t1 - t7 - t5 + t15 + t39 + t12 - 4.0 * t42 - 20.0 * t46 + 36.0 * t49 - 20.0 * t52 + 30.0 * t55 + t58 + t60;
-    double  t63 = 3.0 * t1;
-    double  t65 = 12.0 * t26;
-    double  t67 = 8.0 * t46;
-    double  t68 = 12.0 * t49;
-    double  t69 = 4.0 * t52;
-    double  t70 = 6.0 * t55;
-    double  t71 = -1.0 + t63 + t7 - 10.0 * t4 - t65 - t15 + 2.0 * t38 + t12 - t67 + t68 - t69 + t70 + t58 + t59;
-    double  t73 = 1 / t31;
-    double  t74 = t71 * t20 * t73;
-    double  t75 = 12.0 * t14;
-    double  t76 = t7 * t7;
-    double  t77 = t76 * x;
-    double  t79 = t77 * m * A;
-    double  t82 = t35 * t76 * t7;
-    double  t83 = 10.0 * t82;
-    double  t86 = y * t76 * t2;
-    double  t87 = 8.0 * t86;
-    double  t89 = t35 * y * t77;
-    double  t90 = 12.0 * t89;
-    double  t92 = t2 * t1 * t8;
-    double  t93 = 4.0 * t92;
-    double  t95 = t35 * t1 * t76;
-    double  t96 = 6.0 * t95;
-    double  t98 = 2.0 * y * t8;
-    double  t99 = 1.0 + t1 - t7 + t22 + t27 + t75 + t12 + 8.0 * t79 + t83 + 2.0 * t76 + t87 + t90 + t93 + t96 + t59 + t98;
-    double  t101 = t23 * t23;
-    double  t102 = 1 / t101;
-    double  t104 = 3.0 * t7;
-    double  t115 = -1.0 + t1 + t104 + 10.0 * t9 + t27 + t75 + t12 + 2.0 * t82 + t87 + t90 + t93 + t96 + t59 + t98;
-    double  t117 = t115 * t20 * t102;
-    double  t128 = 1.0 - t1 + t7 - t5 - t65 - t15 + t39 + t12 - 8.0 * t42 - t67 + t68 - t69 + t70 + t58 + t59 + 2.0 * t36;
-    double  t136 = 1.0 - t1 + t7 + t22 - t27 + t12 + 4.0 * t79 + t83 + 20.0 * t86 + 36.0 * t89 + 20.0 * t92 + 30.0 * t95 + t60 + t98;
+    double t2 = m * A;
+    double t3 = t1 * y;
+    double t4 = t2 * t3;
+    double t5 = 2.0 * t4;
+    double t6 = 1.0 - t1 + t5;
+    double t7 = x * x;
+    double t8 = t7 * x;
+    double t9 = t2 * t8;
+    double t12 = 2.0 * y * x;
+    double t14 = t2 * y * t7;
+    double t15 = 6.0 * t14;
+    double t16 = 1.0 + t7 + 4.0 * t9 + t12 + t15;
+    double t19 = pow(x + y, 2.0);
+    double t20 = 1 / t19;
+    double t21 = t6 * t16 * t20;
+    double t22 = 2.0 * t9;
+    double t23 = -1.0 + t7 + t22;
+    double t26 = t2 * t1 * x;
+    double t27 = 6.0 * t26;
+    double t28 = -1.0 - t1 + 4.0 * t4 - t12 + t27;
+    double t30 = t23 * t28 * t20;
+    double t31 = t6 * t6;
+    double t33 = m * m;
+    double t34 = A * A;
+    double t35 = t33 * t34;
+    double t36 = t1 * t1;
+    double t38 = t35 * t36 * t1;
+    double t39 = 10.0 * t38;
+    double t40 = t36 * y;
+    double t42 = t40 * m * A;
+    double t46 = t36 * m * A * x;
+    double t49 = t35 * t40 * x;
+    double t52 = t2 * t3 * t7;
+    double t55 = t35 * t36 * t7;
+    double t58 = 2.0 * t3 * x;
+    double t59 = t1 * t7;
+    double t60 = 3.0 * t59;
+    double t61 = 1.0 + t1 - t7 - t5 + t15 + t39 + t12 - 4.0 * t42 - 20.0 * t46 + 36.0 * t49 - 20.0 * t52 + 30.0 * t55
+        + t58 + t60;
+    double t63 = 3.0 * t1;
+    double t65 = 12.0 * t26;
+    double t67 = 8.0 * t46;
+    double t68 = 12.0 * t49;
+    double t69 = 4.0 * t52;
+    double t70 = 6.0 * t55;
+    double t71 = -1.0 + t63 + t7 - 10.0 * t4 - t65 - t15 + 2.0 * t38 + t12 - t67 + t68 - t69 + t70 + t58 + t59;
+    double t73 = 1 / t31;
+    double t74 = t71 * t20 * t73;
+    double t75 = 12.0 * t14;
+    double t76 = t7 * t7;
+    double t77 = t76 * x;
+    double t79 = t77 * m * A;
+    double t82 = t35 * t76 * t7;
+    double t83 = 10.0 * t82;
+    double t86 = y * t76 * t2;
+    double t87 = 8.0 * t86;
+    double t89 = t35 * y * t77;
+    double t90 = 12.0 * t89;
+    double t92 = t2 * t1 * t8;
+    double t93 = 4.0 * t92;
+    double t95 = t35 * t1 * t76;
+    double t96 = 6.0 * t95;
+    double t98 = 2.0 * y * t8;
+    double t99
+        = 1.0 + t1 - t7 + t22 + t27 + t75 + t12 + 8.0 * t79 + t83 + 2.0 * t76 + t87 + t90 + t93 + t96 + t59 + t98;
+    double t101 = t23 * t23;
+    double t102 = 1 / t101;
+    double t104 = 3.0 * t7;
+    double t115 = -1.0 + t1 + t104 + 10.0 * t9 + t27 + t75 + t12 + 2.0 * t82 + t87 + t90 + t93 + t96 + t59 + t98;
+    double t117 = t115 * t20 * t102;
+    double t128
+        = 1.0 - t1 + t7 - t5 - t65 - t15 + t39 + t12 - 8.0 * t42 - t67 + t68 - t69 + t70 + t58 + t59 + 2.0 * t36;
+    double t136 = 1.0 - t1 + t7 + t22 - t27 + t12 + 4.0 * t79 + t83 + 20.0 * t86 + 36.0 * t89 + 20.0 * t92 + 30.0 * t95
+        + t60 + t98;
     chrisD[0][0][0][0] = 0.0;
     chrisD[0][0][0][1] = 0.0;
     chrisD[0][0][0][2] = 0.0;
@@ -556,16 +552,16 @@ MetricPravda_C::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricPravda_C::localToCoord(const double* pos, const double* ldir, double* dir,
-                                  enum_nat_tetrad_type) {
+void MetricPravda_C::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     double x = pos[1];
     double y = pos[2];
     double A = Par_A;
     double m = Par_m;
 
-    dir[0] = ldir[0] / sqrt(fabs(-2 * m * A * y * y * y + y * y - 1)) * A * (x + y); //q
-    dir[1] = ldir[1] * sqrt(fabs(-2 * m * A * x * x * x - x * x + 1)) * A * (x + y); //x
-    dir[2] = ldir[2] * (sqrt(fabs(-2 * m * A * y * y * y + y * y - 1))) * A * (x + y); //y
+    dir[0] = ldir[0] / sqrt(fabs(-2 * m * A * y * y * y + y * y - 1)) * A * (x + y); // q
+    dir[1] = ldir[1] * sqrt(fabs(-2 * m * A * x * x * x - x * x + 1)) * A * (x + y); // x
+    dir[2] = ldir[2] * (sqrt(fabs(-2 * m * A * y * y * y + y * y - 1))) * A * (x + y); // y
     dir[3] = ldir[3] / (sqrt(fabs(-2 * m * A * x * x * x - x * x + 1))) * A * (x + y); // G^-1 /A^2/(x+y)^2  //p
 }
 
@@ -576,8 +572,8 @@ void MetricPravda_C::localToCoord(const double* pos, const double* ldir, double*
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricPravda_C::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                  enum_nat_tetrad_type) {
+void MetricPravda_C::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     double x = pos[1];
     double y = pos[2];
     double A = Par_A;
@@ -587,7 +583,6 @@ void MetricPravda_C::coordToLocal(const double* pos, const double* cdir, double*
     ldir[1] = cdir[1] / sqrt(fabs(-2 * m * A * x * x * x - x * x + 1)) / (A * (x + y));
     ldir[2] = cdir[2] / (sqrt(fabs(-2 * m * A * y * y * y + y * y - 1)) * A * (x + y));
     ldir[3] = cdir[3] * (sqrt(fabs(-2 * m * A * x * x * x - x * x + 1))) / (A * (x + y));
-
 }
 
 /*! Transform point p to custom coordinates.
@@ -598,8 +593,9 @@ void MetricPravda_C::coordToLocal(const double* pos, const double* cdir, double*
  *
  * Function deleted: Could transform metric to cylindrical coordinates.
  */
-int MetricPravda_C::transToPseudoCart(vec4 p, vec4& cp) {
-    //ToDo
+int MetricPravda_C::transToPseudoCart(vec4 p, vec4& cp)
+{
+    // ToDo
     /* double phi = p[3];
      double x   = p[1];
      double y   = p[2];
@@ -623,11 +619,11 @@ int MetricPravda_C::transToPseudoCart(vec4 p, vec4& cp) {
  *
  *  not implemented.
  */
-bool MetricPravda_C::breakCondition(const double*) {
+bool MetricPravda_C::breakCondition(const double*)
+{
     bool br = false;
     return br;
 }
-
 
 /*! Tests whether the constraint equation is fulfilled.
  *
@@ -639,26 +635,28 @@ bool MetricPravda_C::breakCondition(const double*) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricPravda_C::testConstraint(const double y[], const double kappa) {
+double MetricPravda_C::testConstraint(const double y[], const double kappa)
+{
     calculateMetric(y);
     double sum = -mSign * kappa;
     for (int i = 0; i < 4; i++) {
         sum += g_compts[i][i] * y[4 + i] * y[4 + i];
     }
     return sum;
-    //return 0;
+    // return 0;
 }
 
 /*! Set parameter 'pName' to 'val'.
  *
  *
  */
-bool MetricPravda_C::setParam(const char* pName, double val) {
+bool MetricPravda_C::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
-    if (strcmp(pName,"m") == 0) {
+    if (strcmp(pName, "m") == 0) {
         Par_m = val;
     }
-    else if (strcmp(pName,"a") == 0) {
+    else if (strcmp(pName, "a") == 0) {
         Par_A = val;
     }
     return true;
@@ -666,7 +664,8 @@ bool MetricPravda_C::setParam(const char* pName, double val) {
 
 /*! Generate report.
  */
-bool MetricPravda_C::report(const vec4 , const vec4 , std::string &text) {
+bool MetricPravda_C::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Pravda C metric)\n\tcoordinates : (q,x,y,p)\n";
     ss << "---------------------------------------------------------------\n";
@@ -697,7 +696,7 @@ bool MetricPravda_C::report(const vec4 , const vec4 , std::string &text) {
     ss << "    G positive between... x2 and x3 = " << roots[2] << std::endl;
     ss << "    G negative after x3." << std::endl;
 
-    //calculateRoots(roots, -0.5/m/A, 0.5/m/A);
+    // calculateRoots(roots, -0.5/m/A, 0.5/m/A);
 
     ss << "  Roots of Polynom F= -1 + y^2 - 2mAy^3:" << std::endl;
     ss << "    F positive before........... y1 = " << -roots[2] << std::endl;
@@ -705,11 +704,11 @@ bool MetricPravda_C::report(const vec4 , const vec4 , std::string &text) {
     ss << "    F positive between... y2 and y3 = " << -roots[0] << std::endl;
     ss << "    F negative after y3." << std::endl;
     ss << "---------------------------------------------------------------\n";
-    ss << "quad2d    " << roots[1] << " " << -roots[1] << " " << roots[1] << " " << -roots[0] << " " << roots[2] << " " << -roots[0] << " " << roots[2] << " " << -roots[1] << " 3.0   0.5 1.0 0.5" << std::endl;
+    ss << "quad2d    " << roots[1] << " " << -roots[1] << " " << roots[1] << " " << -roots[0] << " " << roots[2] << " "
+       << -roots[0] << " " << roots[2] << " " << -roots[1] << " 3.0   0.5 1.0 0.5" << std::endl;
 
-
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // *************************** specific  public methods ****************************
@@ -719,19 +718,19 @@ bool MetricPravda_C::report(const vec4 , const vec4 , std::string &text) {
  *\param   c     : y-axes offset
  *\param roots : reference Roots of the polynom sorted ascending.
  */
-void
-MetricPravda_C::calculateRoots(vec3 & roots, double a, double c) {
+void MetricPravda_C::calculateRoots(vec3& roots, double a, double c)
+{
 
     double p = a * a / 3.0;
     double q = 2.0 * a * a * a / 27.0 + c;
     double u = acos(-q * 0.5 * sqrt(27.0 / p / p / p));
 
-    double z1 =  sqrt(4.0 / 3.0 * p) * cos((u) / 3.0) - a / 3.0;
+    double z1 = sqrt(4.0 / 3.0 * p) * cos((u) / 3.0) - a / 3.0;
     double z2 = -sqrt(4.0 / 3.0 * p) * cos((u + M_PI) / 3.0) - a / 3.0;
     double z3 = -sqrt(4.0 / 3.0 * p) * cos((u - M_PI) / 3.0) - a / 3.0;
 
     double tmp;
-    //sort
+    // sort
     if (z2 < z1) {
         tmp = z1;
         z1 = z2;
@@ -754,7 +753,8 @@ MetricPravda_C::calculateRoots(vec3 & roots, double a, double c) {
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricPravda_C::setStandardValues() {
+void MetricPravda_C::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = -5.0;
     mInitPos[2] = -5.0;
@@ -769,6 +769,4 @@ void MetricPravda_C::setStandardValues() {
     mCoordNames[3] = std::string("p");
 }
 
-
 } // end namespace m4d
-

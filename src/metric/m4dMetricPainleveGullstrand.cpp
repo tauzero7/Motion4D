@@ -33,8 +33,9 @@ namespace m4d {
  *
  * \param  mass : mass of the black hole.
  */
-MetricPainleveGullstrand::MetricPainleveGullstrand(double mass) {
-    mMetricName  = "PainleveGullstrand";
+MetricPainleveGullstrand::MetricPainleveGullstrand(double mass)
+{
+    mMetricName = "PainleveGullstrand";
     setCoordType(enum_coordinate_spherical);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -51,20 +52,19 @@ MetricPainleveGullstrand::MetricPainleveGullstrand(double mass) {
     setStandardValues();
 }
 
-MetricPainleveGullstrand::~MetricPainleveGullstrand() {
-}
-
+MetricPainleveGullstrand::~MetricPainleveGullstrand() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricPainleveGullstrand::calculateMetric(const double* pos) {
-    double r     = pos[1];
+bool MetricPainleveGullstrand::calculateMetric(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
 
     double t2 = 1 / r;
     double t4 = c * c;
@@ -98,11 +98,12 @@ bool MetricPainleveGullstrand::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricPainleveGullstrand::calculateChristoffels(const double* pos) {
-    double r     = pos[1];
+bool MetricPainleveGullstrand::calculateChristoffels(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
 
     double t1 = 1 / r;
     double t3 = sqrt(rs * t1);
@@ -191,11 +192,12 @@ bool MetricPainleveGullstrand::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricPainleveGullstrand::calculateChrisD(const double* pos) {
-    double r     = pos[1];
+bool MetricPainleveGullstrand::calculateChrisD(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
 
     double t1 = 1 / r;
     double t2 = rs * t1;
@@ -485,17 +487,19 @@ bool MetricPainleveGullstrand::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricPainleveGullstrand::localToCoord(const double* pos, const double* ldir, double* dir,
-        enum_nat_tetrad_type  type) {
-    double r     = pos[1];
+void MetricPainleveGullstrand::localToCoord(
+    const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type)
+{
+    double r = pos[1];
     double theta = pos[2];
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
 
     if (type != enum_nat_tetrad_freefall) {
         double w = sqrt(1.0 - rs / r);
         dir[0] = (ldir[0] / w + ldir[1] / (sqrt(r / rs - 1.0))) / c;
         dir[1] = ldir[1] * w;
-    } else {
+    }
+    else {
         double w = sqrt(rs / r);
         dir[0] = ldir[0] / c;
         dir[1] = -w * ldir[0] + ldir[1];
@@ -511,17 +515,19 @@ void MetricPainleveGullstrand::localToCoord(const double* pos, const double* ldi
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricPainleveGullstrand::coordToLocal(const double* pos, const double* cdir, double* ldir,
-        enum_nat_tetrad_type  type) {
-    double r     = pos[1];
+void MetricPainleveGullstrand::coordToLocal(
+    const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type)
+{
+    double r = pos[1];
     double theta = pos[2];
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
 
     if (type != enum_nat_tetrad_freefall) {
         double w = sqrt(1.0 - rs / r);
         ldir[0] = c * cdir[0] * w - cdir[1] / w;
         ldir[1] = cdir[1] / w;
-    } else {
+    }
+    else {
         double w = sqrt(rs / r);
         ldir[0] = c * (cdir[0] + w * cdir[1]);
         ldir[1] = cdir[1];
@@ -530,14 +536,14 @@ void MetricPainleveGullstrand::coordToLocal(const double* pos, const double* cdi
     ldir[3] = cdir[3] * r * sin(theta);
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0.
  *  \return false : position is valid.
  */
-bool MetricPainleveGullstrand::breakCondition(const double* pos) {
+bool MetricPainleveGullstrand::breakCondition(const double* pos)
+{
     bool br = false;
 
     if (pos[1] < 0.0) {
@@ -545,7 +551,6 @@ bool MetricPainleveGullstrand::breakCondition(const double* pos) {
     }
     return br;
 }
-
 
 /*! Tests whether the constraint equation is fulfilled.
  *
@@ -558,14 +563,15 @@ bool MetricPainleveGullstrand::breakCondition(const double* pos) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricPainleveGullstrand::testConstraint(const double y[], const double kappa) {
-    double r     = y[1];
+double MetricPainleveGullstrand::testConstraint(const double y[], const double kappa)
+{
+    double r = y[1];
     double theta = y[2];
     double cm = 1.0 / mSpeedOfLight;
 
     // Scale the directions with the speed of light before doubling them !!
-    double dT  = y[4] * cm;
-    double dr  = y[5] * cm;
+    double dT = y[4] * cm;
+    double dr = y[5] * cm;
     double dth = y[6] * cm;
     double dph = y[7] * cm;
 
@@ -578,7 +584,8 @@ double MetricPainleveGullstrand::testConstraint(const double y[], const double k
  *
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  */
-bool MetricPainleveGullstrand::setParam(const char* pName, double val) {
+bool MetricPainleveGullstrand::setParam(const char* pName, double val)
+{
     if (Metric::setParam(pName, val)) {
         mMass = val;
         rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
@@ -586,10 +593,10 @@ bool MetricPainleveGullstrand::setParam(const char* pName, double val) {
     return true;
 }
 
-
 /*! Generate report.
  */
-bool MetricPainleveGullstrand::report(const vec4 , const vec4 , std::string &text) {
+bool MetricPainleveGullstrand::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Painleve-Gullstrand metric\n\tcoordinate : (T,r,theta,phi)\n";
     ss << "-----------------------------------------------------------------------\n";
@@ -598,14 +605,15 @@ bool MetricPainleveGullstrand::report(const vec4 , const vec4 , std::string &tex
     ss.setf(std::ios::fixed);
     ss << "  Schwarzschild radius ........... r_s = 2GM/c^2 = " << rs << std::endl;
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricPainleveGullstrand::setStandardValues() {
+void MetricPainleveGullstrand::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 3.0 * rs;
     mInitPos[2] = M_PI_2;

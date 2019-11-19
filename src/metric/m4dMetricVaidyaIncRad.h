@@ -44,40 +44,40 @@ namespace m4d {
 // ---------------------------------------------------
 //    class definition:   MetricVaidyaIncRad
 // ---------------------------------------------------
-class MetricVaidyaIncRad : public Metric {
+class MetricVaidyaIncRad : public Metric
+{
 public:
     MetricVaidyaIncRad(double p = 1.0);
     virtual ~MetricVaidyaIncRad();
 
-// --------- public methods -----------
+    // --------- public methods -----------
 public:
-    virtual bool   calculateMetric(const double* pos);
-    virtual bool   calculateChristoffels(const double* pos);
-    
-    virtual void   localToCoord(const double* pos, const double* ldir, double* dir,
-                                enum_nat_tetrad_type  type = enum_nat_tetrad_default);
-    virtual void   coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                enum_nat_tetrad_type  type = enum_nat_tetrad_default);
+    virtual bool calculateMetric(const double* pos);
+    virtual bool calculateChristoffels(const double* pos);
 
-    virtual bool   breakCondition(const double* pos);
+    virtual void localToCoord(
+        const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
+    virtual void coordToLocal(
+        const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
 
-    virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
+    virtual bool breakCondition(const double* pos);
 
-    virtual bool   setParam(const char* pName, double val);
+    virtual bool report(const vec4 pos, const vec4 cdir, char*& text);
 
-// --------- protected methods -----------
+    virtual bool setParam(const char* pName, double val);
+
+    // --------- protected methods -----------
 protected:
     virtual void setStandardValues();
 
-    void calcMassFunc(const double v, double &m);    
-    void calcMassFunc(const double v, double &m, double &dmdv);
+    void calcMassFunc(const double v, double& m);
+    void calcMassFunc(const double v, double& m, double& dmdv);
 
-// -------- protected attribute ---------
+    // -------- protected attribute ---------
 protected:
-    double mP;  // constant factor
+    double mP; // constant factor
 };
 
 } // end namespace m4d
 
 #endif // M4D_METRIC_VAIDYA_INC_RAD_H
-

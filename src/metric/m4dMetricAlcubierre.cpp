@@ -29,15 +29,15 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the KerrBL metric.
  *
  * \param  sigma : sharpness of warp bubble.
  * \param  R     : size of warp bubble.
  * \param  vs    : velocity of warp bubble.
  */
-MetricAlcubierre::MetricAlcubierre(double sigma, double R, double vs) {
-    mMetricName  = "AlcubierreWarp";
+MetricAlcubierre::MetricAlcubierre(double sigma, double R, double vs)
+{
+    mMetricName = "AlcubierreWarp";
     mMetricCPPfilename = "m4dMetricAlcubierre.cpp";
     setCoordType(enum_coordinate_cartesian);
 
@@ -46,8 +46,8 @@ MetricAlcubierre::MetricAlcubierre(double sigma, double R, double vs) {
     mGravConstant = 1.0;
 
     mSigma = sigma;
-    mR     = R;
-    mvs    = vs;
+    mR = R;
+    mvs = vs;
 
     addParam("sigma", sigma);
     addParam("r", R);
@@ -61,22 +61,21 @@ MetricAlcubierre::MetricAlcubierre(double sigma, double R, double vs) {
     mLocTeds.push_back(enum_nat_tetrad_static);
 }
 
-MetricAlcubierre::~MetricAlcubierre() {
-}
-
+MetricAlcubierre::~MetricAlcubierre() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricAlcubierre::calculateMetric(const double* pos) {
+bool MetricAlcubierre::calculateMetric(const double* pos)
+{
     double c = mSpeedOfLight;
     double v = mvs;
 
     double t1 = c * c;
     double t2 = v * v;
-    double t3 = calcF(pos);  //f(t,x,y,z);
+    double t3 = calcF(pos); // f(t,x,y,z);
     double t4 = t3 * t3;
     double t7 = v * t3;
 
@@ -104,7 +103,8 @@ bool MetricAlcubierre::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricAlcubierre::calculateChristoffels(const double* pos) {
+bool MetricAlcubierre::calculateChristoffels(const double* pos)
+{
     double c = mSpeedOfLight;
     double v = mvs;
 
@@ -113,17 +113,17 @@ bool MetricAlcubierre::calculateChristoffels(const double* pos) {
 
     double t1 = v * v;
     double t2 = t1 * v;
-    double t3 = calcF(pos);    // f(t,x,y,z);
+    double t3 = calcF(pos); // f(t,x,y,z);
     double t4 = t3 * t3;
-    double t6 = fx;            // diff(f(t,x,y,z),x);
+    double t6 = fx; // diff(f(t,x,y,z),x);
     double t7 = c * c;
     double t8 = 1 / t7;
     double t10 = t2 * t4 * t6 * t8;
-    double t11 = ft;           // diff(f(t,x,y,z),t);
+    double t11 = ft; // diff(f(t,x,y,z),t);
     double t14 = t3 * t6;
     double t22 = t1 * t3;
-    double t23 = fy;           // diff(f(t,x,y,z),y);
-    double t25 = fz;           // diff(f(t,x,y,z),z);
+    double t23 = fy; // diff(f(t,x,y,z),y);
+    double t25 = fz; // diff(f(t,x,y,z),z);
     double t27 = t8 * t1;
     double t28 = t27 * t14;
     double t29 = v * t23;
@@ -211,7 +211,8 @@ bool MetricAlcubierre::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricAlcubierre::calculateChrisD(const double* pos) {
+bool MetricAlcubierre::calculateChrisD(const double* pos)
+{
     double c = mSpeedOfLight;
     double v = mvs;
 
@@ -221,54 +222,53 @@ bool MetricAlcubierre::calculateChrisD(const double* pos) {
     double ftt, ftx, fty, ftz, fxx, fxy, fxz, fyy, fyz, fzz;
     calcD2F(pos, ftt, ftx, fty, ftz, fxx, fxy, fxz, fyy, fyz, fzz);
 
-
     double t1 = v * v;
     double t2 = t1 * v;
-    double t3 = calcF(pos);        // f(t,x,y,z);
+    double t3 = calcF(pos); // f(t,x,y,z);
     double t4 = t2 * t3;
-    double t5 = fx;                // diff(f(t,x,y,z),x);
-    double t6 = ft;                // diff(f(t,x,y,z),t);
+    double t5 = fx; // diff(f(t,x,y,z),x);
+    double t6 = ft; // diff(f(t,x,y,z),t);
     double t7 = t5 * t6;
-    double t9 = ftx;               // diff(diff(f(t,x,y,z),t),x);
+    double t9 = ftx; // diff(diff(f(t,x,y,z),t),x);
     double t10 = t3 * t9;
     double t12 = c * c;
     double t13 = 1 / t12;
     double t15 = t4 * (2.0 * t7 + t10) * t13;
     double t16 = t5 * t5;
-    double t18 = fxx;              // diff(diff(f(t,x,y,z),x),x);
+    double t18 = fxx; // diff(diff(f(t,x,y,z),x),x);
     double t19 = t3 * t18;
     double t22 = t4 * (2.0 * t16 + t19) * t13;
-    double t23 = fy;               // diff(f(t,x,y,z),y);
+    double t23 = fy; // diff(f(t,x,y,z),y);
     double t24 = t5 * t23;
-    double t26 = fxy;              // diff(diff(f(t,x,y,z),x),y);
+    double t26 = fxy; // diff(diff(f(t,x,y,z),x),y);
     double t27 = t3 * t26;
     double t30 = t4 * (2.0 * t24 + t27) * t13;
-    double t31 = fz;               // diff(f(t,x,y,z),z);
+    double t31 = fz; // diff(f(t,x,y,z),z);
     double t32 = t5 * t31;
-    double t34 = fxz;              // diff(diff(f(t,x,y,z),x),z);
+    double t34 = fxz; // diff(diff(f(t,x,y,z),x),z);
     double t35 = t3 * t34;
     double t38 = t4 * (2.0 * t32 + t35) * t13;
     double t39 = t3 * t3;
     double t40 = t2 * t39;
     double t44 = t2 * t39 * t3;
-    double t46 = ftt;              // diff(diff(f(t,x,y,z),t),t);
+    double t46 = ftt; // diff(diff(f(t,x,y,z),t),t);
     double t48 = t12 * v;
-    double t66 = fty;              // diff(diff(f(t,x,y,z),t),y);
+    double t66 = fty; // diff(diff(f(t,x,y,z),t),y);
     double t67 = t12 * t66;
-    double t76 = ftz;              // diff(diff(f(t,x,y,z),t),z);
+    double t76 = ftz; // diff(diff(f(t,x,y,z),t),z);
     double t77 = t12 * t76;
     double t83 = t1 * t6;
     double t85 = t1 * t3;
     double t88 = t1 * t5;
     double t92 = t23 * t23;
     double t93 = t1 * t92;
-    double t94 = fyy;              // diff(diff(f(t,x,y,z),y),y);
+    double t94 = fyy; // diff(diff(f(t,x,y,z),y),y);
     double t97 = t1 * t31;
-    double t99 = fyz;              // diff(diff(f(t,x,y,z),y),z);
+    double t99 = fyz; // diff(diff(f(t,x,y,z),y),z);
     double t101 = -t97 * t23 - t85 * t99;
     double t108 = t31 * t31;
     double t109 = t1 * t108;
-    double t110 = fzz;             // diff(diff(f(t,x,y,z),z),z);
+    double t110 = fzz; // diff(diff(f(t,x,y,z),z),z);
     double t115 = t1 * (t7 + t10) * t13;
     double t118 = t1 * (t16 + t19) * t13;
     double t121 = t1 * (t24 + t27) * t13;
@@ -571,7 +571,8 @@ bool MetricAlcubierre::calculateChrisD(const double* pos) {
  * \param pos : pointer to coordinate position where the Riemann tensor have to be evaluated.
  * \return true : successfull
  */
-bool MetricAlcubierre::calculateRiemann(const double* pos) {
+bool MetricAlcubierre::calculateRiemann(const double* pos)
+{
     double c = mSpeedOfLight;
     double v = mvs;
 
@@ -582,30 +583,30 @@ bool MetricAlcubierre::calculateRiemann(const double* pos) {
     calcD2F(pos, ftt, ftx, fty, ftz, fxx, fxy, fxz, fyy, fyz, fzz);
 
     double t1 = v * v;
-    double t2 = calcF(pos);           // f(t,x,y,z);
+    double t2 = calcF(pos); // f(t,x,y,z);
     double t3 = t1 * t2;
     double t4 = c * c;
     double t5 = 1 / t4;
-    double t6 = ftx;                  // diff(diff(f(t,x,y,z),t),x);
-    double t8 = fx;                   // diff(f(t,x,y,z),x);
+    double t6 = ftx; // diff(diff(f(t,x,y,z),t),x);
+    double t8 = fx; // diff(f(t,x,y,z),x);
     double t9 = t8 * t8;
     double t12 = v * t2;
-    double t13 = fxx;                 // diff(diff(f(t,x,y,z),x),x);
-    double t16 = fy;                  // diff(f(t,x,y,z),y);
+    double t13 = fxx; // diff(diff(f(t,x,y,z),x),x);
+    double t16 = fy; // diff(f(t,x,y,z),y);
     double t17 = t16 * t16;
-    double t19 = fz;                  // diff(f(t,x,y,z),z);
+    double t19 = fz; // diff(f(t,x,y,z),z);
     double t20 = t19 * t19;
     double t22 = 4.0 * t6 + 4.0 * v * t9 + 4.0 * t12 * t13 - v * t17 - v * t20;
     double t25 = t3 * t5 * t22 / 4.0;
-    double t26 = fty;                 // diff(diff(f(t,x,y,z),t),y);
+    double t26 = fty; // diff(diff(f(t,x,y,z),t),y);
     double t29 = 2.0 * v * t16 * t8;
-    double t30 = fxy;                 // diff(diff(f(t,x,y,z),x),y);
+    double t30 = fxy; // diff(diff(f(t,x,y,z),x),y);
     double t31 = t12 * t30;
     double t33 = t26 + t29 + 2.0 * t31;
     double t36 = t3 * t5 * t33 / 2.0;
-    double t37 = ftz;                 // diff(diff(f(t,x,y,z),t),z);
+    double t37 = ftz; // diff(diff(f(t,x,y,z),t),z);
     double t40 = 2.0 * v * t19 * t8;
-    double t41 = fxz;                 // diff(diff(f(t,x,y,z),x),z);
+    double t41 = fxz; // diff(diff(f(t,x,y,z),x),z);
     double t42 = t12 * t41;
     double t44 = t37 + t40 + 2.0 * t42;
     double t47 = t3 * t5 * t44 / 2.0;
@@ -619,19 +620,19 @@ bool MetricAlcubierre::calculateRiemann(const double* pos) {
     double t64 = t54 * t41 / 2.0;
     double t68 = v * (t26 + t29 + t31) * t5 / 2.0;
     double t69 = t1 * t5;
-    double t71 = fyy;                 // diff(diff(f(t,x,y,z),y),y);
+    double t71 = fyy; // diff(diff(f(t,x,y,z),y),y);
     double t72 = t2 * t71;
     double t73 = 2.0 * t72;
     double t76 = t69 * (3.0 * t17 + t73) / 4.0;
     double t77 = t16 * t19;
-    double t79 = fyz;                 // diff(diff(f(t,x,y,z),y),z);
+    double t79 = fyz; // diff(diff(f(t,x,y,z),y),z);
     double t80 = t2 * t79;
     double t81 = 2.0 * t80;
     double t84 = t69 * (3.0 * t77 + t81) / 4.0;
     double t87 = v * t71 * t5 / 2.0;
     double t90 = v * t79 * t5 / 2.0;
     double t94 = v * (t37 + t40 + t42) * t5 / 2.0;
-    double t96 = fzz;                 // diff(diff(f(t,x,y,z),z),z);
+    double t96 = fzz; // diff(diff(f(t,x,y,z),z),z);
     double t97 = t2 * t96;
     double t98 = 2.0 * t97;
     double t101 = t69 * (3.0 * t20 + t98) / 4.0;
@@ -943,8 +944,8 @@ bool MetricAlcubierre::calculateRiemann(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricAlcubierre::localToCoord(const double* pos, const double* ldir, double* dir,
-                                    enum_nat_tetrad_type  type) {
+void MetricAlcubierre::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type)
+{
     double f = calcF(pos);
     double c = mSpeedOfLight;
 
@@ -953,7 +954,8 @@ void MetricAlcubierre::localToCoord(const double* pos, const double* ldir, doubl
         dir[1] = ldir[0] * mvs * f / c + ldir[1];
         dir[2] = ldir[2];
         dir[3] = ldir[3];
-    } else {
+    }
+    else {
         double w = sqrt(c * c - mvs * mvs * f * f);
 
         dir[0] = (ldir[0] - mvs * f / c * ldir[1]) / w;
@@ -970,8 +972,8 @@ void MetricAlcubierre::localToCoord(const double* pos, const double* ldir, doubl
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricAlcubierre::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                    enum_nat_tetrad_type  type) {
+void MetricAlcubierre::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type)
+{
     double f = calcF(pos);
     double c = mSpeedOfLight;
 
@@ -980,7 +982,8 @@ void MetricAlcubierre::coordToLocal(const double* pos, const double* cdir, doubl
         ldir[1] = cdir[1] - mvs * f * cdir[0];
         ldir[2] = cdir[2];
         ldir[3] = cdir[3];
-    } else {
+    }
+    else {
         double w = sqrt(c * c - mvs * mvs * f * f);
 
         ldir[1] = c / w * cdir[1];
@@ -990,25 +993,25 @@ void MetricAlcubierre::coordToLocal(const double* pos, const double* cdir, doubl
     }
 }
 
-
 /*!
  *  \param pos  :  position.
  *  \return true  : radial position r < 0.0 or ...
  *  \return false : position is valid.
  */
-bool MetricAlcubierre::breakCondition(const double*) {
+bool MetricAlcubierre::breakCondition(const double*)
+{
     bool br = false;
 
     return br;
 }
-
 
 /*! Calculate right hand side of the geodesic equation in first order form.
  *
  *  \param  y[]   : pointer to position and direction coordinates.
  *  \param  dydx[] : pointer to right side of geodesic equation.
  */
-bool MetricAlcubierre::calcDerivs(const double y[], double dydx[]) {
+bool MetricAlcubierre::calcDerivs(const double y[], double dydx[])
+{
     dydx[0] = y[4];
     dydx[1] = y[5];
     dydx[2] = y[6];
@@ -1019,7 +1022,7 @@ bool MetricAlcubierre::calcDerivs(const double y[], double dydx[]) {
 
     double c = mSpeedOfLight;
     double edc2 = 1.0 / (c * c);
-    //fprintf(stderr,"hier...%f %f\n",y[5]-mvs*y[4],f);
+    // fprintf(stderr,"hier...%f %f\n",y[5]-mvs*y[4],f);
     double v = mvs;
     double v2 = v * v;
     double v3 = v2 * v;
@@ -1027,16 +1030,18 @@ bool MetricAlcubierre::calcDerivs(const double y[], double dydx[]) {
     double ft, fx, fy, fz;
     calcDF(y, ft, fx, fy, fz);
 
-    dydx[4] = edc2 * (- v3 * f * f * fx * y[4] * y[4] + 2.0 * v2 * f * fx * y[4] * y[5] + v2 * f * fy * y[4] * y[6] + v2 * f * fz * y[4] * y[7]
-                      - v * fx * y[5] * y[5] - v * fy * y[5] * y[6] - v * fz * y[5] * y[7]);
+    dydx[4] = edc2
+        * (-v3 * f * f * fx * y[4] * y[4] + 2.0 * v2 * f * fx * y[4] * y[5] + v2 * f * fy * y[4] * y[6]
+            + v2 * f * fz * y[4] * y[7] - v * fx * y[5] * y[5] - v * fy * y[5] * y[6] - v * fz * y[5] * y[7]);
     dydx[5] = v * ft * y[4] * y[4] + v2 * f * fx * y[4] * y[4] + v * fy * y[4] * y[6] + v * fz * y[4] * y[7]
-              + edc2 * (-v2 * v2 * f2 * f * fx * y[4] * y[4] + 2.0 * v3 * f2 * fx * y[4] * y[5] + v3 * f2 * fy * y[4] * y[6]
-                        + v3 * f2 * fz * y[4] * y[7] - v2 * f * fx * y[5] * y[5] - v2 * f * fy * y[5] * y[6] - v2 * f * fz * y[5] * y[7]);
+        + edc2
+            * (-v2 * v2 * f2 * f * fx * y[4] * y[4] + 2.0 * v3 * f2 * fx * y[4] * y[5] + v3 * f2 * fy * y[4] * y[6]
+                + v3 * f2 * fz * y[4] * y[7] - v2 * f * fx * y[5] * y[5] - v2 * f * fy * y[5] * y[6]
+                - v2 * f * fz * y[5] * y[7]);
     dydx[6] = v2 * f * fy * y[4] * y[4] - v * fy * y[4] * y[5];
     dydx[7] = v2 * f * fz * y[4] * y[4] - v * fz * y[4] * y[5];
     return true;
 }
-
 
 /*! Tests whether the constraint equation is fulfilled.
  *
@@ -1048,15 +1053,16 @@ bool MetricAlcubierre::calcDerivs(const double y[], double dydx[]) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricAlcubierre::testConstraint(const double y[], const double kappa) {
+double MetricAlcubierre::testConstraint(const double y[], const double kappa)
+{
     double c = mSpeedOfLight;
     double f = calcF(y);
 
     double sum = -kappa;
     sum += -c * c * y[4] * y[4] + pow(y[5] - mvs * f * y[4], 2.0) + y[6] * y[6] + y[7] * y[7];
 
-    //double A = 1.0-mvs*mvs*(1.0-f)*(1.0-f);
-    //fprintf(stderr,"%e %e %e %e  %e %e %e %e\n",y[4],y[5],y[6],y[7],f,A,mvs*f+1,mvs*f-1);
+    // double A = 1.0-mvs*mvs*(1.0-f)*(1.0-f);
+    // fprintf(stderr,"%e %e %e %e  %e %e %e %e\n",y[4],y[5],y[6],y[7],f,A,mvs*f+1,mvs*f-1);
     return sum;
 }
 
@@ -1065,20 +1071,23 @@ double MetricAlcubierre::testConstraint(const double y[], const double kappa) {
  * \return true: have resized.
  * \return false: have not resized.
  */
-bool MetricAlcubierre::resize(double* y, double kappa, double factor) {
+bool MetricAlcubierre::resize(double* y, double kappa, double factor)
+{
     double f = calcF(y);
     double z = mvs * f;
 
     if (kappa < -0.5) {
         double c2 = y[6] * y[6] + y[7] * y[7];
-        //fprintf(stderr,"v: %e %e %e %e \n",y[4],y[5],y[6],y[7]);
+        // fprintf(stderr,"v: %e %e %e %e \n",y[4],y[5],y[6],y[7]);
         if (y[4] > 0.0) {
             y[4] = -(sqrt((kappa - c2) * z * z - kappa + y[5] * y[5] + c2) - y[5] * z) / (z * z - 1.0);
-        } else {
+        }
+        else {
             y[4] = (sqrt((kappa - c2) * z * z - kappa + y[5] * y[5] + c2) + y[5] * z) / (z * z - 1.0);
         }
-        //fprintf(stderr,"n: %e %e %e %e \n",y[4],y[5],y[6],y[7]);
-    } else {
+        // fprintf(stderr,"n: %e %e %e %e \n",y[4],y[5],y[6],y[7]);
+    }
+    else {
         //  factor = 0.1;
         y[5] *= factor;
         y[6] *= factor;
@@ -1087,7 +1096,8 @@ bool MetricAlcubierre::resize(double* y, double kappa, double factor) {
         //  fprintf(stderr,"v:%12.8f\n",y[4]);
         if (y[4] > 0.0) {
             y[4] = -(sqrt(c2 + y[5] * y[5] - c2 * z * z) - y[5] * z) / (z * z - 1.0);
-        } else {
+        }
+        else {
             y[4] = (sqrt(c2 + y[5] * y[5] - c2 * z * z) + y[5] * z) / (z * z - 1.0);
         }
         // fprintf(stderr,"n:%12.8f %12.8e\n",y[4],sum);
@@ -1099,15 +1109,16 @@ bool MetricAlcubierre::resize(double* y, double kappa, double factor) {
  *
  *  Set 'sigma', 'R', and 'vs' parameters.
  */
-bool MetricAlcubierre::setParam(const char* pName, double val) {
+bool MetricAlcubierre::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
-    if (strcmp(pName,"sigma") == 0) {
+    if (strcmp(pName, "sigma") == 0) {
         mSigma = val;
     }
-    else if (strcmp(pName,"r") == 0) {
+    else if (strcmp(pName, "r") == 0) {
         mR = val;
     }
-    else if (strcmp(pName,"vs") == 0) {
+    else if (strcmp(pName, "vs") == 0) {
         mvs = val;
     }
     return true;
@@ -1119,14 +1130,16 @@ bool MetricAlcubierre::setParam(const char* pName, double val) {
  *  \param  cp : reference to transformed point.
  *  \return true : success.
  */
-bool MetricAlcubierre::transToTwoPlusOne(vec4 p, vec4 &cp) {
+bool MetricAlcubierre::transToTwoPlusOne(vec4 p, vec4& cp)
+{
     cp = vec4(p[0], p[1], p[2], p[0]);
     return true;
 }
 
 /*! Generate report.
  */
-bool MetricAlcubierre::report(const vec4 , const vec4 , std::string &text) {
+bool MetricAlcubierre::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for AlcubierreWarp metric\n\tcoordinate : (t,x,y,z)\n";
     ss << "---------------------------------------------------------------\n";
@@ -1134,15 +1147,15 @@ bool MetricAlcubierre::report(const vec4 , const vec4 , std::string &text) {
     ss.precision(DEF_FIXED_REPORT_PRECISION);
     ss.setf(std::ios::fixed);
 
-
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricAlcubierre::setStandardValues() {
+void MetricAlcubierre::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 0.0;
     mInitPos[2] = -10.0;
@@ -1160,7 +1173,8 @@ void MetricAlcubierre::setStandardValues() {
 /*! Calculate rs function
  *  \param  pos : pointer to position.
  */
-double MetricAlcubierre::calcRs(const double* pos) {
+double MetricAlcubierre::calcRs(const double* pos)
+{
     double t = pos[0];
     double x = pos[1];
     double y = pos[2];
@@ -1169,7 +1183,8 @@ double MetricAlcubierre::calcRs(const double* pos) {
     return sqrt((x - mvs * t) * (x - mvs * t) + y * y + z * z);
 }
 
-double MetricAlcubierre::calcF(const double* pos) {
+double MetricAlcubierre::calcF(const double* pos)
+{
     double rs = calcRs(pos);
 #if 1
     double w1 = tanh(mSigma * (rs + mR));
@@ -1184,7 +1199,8 @@ double MetricAlcubierre::calcF(const double* pos) {
 #endif
 }
 
-void MetricAlcubierre::calcDF(const double* pos, double &ft, double &fx, double &fy, double &fz) {
+void MetricAlcubierre::calcDF(const double* pos, double& ft, double& fx, double& fy, double& fz)
+{
     double rs = calcRs(pos);
 #if 1
     double thp = tanh(mSigma * (rs + mR));
@@ -1199,8 +1215,8 @@ void MetricAlcubierre::calcDF(const double* pos, double &ft, double &fx, double 
     double y = pos[2];
     double z = pos[3];
 
-    //std::cerr << pos[0] << " " << pos[1] << " " << pos[2] << " " << pos[3] << std::endl;
-    //std::cerr << rs << " " << thp << " " << thm  << " " << df << std::endl;
+    // std::cerr << pos[0] << " " << pos[1] << " " << pos[2] << " " << pos[3] << std::endl;
+    // std::cerr << rs << " " << thp << " " << thm  << " " << df << std::endl;
 
     ft = -mvs * (x - mvs * t) * df;
     fx = (x - mvs * t) * df;
@@ -1230,9 +1246,9 @@ void MetricAlcubierre::calcDF(const double* pos, double &ft, double &fx, double 
 #endif
 }
 
-void MetricAlcubierre::calcD2F(const double* pos, double &ftt, double &ftx, double &fty, double &ftz,
-                               double &fxx, double &fxy, double &fxz, double &fyy,
-                               double &fyz, double &fzz) {
+void MetricAlcubierre::calcD2F(const double* pos, double& ftt, double& ftx, double& fty, double& ftz, double& fxx,
+    double& fxy, double& fxz, double& fyy, double& fyz, double& fzz)
+{
     double t = pos[0];
     double x = pos[1];
     double y = pos[2];

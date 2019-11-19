@@ -56,7 +56,7 @@ public:
 
     virtual bool   setParam(const char* pName, double val);
 
-    virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
+    virtual bool   report(const vec4 pos, const vec4 cdir, char*&text);
 
     virtual bool   transToEmbedding(vec4 p, vec4 &ep);
     virtual bool   setEmbeddingParam(const char *name, double val);

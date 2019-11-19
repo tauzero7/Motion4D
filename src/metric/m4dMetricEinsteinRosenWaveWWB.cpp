@@ -27,8 +27,9 @@
 
 namespace m4d {
 
-MetricEinsteinRosenWaveWWB::MetricEinsteinRosenWaveWWB(double c, double a) {
-    mMetricName  = "EinsteinRosenWaveWWB";
+MetricEinsteinRosenWaveWWB::MetricEinsteinRosenWaveWWB(double c, double a)
+{
+    mMetricName = "EinsteinRosenWaveWWB";
     setCoordType(enum_coordinate_cylinder);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -43,20 +44,19 @@ MetricEinsteinRosenWaveWWB::MetricEinsteinRosenWaveWWB(double c, double a) {
     setStandardValues();
 }
 
-MetricEinsteinRosenWaveWWB::~MetricEinsteinRosenWaveWWB() {
-}
+MetricEinsteinRosenWaveWWB::~MetricEinsteinRosenWaveWWB() {}
 
-
-bool MetricEinsteinRosenWaveWWB::calculateMetric(const double* pos) {
+bool MetricEinsteinRosenWaveWWB::calculateMetric(const double* pos)
+{
     double rho = pos[1];
 
     double gam, psi;
     calcPotentials(pos, gam, psi);
 
-    double t1 = gam;     // g(t,rho);
+    double t1 = gam; // g(t,rho);
     double t2 = exp(t1);
     double t3 = t2 * t2;
-    double t4 = psi;     // psi(t,rho);
+    double t4 = psi; // psi(t,rho);
     double t5 = exp(t4);
     double t6 = t5 * t5;
     double t7 = 1 / t6;
@@ -83,27 +83,27 @@ bool MetricEinsteinRosenWaveWWB::calculateMetric(const double* pos) {
     return true;
 }
 
-
-bool MetricEinsteinRosenWaveWWB::calculateChristoffels(const double* pos) {
+bool MetricEinsteinRosenWaveWWB::calculateChristoffels(const double* pos)
+{
     double rho = pos[1];
 
     double gam, psi, gamt, gamr, psit, psir;
     calcDiffPoti(pos, gam, psi, gamt, gamr, psit, psir);
 
-    double t1 = gamt;          // diff(g(t,rho),t);
-    double t2 = psit;          // diff(psi(t,rho),t);
+    double t1 = gamt; // diff(g(t,rho),t);
+    double t2 = psit; // diff(psi(t,rho),t);
     double t3 = t1 - t2;
-    double t4 = gamr;          // diff(g(t,rho),rho);
-    double t5 = psir;          // diff(psi(t,rho),rho);
+    double t4 = gamr; // diff(g(t,rho),rho);
+    double t5 = psir; // diff(psi(t,rho),rho);
     double t6 = t4 - t5;
     double t9 = -1.0 + rho * t5;
     double t10 = t9 / rho;
-    double t11 = gam;          // g(t,rho);
+    double t11 = gam; // g(t,rho);
     double t12 = exp(t11);
     double t13 = t12 * t12;
     double t14 = 1 / t13;
     double t15 = rho * rho;
-    double t20 = psi;          // psi(t,rho);
+    double t20 = psi; // psi(t,rho);
     double t21 = exp(t20);
     double t22 = t21 * t21;
     double t23 = t22 * t22;
@@ -177,8 +177,8 @@ bool MetricEinsteinRosenWaveWWB::calculateChristoffels(const double* pos) {
     return true;
 }
 
-
-bool MetricEinsteinRosenWaveWWB::calculateChrisD(const double*) {
+bool MetricEinsteinRosenWaveWWB::calculateChrisD(const double*)
+{
     return false;
     /*
     double t1 = diff(diff(g(t,rho),t),t);
@@ -471,7 +471,6 @@ bool MetricEinsteinRosenWaveWWB::calculateChrisD(const double*) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -479,8 +478,8 @@ bool MetricEinsteinRosenWaveWWB::calculateChrisD(const double*) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricEinsteinRosenWaveWWB::localToCoord(const double* pos, const double* ldir, double* dir,
-        enum_nat_tetrad_type) {
+void MetricEinsteinRosenWaveWWB::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
 
     double gam, psi;
     calcPotentials(pos, gam, psi);
@@ -501,8 +500,8 @@ void MetricEinsteinRosenWaveWWB::localToCoord(const double* pos, const double* l
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricEinsteinRosenWaveWWB::coordToLocal(const double* pos, const double* cdir, double* ldir,
-        enum_nat_tetrad_type) {
+void MetricEinsteinRosenWaveWWB::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     double gam, psi;
     calcPotentials(pos, gam, psi);
 
@@ -515,42 +514,43 @@ void MetricEinsteinRosenWaveWWB::coordToLocal(const double* pos, const double* c
     ldir[3] = exp(psi) * cdir[3];
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricEinsteinRosenWaveWWB::breakCondition(const double*) {
+bool MetricEinsteinRosenWaveWWB::breakCondition(const double*)
+{
     return false;
 }
 
-
-double MetricEinsteinRosenWaveWWB::testConstraint(const double* y, const double kappa) {
-    double rho  = y[1];
-    double dt   = y[4];
+double MetricEinsteinRosenWaveWWB::testConstraint(const double* y, const double kappa)
+{
+    double rho = y[1];
+    double dt = y[4];
     double drho = y[5];
     double dphi = y[6];
-    double dz   = y[7];
+    double dz = y[7];
 
     double gam, psi;
     calcPotentials(y, gam, psi);
 
     double sum = -kappa;
-    sum += exp(2.0 * (gam - psi)) * (-dt * dt + drho * drho) + rho * rho * exp(-2.0 * psi) * dphi * dphi + exp(2.0 * psi) * dz * dz;
+    sum += exp(2.0 * (gam - psi)) * (-dt * dt + drho * drho) + rho * rho * exp(-2.0 * psi) * dphi * dphi
+        + exp(2.0 * psi) * dz * dz;
     return sum;
 }
-
 
 /*! Set parameter 'pName' to 'val'.
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricEinsteinRosenWaveWWB::setParam(const char* pName, double val) {
+bool MetricEinsteinRosenWaveWWB::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"c") == 0) {
+    if (strcmp(pName, "c") == 0) {
         m_c = val;
     }
     else if (strcmp(pName, "a") == 0) {
@@ -559,24 +559,24 @@ bool MetricEinsteinRosenWaveWWB::setParam(const char* pName, double val) {
     return true;
 }
 
-
 /*! Generate report.
  */
-bool MetricEinsteinRosenWaveWWB::report(const vec4 , const vec4 , std::string &text) {
+bool MetricEinsteinRosenWaveWWB::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for MetricEinsteinRosenWaveWWB metric\n\tcoordinates : (t,r,theta,phi)\n";
     ss << "---------------------------------------------------------------\n";
     ss << "  physical units ......... no\n";
     ss.precision(DEF_FIXED_REPORT_PRECISION);
     ss.setf(std::ios::fixed);
-
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 /*!
  */
-void MetricEinsteinRosenWaveWWB::setStandardValues() {
+void MetricEinsteinRosenWaveWWB::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 10.0;
     mInitPos[2] = 0.0;
@@ -591,9 +591,9 @@ void MetricEinsteinRosenWaveWWB::setStandardValues() {
     mCoordNames[3] = std::string("z");
 }
 
-
-void MetricEinsteinRosenWaveWWB::calcPotentials(const double *pos, double &gam, double &psi) {
-    double t   = pos[0];
+void MetricEinsteinRosenWaveWWB::calcPotentials(const double* pos, double& gam, double& psi)
+{
+    double t = pos[0];
     double rho = pos[1];
     double a = m_a;
     double c = m_c;
@@ -619,9 +619,9 @@ void MetricEinsteinRosenWaveWWB::calcPotentials(const double *pos, double &gam, 
     gam = t26 / t3 * (1.0 - 2.0 * t6 * (t19 - t20) / t30 + (t5 - t3 - t8) / t16) / 2.0;
 }
 
-
-void MetricEinsteinRosenWaveWWB::calcDiffPoti(const double *pos, double &gam, double &psi,
-        double &gamt, double &gamr, double &psit, double &psir) {
+void MetricEinsteinRosenWaveWWB::calcDiffPoti(
+    const double* pos, double& gam, double& psi, double& gamt, double& gamr, double& psit, double& psir)
+{
     double t = pos[0];
     double rho = pos[1];
 
@@ -671,7 +671,9 @@ void MetricEinsteinRosenWaveWWB::calcDiffPoti(const double *pos, double &gam, do
     psit = t2 * t25 * ((2.0 * t26 * t30 - 2.0 * t) * t22 - t38 * t42) / 2.0;
     psir = t2 * t25 * ((2.0 * t26 * t51 + 2.0 * rho) * t22 - 4.0 * t38 * t18 * rho) / 2.0;
     gamt = t66 * (-2.0 * t6 * (-t40 - t41) * t37 + 4.0 * t6 * t74 * t42 - 2.0 * t * t26 - 2.0 * t83 * t30) / 2.0;
-    gamr = t66 * (-4.0 * t48 * t71 * t37 - 8.0 * t92 * t18 * t37 + 16.0 * t92 * t74 * t18 + 2.0 * rho * t26 - 2.0 * t83 * t51) / 2.0;
+    gamr = t66
+        * (-4.0 * t48 * t71 * t37 - 8.0 * t92 * t18 * t37 + 16.0 * t92 * t74 * t18 + 2.0 * rho * t26 - 2.0 * t83 * t51)
+        / 2.0;
 }
 
 } // end namespace m4d

@@ -58,8 +58,9 @@
 #include <sstream>
 #include <vector>
 
-#include <m4dGlobalDefs.h>
-#include <math/TransCoordinates.h>
+#include "extra/m4dUtilities.h"
+#include "m4dGlobalDefs.h"
+#include "math/TransCoordinates.h"
 
 #ifdef _WIN32
 #ifndef __GNUC__

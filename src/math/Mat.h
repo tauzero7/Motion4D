@@ -61,9 +61,9 @@ protected:
 
 public:
     Matrix();
-    Matrix(double val);
+    explicit Matrix(double val);
     Matrix(const Matrix& M);
-    Matrix(mType* field);
+    explicit Matrix(mType* field);
     ~Matrix();
 
     void setAll(mType val);
@@ -140,7 +140,7 @@ public:
     {
         VnD<mType, n> q;
         for (int i = 0; i < n; i++) {
-            q[i] = (mType)0;
+            q[i] = static_cast<mType>(0);
             for (int j = 0; j < n; j++) {
                 q[i] += M.getElem(i, j) * vec.x(j);
             }
@@ -154,7 +154,7 @@ public:
     {
         VnD<mType, n> q;
         for (int i = 0; i < n; i++) {
-            q[i] = (mType)0;
+            q[i] = static_cast<mType>(0);
             for (int j = 0; j < n; j++) {
                 q[i] += M.getElem(j, i) * vec.x(j);
             }
@@ -358,7 +358,7 @@ template <class mType, int n, int m> void Matrix<mType, n, m>::setNull()
 {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
-            mat[i][j] = (mType)0;
+            mat[i][j] = static_cast<mType>(0);
         }
     }
 }
@@ -371,10 +371,10 @@ template <class mType, int n, int m> void Matrix<mType, n, m>::setIdent()
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             if (i == j) {
-                mat[i][j] = (mType)1;
+                mat[i][j] = static_cast<mType>(1);
             }
             else {
-                mat[i][j] = (mType)0;
+                mat[i][j] = static_cast<mType>(0);
             }
         }
     }
@@ -387,14 +387,14 @@ template <class mType, int n, int m> bool Matrix<mType, n, m>::isIdentMat() cons
 {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            if (mat[i][j] != (mType)(i == j)) {
+            if (mat[i][j] != static_cast<mType>(i == j)) {
                 return false;
             }
         }
     }
     if (n + 1 == m) {
         for (int j = 0; j < n; j++) {
-            if (mat[j][m - 1] != (mType)(0)) {
+            if (mat[j][m - 1] != static_cast<mType>(0)) {
                 return false;
             }
         }
@@ -645,7 +645,7 @@ Matrix<mType, n, m> Matrix<mType, n, m>::operator|(const Matrix<mType, n, m>& M)
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
-            Q.mat[i][j] = (mType)0;
+            Q.mat[i][j] = static_cast<mType>(0);
             for (int k = 0; k < m; k++) {
                 Q.mat[i][j] += mat[i][k] * M.mat[k][j];
             }
@@ -683,7 +683,7 @@ template <class mType, int n, int m> VnD<mType, n> Matrix<mType, n, m>::operator
 {
     VnD<mType, n> q;
     for (int i = 0; i < n; i++) {
-        q[i] = (mType)0;
+        q[i] = static_cast<mType>(0);
         for (int j = 0; j < m; j++) {
             q[i] += mat[i][j] * v.x(j);
         }
@@ -720,10 +720,7 @@ template <class mType, int n, int m> void Matrix<mType, n, m>::operator*=(const 
     Matrix<mType, n, m> prod(0.0);
     prod.matIsUnit = true;
 
-    register int i;
-    register int j;
-    register int k;
-    // int limit;
+    int i, j, k;
 
     assert((n == m) || (n + 1 == m));
 

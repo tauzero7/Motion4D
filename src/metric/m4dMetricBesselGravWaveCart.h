@@ -82,7 +82,7 @@ public:
 
     virtual bool   transToTwoPlusOne(vec4 p, vec4 &cp);
 
-    virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
+    virtual bool   report(const vec4 pos, const vec4 cdir, char*&text);
 
 // --------- protected methods -----------
 protected:

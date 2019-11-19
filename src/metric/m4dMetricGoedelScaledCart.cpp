@@ -30,8 +30,9 @@ namespace m4d {
 // ---------------------------------------------------
 //    constructur/destructor
 // ---------------------------------------------------
-MetricGoedelScaledCart::MetricGoedelScaledCart(double rG, double zeta) {
-    mMetricName  = "Goedel scaled cartesian";
+MetricGoedelScaledCart::MetricGoedelScaledCart(double rG, double zeta)
+{
+    mMetricName = "Goedel scaled cartesian";
     setCoordType(enum_coordinate_cartesian);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -48,16 +49,14 @@ MetricGoedelScaledCart::MetricGoedelScaledCart(double rG, double zeta) {
     setStandardValues();
 }
 
-MetricGoedelScaledCart::~MetricGoedelScaledCart() {
-
-}
-
+MetricGoedelScaledCart::~MetricGoedelScaledCart() {}
 
 // *********************************** public methods ******************************
 // ---------------------------------------------------
 //    public::calculateMetric
 // ---------------------------------------------------
-bool MetricGoedelScaledCart::calculateMetric(const double* pos) {
+bool MetricGoedelScaledCart::calculateMetric(const double* pos)
+{
     double X = pos[1];
     double Y = pos[2];
     double r_G = mRG;
@@ -97,15 +96,14 @@ bool MetricGoedelScaledCart::calculateMetric(const double* pos) {
     g_compts[3][2] = 0.0;
     g_compts[3][3] = t6 * t2 + t6 + t6 * t3;
 
-
-
     return true;
 }
 
 // ---------------------------------------------------
 //    public::calculateChristoffels
 // ---------------------------------------------------
-bool MetricGoedelScaledCart::calculateChristoffels(const double* pos) {
+bool MetricGoedelScaledCart::calculateChristoffels(const double* pos)
+{
     double X = pos[1];
     double Y = pos[2];
     double c = mSpeedOfLight;
@@ -202,22 +200,21 @@ bool MetricGoedelScaledCart::calculateChristoffels(const double* pos) {
     christoffel[3][3][2] = 0.0;
     christoffel[3][3][3] = 0.0;
 
-
     return true;
 }
 
 // ---------------------------------------------------
 //    public::localToCoord
 // ---------------------------------------------------
-void MetricGoedelScaledCart::localToCoord(const double* pos, const double* ldir, double* dir,
-        enum_nat_tetrad_type) {
-//TODO
+void MetricGoedelScaledCart::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
+    // TODO
 
     double X = pos[1];
     double Y = pos[2];
     double R = sqrt(X * X + Y * Y);
     double R2 = R * R;
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
     double c2 = c * c;
 
     double A = R2 * (-sqrt(2.0) * c + (1.0 - R2) * mZeta);
@@ -225,52 +222,54 @@ void MetricGoedelScaledCart::localToCoord(const double* pos, const double* ldir,
     double Gamma = 1.0 / sqrt(c2 + 2.0 * sqrt(2.0) * R2 * c * mZeta - R2 * (1.0 - R2) * mZeta * mZeta);
     double Delta = 1.0 / (R * c * sqrt(1.0 + R2));
 
-
     if (R > m4dGoedelScaledCartEps) {
-        //local to coord to cylindrical coordinates + transformation to cartesian coordinate (direction)
+        // local to coord to cylindrical coordinates + transformation to cartesian coordinate (direction)
 
-        dir[0] = Gamma / mRG * ldir[0]       + Delta * Gamma * A / mRG * ldir[2];
-        dir[1] = 1.0 / mRG * ldir[1] * sqrt(1.0 + R * R) * X / R + (Gamma * mZeta / mRG * ldir[0] + Delta * Gamma * B / mRG * ldir[2]) * (-Y);
-        dir[2] = 1.0 / mRG * ldir[1] * sqrt(1.0 + R * R) * Y / R + (Gamma * mZeta / mRG * ldir[0] + Delta * Gamma * B / mRG * ldir[2]) * X;
+        dir[0] = Gamma / mRG * ldir[0] + Delta * Gamma * A / mRG * ldir[2];
+        dir[1] = 1.0 / mRG * ldir[1] * sqrt(1.0 + R * R) * X / R
+            + (Gamma * mZeta / mRG * ldir[0] + Delta * Gamma * B / mRG * ldir[2]) * (-Y);
+        dir[2] = 1.0 / mRG * ldir[1] * sqrt(1.0 + R * R) * Y / R
+            + (Gamma * mZeta / mRG * ldir[0] + Delta * Gamma * B / mRG * ldir[2]) * X;
         dir[3] = 1.0 / mRG * ldir[3];
-
-    } else {
-        //metric converges to minkowski metric
+    }
+    else {
+        // metric converges to minkowski metric
         dir[0] = ldir[0];
         dir[1] = ldir[1];
         dir[2] = ldir[2];
         dir[3] = ldir[3];
     }
-
 }
 // ---------------------------------------------------
 //    public::coordToLocal
 // ---------------------------------------------------
-void MetricGoedelScaledCart::coordToLocal(const double* , const double* , double* ,
-        enum_nat_tetrad_type) {
+void MetricGoedelScaledCart::coordToLocal(const double*, const double*, double*, enum_nat_tetrad_type)
+{
     printf("MetricGoedelScaledCart::coordToLocal missing\n");
 }
 
 // ---------------------------------------------------
 //    public::breakCondition
 // ---------------------------------------------------
-bool MetricGoedelScaledCart::breakCondition(const double*) {
+bool MetricGoedelScaledCart::breakCondition(const double*)
+{
     return false;
 }
 
 // ---------------------------------------------------
 //    public::setParam
 // ---------------------------------------------------
-bool MetricGoedelScaledCart::setParam(const char* pName, double val) {
+bool MetricGoedelScaledCart::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
-    if (strcmp(pName,"rG") == 0) {
+    if (strcmp(pName, "rG") == 0) {
         mRG = val;
     }
-    else if (strcmp(pName,"zeta") == 0) {
+    else if (strcmp(pName, "zeta") == 0) {
         mZeta = val;
     }
 
-    //printf("a=%f, zeta=%f\n",mA,mZeta);
+    // printf("a=%f, zeta=%f\n",mA,mZeta);
 
     return true;
 }
@@ -281,14 +280,16 @@ bool MetricGoedelScaledCart::setParam(const char* pName, double val) {
  *  \param  cp : reference to transformed point.
  *  \return true : success.
  */
-bool MetricGoedelScaledCart::transToTwoPlusOne(vec4 p, vec4 &cp) {
+bool MetricGoedelScaledCart::transToTwoPlusOne(vec4 p, vec4& cp)
+{
     cp = vec4(p[0], p[1], p[2], p[0]);
     return true;
 }
 
 /*! Generate report.
  */
-bool MetricGoedelScaledCart::report(const vec4 pos, const vec4 cdir, std::string &text) {
+bool MetricGoedelScaledCart::report(const vec4 pos, const vec4 cdir, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Goedel metric\n\tcoordinate : (T,X,Y,Z)\n";
     ss << "\tScaled coordinates, geodesical shape independent of rG\n";
@@ -301,23 +302,25 @@ bool MetricGoedelScaledCart::report(const vec4 pos, const vec4 cdir, std::string
     ss.setf(std::ios::fixed);
     vec4 locStartDir;
     coordToLocal(pos.data(), cdir.data(), locStartDir.data());
-    double k0  = -locStartDir[0] / mRG;
-    double k2  = (pos[1] * sqrt(1.0 + pos[1] * pos[1]) * locStartDir[2] - sqrt(2.0) * pos[1] * pos[1] * locStartDir[0]) / mRG;
-    double k3  = locStartDir[3] / mRG;
+    double k0 = -locStartDir[0] / mRG;
+    double k2
+        = (pos[1] * sqrt(1.0 + pos[1] * pos[1]) * locStartDir[2] - sqrt(2.0) * pos[1] * pos[1] * locStartDir[0]) / mRG;
+    double k3 = locStartDir[3] / mRG;
     ss << "  Goedel radius ............ rG  = " << mRG << std::endl;
     ss << "  constant of motion ....... k_0 = " << k0 << std::endl;
     ss << "  constant of motion ....... k_2 = " << k2 << std::endl;
     ss << "  constant of motion ....... k_3 = " << k3;
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 // ---------------------------------------------------
 //    protected::setViewerVal
 // ---------------------------------------------------
-void MetricGoedelScaledCart::setStandardValues() {
+void MetricGoedelScaledCart::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 0.0;
     mInitPos[2] = 0.0;

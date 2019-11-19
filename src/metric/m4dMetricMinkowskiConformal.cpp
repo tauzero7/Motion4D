@@ -29,7 +29,8 @@ namespace m4d {
 
 /*! Standard constructor for the Minkowski metric.
  */
-MetricMinkowskiConformal::MetricMinkowskiConformal() {
+MetricMinkowskiConformal::MetricMinkowskiConformal()
+{
     mMetricName = "MinkowskiConformal";
     setCoordType(enum_coordinate_spherical);
 
@@ -42,16 +43,16 @@ MetricMinkowskiConformal::MetricMinkowskiConformal() {
     mDrawTypes.push_back(enum_draw_twoplusone);
 }
 
-MetricMinkowskiConformal::~MetricMinkowskiConformal() {
-}
+MetricMinkowskiConformal::~MetricMinkowskiConformal() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricMinkowskiConformal::calculateMetric(const double* pos) {
-    double xi    = pos[1];
+bool MetricMinkowskiConformal::calculateMetric(const double* pos)
+{
+    double xi = pos[1];
     double theta = pos[2];
 
     double sxi = sin(xi);
@@ -81,8 +82,9 @@ bool MetricMinkowskiConformal::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricMinkowskiConformal::calculateChristoffels(const double* pos) {
-    double xi    = pos[1];
+bool MetricMinkowskiConformal::calculateChristoffels(const double* pos)
+{
+    double xi = pos[1];
     double theta = pos[2];
 
     double t1 = sin(xi);
@@ -161,13 +163,13 @@ bool MetricMinkowskiConformal::calculateChristoffels(const double* pos) {
     return true;
 }
 
-
 /*! Calculate Jacobi matrix.
  *
  *  \param pos : pointer to position.
  */
-bool MetricMinkowskiConformal::calculateChrisD(const double* pos) {
-    double xi    = pos[1];
+bool MetricMinkowskiConformal::calculateChrisD(const double* pos)
+{
+    double xi = pos[1];
     double theta = pos[2];
 
     double t1 = cos(xi);
@@ -448,9 +450,9 @@ bool MetricMinkowskiConformal::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricMinkowskiConformal::localToCoord(const double* pos, const double* ldir, double* dir,
-        enum_nat_tetrad_type) {
-    double xi    = pos[1];
+void MetricMinkowskiConformal::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
+    double xi = pos[1];
     double theta = pos[2];
 
     dir[0] = ldir[0];
@@ -466,9 +468,9 @@ void MetricMinkowskiConformal::localToCoord(const double* pos, const double* ldi
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricMinkowskiConformal::coordToLocal(const double* pos, const double* cdir, double* ldir,
-        enum_nat_tetrad_type) {
-    double xi    = pos[1];
+void MetricMinkowskiConformal::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
+    double xi = pos[1];
     double theta = pos[2];
 
     ldir[0] = cdir[0];
@@ -482,11 +484,12 @@ void MetricMinkowskiConformal::coordToLocal(const double* pos, const double* cdi
  *  \param pos    : pointer to position array.
  *  \return false : position is always valid.
  */
-bool MetricMinkowskiConformal::breakCondition(const double* pos) {
+bool MetricMinkowskiConformal::breakCondition(const double* pos)
+{
     bool b = false;
 
     double psi = pos[0];
-    double xi  = pos[1];
+    double xi = pos[1];
 
     if (xi < 1e-8 || xi >= M_PI) {
         b = true;
@@ -496,7 +499,6 @@ bool MetricMinkowskiConformal::breakCondition(const double* pos) {
     }
     return b;
 }
-
 
 /*! Tests whether the constraint equation is fulfilled.
  *
@@ -508,9 +510,10 @@ bool MetricMinkowskiConformal::breakCondition(const double* pos) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricMinkowskiConformal::testConstraint(const double y[], const double kappa) {
+double MetricMinkowskiConformal::testConstraint(const double y[], const double kappa)
+{
     // Scale the directions with the speed of light before doubling them !!
-    double xi    = y[1];
+    double xi = y[1];
     double theta = y[2];
 
     double sum = -kappa;
@@ -524,7 +527,8 @@ double MetricMinkowskiConformal::testConstraint(const double y[], const double k
  *  \param  cp : reference to transformed point.
  *  \return true : success.
  */
-bool MetricMinkowskiConformal::transToTwoPlusOne(vec4 p, vec4 &cp) {
+bool MetricMinkowskiConformal::transToTwoPlusOne(vec4 p, vec4& cp)
+{
     vec4 tp;
     TransCoordinates::toCartesianCoord(mCoordType, p, tp);
     cp = vec4(tp[0], tp[1], tp[2], tp[0]);
@@ -533,20 +537,22 @@ bool MetricMinkowskiConformal::transToTwoPlusOne(vec4 p, vec4 &cp) {
 
 /*! Generate report.
  */
-bool MetricMinkowskiConformal::report(const vec4 , const vec4 , std::string &text) {
+bool MetricMinkowskiConformal::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for conformal Minkowski metric\n\tcoordinate : (psi,xi,theta,phi)\n";
     ss << "------------------------------------------------------------------------\n";
     ss << "  physical units ................................. no\n";
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricMinkowskiConformal::setStandardValues() {
+void MetricMinkowskiConformal::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 1.0;
     mInitPos[2] = M_PI_2;

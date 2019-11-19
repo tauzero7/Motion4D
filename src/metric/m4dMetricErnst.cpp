@@ -29,19 +29,19 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the Ernst-Schwarzschild metric.
  *
  * \param  mass : mass of the black hole.
  * \param  B : magnetic field
  */
-MetricErnst::MetricErnst(double mass, double B) {
-    mMetricName  = "Ernst";
+MetricErnst::MetricErnst(double mass, double B)
+{
+    mMetricName = "Ernst";
     setCoordType(enum_coordinate_spherical);
 
     mPhysicalUnits = enum_physical_constants_geom;
-    mSpeedOfLight   = 1.0;
-    mGravConstant   = 1.0;
+    mSpeedOfLight = 1.0;
+    mGravConstant = 1.0;
     mDielectricPerm = 1.0;
 
     addParam("mass", mass);
@@ -58,9 +58,7 @@ MetricErnst::MetricErnst(double mass, double B) {
 
 /*!
  */
-MetricErnst::~MetricErnst() {
-}
-
+MetricErnst::~MetricErnst() {}
 
 // *********************************** public methods ******************************
 
@@ -68,13 +66,14 @@ MetricErnst::~MetricErnst() {
  *
  *  \param pos : pointer to position.
  */
-bool MetricErnst::calculateMetric(const double* pos) {
-    double r     = pos[1];
+bool MetricErnst::calculateMetric(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
     double rs = 2.0 * mMass;
-    double B  = mB;
+    double B = mB;
 
     double t1 = c * c;
     double t3 = 1 / r;
@@ -92,7 +91,8 @@ bool MetricErnst::calculateMetric(const double* pos) {
     double t30 = 1 / (1.0 - rs * t3);
     double t47 = pow(1.0 + t7 * t9, 2.0);
 
-    g_compts[0][0] = -t1 + t1 * rs * t3 - 2.0 * t7 * t10 + 2.0 * t5 * r * t10 * rs - t19 * t21 + t17 * t6 * r * t21 * rs;
+    g_compts[0][0]
+        = -t1 + t1 * rs * t3 - 2.0 * t7 * t10 + 2.0 * t5 * r * t10 * rs - t19 * t21 + t17 * t6 * r * t21 * rs;
     g_compts[0][1] = 0.0;
     g_compts[0][2] = 0.0;
     g_compts[0][3] = 0.0;
@@ -116,13 +116,14 @@ bool MetricErnst::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricErnst::calculateChristoffels(const double* pos) {
-    double r     = pos[1];
+bool MetricErnst::calculateChristoffels(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
     double rs = 2.0 * mMass;
-    double B  = mB;
+    double B = mB;
 
     double t1 = B * B;
     double t2 = r * r;
@@ -230,13 +231,14 @@ bool MetricErnst::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricErnst::calculateChrisD(const double* pos) {
-    double r     = pos[1];
+bool MetricErnst::calculateChrisD(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
     double rs = 2.0 * mMass;
-    double B  = mB;
+    double B = mB;
 
     double t1 = c * c;
     double t2 = B * B;
@@ -557,7 +559,6 @@ bool MetricErnst::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -565,9 +566,9 @@ bool MetricErnst::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricErnst::localToCoord(const double* pos, const double* ldir, double* dir,
-                               enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricErnst::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double w = sqrt(1.0 - 2.0 * mMass / r);
@@ -586,9 +587,9 @@ void MetricErnst::localToCoord(const double* pos, const double* ldir, double* di
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricErnst::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                               enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricErnst::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double w = sqrt(1.0 - 2.0 * mMass / r);
@@ -600,22 +601,21 @@ void MetricErnst::coordToLocal(const double* pos, const double* cdir, double* ld
     ldir[3] = cdir[3] * r * sin(theta) / L;
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricErnst::breakCondition(const double* pos) {
+bool MetricErnst::breakCondition(const double* pos)
+{
     bool br = false;
-    if ((pos[1] < 0.0) || (pos[1]*pos[1] <= (1.0 + eps) * 4.0 * mMass * mMass)) {
+    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + eps) * 4.0 * mMass * mMass)) {
         br = true;
     }
 
     return br;
 }
-
 
 /*! Tests whether the constraint equation is fulfilled.
  *
@@ -627,21 +627,23 @@ bool MetricErnst::breakCondition(const double* pos) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricErnst::testConstraint(const double y[], const double kappa) {
-    double r     = y[1];
+double MetricErnst::testConstraint(const double y[], const double kappa)
+{
+    double r = y[1];
     double theta = y[2];
 
     double w2 = 1.0 - 2.0 * mMass / r;
-    double L  = 1.0 + mB * mB * r * r * sin(theta) * sin(theta);
+    double L = 1.0 + mB * mB * r * r * sin(theta) * sin(theta);
 
     // Scale the directions with the speed of light before doubling them !!
-    double dt     = y[4];
-    double dr     = y[5];
+    double dt = y[4];
+    double dr = y[5];
     double dtheta = y[6];
-    double dphi   = y[7];
+    double dphi = y[7];
 
     double sum = -kappa * mSign;
-    sum += L * L * (-w2 * dt * dt + dr * dr / w2 + r * r * dtheta * dtheta) + r * r * sin(theta) * sin(theta) / (L * L) * dphi * dphi;
+    sum += L * L * (-w2 * dt * dt + dr * dr / w2 + r * r * dtheta * dtheta)
+        + r * r * sin(theta) * sin(theta) / (L * L) * dphi * dphi;
     return sum;
 }
 
@@ -650,13 +652,14 @@ double MetricErnst::testConstraint(const double y[], const double kappa) {
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  *  'charge' represents the charge of the black hole.
  */
-bool MetricErnst::setParam(const char* pName, double val) {
+bool MetricErnst::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"mass") == 0) {
+    if (strcmp(pName, "mass") == 0) {
         mMass = val;
     }
-    else if (strcmp(pName,"b") == 0) {
+    else if (strcmp(pName, "b") == 0) {
         mB = val;
     }
 
@@ -671,7 +674,9 @@ bool MetricErnst::setParam(const char* pName, double val) {
  *  \param val : reference to effective potential value.
  *  \return true : effective potential exists at x.
  */
-bool MetricErnst::effPotentialValue(const vec4 pos, const vec4 cdir , enum_geodesic_type type, const double x, double &val) {
+bool MetricErnst::effPotentialValue(
+    const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double& val)
+{
     double kappa = 0.0;
     if (type == enum_geodesic_timelike) {
         kappa = mSign;
@@ -682,14 +687,14 @@ bool MetricErnst::effPotentialValue(const vec4 pos, const vec4 cdir , enum_geode
     }
 
     double Lc = 1.0 + mB * mB * pos[1] * pos[1] * sin(pos[2]) * sin(pos[2]);
-    double h  = pow(pos[1] * sin(pos[2]) / Lc, 2.0) * cdir[3];
-    double k  = (1.0 - 2.0 * mMass / pos[1]) * Lc * Lc * cdir[0];
+    double h = pow(pos[1] * sin(pos[2]) / Lc, 2.0) * cdir[3];
+    double k = (1.0 - 2.0 * mMass / pos[1]) * Lc * Lc * cdir[0];
 
     double Lambda = 1.0 + mB * mB * x * x;
-    val = h * h * (1.0 - 2.0 * mMass / x) / (x * x) - k * k * pow(Lambda, -4.0) + kappa * (1.0 - 2.0 * mMass / x) * pow(Lambda, -2.0);
+    val = h * h * (1.0 - 2.0 * mMass / x) / (x * x) - k * k * pow(Lambda, -4.0)
+        + kappa * (1.0 - 2.0 * mMass / x) * pow(Lambda, -2.0);
     return true;
 }
-
 
 /*! Total energy.
  *  \param pos : initial position.
@@ -698,30 +703,32 @@ bool MetricErnst::effPotentialValue(const vec4 pos, const vec4 cdir , enum_geode
  *  \param val : reference to total energy value.
  *  \return true : effective potential exists at x.
  */
-bool MetricErnst::totEnergy(const vec4 , const vec4 , const double , double &val) {
+bool MetricErnst::totEnergy(const vec4, const vec4, const double, double& val)
+{
     val = 0.0;
     return true;
 }
 
-void MetricErnst::calcFmu_nu(const double* pos) {
+void MetricErnst::calcFmu_nu(const double* pos)
+{
     double r = pos[1];
     double theta = pos[2];
-    double rs = 2.0*mMass;
+    double rs = 2.0 * mMass;
 
-    double t2 = mB*mB;
-    double t3 = r*r;
+    double t2 = mB * mB;
+    double t3 = r * r;
     double t5 = sin(theta);
-    double t6 = t5*t5;
-    double t9 = t2*t2;
-    double t10 = t3*t3;
-    double t12 = t6*t6;
-    double t14 = 1.0+2.0*t2*t3*t6+t9*t10*t12;
-    double t15 = 1/t14;
-    double t18 = 4.0+t2;
-    double t23 = pow(4.0+t2+4.0*t3*t6,2.0);
-    double t24 = 1/t23;
+    double t6 = t5 * t5;
+    double t9 = t2 * t2;
+    double t10 = t3 * t3;
+    double t12 = t6 * t6;
+    double t14 = 1.0 + 2.0 * t2 * t3 * t6 + t9 * t10 * t12;
+    double t15 = 1 / t14;
+    double t18 = 4.0 + t2;
+    double t23 = pow(4.0 + t2 + 4.0 * t3 * t6, 2.0);
+    double t24 = 1 / t23;
     double t30 = cos(theta);
-    double t32 = t30*t18*t24;
+    double t32 = t30 * t18 * t24;
 
     fmu_nu[0][0] = 0.0;
     fmu_nu[0][1] = 0.0;
@@ -730,20 +737,21 @@ void MetricErnst::calcFmu_nu(const double* pos) {
     fmu_nu[1][0] = 0.0;
     fmu_nu[1][1] = 0.0;
     fmu_nu[1][2] = 0.0;
-    fmu_nu[1][3] = -4.0*(r-rs)*t15*mB*t6*t18*t24;
+    fmu_nu[1][3] = -4.0 * (r - rs) * t15 * mB * t6 * t18 * t24;
     fmu_nu[2][0] = 0.0;
     fmu_nu[2][1] = 0.0;
     fmu_nu[2][2] = 0.0;
-    fmu_nu[2][3] = -4.0*t15*mB*t5*t32;
+    fmu_nu[2][3] = -4.0 * t15 * mB * t5 * t32;
     fmu_nu[3][0] = 0.0;
-    fmu_nu[3][1] = 4.0*t14/r*mB*t18*t24;
-    fmu_nu[3][2] = 4.0*t14/t5*mB*t32;
+    fmu_nu[3][1] = 4.0 * t14 / r * mB * t18 * t24;
+    fmu_nu[3][2] = 4.0 * t14 / t5 * mB * t32;
     fmu_nu[3][3] = 0.0;
 }
 
 /*! Generate report.
  */
-bool MetricErnst::report(const vec4 pos, const vec4 cdir, std::string &text) {
+bool MetricErnst::report(const vec4 pos, const vec4 cdir, char*& text)
+{
     std::stringstream ss;
     ss << "Report for the  Ernst metric\n\tcoordinate : (t,r,theta,phi)\n";
     ss << "---------------------------------------------------------------\n";
@@ -751,19 +759,20 @@ bool MetricErnst::report(const vec4 pos, const vec4 cdir, std::string &text) {
     ss.setf(std::ios::fixed);
 
     double Lc = 1.0 + mB * mB * pos[1] * pos[1] * sin(pos[2]) * sin(pos[2]);
-    double h  = pow(pos[1] * sin(pos[2]) / Lc, 2.0) * cdir[3];
-    double k  = (1.0 - 2.0 * mMass / pos[1]) * Lc * Lc * cdir[0];
+    double h = pow(pos[1] * sin(pos[2]) / Lc, 2.0) * cdir[3];
+    double k = (1.0 - 2.0 * mMass / pos[1]) * Lc * Lc * cdir[0];
     ss << "  constant of motion ........... h = " << h << std::endl;
     ss << "  constant of motion ........... k = " << k << std::endl;
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricErnst::setStandardValues() {
+void MetricErnst::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 6.0;
     mInitPos[2] = M_PI_2;

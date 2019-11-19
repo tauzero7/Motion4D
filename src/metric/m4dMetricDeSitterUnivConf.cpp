@@ -29,14 +29,14 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the Kottler metric.
  *
  * \param  h : Hubble parameter.
  * \param  p : artificial parameter to switch the conformal factor.
  */
-MetricDeSitterUnivConf::MetricDeSitterUnivConf(double h, double p) {
-    mMetricName  = "DeSitterUnivConformal";
+MetricDeSitterUnivConf::MetricDeSitterUnivConf(double h, double p)
+{
+    mMetricName = "DeSitterUnivConformal";
     setCoordType(enum_coordinate_cartesian);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -56,16 +56,15 @@ MetricDeSitterUnivConf::MetricDeSitterUnivConf(double h, double p) {
     setStandardValues();
 }
 
-MetricDeSitterUnivConf::~MetricDeSitterUnivConf() {
-}
-
+MetricDeSitterUnivConf::~MetricDeSitterUnivConf() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricDeSitterUnivConf::calculateMetric(const double* pos) {
+bool MetricDeSitterUnivConf::calculateMetric(const double* pos)
+{
     double T = pos[0];
 
     double H = mHubble;
@@ -104,7 +103,8 @@ bool MetricDeSitterUnivConf::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricDeSitterUnivConf::calculateChristoffels(const double* pos) {
+bool MetricDeSitterUnivConf::calculateChristoffels(const double* pos)
+{
     double T = pos[0];
     double t1 = 1 / T;
 
@@ -184,7 +184,8 @@ bool MetricDeSitterUnivConf::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricDeSitterUnivConf::calculateChrisD(const double* pos) {
+bool MetricDeSitterUnivConf::calculateChrisD(const double* pos)
+{
     double T = pos[0];
 
     double t1 = T * T;
@@ -450,10 +451,8 @@ bool MetricDeSitterUnivConf::calculateChrisD(const double* pos) {
     chrisD[3][3][3][2] = 0.0;
     chrisD[3][3][3][3] = 0.0;
 
-
     return true;
 }
-
 
 /*! Transform local 4-direction to coordinate 4-direction.
  *
@@ -462,8 +461,8 @@ bool MetricDeSitterUnivConf::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricDeSitterUnivConf::localToCoord(const double* pos, const double* ldir, double* dir,
-        enum_nat_tetrad_type) {
+void MetricDeSitterUnivConf::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     double T = pos[0];
     double f = -mHubble * T / mSpeedOfLight;
 
@@ -484,8 +483,8 @@ void MetricDeSitterUnivConf::localToCoord(const double* pos, const double* ldir,
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricDeSitterUnivConf::coordToLocal(const double* pos, const double* cdir, double* ldir,
-        enum_nat_tetrad_type) {
+void MetricDeSitterUnivConf::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     double T = pos[0];
     double edf = -mSpeedOfLight / (mHubble * T);
 
@@ -499,18 +498,17 @@ void MetricDeSitterUnivConf::coordToLocal(const double* pos, const double* cdir,
     ldir[3] = cdir[3] * edf;
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricDeSitterUnivConf::breakCondition(const double* pos) {
+bool MetricDeSitterUnivConf::breakCondition(const double* pos)
+{
     bool br = false;
 
     double T = pos[0];
-
 
     if ((T + 1e-12) >= 0.0 && !(mP < 0.0)) {
         br = true;
@@ -528,10 +526,11 @@ bool MetricDeSitterUnivConf::breakCondition(const double* pos) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricDeSitterUnivConf::testConstraint(const double y[], const double kappa) {
+double MetricDeSitterUnivConf::testConstraint(const double y[], const double kappa)
+{
     double T = y[0];
     double edf = mSpeedOfLight / (mHubble * T);
-    double cm  = 1.0 / mSpeedOfLight;
+    double cm = 1.0 / mSpeedOfLight;
 
     if (mP < 0.0) {
         edf = 1.0;
@@ -548,14 +547,14 @@ double MetricDeSitterUnivConf::testConstraint(const double y[], const double kap
     return sum;
 }
 
-
 /*! Transform point p to 2+1 coordinates.
  *
  *  \param  p  : point in proper metric coordinates.
  *  \param  cp : reference to transformed point.
  *  \return true : success.
  */
-bool MetricDeSitterUnivConf::transToTwoPlusOne(vec4 p, vec4 &cp) {
+bool MetricDeSitterUnivConf::transToTwoPlusOne(vec4 p, vec4& cp)
+{
     cp = vec4(p[0], p[1], p[2], p[0]);
     return true;
 }
@@ -564,36 +563,37 @@ bool MetricDeSitterUnivConf::transToTwoPlusOne(vec4 p, vec4 &cp) {
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricDeSitterUnivConf::setParam(const char* pName, double val) {
+bool MetricDeSitterUnivConf::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"hubble") == 0) {
+    if (strcmp(pName, "hubble") == 0) {
         mHubble = val;
     }
-    else if (strcmp(pName,"p") == 0) {
+    else if (strcmp(pName, "p") == 0) {
         mP = val;
     }
     return true;
 }
 
-
 /*! Generate report.
  */
-bool MetricDeSitterUnivConf::report(const vec4 , const vec4 , std::string &text) {
+bool MetricDeSitterUnivConf::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for conformal deSitter universe metric\n\tcoordinate : (T,x,y,z)\n";
     ss << "---------------------------------------------------------\n";
     ss << "  physical units ................................. no\n";
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
-
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricDeSitterUnivConf::setStandardValues() {
+void MetricDeSitterUnivConf::setStandardValues()
+{
     mInitPos[0] = -1.0;
     mInitPos[1] = 0.0;
     mInitPos[2] = 0.0;

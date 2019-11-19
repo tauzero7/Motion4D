@@ -5,7 +5,6 @@
  *  This file is part of libMotion4D.
  */
 #include "m4dMetricSchwarzschild.h"
-#include "extra/m4dUtilities.h"
 #include <cmath>
 
 #define sign(x) ((x >= 0) ? 1.0 : -1.0)
@@ -1864,8 +1863,7 @@ bool MetricSchwarzschild::minDist_r(const double r, const double ksi, double& rM
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricSchwarzschild::setStandardValues()
 {
     mInitPos[0] = 0.0;

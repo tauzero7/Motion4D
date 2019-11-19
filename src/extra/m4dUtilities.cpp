@@ -12,8 +12,6 @@
 
 namespace m4d {
 
-/*!  Get system clock in micro-seconds.
- */
 int64_t get_system_clock()
 {
     struct timeval tv;
@@ -21,14 +19,8 @@ int64_t get_system_clock()
     return static_cast<int64_t>(tv.tv_sec) * 1000000 + tv.tv_usec;
 }
 
-/*!  Tokenize file
- *  \param filename : name of file.
- *  \param tokens   : reference to vector of vector of string.
- *  \param useStandardIgnoreTokens : use standard ignore tokens ("#").
- *  \return  true : success.
- */
 bool tokenizeFile(
-    const std::string filename, std::vector<std::vector<std::string>>& tokens, bool useStandardIgnoreTokens)
+    const std::string& filename, std::vector<std::vector<std::string>>& tokens, bool useStandardIgnoreTokens)
 {
     std::ifstream in(filename.c_str());
 
@@ -78,7 +70,7 @@ bool tokenizeFile(
  *  \return  true : success.
  */
 bool tokenizeFile(
-    const std::string filename, const std::vector<std::string> ignores, std::vector<std::vector<std::string>>& tokens)
+    const std::string& filename, const std::vector<std::string>& ignores, std::vector<std::vector<std::string>>& tokens)
 {
     std::ifstream in(filename.c_str());
 
@@ -132,9 +124,6 @@ bool getIntFromTokens(const std::vector<std::string>& tokenRow, std::string name
     return false;
 }
 
-// ---------------------------------------------------
-/*!  get integer array from tokens
- */
 bool getIntFromTokensV(const std::vector<std::string>& tokenRow, std::string name, int num, int* val)
 {
     std::string baseString = tokenRow[0];
@@ -147,9 +136,6 @@ bool getIntFromTokensV(const std::vector<std::string>& tokenRow, std::string nam
     return false;
 }
 
-// ---------------------------------------------------
-/*!  get double from tokens
- */
 bool getDoubleFromTokens(const std::vector<std::string>& tokenRow, std::string name, double& val)
 {
     std::string baseString = tokenRow[0];
@@ -160,9 +146,6 @@ bool getDoubleFromTokens(const std::vector<std::string>& tokenRow, std::string n
     return false;
 }
 
-// ---------------------------------------------------
-/*!  get double array from tokens
- */
 bool getDoubleFromTokensV(const std::vector<std::string>& tokenRow, std::string name, int num, double* val)
 {
     std::string baseString = tokenRow[0];
@@ -175,9 +158,6 @@ bool getDoubleFromTokensV(const std::vector<std::string>& tokenRow, std::string 
     return false;
 }
 
-// ---------------------------------------------------
-/*!  get string from tokens
- */
 bool getStringFromTokens(const std::vector<std::string>& tokenRow, std::string name, std::string& val)
 {
     std::string baseString = tokenRow[0];
@@ -188,15 +168,6 @@ bool getStringFromTokens(const std::vector<std::string>& tokenRow, std::string n
     return false;
 }
 
-/*! Write a binary float array.
- *   \param   filename  :  name of the file.
- *   \param      array  :  pointer to float array.
- *   \param          x  :  width of array.
- *   \param          y  :  height of array.
- *   \param          c  :  number of channels.
- *   \return      true  :  success.
- *   \return     false  :  error occured.
- */
 bool writeFloatArray(std::string filename, const float* array, int x, int y, int c)
 {
     std::ofstream out(filename.c_str(), std::ios::binary);

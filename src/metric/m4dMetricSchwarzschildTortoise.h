@@ -92,7 +92,7 @@ public:
     virtual bool   testEmbeddingParams();
 //    virtual int    getEmbeddingVertices(std::vector<vec3> &verts,
 //                                        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter);
-    virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
+    virtual bool   report(const vec4 pos, const vec4 cdir, char*&text);
 
 
 // --------- protected methods -----------

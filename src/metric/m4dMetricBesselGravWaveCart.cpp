@@ -29,13 +29,13 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the BesselGravWave metric.
  *
  */
-MetricBesselGravWaveCart::MetricBesselGravWaveCart(double C) {
-    mMetricName  = "BesselGravWaveCart";
-    setCoordType(enum_coordinate_cartesian);    // cartesian:  [t, x, y, z]
+MetricBesselGravWaveCart::MetricBesselGravWaveCart(double C)
+{
+    mMetricName = "BesselGravWaveCart";
+    setCoordType(enum_coordinate_cartesian); // cartesian:  [t, x, y, z]
 
     mPhysicalUnits = enum_physical_constants_geom;
     mSpeedOfLight = 1.0;
@@ -43,7 +43,7 @@ MetricBesselGravWaveCart::MetricBesselGravWaveCart(double C) {
     addParam("c", C);
     mC = C;
 
-    //mLocTeds.push_back(enum_nat_tetrad_static);
+    // mLocTeds.push_back(enum_nat_tetrad_static);
 
     mDrawTypes.push_back(enum_draw_twoplusone);
 
@@ -52,10 +52,7 @@ MetricBesselGravWaveCart::MetricBesselGravWaveCart(double C) {
 
 /*!
  */
-MetricBesselGravWaveCart::~MetricBesselGravWaveCart() {
-
-}
-
+MetricBesselGravWaveCart::~MetricBesselGravWaveCart() {}
 
 // *********************************** public methods ******************************
 
@@ -63,7 +60,8 @@ MetricBesselGravWaveCart::~MetricBesselGravWaveCart() {
  *
  *  \param pos : pointer to position.
  */
-bool MetricBesselGravWaveCart::calculateMetric(const double* pos) {
+bool MetricBesselGravWaveCart::calculateMetric(const double* pos)
+{
     double t = pos[0];
     double x = pos[1];
     double y = pos[2];
@@ -93,16 +91,17 @@ bool MetricBesselGravWaveCart::calculateMetric(const double* pos) {
         g_compts[3][1] = 0.0e0;
         g_compts[3][2] = 0.0e0;
         g_compts[3][3] = t8;
-    } else {
+    }
+    else {
         double t1 = mC * mC;
         double t2 = x * x;
         double t3 = y * y;
         double t4 = t2 + t3;
         double t5 = sqrt(t4);
-        //double t7 = BesselJ(0, t5);
+        // double t7 = BesselJ(0, t5);
         double t7 = gsl_sf_bessel_J0(t5);
         double t8 = t7 * t7;
-        //double t9 = BesselJ(1, t5);
+        // double t9 = BesselJ(1, t5);
         double t9 = gsl_sf_bessel_J1(t5);
         double t10 = t9 * t9;
         double t14 = cos(t);
@@ -142,7 +141,8 @@ bool MetricBesselGravWaveCart::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricBesselGravWaveCart::calculateChristoffels(const double* pos) {
+bool MetricBesselGravWaveCart::calculateChristoffels(const double* pos)
+{
     double t = pos[0];
     double x = pos[1];
     double y = pos[2];
@@ -219,17 +219,18 @@ bool MetricBesselGravWaveCart::calculateChristoffels(const double* pos) {
         christoffel[3][3][1] = 0.0e0;
         christoffel[3][3][2] = 0.0e0;
         christoffel[3][3][3] = 0.0e0;
-    } else {
+    }
+    else {
         double t1 = x * x;
         double t2 = y * y;
         double t3 = t1 + t2;
         double t4 = sqrt(t3);
-        //double t5 = BesselJ(0, t4);
+        // double t5 = BesselJ(0, t4);
         double t5 = gsl_sf_bessel_J0(t4);
         double t6 = mC * t5;
         double t7 = sin(t);
         double t8 = mC * t4;
-        //double t9 = BesselJ(1, t4);
+        // double t9 = BesselJ(1, t4);
         double t9 = gsl_sf_bessel_J1(t4);
         double t10 = cos(t);
         double t11 = t9 * t10;
@@ -314,7 +315,8 @@ bool MetricBesselGravWaveCart::calculateChristoffels(const double* pos) {
         double t164 = t47 * t27 * y * t10;
         double t165 = mC * t18;
         double t168 = mC * t20;
-        double t179 = exp(-mC * (t165 * t1 + t165 * t2 + t168 * t1 + t168 * t2 - 0.2e1 * t8 * t5 * t9 * t21 - 0.4e1 * t5 * t10));
+        double t179 = exp(
+            -mC * (t165 * t1 + t165 * t2 + t168 * t1 + t168 * t2 - 0.2e1 * t8 * t5 * t9 * t21 - 0.4e1 * t5 * t10));
         double t180 = t179 * mC;
 
         christoffel[0][0][0] = t6 * t7 * (0.2e1 * t8 * t11 + 0.1e1);
@@ -390,7 +392,8 @@ bool MetricBesselGravWaveCart::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
+bool MetricBesselGravWaveCart::calculateChrisD(const double* pos)
+{
     double t = pos[0];
     double x = pos[1];
     double y = pos[2];
@@ -667,16 +670,17 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         chrisD[3][3][3][1] = 0.0e0;
         chrisD[3][3][3][2] = 0.0e0;
         chrisD[3][3][3][3] = 0.0e0;
-    } else {
+    }
+    else {
         double t1 = x * x;
         double t2 = y * y;
         double t3 = t1 + t2;
         double t4 = sqrt(t3);
-        //double t5 = BesselJ(0, t4);
+        // double t5 = BesselJ(0, t4);
         double t5 = gsl_sf_bessel_J0(t4);
         double t6 = mC * t5;
         double t7 = mC * t4;
-        //double t8 = BesselJ(1, t4);
+        // double t8 = BesselJ(1, t4);
         double t8 = gsl_sf_bessel_J1(t4);
         double t9 = cos(t);
         double t10 = t9 * t9;
@@ -727,17 +731,22 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         double t72 = 0.4e1 * t69 * t70;
         double t73 = t1 * t9;
         double t74 = t4 * t5;
-        double t76 = -t37 - t39 + t43 - t46 + t49 + t51 + t53 - t55 + 0.2e1 * t57 * t58 + t64 - 0.4e1 * t57 * t66 - t72 - t73 * t74;
+        double t76 = -t37 - t39 + t43 - t46 + t49 + t51 + t53 - t55 + 0.2e1 * t57 * t58 + t64 - 0.4e1 * t57 * t66 - t72
+            - t73 * t74;
         double t79 = 0.1e1 / t4 / t3;
         double t80 = t76 * mC * t79;
         double t92 = t9 * t5;
         double t93 = t92 * t4;
-        double t98 = t18 * y * (-0.2e1 * t6 * t52 - 0.2e1 * t6 * t61 - 0.2e1 * t7 * t44 + 0.4e1 * t6 * t11 * t1 + 0.4e1 * t6 * t70 + t93 - 0.2e1 * t54) * t79;
+        double t98 = t18 * y
+            * (-0.2e1 * t6 * t52 - 0.2e1 * t6 * t61 - 0.2e1 * t7 * t44 + 0.4e1 * t6 * t11 * t1 + 0.4e1 * t6 * t70 + t93
+                - 0.2e1 * t54)
+            * t79;
         double t99 = t2 * t2;
         double t100 = t8 * t99;
         double t106 = t2 * t9;
         double t107 = t106 * t74;
-        double t108 = -t37 - t39 - t43 + t46 + t49 + t51 - t53 + t55 + t64 + 0.2e1 * t6 * t100 - t72 - 0.4e1 * t6 * t11 * t99 - t107;
+        double t108 = -t37 - t39 - t43 + t46 + t49 + t51 - t53 + t55 + t64 + 0.2e1 * t6 * t100 - t72
+            - 0.4e1 * t6 * t11 * t99 - t107;
         double t110 = t108 * mC * t79;
         double t111 = mC * t8;
         double t112 = t111 * t1;
@@ -828,7 +837,8 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         double t291 = 0.2e1 * t272 * t289;
         double t293 = t9 * t201;
         double t295 = t6 * t8 * t293 * t99;
-        double t297 = t240 + t244 - t249 + t254 + t258 + t259 - t262 + t263 - t267 + t271 - t277 - 0.2e1 * t278 + t282 + t100 - t285 + t288 + t291 - 0.4e1 * t295;
+        double t297 = t240 + t244 - t249 + t254 + t258 + t259 - t262 + t263 - t267 + t271 - t277 - 0.2e1 * t278 + t282
+            + t100 - t285 + t288 + t291 - 0.4e1 * t295;
         double t300 = t3 * t3;
         double t302 = 0.1e1 / t4 / t300;
         double t303 = t18 * t302;
@@ -838,7 +848,8 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         double t310 = t133 * t4;
         double t311 = 0.2e1 * t310;
         double t312 = t133 * t224;
-        double t314 = t240 - t249 + t244 + 0.4e1 * t308 + t259 + t258 - t277 + t263 + t254 - t311 + t262 + 0.2e1 * t312 - t267 + t271 + t288 + t291 + t100 - t285;
+        double t314 = t240 - t249 + t244 + 0.4e1 * t308 + t259 + t258 - t277 + t263 + t254 - t311 + t262 + 0.2e1 * t312
+            - t267 + t271 + t288 + t291 + t100 - t285;
         double t317 = t34 * t302;
         double t319 = t41 * mC;
         double t320 = -t142 * t199;
@@ -917,7 +928,8 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         double t421 = t353 * t134;
         double t422 = t365 * t346;
         double t423 = 0.2e1 * t422;
-        double t424 = -0.4e1 * t388 * t142 * t66 + t396 + 0.2e1 * t388 * t143 + t403 - 0.2e1 * t405 - 0.3e1 * t409 - t412 - t353 * mC * t93 - t416 + 0.4e1 * t419 + t421 - t423;
+        double t424 = -0.4e1 * t388 * t142 * t66 + t396 + 0.2e1 * t388 * t143 + t403 - 0.2e1 * t405 - 0.3e1 * t409
+            - t412 - t353 * mC * t93 - t416 + 0.4e1 * t419 + t421 - t423;
         double t426 = t10 * t99;
         double t428 = t407 * t264 * t426;
         double t431 = t214 * t2 * t24;
@@ -937,7 +949,8 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         double t450 = t382 * t62;
         double t454 = t344 * t99 * t377 * t214;
         double t455 = 0.4e1 * t454;
-        double t456 = 0.3e1 * t428 + t433 - 0.4e1 * t434 + t436 + t438 - t440 + t442 + t447 - t449 + 0.4e1 * t450 - t455;
+        double t456
+            = 0.3e1 * t428 + t433 - 0.4e1 * t434 + t436 + t438 - t440 + t442 + t447 - t449 + 0.4e1 * t450 - t455;
         double t460 = 0.3e1 * t1 * t2 * t4;
         double t462 = 0.2e1 * t340 * t394;
         double t464 = t407 * t41 * t426;
@@ -954,7 +967,8 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         double t476 = t475 * t134;
         double t480 = t363 * t364 * t377 * t214;
         double t481 = 0.2e1 * t480;
-        double t482 = -t224 * t99 - t460 + t462 - t465 - t468 + 0.4e1 * t469 + t471 + t472 - t474 - 0.2e1 * t476 + t289 - t481;
+        double t482
+            = -t224 * t99 - t460 + t462 - t465 - t468 + 0.4e1 * t469 + t471 + t472 - t474 - 0.2e1 * t476 + t289 - t481;
         double t488 = 0.1e1 / t4 / t300 / t3;
         double t490 = t142 * t99;
         double t492 = 0.2e1 * t490 * t42;
@@ -992,7 +1006,8 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         double t536 = t374 * mC;
         double t537 = t536 * t107;
         double t538 = 0.3e1 * t537;
-        double t539 = t492 + t493 - t495 + t500 + t502 + t506 + t509 - t512 + t514 + t516 - t518 - t520 - t522 + t525 - t527 + t529 + t531 - t533 + t535 + t538;
+        double t539 = t492 + t493 - t495 + t500 + t502 + t506 + t509 - t512 + t514 + t516 - t518 - t520 - t522 + t525
+            - t527 + t529 + t531 - t533 + t535 + t538;
         double t541 = 0.4e1 * t382 * t66;
         double t542 = t523 * t307;
         double t543 = 0.4e1 * t542;
@@ -1024,7 +1039,8 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         double t582 = t344 * t379;
         double t583 = 0.2e1 * t582;
         double t585 = 0.2e1 * t510 * t346;
-        double t586 = t541 - t543 + t545 + t546 - t547 + 0.2e1 * t550 - t553 + t555 - t557 - t560 - t563 - t565 + t568 - t570 - t572 - t574 - 0.4e1 * t575 - t581 + t583 + t585;
+        double t586 = t541 - t543 + t545 + t546 - t547 + 0.2e1 * t550 - t553 + t555 - t557 - t560 - t563 - t565 + t568
+            - t570 - t572 - t574 - 0.4e1 * t575 - t581 + t583 + t585;
         double t589 = t235 * x;
         double t590 = t589 * t488;
         double t595 = mC * t79;
@@ -1035,12 +1051,14 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         double t602 = 0.2e1 * t601;
         double t604 = 0.4e1 * t40 * t55;
         double t606 = 0.2e1 * t548 * t355;
-        double t609 = -t492 + t493 + t600 + t495 - t500 - t502 - t506 - t602 - t509 + t512 - t514 + t516 - t604 - t606 + 0.4e1 * t519 - 0.4e1 * t524 + t527 - t529;
+        double t609 = -t492 + t493 + t600 + t495 - t500 - t502 - t506 - t602 - t509 + t512 - t514 + t516 - t604 - t606
+            + 0.4e1 * t519 - 0.4e1 * t524 + t527 - t529;
         double t610 = 0.2e1 * t542;
         double t612 = t57 * t307;
         double t613 = 0.2e1 * t612;
         double t614 = 0.2e1 * t575;
-        double t615 = -t535 + t537 - t541 + t610 - t545 - 0.4e1 * t268 + t547 + t553 - t613 + t557 + t560 + t565 - t568 + t572 - t574 + t614 + t581 - t583 - t585;
+        double t615 = -t535 + t537 - t541 + t610 - t545 - 0.4e1 * t268 + t547 + t553 - t613 + t557 + t560 + t565 - t568
+            + t572 - t574 + t614 + t581 - t583 - t585;
         double t620 = t99 * t321;
         double t621 = t620 * t1;
         double t624 = t364 * t321;
@@ -1069,7 +1087,8 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         double t662 = t650 * t661;
         double t663 = t621 * t643;
         double t665 = 0.2e1 * t446;
-        double t666 = 0.2e1 * t644 + t648 - t652 - t412 + t653 - 0.4e1 * t422 - t656 * t658 + t662 - t442 + 0.3e1 * t663 + t665;
+        double t666
+            = 0.2e1 * t644 + t648 - t652 - t412 + t653 - 0.4e1 * t422 - t656 * t658 + t662 - t442 + 0.3e1 * t663 + t665;
         double t672 = 0.2e1 * t454;
         double t673 = t641 * t352;
         double t675 = 0.2e1 * t673 * t143;
@@ -1084,22 +1103,28 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         double t694 = t142 * t24 * t10;
         double t696 = t350 * t647;
         double t697 = 0.3e1 * t696;
-        double t703 = -t655 * t685 * t24 + t441 * t93 - t690 + t474 - t692 + t656 * t694 - t289 - t697 - 0.2e1 * t637 * t42 - 0.2e1 * t630 * t346 - 0.4e1 * t480;
+        double t703 = -t655 * t685 * t24 + t441 * t93 - t690 + t474 - t692 + t656 * t694 - t289 - t697
+            - 0.2e1 * t637 * t42 - 0.2e1 * t630 * t346 - 0.4e1 * t480;
         double t708 = t58 * t214;
         double t711 = t58 * t9;
         double t721 = t10 * t321 * t2;
-        double t736 = (0.4e1 * t212 * t708 - 0.4e1 * t212 * t711 + 0.2e1 * t40 * t8 * t321 - 0.4e1 * t40 * t11 * t321 - 0.4e1 * t111 * t721 - 0.4e1 * t226 * t55 - t26 * t321 + 0.4e1 * t226 * t216 + t26 + 0.2e1 * t111 * t641) * y * x * t335 * t5 * t595;
+        double t736 = (0.4e1 * t212 * t708 - 0.4e1 * t212 * t711 + 0.2e1 * t40 * t8 * t321 - 0.4e1 * t40 * t11 * t321
+                          - 0.4e1 * t111 * t721 - 0.4e1 * t226 * t55 - t26 * t321 + 0.4e1 * t226 * t216 + t26
+                          + 0.2e1 * t111 * t641)
+            * y * x * t335 * t5 * t595;
         double t738 = 0.2e1 * t392 * t251;
         double t739 = 0.2e1 * t308;
         double t743 = 0.2e1 * t392 * t250 * t10 * t4;
         double t746 = 0.2e1 * t392 * t5 * t42;
         double t747 = 0.2e1 * t295;
-        double t748 = t239 - t240 - t244 + t738 - t739 - t743 + t249 + t746 - t277 + t310 + t271 + t254 + t267 + t263 - t259 - t258 - t312 + t747 - t281 + t278;
+        double t748 = t239 - t240 - t244 + t738 - t739 - t743 + t249 + t746 - t277 + t310 + t271 + t254 + t267 + t263
+            - t259 - t258 - t312 + t747 - t281 + t278;
         double t752 = t235 * mC * t302;
         double t753 = t748 * t19 * y * t752;
         double t755 = t99 * t24;
         double t761 = t99 * t20 * t4;
-        double t764 = t739 - t258 + t271 + t263 - t310 + t267 - t277 + t312 - t259 + t254 + t100 - t100 * t201 + 0.2e1 * t755 * mC * t293 * t4 - t285 - 0.2e1 * t761 * t242 + t291 + t288 - t747 + t281 - t278;
+        double t764 = t739 - t258 + t271 + t263 - t310 + t267 - t277 + t312 - t259 + t254 + t100 - t100 * t201
+            + 0.2e1 * t755 * mC * t293 * t4 - t285 - 0.2e1 * t761 * t242 + t291 + t288 - t747 + t281 - t278;
         double t767 = t764 * t19 * x * t752;
         double t772 = 0.4e1 * t213 * t42;
         double t778 = (0.2e1 * t536 * t41 * t9 + t772 + t136 - 0.2e1 * t536 * t120 + t52 + t219) * y * t235 * t338;
@@ -1112,13 +1137,15 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         double t790 = 0.2e1 * t354 * t56 * t20 * t10;
         double t791 = t56 * t24;
         double t794 = 0.2e1 * t354 * t791 * t10;
-        double t795 = t780 + t600 - t782 - t783 + t784 + t785 + t786 - t602 + t509 - t514 + t516 + t518 - t606 + t520 + t790 - t794 - t525 + t527 + t533;
+        double t795 = t780 + t600 - t782 - t783 + t784 + t785 + t786 - t602 + t509 - t514 + t516 + t518 - t606 + t520
+            + t790 - t794 - t525 + t527 + t533;
         double t796 = t57 * t93;
         double t798 = 0.2e1 * t369 * t378;
         double t799 = 0.2e1 * t580;
         double t800 = 0.4e1 * t582;
         double t802 = 0.2e1 * t354 * t791;
-        double t803 = -t537 - t541 + t543 - t545 - t546 - t550 - t553 - t796 - t555 + t557 - t560 + t563 + t568 + t572 - t574 + t614 + t798 - t799 + t800 + t802;
+        double t803 = -t537 - t541 + t543 - t545 - t546 - t550 - t553 - t796 - t555 + t557 - t560 + t563 + t568 + t572
+            - t574 + t614 + t798 - t799 + t800 + t802;
         double t808 = (t795 + t803) * x * t235 * y * t488;
         double t809 = t475 * t1;
         double t810 = t809 * t633;
@@ -1131,7 +1158,9 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         double t831 = t441 * t9 * t201 * t5 * t4;
         double t832 = t646 * t54;
         double t833 = -t465 + 0.8e1 * t467 + 0.3e1 * t469 + t471 + t472 + t820 - t827 - t476 + t831 - t481 + t832;
-        double t837 = (-t342 - t348 + t351 + 0.4e1 * t810 + t356 - t812 + t368 - t373 + 0.2e1 * t376 - t381 + t817 + t438 - t440 + t447 - t449 - 0.2e1 * t450 - t455 - t821 - t460 + t462 - 0.2e1 * t822 + t833) * t235 * t488;
+        double t837 = (-t342 - t348 + t351 + 0.4e1 * t810 + t356 - t812 + t368 - t373 + 0.2e1 * t376 - t381 + t817
+                          + t438 - t440 + t447 - t449 - 0.2e1 * t450 - t455 - t821 - t460 + t462 - 0.2e1 * t822 + t833)
+            * t235 * t488;
         double t840 = 0.2e1 * t319 * t106 * t321;
         double t842 = t655 * t2;
         double t844 = 0.2e1 * t177 * t24 * t842;
@@ -1149,11 +1178,17 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         double t864 = 0.2e1 * t663;
         double t867 = t655 * t637 * t24;
         double t868 = t682 - t460 + t462 + t472 + t690 - t474 + t867 + t692 + t289 + t697 - t481;
-        double t872 = (-t342 - t627 - t348 + t351 + t635 + t851 - t362 + t368 - t373 - t381 + t862 - t423 + t433 + t662 + t442 - t864 + t447 - t449 - t455 - t675 - t679 + t868) * t335 * t488;
+        double t872 = (-t342 - t627 - t348 + t351 + t635 + t851 - t362 + t368 - t373 - t381 + t862 - t423 + t433 + t662
+                          + t442 - t864 + t447 - t449 - t455 - t675 - t679 + t868)
+            * t335 * t488;
         double t878 = t620 * t142;
         double t888 = t680 * t142;
-        double t891 = t552 * t661 - t492 + t495 - t500 - t502 - 0.4e1 * t680 * mC * t55 - t506 - t509 + t512 - 0.2e1 * t878 * t42 + 0.2e1 * t850 * t42 + t518 + 0.4e1 * t624 * t142 * t66 + 0.4e1 * t850 * t383 - t525 - 0.2e1 * t888 * t418 - t529 + t533 - t535;
-        double t913 = -0.4e1 * t878 * t153 - 0.2e1 * t624 * t143 - t546 + t547 + 0.2e1 * t842 - 0.2e1 * t680 * t4 + t553 - 0.4e1 * t849 * t134 + t560 + t565 - t568 + 0.2e1 * t849 * t355 + 0.2e1 * t888 * t161 - 0.2e1 * t850 * t394 + 0.8e1 * t878 * t65 * t52 + t245 * t858 + t581 - t583 - 0.2e1 * t850 * t62 - t585;
+        double t891 = t552 * t661 - t492 + t495 - t500 - t502 - 0.4e1 * t680 * mC * t55 - t506 - t509 + t512
+            - 0.2e1 * t878 * t42 + 0.2e1 * t850 * t42 + t518 + 0.4e1 * t624 * t142 * t66 + 0.4e1 * t850 * t383 - t525
+            - 0.2e1 * t888 * t418 - t529 + t533 - t535;
+        double t913 = -0.4e1 * t878 * t153 - 0.2e1 * t624 * t143 - t546 + t547 + 0.2e1 * t842 - 0.2e1 * t680 * t4 + t553
+            - 0.4e1 * t849 * t134 + t560 + t565 - t568 + 0.2e1 * t849 * t355 + 0.2e1 * t888 * t161 - 0.2e1 * t850 * t394
+            + 0.8e1 * t878 * t65 * t52 + t245 * t858 + t581 - t583 - 0.2e1 * t850 * t62 - t585;
         double t917 = y * t335 * x * (t891 + t913) * t488;
         double t920 = (t310 - t52 + t61) * t9 * t595;
         double t921 = 0.2e1 * t8;
@@ -1165,35 +1200,50 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         double t960 = 0.2e1 * t523 * t9 * t325;
         double t963 = t100 * t321;
         double t966 = 0.2e1 * t761 * t177 * t321;
-        double t967 = -t239 + t743 - t746 - t738 + t277 - t263 + t947 - t950 - t951 - t954 - t271 - t254 - 0.4e1 * t400 * mC * t647 + t960 - 0.2e1 * t641 * t74 - t963 - t966 + t282;
-        double t975 = 0.4e1 * t306 * t647 - t239 - t738 - t746 + t743 - t951 - t271 + t954 - t311 + 0.2e1 * t133 * t655 - t950 - t254 + t947 - t263 + t277 + t960 - t966 - t963;
+        double t967 = -t239 + t743 - t746 - t738 + t277 - t263 + t947 - t950 - t951 - t954 - t271 - t254
+            - 0.4e1 * t400 * mC * t647 + t960 - 0.2e1 * t641 * t74 - t963 - t966 + t282;
+        double t975 = 0.4e1 * t306 * t647 - t239 - t738 - t746 + t743 - t951 - t271 + t954 - t311 + 0.2e1 * t133 * t655
+            - t950 - t254 + t947 - t263 + t277 + t960 - t966 - t963;
         double t986 = t343 * t387;
-        double t999 = t854 - t855 - t860 - t396 - t861 - 0.2e1 * t986 * t366 + 0.3e1 * t651 + t416 - 0.2e1 * t685 * t394 - t646 * t93 - 0.4e1 * t432;
-        double t1008 = -t683 + 0.2e1 * t986 * t378 + 0.2e1 * t685 * t264 - t472 + t820 + t690 - t827 + t867 + t692 + 0.2e1 * t696 + t832;
+        double t999 = t854 - t855 - t860 - t396 - t861 - 0.2e1 * t986 * t366 + 0.3e1 * t651 + t416 - 0.2e1 * t685 * t394
+            - t646 * t93 - 0.4e1 * t432;
+        double t1008 = -t683 + 0.2e1 * t986 * t378 + 0.2e1 * t685 * t264 - t472 + t820 + t690 - t827 + t867 + t692
+            + 0.2e1 * t696 + t832;
         double t1013 = 0.8e1 * t513;
         double t1016 = 0.2e1 * t475 * t143;
-        double t1018 = t780 - t782 - t783 + t784 + t785 + t786 - t602 + t509 + t1013 - t516 + t604 + 0.4e1 * t517 - t1016 + t790 - t794 - t531 + 0.4e1 * t532 - t537;
+        double t1018 = t780 - t782 - t783 + t784 + t785 + t786 - t602 + t509 + t1013 - t516 + t604 + 0.4e1 * t517
+            - t1016 + t790 - t794 - t531 + 0.4e1 * t532 - t537;
         double t1019 = 0.4e1 * t544;
         double t1021 = 0.2e1 * t556;
         double t1022 = 0.4e1 * t571;
         double t1023 = t475 * t142;
         double t1025 = 0.4e1 * t1023 * t66;
-        double t1026 = t610 + t1019 - t550 - t553 - t796 - 0.4e1 * t554 - t613 - t1021 - t560 + t568 + t570 - t1022 + t574 + t614 + t1025 + t798 - t799 + t800 + t802;
+        double t1026 = t610 + t1019 - t550 - t553 - t796 - 0.4e1 * t554 - t613 - t1021 - t560 + t568 + t570 - t1022
+            + t574 + t614 + t1025 + t798 - t799 + t800 + t802;
         double t1033 = t201 * mC * t4;
-        double t1045 = t780 + 0.2e1 * t493 + t600 - t782 - t783 + t784 + t785 + t786 - 0.4e1 * t601 + t509 + t1013 + t516 + t518 - t1016 - t606 + t520 - t522 + t790 - t794 - t525;
-        double t1047 = t533 + t538 + t1019 - t546 + t550 - t553 - t796 - t555 - 0.4e1 * t612 - t1021 - t560 - t563 + t568 - t1022 - t574 + t1025 + t798 - t799 + t800 + t802;
+        double t1045 = t780 + 0.2e1 * t493 + t600 - t782 - t783 + t784 + t785 + t786 - 0.4e1 * t601 + t509 + t1013
+            + t516 + t518 - t1016 - t606 + t520 - t522 + t790 - t794 - t525;
+        double t1047 = t533 + t538 + t1019 - t546 + t550 - t553 - t796 - t555 - 0.4e1 * t612 - t1021 - t560 - t563
+            + t568 - t1022 - t574 + t1025 + t798 - t799 + t800 + t802;
         double t1055 = t629 * t201;
-        double t1058 = -t342 - t348 + t351 - 0.8e1 * t810 - 0.2e1 * t359 - t812 + t368 - t373 + 0.4e1 * t376 - t381 + 0.2e1 * t1055 * t143;
-        double t1065 = t396 + t403 - 0.3e1 * t405 - 0.4e1 * t409 - t412 - t416 + 0.3e1 * t419 - 0.2e1 * t421 - t423 + 0.4e1 * t428 + t433 - 0.3e1 * t434;
-        double t1073 = t438 - 0.3e1 * t439 + t1023 * t394 + t447 - t449 - t455 - t821 - 0.4e1 * t1055 * t142 * t66 - t460 + t462 + 0.4e1 * t822;
-        double t1077 = -0.2e1 * t464 - t468 + t469 + t1023 * t42 + t472 - t475 * t355 + t820 - t827 + t476 - t831 - t481 + t832;
+        double t1058 = -t342 - t348 + t351 - 0.8e1 * t810 - 0.2e1 * t359 - t812 + t368 - t373 + 0.4e1 * t376 - t381
+            + 0.2e1 * t1055 * t143;
+        double t1065 = t396 + t403 - 0.3e1 * t405 - 0.4e1 * t409 - t412 - t416 + 0.3e1 * t419 - 0.2e1 * t421 - t423
+            + 0.4e1 * t428 + t433 - 0.3e1 * t434;
+        double t1073 = t438 - 0.3e1 * t439 + t1023 * t394 + t447 - t449 - t455 - t821 - 0.4e1 * t1055 * t142 * t66
+            - t460 + t462 + 0.4e1 * t822;
+        double t1077
+            = -0.2e1 * t464 - t468 + t469 + t1023 * t42 + t472 - t475 * t355 + t820 - t827 + t476 - t831 - t481 + t832;
         double t1084 = (t52 + t281 - t61) * t9 * t595;
         double t1087 = mC * t20;
         double t1095 = exp(-mC * (t25 * t1 + t25 * t2 + t1087 * t1 + t1087 * t2 - 0.2e1 * t7 * t66 - 0.4e1 * t92));
         double t1096 = mC * t1095;
         double t1097 = t4 * t8;
         double t1098 = t1097 * t9;
-        double t1128 = t19 * (-0.2e1 * t273 - 0.2e1 * t272 * t2 - 0.2e1 * t226 * t566 - 0.2e1 * t226 * t45 + 0.2e1 * t272 * t10 * t1 + 0.2e1 * t272 * t417 - 0.4e1 * t6 * t1098 - t1097) / t3;
+        double t1128 = t19
+            * (-0.2e1 * t273 - 0.2e1 * t272 * t2 - 0.2e1 * t226 * t566 - 0.2e1 * t226 * t45 + 0.2e1 * t272 * t10 * t1
+                + 0.2e1 * t272 * t417 - 0.4e1 * t6 * t1098 - t1097)
+            / t3;
         double t1130 = t34 * t1095;
         double t1137 = (0.4e1 * t354 * t66 + 0.4e1 * t189 + 0.1e1) * t31;
         double t1140 = t8 * t24;
@@ -1205,7 +1255,9 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         double t1161 = t1096 * t79;
         double t1170 = t142 * t8;
         double t1175 = t142 * t377;
-        double t1183 = (-0.2e1 * t212 * t1143 - 0.2e1 * t212 * t1140 + 0.2e1 * t212 * t1146 - 0.4e1 * t22 + t74 - t921 + 0.2e1 * t1170 * t50 - 0.2e1 * t1170 * t38 - 0.2e1 * t1175 * t417) * t9 * x * t1095 * y * t595;
+        double t1183 = (-0.2e1 * t212 * t1143 - 0.2e1 * t212 * t1140 + 0.2e1 * t212 * t1146 - 0.4e1 * t22 + t74 - t921
+                           + 0.2e1 * t1170 * t50 - 0.2e1 * t1170 * t38 - 0.2e1 * t1175 * t417)
+            * t9 * x * t1095 * y * t595;
 
         chrisD[0][0][0][0] = t6 * (0.4e1 * t7 * t11 + t9 - 0.2e1 * t7 * t8);
         chrisD[0][0][0][1] = t33;
@@ -1287,7 +1339,10 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         chrisD[1][0][3][1] = 0.0e0;
         chrisD[1][0][3][2] = 0.0e0;
         chrisD[1][0][3][3] = 0.0e0;
-        chrisD[1][1][0][0] = (0.4e1 * t57 * t11 * t201 - 0.2e1 * t57 * t8 * t201 + 0.4e1 * t112 * t10 * t201 * t2 + t218 - 0.2e1 * t40 * t219 - t223 + t73 * t224 - 0.4e1 * t226 * t54 * t99 + 0.4e1 * t226 * t215 * t99 + t106 * t4) * t235 * t237;
+        chrisD[1][1][0][0] = (0.4e1 * t57 * t11 * t201 - 0.2e1 * t57 * t8 * t201 + 0.4e1 * t112 * t10 * t201 * t2 + t218
+                                 - 0.2e1 * t40 * t219 - t223 + t73 * t224 - 0.4e1 * t226 * t54 * t99
+                                 + 0.4e1 * t226 * t215 * t99 + t106 * t4)
+            * t235 * t237;
         chrisD[1][1][0][1] = -t297 * t19 * t235 * t303;
         chrisD[1][1][0][2] = -t314 * t19 * t235 * t317;
         chrisD[1][1][0][3] = 0.0e0;
@@ -1297,7 +1352,10 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         chrisD[1][1][1][3] = 0.0e0;
         chrisD[1][1][2][0] = (t328 - t324 + t327 + t330 + t127 + t61) * y * t19 * t596;
         chrisD[1][1][2][1] = -t589 * y * (t609 + t615) * t488;
-        chrisD[1][1][2][2] = -(-t342 - t621 * t354 * t47 + t627 - t628 + t351 + 0.2e1 * t630 * t366 - t635 + t362 + 0.4e1 * t367 + 0.2e1 * t637 * t394 + t666 - 0.2e1 * t637 * t264 - 0.2e1 * t630 * t378 - t672 + t675 + t621 * t355 + t679 - t682 + t460 + t462 + t683 + t703) * t335 * t488;
+        chrisD[1][1][2][2] = -(-t342 - t621 * t354 * t47 + t627 - t628 + t351 + 0.2e1 * t630 * t366 - t635 + t362
+                                 + 0.4e1 * t367 + 0.2e1 * t637 * t394 + t666 - 0.2e1 * t637 * t264 - 0.2e1 * t630 * t378
+                                 - t672 + t675 + t621 * t355 + t679 - t682 + t460 + t462 + t683 + t703)
+            * t335 * t488;
         chrisD[1][1][2][3] = 0.0e0;
         chrisD[1][1][3][0] = 0.0e0;
         chrisD[1][1][3][1] = 0.0e0;
@@ -1367,15 +1425,23 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         chrisD[2][1][3][1] = 0.0e0;
         chrisD[2][1][3][2] = 0.0e0;
         chrisD[2][1][3][3] = 0.0e0;
-        chrisD[2][2][0][0] = (-0.4e1 * t392 * t711 + 0.4e1 * t392 * t708 + t218 - 0.2e1 * t40 * t331 + 0.4e1 * t112 * t721 - t223 + t73 * t4 + t106 * t655 + 0.4e1 * t111 * t426 * t321 - 0.2e1 * t111 * t620) * t335 * t237;
+        chrisD[2][2][0][0]
+            = (-0.4e1 * t392 * t711 + 0.4e1 * t392 * t708 + t218 - 0.2e1 * t40 * t331 + 0.4e1 * t112 * t721 - t223
+                  + t73 * t4 + t106 * t655 + 0.4e1 * t111 * t426 * t321 - 0.2e1 * t111 * t620)
+            * t335 * t237;
         chrisD[2][2][0][1] = t967 * t19 * t335 * t303;
         chrisD[2][2][0][2] = t975 * t19 * t335 * t317;
         chrisD[2][2][0][3] = 0.0e0;
         chrisD[2][2][1][0] = (t52 + t772 + t136 + t844 + t331 - t840) * x * t335 * t338;
-        chrisD[2][2][1][1] = (-t820 * t321 - t627 + t628 + 0.2e1 * t685 * t42 + t635 + t851 - t812 + 0.2e1 * t986 * t346 + 0.4e1 * t372 + 0.4e1 * t380 + t999 - t441 * t647 - t662 - t864 - t665 + t449 + t672 - t675 - t679 + t682 - t460 + t1008) * t335 * t488;
+        chrisD[2][2][1][1] = (-t820 * t321 - t627 + t628 + 0.2e1 * t685 * t42 + t635 + t851 - t812 + 0.2e1 * t986 * t346
+                                 + 0.4e1 * t372 + 0.4e1 * t380 + t999 - t441 * t647 - t662 - t864 - t665 + t449 + t672
+                                 - t675 - t679 + t682 - t460 + t1008)
+            * t335 * t488;
         chrisD[2][2][1][2] = (t1018 + t1026) * y * t590;
         chrisD[2][2][1][3] = 0.0e0;
-        chrisD[2][2][2][0] = (t52 - 0.2e1 * t52 * t201 + t772 + t136 + 0.2e1 * t1033 * t371 - 0.2e1 * t1033 * t21 * t2 - t219) * y * t235 * t338;
+        chrisD[2][2][2][0]
+            = (t52 - 0.2e1 * t52 * t201 + t772 + t136 + 0.2e1 * t1033 * t371 - 0.2e1 * t1033 * t21 * t2 - t219) * y
+            * t235 * t338;
         chrisD[2][2][2][1] = t589 * y * (t1045 + t1047) * t488;
         chrisD[2][2][2][2] = -(t1058 + t1065 + t1073 + t1077) * t235 * t488;
         chrisD[2][2][2][3] = 0.0e0;
@@ -1447,17 +1513,22 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
         chrisD[3][2][3][1] = -t926;
         chrisD[3][2][3][2] = -t1084;
         chrisD[3][2][3][3] = 0.0e0;
-        chrisD[3][3][0][0] = -t1096 * t5 * (-0.4e1 * t226 * t1098 + 0.4e1 * t226 * t1097 * t214 - 0.4e1 * t6 + 0.4e1 * t6 * t10 + t9);
+        chrisD[3][3][0][0]
+            = -t1096 * t5 * (-0.4e1 * t226 * t1098 + 0.4e1 * t226 * t1097 * t214 - 0.4e1 * t6 + 0.4e1 * t6 * t10 + t9);
         chrisD[3][3][0][1] = -t18 * t1095 * t1128;
         chrisD[3][3][0][2] = -t1130 * t1128;
         chrisD[3][3][0][3] = 0.0e0;
         chrisD[3][3][1][0] = -t1096 * t8 * t130 * t1137;
-        chrisD[3][3][1][1] = (-0.2e1 * t392 * t1140 - 0.2e1 * t392 * t1143 + 0.2e1 * t392 * t1146 - t52 - t1151 - 0.4e1 * t124 + t310 + t1155 - t1158 + t61) * t9 * t1161;
+        chrisD[3][3][1][1] = (-0.2e1 * t392 * t1140 - 0.2e1 * t392 * t1143 + 0.2e1 * t392 * t1146 - t52 - t1151
+                                 - 0.4e1 * t124 + t310 + t1155 - t1158 + t61)
+            * t9 * t1161;
         chrisD[3][3][1][2] = t1183;
         chrisD[3][3][1][3] = 0.0e0;
         chrisD[3][3][2][0] = -t1130 * t8 * t19 * t1137;
         chrisD[3][3][2][1] = t1183;
-        chrisD[3][3][2][2] = (-t1158 + t52 + t1155 - t1151 - 0.2e1 * t1175 * t426 - 0.2e1 * t1170 * t755 - 0.4e1 * t181 + 0.2e1 * t1170 * t47 * t99 + t281 - t61) * t9 * t1161;
+        chrisD[3][3][2][2] = (-t1158 + t52 + t1155 - t1151 - 0.2e1 * t1175 * t426 - 0.2e1 * t1170 * t755 - 0.4e1 * t181
+                                 + 0.2e1 * t1170 * t47 * t99 + t281 - t61)
+            * t9 * t1161;
         chrisD[3][3][2][3] = 0.0e0;
         chrisD[3][3][3][0] = 0.0e0;
         chrisD[3][3][3][1] = 0.0e0;
@@ -1468,7 +1539,6 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -1476,8 +1546,8 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricBesselGravWaveCart::localToCoord(const double* pos, const double* ldir, double* dir,
-        enum_nat_tetrad_type) {
+void MetricBesselGravWaveCart::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     calcLTcoeffs(pos);
 
     dir[0] = ldir[0] / ltT;
@@ -1493,8 +1563,8 @@ void MetricBesselGravWaveCart::localToCoord(const double* pos, const double* ldi
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricBesselGravWaveCart::coordToLocal(const double* pos, const double* cdir, double* ldir,
-        enum_nat_tetrad_type) {
+void MetricBesselGravWaveCart::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     calcLTcoeffs(pos);
 
     ldir[0] = cdir[0] * ltT;
@@ -1503,19 +1573,18 @@ void MetricBesselGravWaveCart::coordToLocal(const double* pos, const double* cdi
     ldir[3] = cdir[3] * ltZ;
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r <= eps.
  *  \return false : position is valid.
  */
-bool MetricBesselGravWaveCart::breakCondition(const double*) {
+bool MetricBesselGravWaveCart::breakCondition(const double*)
+{
     bool br = false;
 
     return br;
 }
-
 
 /*! Tests whether the constraint equation is fulfilled.
  *
@@ -1528,14 +1597,15 @@ bool MetricBesselGravWaveCart::breakCondition(const double*) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricBesselGravWaveCart::testConstraint(const double Y[], const double kappa) {
+double MetricBesselGravWaveCart::testConstraint(const double Y[], const double kappa)
+{
     double cm = 1.0 / mSpeedOfLight;
 
     double t = Y[0];
     double x = Y[1];
     double y = Y[2];
     double z = Y[3];
-    double pos[4] = {t, x, y, z};
+    double pos[4] = { t, x, y, z };
 
     calculateMetric(pos);
 
@@ -1546,36 +1616,34 @@ double MetricBesselGravWaveCart::testConstraint(const double Y[], const double k
     double dz = Y[7] * cm;
 
     double sum = -kappa;
-    sum += g_compts[0][0] * dt * dt
-           + g_compts[1][1] * dx * dx
-           + g_compts[2][2] * dy * dy
-           + 2.0 * g_compts[2][1] * dx * dy
-           + g_compts[3][3] * dz * dz;
+    sum += g_compts[0][0] * dt * dt + g_compts[1][1] * dx * dx + g_compts[2][2] * dy * dy
+        + 2.0 * g_compts[2][1] * dx * dy + g_compts[3][3] * dz * dz;
 
-//  if(x == 0.0 && y == 0.0)
-//  {
-//    std::cerr << "calculateTetradCompts Grenzfall" << std::endl;
-//    double e2Cos = exp(2.0*mC*cos(t));
-//
-//    sum += -1.0/e2Cos * dt*dt + 1.0/e2Cos * dx*dx + 1.0/e2Cos * dy*dy + e2Cos * dz*dz;
-//
-//  }
-//  else
-//  {
-//    double xx = x*x;
-//    double yy = y*y;
-//    double rho = sqrt(xx + yy);
-//    double ct = cos(t);
-//    double j0 = gsl_sf_bessel_J0(rho);
-//    double j1 = gsl_sf_bessel_J1(rho);
-//    double U = mC*j0*ct;
-//    double K = 0.5*mC*mC*rho * (rho*(j0*j0 + j1*j1) - 2.0*j0*j1*ct*ct);
-//    double e2K = exp(2.0*K);
-//    double e2U = exp(2.0*U);
-//    double e2KU = exp(2.0*(K-U));
-//
-//    sum += -e2KU * dt*dt + 1.0/(rho*rho * e2U) * ( (e2K*xx+yy)*dx*dx + (e2K*yy+xx)*dy*dy + 2.0*x*y*(e2K-1.0)*dx*dy ) + e2U*dz*dz;
-//  }
+    //  if(x == 0.0 && y == 0.0)
+    //  {
+    //    std::cerr << "calculateTetradCompts Grenzfall" << std::endl;
+    //    double e2Cos = exp(2.0*mC*cos(t));
+    //
+    //    sum += -1.0/e2Cos * dt*dt + 1.0/e2Cos * dx*dx + 1.0/e2Cos * dy*dy + e2Cos * dz*dz;
+    //
+    //  }
+    //  else
+    //  {
+    //    double xx = x*x;
+    //    double yy = y*y;
+    //    double rho = sqrt(xx + yy);
+    //    double ct = cos(t);
+    //    double j0 = gsl_sf_bessel_J0(rho);
+    //    double j1 = gsl_sf_bessel_J1(rho);
+    //    double U = mC*j0*ct;
+    //    double K = 0.5*mC*mC*rho * (rho*(j0*j0 + j1*j1) - 2.0*j0*j1*ct*ct);
+    //    double e2K = exp(2.0*K);
+    //    double e2U = exp(2.0*U);
+    //    double e2KU = exp(2.0*(K-U));
+    //
+    //    sum += -e2KU * dt*dt + 1.0/(rho*rho * e2U) * ( (e2K*xx+yy)*dx*dx + (e2K*yy+xx)*dy*dy + 2.0*x*y*(e2K-1.0)*dx*dy
+    //    ) + e2U*dz*dz;
+    //  }
 
     return sum;
 }
@@ -1583,10 +1651,11 @@ double MetricBesselGravWaveCart::testConstraint(const double Y[], const double k
 /*! Set parameter 'pName' to 'val'.
  *
  */
-bool MetricBesselGravWaveCart::setParam(const char* pName, double val) {
+bool MetricBesselGravWaveCart::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"c") == 0) {
+    if (strcmp(pName, "c") == 0) {
         mC = val;
     }
 
@@ -1599,7 +1668,8 @@ bool MetricBesselGravWaveCart::setParam(const char* pName, double val) {
  *  \param  cp : reference to transformed point.
  *  \return true : success.
  */
-bool MetricBesselGravWaveCart::transToTwoPlusOne(vec4 p, vec4 &cp) {
+bool MetricBesselGravWaveCart::transToTwoPlusOne(vec4 p, vec4& cp)
+{
     vec4 tp;
     TransCoordinates::toCartesianCoord(mCoordType, p, tp);
     cp = vec4(tp[0], tp[1], tp[2], tp[0]);
@@ -1608,7 +1678,8 @@ bool MetricBesselGravWaveCart::transToTwoPlusOne(vec4 p, vec4 &cp) {
 
 /*! Generate report.
  */
-bool MetricBesselGravWaveCart::report(const vec4 , const vec4 , std::string &text) {
+bool MetricBesselGravWaveCart::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for gravitational Bessel wave metric\n\tcoordinate : (t,x,y,z)\n";
     ss << "---------------------------------------------------------------\n";
@@ -1617,14 +1688,15 @@ bool MetricBesselGravWaveCart::report(const vec4 , const vec4 , std::string &tex
     ss.setf(std::ios::fixed);
     ss << "  \"Amplitude\" C ............. = " << mC << std::endl;
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricBesselGravWaveCart::setStandardValues() {
+void MetricBesselGravWaveCart::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 0.0;
     mInitPos[2] = 0.0;
@@ -1643,7 +1715,8 @@ void MetricBesselGravWaveCart::setStandardValues() {
  *
  *  \param pos : pointer to position.
  */
-void MetricBesselGravWaveCart::calcLTcoeffs(const double* pos) {
+void MetricBesselGravWaveCart::calcLTcoeffs(const double* pos)
+{
     double t = pos[0];
     double x = pos[1];
     double y = pos[2];
@@ -1659,7 +1732,8 @@ void MetricBesselGravWaveCart::calcLTcoeffs(const double* pos) {
         ltF = 1.0 / eCos;
         ltT = 1.0 / eCos;
         ltZ = eCos;
-    } else {
+    }
+    else {
         double xx = x * x;
         double yy = y * y;
         double rho = sqrt(xx + yy);

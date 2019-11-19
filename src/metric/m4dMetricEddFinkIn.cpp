@@ -30,7 +30,8 @@
 
 namespace m4d {
 
-double tau_of_r(double r, void* params) {
+double tau_of_r(double r, void* params)
+{
     struct EddFinkParams* par = static_cast<struct EddFinkParams*>(params);
     double rs = par->rs;
     double r0 = par->r0;
@@ -38,15 +39,15 @@ double tau_of_r(double r, void* params) {
     return r * r0 / rs * sqrt(rs / r - rs / r0) + r0 * pow(r0 / rs, 0.5) * atan(sqrt(r0 / r - 1.0)) - tau;
 }
 
-
 #define eps 1.0e-6
 
 /*! Standard constructor for the Eddington-Finkelstein metric.
  *
  * \param  mass : mass of the black hole.
  */
-MetricEddFinkIn::MetricEddFinkIn(double mass) {
-    mMetricName  = "EddFinkIn";
+MetricEddFinkIn::MetricEddFinkIn(double mass)
+{
+    mMetricName = "EddFinkIn";
     setCoordType(enum_coordinate_spherical);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -63,21 +64,19 @@ MetricEddFinkIn::MetricEddFinkIn(double mass) {
     mLocTeds.push_back(enum_nat_tetrad_freefall);
 }
 
-MetricEddFinkIn::~MetricEddFinkIn() {
-
-}
-
+MetricEddFinkIn::~MetricEddFinkIn() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricEddFinkIn::calculateMetric(const double* pos) {
-    double r     = pos[1];
+bool MetricEddFinkIn::calculateMetric(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
 
     double t1 = c * c;
     double t6 = r * r;
@@ -101,7 +100,6 @@ bool MetricEddFinkIn::calculateMetric(const double* pos) {
     g_compts[3][2] = 0.0;
     g_compts[3][3] = t6 * t8;
 
-
     return true;
 }
 
@@ -109,11 +107,12 @@ bool MetricEddFinkIn::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricEddFinkIn::calculateChristoffels(const double* pos) {
-    double r     = pos[1];
+bool MetricEddFinkIn::calculateChristoffels(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
 
     double t2 = r * r;
     double t5 = c * rs / t2 / 2.0;
@@ -198,11 +197,12 @@ bool MetricEddFinkIn::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricEddFinkIn::calculateChrisD(const double* pos) {
-    double r     = pos[1];
+bool MetricEddFinkIn::calculateChrisD(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
 
     double t2 = r * r;
     double t5 = c * rs / t2 / r;
@@ -483,17 +483,18 @@ bool MetricEddFinkIn::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricEddFinkIn::localToCoord(const double* pos, const double* ldir, double* dir,
-                                   enum_nat_tetrad_type  type) {
-    double r     = pos[1];
+void MetricEddFinkIn::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type)
+{
+    double r = pos[1];
     double theta = pos[2];
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
 
     if (type != enum_nat_tetrad_freefall) {
         double w = sqrt(1.0 - rs / r);
         dir[0] = (ldir[0] + ldir[1]) / w / c;
         dir[1] = ldir[1] * w;
-    } else {
+    }
+    else {
         double w = sqrt(rs / r);
         dir[0] = (ldir[0] + ldir[1]) / (1.0 + w) / c;
         dir[1] = -w * ldir[0] + ldir[1];
@@ -509,17 +510,18 @@ void MetricEddFinkIn::localToCoord(const double* pos, const double* ldir, double
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricEddFinkIn::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                   enum_nat_tetrad_type  type) {
-    double r     = pos[1];
+void MetricEddFinkIn::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type)
+{
+    double r = pos[1];
     double theta = pos[2];
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
 
     if (type != enum_nat_tetrad_freefall) {
         double w = sqrt(1.0 - rs / r);
         ldir[0] = c * cdir[0] * w - cdir[1] / w;
         ldir[1] = cdir[1] / w;
-    } else {
+    }
+    else {
         double w = sqrt(rs / r);
         ldir[0] = c * cdir[0] - cdir[1] / (1.0 + w);
         ldir[1] = c * w * cdir[0] + cdir[1] / (1.0 + w);
@@ -528,14 +530,14 @@ void MetricEddFinkIn::coordToLocal(const double* pos, const double* cdir, double
     ldir[3] = cdir[3] * r * sin(theta);
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0.
  *  \return false : position is valid.
  */
-bool MetricEddFinkIn::breakCondition(const double* pos) {
+bool MetricEddFinkIn::breakCondition(const double* pos)
+{
     bool br = false;
 
     if (pos[1] < 0.0) {
@@ -546,12 +548,13 @@ bool MetricEddFinkIn::breakCondition(const double* pos) {
 
 /*! Calculate right hand side of parallel transport and Jocobi equation.
  */
-bool MetricEddFinkIn::calcDerivsSachsJacobi(const double y[], double dydx[]) {
-    const double* u    = &y[DEF_TG_IDX];
+bool MetricEddFinkIn::calcDerivsSachsJacobi(const double y[], double dydx[])
+{
+    const double* u = &y[DEF_TG_IDX];
     const double* wSA1 = &y[DEF_SA1_IDX];
     const double* wSA2 = &y[DEF_SA2_IDX];
-    const double* wJ1  = &y[DEF_JAC1_IDX];
-    const double* wJ2  = &y[DEF_JAC2_IDX];
+    const double* wJ1 = &y[DEF_JAC1_IDX];
+    const double* wJ2 = &y[DEF_JAC2_IDX];
     const double* wJ1d = &y[DEF_DJ1_IDX];
     const double* wJ2d = &y[DEF_DJ2_IDX];
 
@@ -569,16 +572,16 @@ bool MetricEddFinkIn::calcDerivsSachsJacobi(const double y[], double dydx[]) {
     contrChrDVecVecVec(y, u, u, wJ2, zJ2b);
 
     for (int mu = 0; mu < 4; mu++) {
-        dydx[mu]              = y[DEF_TG_IDX + mu];
-        dydx[DEF_TG_IDX + mu]   = -gd[mu];
+        dydx[mu] = y[DEF_TG_IDX + mu];
+        dydx[DEF_TG_IDX + mu] = -gd[mu];
 
-        dydx[DEF_SA1_IDX + mu]  = -zSA1[mu];
-        dydx[DEF_SA2_IDX + mu]  = -zSA2[mu];
+        dydx[DEF_SA1_IDX + mu] = -zSA1[mu];
+        dydx[DEF_SA2_IDX + mu] = -zSA2[mu];
         dydx[DEF_JAC1_IDX + mu] = y[DEF_DJ1_IDX + mu];
         dydx[DEF_JAC2_IDX + mu] = y[DEF_DJ2_IDX + mu];
 
-        dydx[DEF_DJ1_IDX + mu]  = -2.0 * zJ1a[mu] - zJ1b[mu];
-        dydx[DEF_DJ2_IDX + mu]  = -2.0 * zJ2a[mu] - zJ2b[mu];
+        dydx[DEF_DJ1_IDX + mu] = -2.0 * zJ1a[mu] - zJ1b[mu];
+        dydx[DEF_DJ2_IDX + mu] = -2.0 * zJ2a[mu] - zJ2b[mu];
     }
     return true;
 }
@@ -594,14 +597,15 @@ bool MetricEddFinkIn::calcDerivsSachsJacobi(const double y[], double dydx[]) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricEddFinkIn::testConstraint(const double y[], const double kappa) {
-    double r     = y[1];
+double MetricEddFinkIn::testConstraint(const double y[], const double kappa)
+{
+    double r = y[1];
     double theta = y[2];
     double cm = 1.0 / mSpeedOfLight;
 
     // Scale the directions with the speed of light before doubling them !!
-    double dv  = y[4];
-    double dr  = y[5] * cm;
+    double dv = y[4];
+    double dr = y[5] * cm;
     double dth = y[6] * cm;
     double dph = y[7] * cm;
 
@@ -614,7 +618,8 @@ double MetricEddFinkIn::testConstraint(const double y[], const double kappa) {
  *
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  */
-bool MetricEddFinkIn::setParam(const char* pName, double val) {
+bool MetricEddFinkIn::setParam(const char* pName, double val)
+{
     if (Metric::setParam(pName, val)) {
         mMass = val;
         rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
@@ -625,7 +630,8 @@ bool MetricEddFinkIn::setParam(const char* pName, double val) {
 /*!
  *  \param units : type of physical constants.
  */
-void MetricEddFinkIn::usePhysicalUnits(const enum_physical_constants  units) {
+void MetricEddFinkIn::usePhysicalUnits(const enum_physical_constants units)
+{
     Metric::usePhysicalUnits(units);
     rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
 }
@@ -635,14 +641,16 @@ void MetricEddFinkIn::usePhysicalUnits(const enum_physical_constants  units) {
  *  \param grav_const : value for gravitational constant.
  *  \param diel_perm : value for dielectric permittivity.
  */
-void MetricEddFinkIn::setUnits(const double speed_of_light, const double grav_const, const double diel_perm) {
+void MetricEddFinkIn::setUnits(const double speed_of_light, const double grav_const, const double diel_perm)
+{
     Metric::setUnits(speed_of_light, grav_const, diel_perm);
     rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
 }
 
 /*! Generate report.
  */
-bool MetricEddFinkIn::report(const vec4 , const vec4 , std::string &text) {
+bool MetricEddFinkIn::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Eddington-Finkelstein metric\n\tcoordinate : (v,r,theta,phi)\n";
     ss << "-----------------------------------------------------------------------\n";
@@ -651,10 +659,9 @@ bool MetricEddFinkIn::report(const vec4 , const vec4 , std::string &text) {
     ss.setf(std::ios::fixed);
     ss << "  Schwarzschild radius ........... r_s = 2GM/c^2 = " << rs << std::endl;
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
-
 
 /*!  Get the critical angle for a freely falling observer
  *   with initial position r0 and current position r.
@@ -665,14 +672,15 @@ bool MetricEddFinkIn::report(const vec4 , const vec4 , std::string &text) {
  * @param ca  critical angle in radians.
  * @return false  There is no critical angle.
  */
-bool MetricEddFinkIn::GetCriticalAngle(const double r0, const double r , double &ca) {
+bool MetricEddFinkIn::GetCriticalAngle(const double r0, const double r, double& ca)
+{
     if (r0 <= rs || r <= 0.0 || r0 < r) {
         return false;
     }
 
     double x0 = rs / r0;
-    double x  = rs / r;
-    double p  = 4.0 / 27.0;
+    double x = rs / r;
+    double p = 4.0 / 27.0;
 
     double a = x * x * sqrt(1.0 - x0) * sqrt(x - x0);
     double b = sqrt(p * (x * x * x - x * x + p));
@@ -680,14 +688,15 @@ bool MetricEddFinkIn::GetCriticalAngle(const double r0, const double r , double 
 
     if (r >= 1.5 * rs) {
         ca = acos((a + b) / c);
-    } else {
+    }
+    else {
         ca = acos((a - b) / c);
     }
     return true;
 }
 
-
-bool MetricEddFinkIn::GetCurrPosition(const double r0, const double tau, double &r) {
+bool MetricEddFinkIn::GetCurrPosition(const double r0, const double tau, double& r)
+{
     if (tau < 0.0) {
         return false;
     }
@@ -696,14 +705,14 @@ bool MetricEddFinkIn::GetCurrPosition(const double r0, const double tau, double 
         return true;
     }
 
-    struct EddFinkParams params = {rs, r0, tau};
+    struct EddFinkParams params = { rs, r0, tau };
 
-    const gsl_root_fsolver_type *T = gsl_root_fsolver_brent;
-    gsl_root_fsolver *s = gsl_root_fsolver_alloc(T);
+    const gsl_root_fsolver_type* T = gsl_root_fsolver_brent;
+    gsl_root_fsolver* s = gsl_root_fsolver_alloc(T);
 
     gsl_function F;
     F.function = tau_of_r;
-    F.params   = &params;
+    F.params = &params;
     int status = 0;
     int iter = 0, max_iter = 100;
 
@@ -731,19 +740,20 @@ bool MetricEddFinkIn::GetCurrPosition(const double r0, const double tau, double 
  * @param beta  freefall velocity.
  * @return false  There is no freefall velocity.
  */
-bool MetricEddFinkIn::GetFreefallVel(const double r0, const double r, double &beta) {
+bool MetricEddFinkIn::GetFreefallVel(const double r0, const double r, double& beta)
+{
     if (r0 <= rs || r <= 0.0 || r0 < r) {
         return false;
     }
 
     double x0 = rs / r0;
-    double x  = rs / r;
+    double x = rs / r;
     beta = sqrt((x - x0) / (1.0 - x0));
     return true;
 }
 
-
-bool MetricEddFinkIn::GetTauCrash(const double r0, double &tau) {
+bool MetricEddFinkIn::GetTauCrash(const double r0, double& tau)
+{
     tau = 0.5 * M_PI * rs * pow(r0 / rs, 1.5);
     return true;
 }
@@ -751,7 +761,8 @@ bool MetricEddFinkIn::GetTauCrash(const double r0, double &tau) {
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricEddFinkIn::setStandardValues() {
+void MetricEddFinkIn::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 3.0 * rs;
     mInitPos[2] = M_PI_2;
@@ -775,11 +786,12 @@ void MetricEddFinkIn::setStandardValues() {
  *
  *  The Christoffel symbols do not have to be calculated before this function can be evaluated!
  */
-void MetricEddFinkIn::contrChrisVecVec(const double y[], const double u[], const double w[], double* z, bool) {
-    double r     = y[1];
+void MetricEddFinkIn::contrChrisVecVec(const double y[], const double u[], const double w[], double* z, bool)
+{
+    double r = y[1];
     double theta = y[2];
 
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
 
     double t1 = c * rs;
     double t2 = r * r;
@@ -797,10 +809,10 @@ void MetricEddFinkIn::contrChrisVecVec(const double y[], const double u[], const
     double t53 = 1 / t12 * t46;
 
     z[0] = t1 * t4 * w[0] / 2.0 - t9 * u[2] * w[2] - t9 * t13 * u[3] * w[3];
-    z[1] = t18 / t2 / r * t22 * rs * u[0] * w[0] / 2.0 - t1 * t3 * u[1] * w[0] / 2.0 - t1 * t4 * w[1] / 2.0 - t18 * u[2] * w[2] - t18 * t13 * t38;
+    z[1] = t18 / t2 / r * t22 * rs * u[0] * w[0] / 2.0 - t1 * t3 * u[1] * w[0] / 2.0 - t1 * t4 * w[1] / 2.0
+        - t18 * u[2] * w[2] - t18 * t13 * t38;
     z[2] = t41 * u[2] * w[1] + t44 * w[2] - t12 * t46 * t38;
     z[3] = t41 * u[3] * w[1] + t53 * u[3] * w[2] + t44 * w[3] + t53 * u[2] * w[3];
-
 }
 
 /*! Contract partially derived Christoffel symbols with three vectors.
@@ -811,13 +823,16 @@ void MetricEddFinkIn::contrChrisVecVec(const double y[], const double u[], const
  *  \param z : pointer to contraction
  *  \param calc : calculate the Christoffels before using them
  *
- * The partial derivatives of the Christoffel symbols do not have to be calculated before this function can be evaluated!
+ * The partial derivatives of the Christoffel symbols do not have to be calculated before this function can be
+ * evaluated!
  */
-void MetricEddFinkIn::contrChrDVecVecVec(const double y[], const double u[], const double v[], const double w[], double* z, bool) {
-    double r     = y[1];
+void MetricEddFinkIn::contrChrDVecVecVec(
+    const double y[], const double u[], const double v[], const double w[], double* z, bool)
+{
+    double r = y[1];
     double theta = y[2];
 
-    double c  = mSpeedOfLight;
+    double c = mSpeedOfLight;
 
     double t2 = r * r;
     double t5 = c * rs / t2 / r;
@@ -838,7 +853,8 @@ void MetricEddFinkIn::contrChrDVecVecVec(const double y[], const double u[], con
     double t75 = (t65 + t14) / t14;
 
     z[0] = -t5 * u[0] * v[0] * w[1] - t9 * u[2] * t11 - t9 * t14 * t16 * w[1] - 2.0 * t9 * r * t13 * t21 * u[3] * t23;
-    z[1] = -t28 * rs * (2.0 * r - 3.0 * rs) / t34 * u[0] * v[0] * w[1] / 2.0 + t5 * u[1] * v[0] * w[1] + t5 * u[0] * v[1] * w[1] - u[2] * v[2] * w[1] - t14 * u[3] * t50 - 2.0 * (r - rs) * t13 * t21 * t16 * w[2];
+    z[1] = -t28 * rs * (2.0 * r - 3.0 * rs) / t34 * u[0] * v[0] * w[1] / 2.0 + t5 * u[1] * v[0] * w[1]
+        + t5 * u[0] * v[1] * w[1] - u[2] * v[2] * w[1] - t14 * u[3] * t50 - 2.0 * (r - rs) * t13 * t21 * t16 * w[2];
     z[2] = -t59 * u[2] * t61 - t63 * t11 + (-t65 + t14) * u[3] * t23;
     z[3] = -t59 * u[3] * t61 - t63 * t50 - t75 * u[3] * v[2] * w[2] - t75 * u[2] * v[3] * w[2];
 }

@@ -27,14 +27,14 @@
 
 namespace m4d {
 
-
 /*! Standard constructor for the KerrBL metric.
  *
  * \param  R     : size of warp bubble.
  * \param  vs    : velocity of warp bubble.
  */
-MetricAlcubierreSimple::MetricAlcubierreSimple(double R, double vs) {
-    mMetricName  = "AlcubierreWarpSimple";
+MetricAlcubierreSimple::MetricAlcubierreSimple(double R, double vs)
+{
+    mMetricName = "AlcubierreWarpSimple";
     mMetricCPPfilename = "m4dMetricAlcubierreSimple.cpp";
     setCoordType(enum_coordinate_cartesian);
 
@@ -42,13 +42,13 @@ MetricAlcubierreSimple::MetricAlcubierreSimple(double R, double vs) {
     mSpeedOfLight = 1.0;
     mGravConstant = 1.0;
 
-    mR     = R;
-    mvs    = vs;
+    mR = R;
+    mvs = vs;
 
     addParam("r", R);
     addParam("vs", vs);
 
-    //mDrawTypes.push_back(enum_draw_twoplusone);
+    // mDrawTypes.push_back(enum_draw_twoplusone);
 
     setStandardValues();
 
@@ -56,16 +56,15 @@ MetricAlcubierreSimple::MetricAlcubierreSimple(double R, double vs) {
     mLocTeds.push_back(enum_nat_tetrad_static);
 }
 
-MetricAlcubierreSimple::~MetricAlcubierreSimple() {
-}
-
+MetricAlcubierreSimple::~MetricAlcubierreSimple() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the covariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricAlcubierreSimple::calculateMetric(const double* pos) {
+bool MetricAlcubierreSimple::calculateMetric(const double* pos)
+{
     double c = mSpeedOfLight;
     double vs = mvs;
 
@@ -95,7 +94,8 @@ bool MetricAlcubierreSimple::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricAlcubierreSimple::calculateChristoffels(const double* pos) {
+bool MetricAlcubierreSimple::calculateChristoffels(const double* pos)
+{
     double c = mSpeedOfLight;
     double vs = mvs;
 
@@ -176,7 +176,8 @@ bool MetricAlcubierreSimple::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricAlcubierreSimple::calculateChrisD(const double* pos) {
+bool MetricAlcubierreSimple::calculateChrisD(const double* pos)
+{
     double ft, fx, fy, fz;
     calcDF(pos, ft, fx, fy, fz);
 
@@ -190,7 +191,8 @@ bool MetricAlcubierreSimple::calculateChrisD(const double* pos) {
  * \param pos : pointer to coordinate position where the Riemann tensor have to be evaluated.
  * \return true : successfull
  */
-bool MetricAlcubierreSimple::calculateRiemann(const double* pos) {
+bool MetricAlcubierreSimple::calculateRiemann(const double* pos)
+{
     double ft, fx, fy, fz;
     calcDF(pos, ft, fx, fy, fz);
 
@@ -207,8 +209,8 @@ bool MetricAlcubierreSimple::calculateRiemann(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricAlcubierreSimple::localToCoord(const double* pos, const double* ldir, double* dir,
-        enum_nat_tetrad_type  type) {
+void MetricAlcubierreSimple::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type)
+{
     double f = calcF(pos);
     double c = mSpeedOfLight;
 
@@ -217,7 +219,8 @@ void MetricAlcubierreSimple::localToCoord(const double* pos, const double* ldir,
         dir[1] = ldir[0] * mvs * f / c + ldir[1];
         dir[2] = ldir[2];
         dir[3] = ldir[3];
-    } else {
+    }
+    else {
         double w = sqrt(c * c - mvs * mvs * f * f);
 
         dir[0] = (ldir[0] - mvs * f / c * ldir[1]) / w;
@@ -234,8 +237,9 @@ void MetricAlcubierreSimple::localToCoord(const double* pos, const double* ldir,
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricAlcubierreSimple::coordToLocal(const double* pos, const double* cdir, double* ldir,
-        enum_nat_tetrad_type  type) {
+void MetricAlcubierreSimple::coordToLocal(
+    const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type)
+{
     double f = calcF(pos);
     double c = mSpeedOfLight;
 
@@ -244,7 +248,8 @@ void MetricAlcubierreSimple::coordToLocal(const double* pos, const double* cdir,
         ldir[1] = cdir[1] - mvs * f * cdir[0];
         ldir[2] = cdir[2];
         ldir[3] = cdir[3];
-    } else {
+    }
+    else {
         double w = sqrt(c * c - mvs * mvs * f * f);
 
         ldir[1] = c / w * cdir[1];
@@ -254,18 +259,17 @@ void MetricAlcubierreSimple::coordToLocal(const double* pos, const double* cdir,
     }
 }
 
-
 /*!
  *  \param pos  :  position.
  *  \return true  : radial position r < 0.0 or ...
  *  \return false : position is valid.
  */
-bool MetricAlcubierreSimple::breakCondition(const double*) {
+bool MetricAlcubierreSimple::breakCondition(const double*)
+{
     bool br = false;
 
     return br;
 }
-
 
 // Calculate right hand side of the geodesic equation in first order form.
 //
@@ -308,29 +312,30 @@ bool MetricAlcubierreSimple::calcDerivs ( const double y[], double dydx[] )
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return sum.
  */
-double MetricAlcubierreSimple::testConstraint(const double y[], const double kappa) {
+double MetricAlcubierreSimple::testConstraint(const double y[], const double kappa)
+{
     double c = mSpeedOfLight;
     double f = calcF(y);
 
     double sum = -kappa;
     sum += -c * c * y[4] * y[4] + pow(y[5] - mvs * f * y[4], 2.0) + y[6] * y[6] + y[7] * y[7];
 
-    //double A = 1.0-mvs*mvs*(1.0-f)*(1.0-f);
-    //fprintf(stderr,"%e %e %e %e  %e %e %e %e\n",y[4],y[5],y[6],y[7],f,A,mvs*f+1,mvs*f-1);
+    // double A = 1.0-mvs*mvs*(1.0-f)*(1.0-f);
+    // fprintf(stderr,"%e %e %e %e  %e %e %e %e\n",y[4],y[5],y[6],y[7],f,A,mvs*f+1,mvs*f-1);
     return sum;
 }
-
 
 /*! Set parameter 'pName' to 'val'.
  *
  *  Set 'sigma', 'R', and 'vs' parameters.
  */
-bool MetricAlcubierreSimple::setParam(const char* pName, double val) {
+bool MetricAlcubierreSimple::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
-    if (strcmp(pName,"r") == 0) {
+    if (strcmp(pName, "r") == 0) {
         mR = val;
     }
-    else if (strcmp(pName,"vs") == 0) {
+    else if (strcmp(pName, "vs") == 0) {
         mvs = val;
     }
     return true;
@@ -342,14 +347,16 @@ bool MetricAlcubierreSimple::setParam(const char* pName, double val) {
  *  \param  cp : reference to transformed point.
  *  \return true : success.
  */
-bool MetricAlcubierreSimple::transToTwoPlusOne(vec4 p, vec4 &cp) {
+bool MetricAlcubierreSimple::transToTwoPlusOne(vec4 p, vec4& cp)
+{
     cp = vec4(p[0], p[1], p[2], p[0]);
     return true;
 }
 
 /*! Generate report.
  */
-bool MetricAlcubierreSimple::report(const vec4 , const vec4 , std::string &text) {
+bool MetricAlcubierreSimple::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for AlcubierreSimple metric\n\tcoordinate : (t,x,y,z)\n";
     ss << "---------------------------------------------------------------\n";
@@ -357,18 +364,17 @@ bool MetricAlcubierreSimple::report(const vec4 , const vec4 , std::string &text)
     ss.precision(DEF_FIXED_REPORT_PRECISION);
     ss.setf(std::ios::fixed);
 
-
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // *************************** specific  public methods ****************************
 
-
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricAlcubierreSimple::setStandardValues() {
+void MetricAlcubierreSimple::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 0.0;
     mInitPos[2] = -10.0;
@@ -386,7 +392,8 @@ void MetricAlcubierreSimple::setStandardValues() {
 /*! Calculate rs function
  *  \param  pos : pointer to position.
  */
-double MetricAlcubierreSimple::calcRs(const double* pos) {
+double MetricAlcubierreSimple::calcRs(const double* pos)
+{
     double t = pos[0];
     double x = pos[1];
     double y = pos[2];
@@ -395,7 +402,8 @@ double MetricAlcubierreSimple::calcRs(const double* pos) {
     return sqrt((x - mvs * t) * (x - mvs * t) + y * y + z * z);
 }
 
-double MetricAlcubierreSimple::calcF(const double* pos) {
+double MetricAlcubierreSimple::calcF(const double* pos)
+{
     double rs = calcRs(pos);
     if (rs <= mR) {
         return 1.0 - pow(rs / mR, 4.0);
@@ -403,7 +411,8 @@ double MetricAlcubierreSimple::calcF(const double* pos) {
     return 0.0;
 }
 
-void MetricAlcubierreSimple::calcDF(const double* pos, double &ft, double &fx, double &fy, double &fz) {
+void MetricAlcubierreSimple::calcDF(const double* pos, double& ft, double& fx, double& fy, double& fz)
+{
     double rs = calcRs(pos);
 
     double t = pos[0];
@@ -429,8 +438,9 @@ void MetricAlcubierreSimple::calcD2F ( const double* pos, double &ftt, double &f
                               double &fxx, double &fxy, double &fxz, double &fyy,
                               double &fyz, double &fzz )
 */
-void MetricAlcubierreSimple::calcD2F(const double* , double &, double &, double &, double &,
-                                     double &, double &, double &, double &, double &, double &) {
+void MetricAlcubierreSimple::calcD2F(
+    const double*, double&, double&, double&, double&, double&, double&, double&, double&, double&, double&)
+{
     /*
     double t = pos[0];
     double x = pos[1];

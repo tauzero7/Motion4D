@@ -35,8 +35,9 @@ namespace m4d {
  * \param  mass : mass of the black hole.
  * \param  k : Friedman parameter.
  */
-MetricFriedmanNonEmptyNull::MetricFriedmanNonEmptyNull(double mass, double k) {
-    mMetricName  = "FriedmanNonEmptyNull";
+MetricFriedmanNonEmptyNull::MetricFriedmanNonEmptyNull(double mass, double k)
+{
+    mMetricName = "FriedmanNonEmptyNull";
     setCoordType(enum_coordinate_spherical);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -50,7 +51,8 @@ MetricFriedmanNonEmptyNull::MetricFriedmanNonEmptyNull(double mass, double k) {
     mK = 0;
     if (k >= 1.0) {
         mK = 1;
-    } else if (k <= -1.0) {
+    }
+    else if (k <= -1.0) {
         mK = -1;
     }
 
@@ -60,18 +62,17 @@ MetricFriedmanNonEmptyNull::MetricFriedmanNonEmptyNull(double mass, double k) {
     setStandardValues();
 }
 
-MetricFriedmanNonEmptyNull::~MetricFriedmanNonEmptyNull() {
-}
-
+MetricFriedmanNonEmptyNull::~MetricFriedmanNonEmptyNull() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricFriedmanNonEmptyNull::calculateMetric(const double* pos) {
-    double chi   = pos[0];
-    double r     = pos[1];
+bool MetricFriedmanNonEmptyNull::calculateMetric(const double* pos)
+{
+    double chi = pos[0];
+    double r = pos[1];
     double theta = pos[2];
     double k = (double)mK;
 
@@ -107,9 +108,10 @@ bool MetricFriedmanNonEmptyNull::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricFriedmanNonEmptyNull::calculateChristoffels(const double* pos) {
-    double chi   = pos[0];
-    double r     = pos[1];
+bool MetricFriedmanNonEmptyNull::calculateChristoffels(const double* pos)
+{
+    double chi = pos[0];
+    double r = pos[1];
     double theta = pos[2];
     double k = (double)mK;
 
@@ -204,13 +206,14 @@ bool MetricFriedmanNonEmptyNull::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricFriedmanNonEmptyNull::calculateChrisD(const double* pos) {
-    double chi   = pos[0];
-    double r     = pos[1];
+bool MetricFriedmanNonEmptyNull::calculateChrisD(const double* pos)
+{
+    double chi = pos[0];
+    double r = pos[1];
     double theta = pos[2];
     double k = (double)mK;
 
-    double t1 = calc_dR(chi);  // diff(R(chi),chi);
+    double t1 = calc_dR(chi); // diff(R(chi),chi);
     double t2 = t1 * t1;
     double t3 = calc_ddR(chi); // diff(diff(R(chi),chi),chi);
     double t4 = calc_R(chi);
@@ -500,7 +503,6 @@ bool MetricFriedmanNonEmptyNull::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -508,10 +510,10 @@ bool MetricFriedmanNonEmptyNull::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricFriedmanNonEmptyNull::localToCoord(const double* pos, const double* ldir, double* dir,
-        enum_nat_tetrad_type) {
-    double chi   = pos[0];
-    double r     = pos[1];
+void MetricFriedmanNonEmptyNull::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
+    double chi = pos[0];
+    double r = pos[1];
     double theta = pos[2];
     double k = (double)mK;
 
@@ -531,15 +533,15 @@ void MetricFriedmanNonEmptyNull::localToCoord(const double* pos, const double* l
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricFriedmanNonEmptyNull::coordToLocal(const double* pos, const double* cdir, double* ldir,
-        enum_nat_tetrad_type) {
-    double chi   = pos[0];
-    double r     = pos[1];
+void MetricFriedmanNonEmptyNull::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
+    double chi = pos[0];
+    double r = pos[1];
     double theta = pos[2];
     double k = (double)mK;
 
     double edbrk = 1.0 / (1.0 + 0.25 * k * r * r);
-    double R     = calc_R(chi);
+    double R = calc_R(chi);
 
     ldir[0] = cdir[0] * R;
     ldir[1] = cdir[1] * R * edbrk;
@@ -547,14 +549,14 @@ void MetricFriedmanNonEmptyNull::coordToLocal(const double* pos, const double* c
     ldir[3] = cdir[3] * R * edbrk * r * sin(theta);
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricFriedmanNonEmptyNull::breakCondition(const double* pos) {
+bool MetricFriedmanNonEmptyNull::breakCondition(const double* pos)
+{
     bool br = false;
 
     double r = pos[1];
@@ -566,7 +568,6 @@ bool MetricFriedmanNonEmptyNull::breakCondition(const double* pos) {
     return br;
 }
 
-
 /*! Tests whether the constraint equation is fulfilled.
  *
  *  The constraint equation for lightlike and timelike geodesics reads:
@@ -577,22 +578,24 @@ bool MetricFriedmanNonEmptyNull::breakCondition(const double* pos) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricFriedmanNonEmptyNull::testConstraint(const double y[], const double kappa) {
-    double chi   = y[0];
-    double r     = y[1];
+double MetricFriedmanNonEmptyNull::testConstraint(const double y[], const double kappa)
+{
+    double chi = y[0];
+    double r = y[1];
     double theta = y[2];
     double k = (double)mK;
 
-    double R     = calc_R(chi);
+    double R = calc_R(chi);
     double edbrk = 1.0 / (1.0 + 0.25 * k * r * r);
 
     double dchi = y[4];
-    double dr   = y[5];
-    double dth  = y[6];
-    double dph  = y[7];
+    double dr = y[5];
+    double dth = y[6];
+    double dph = y[7];
 
     double sum = -kappa;
-    sum += R * R * (-dchi * dchi + edbrk * edbrk * (dr * dr + r * r * (dth * dth + sin(theta) * sin(theta) * dph * dph)));
+    sum += R * R
+        * (-dchi * dchi + edbrk * edbrk * (dr * dr + r * r * (dth * dth + sin(theta) * sin(theta) * dph * dph)));
     return sum;
 }
 
@@ -600,18 +603,20 @@ double MetricFriedmanNonEmptyNull::testConstraint(const double y[], const double
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricFriedmanNonEmptyNull::setParam(const char* pName, double val) {
+bool MetricFriedmanNonEmptyNull::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"k") == 0) {
+    if (strcmp(pName, "k") == 0) {
         mK = 0;
         if (val >= 1.0) {
             mK = 1;
-        } else if (val <= -1.0) {
+        }
+        else if (val <= -1.0) {
             mK = -1;
         }
     }
-    else if (strcmp(pName,"mass") == 0) {
+    else if (strcmp(pName, "mass") == 0) {
         mC = 4.0 * mGravConstant * val / (3.0 * M_PI);
     }
     return true;
@@ -623,7 +628,8 @@ bool MetricFriedmanNonEmptyNull::setParam(const char* pName, double val) {
  *  \param  cp : reference to transformed point.
  *  \return true : success.
  */
-bool MetricFriedmanNonEmptyNull::transToTwoPlusOne(vec4 p, vec4 &cp) {
+bool MetricFriedmanNonEmptyNull::transToTwoPlusOne(vec4 p, vec4& cp)
+{
     vec4 tp;
     TransCoordinates::toCartesianCoord(mCoordType, p, tp);
     cp = vec4(tp[0], tp[1], tp[2], tp[0]);
@@ -632,21 +638,22 @@ bool MetricFriedmanNonEmptyNull::transToTwoPlusOne(vec4 p, vec4 &cp) {
 
 /*! Generate report.
  */
-bool MetricFriedmanNonEmptyNull::report(const vec4 , const vec4 , std::string &text) {
+bool MetricFriedmanNonEmptyNull::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for non-empty Friedman metric\n\tcoordinate : (t,r,theta,phi)\n";
     ss << "---------------------------------------------------------\n";
     ss << "  physical units ................................. no\n";
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
-
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricFriedmanNonEmptyNull::setStandardValues() {
+void MetricFriedmanNonEmptyNull::setStandardValues()
+{
     mInitPos[0] = 1.0;
     mInitPos[1] = 10.0;
     mInitPos[2] = M_PI_2;
@@ -664,10 +671,12 @@ void MetricFriedmanNonEmptyNull::setStandardValues() {
 /*! Calculate conformal factor R(chi).
  * \param chi: conformal coordinate.
  */
-double MetricFriedmanNonEmptyNull::calc_R(const double chi) {
+double MetricFriedmanNonEmptyNull::calc_R(const double chi)
+{
     if (mK == 0) {
         return 2.25 * mC * chi * chi;
-    } else if (mK == 1) {
+    }
+    else if (mK == 1) {
         return 0.5 * mC * (1.0 - cos(chi));
     }
 
@@ -677,10 +686,12 @@ double MetricFriedmanNonEmptyNull::calc_R(const double chi) {
 /*! Calculate first derivative of conformal factor R(chi).
  * \param chi: conformal coordinate.
  */
-double MetricFriedmanNonEmptyNull::calc_dR(const double chi) {
+double MetricFriedmanNonEmptyNull::calc_dR(const double chi)
+{
     if (mK == 0) {
         return 4.5 * mC * chi;
-    } else if (mK == 1) {
+    }
+    else if (mK == 1) {
         return 0.5 * mC * sin(chi);
     }
 
@@ -690,10 +701,12 @@ double MetricFriedmanNonEmptyNull::calc_dR(const double chi) {
 /*! Calculate second derivative of conformal factor R(chi).
  * \param chi: conformal coordinate.
  */
-double MetricFriedmanNonEmptyNull::calc_ddR(const double chi) {
+double MetricFriedmanNonEmptyNull::calc_ddR(const double chi)
+{
     if (mK == 0) {
         return 4.5 * mC;
-    } else if (mK == 1) {
+    }
+    else if (mK == 1) {
         return 0.5 * mC * cos(chi);
     }
 

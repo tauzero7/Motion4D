@@ -29,18 +29,18 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the BertottiKasner metric.
  *
  * \param  lambda : cosmological constant.
  */
-MetricBertottiKasner::MetricBertottiKasner(double lambda) {
-    mMetricName  = "MetricBertottiKasner";
+MetricBertottiKasner::MetricBertottiKasner(double lambda)
+{
+    mMetricName = "MetricBertottiKasner";
     setCoordType(enum_coordinate_spherical);
 
     mPhysicalUnits = enum_physical_constants_geom;
-    mSpeedOfLight   = 1.0;
-    mGravConstant   = 1.0;
+    mSpeedOfLight = 1.0;
+    mGravConstant = 1.0;
     mDielectricPerm = 1.0;
 
     addParam("lambda", lambda);
@@ -53,9 +53,7 @@ MetricBertottiKasner::MetricBertottiKasner(double lambda) {
 
 /*!
  */
-MetricBertottiKasner::~MetricBertottiKasner() {
-}
-
+MetricBertottiKasner::~MetricBertottiKasner() {}
 
 // *********************************** public methods ******************************
 
@@ -63,8 +61,9 @@ MetricBertottiKasner::~MetricBertottiKasner() {
  *
  *  \param pos : pointer to position.
  */
-bool MetricBertottiKasner::calculateMetric(const double* pos) {
-    double t     = pos[0];
+bool MetricBertottiKasner::calculateMetric(const double* pos)
+{
+    double t = pos[0];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -93,8 +92,9 @@ bool MetricBertottiKasner::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricBertottiKasner::calculateChristoffels(const double* pos) {
-    double t     = pos[0];
+bool MetricBertottiKasner::calculateChristoffels(const double* pos)
+{
+    double t = pos[0];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -173,8 +173,9 @@ bool MetricBertottiKasner::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricBertottiKasner::calculateChrisD(const double* pos) {
-    double t     = pos[0];
+bool MetricBertottiKasner::calculateChrisD(const double* pos)
+{
+    double t = pos[0];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -440,7 +441,6 @@ bool MetricBertottiKasner::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -448,9 +448,9 @@ bool MetricBertottiKasner::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricBertottiKasner::localToCoord(const double* pos, const double* ldir, double* dir,
-                                        enum_nat_tetrad_type) {
-    double t     = pos[0];
+void MetricBertottiKasner::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
+    double t = pos[0];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -469,9 +469,9 @@ void MetricBertottiKasner::localToCoord(const double* pos, const double* ldir, d
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricBertottiKasner::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                        enum_nat_tetrad_type) {
-    double t     = pos[0];
+void MetricBertottiKasner::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
+    double t = pos[0];
     double theta = pos[2];
 
     double sl = sqrt(mLambda);
@@ -482,17 +482,16 @@ void MetricBertottiKasner::coordToLocal(const double* pos, const double* cdir, d
     ldir[3] = cdir[3] / sl * sin(theta);
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricBertottiKasner::breakCondition(const double*) {
+bool MetricBertottiKasner::breakCondition(const double*)
+{
     return false;
 }
-
 
 /*! Tests whether the constraint equation is fulfilled.
  *
@@ -504,17 +503,19 @@ bool MetricBertottiKasner::breakCondition(const double*) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricBertottiKasner::testConstraint(const double y[], const double kappa) {
-    double t     = y[0];
+double MetricBertottiKasner::testConstraint(const double y[], const double kappa)
+{
+    double t = y[0];
     double theta = y[2];
 
-    double dt     = y[4];
-    double dr     = y[5];
+    double dt = y[4];
+    double dr = y[5];
     double dtheta = y[6];
-    double dphi   = y[7];
+    double dphi = y[7];
 
     double sum = -kappa * mSign;
-    sum += -dt * dt + exp(2.0 * sqrt(mLambda) * t) * dr * dr + (dtheta * dtheta + sin(theta) * sin(theta) * dphi * dphi) / mLambda;
+    sum += -dt * dt + exp(2.0 * sqrt(mLambda) * t) * dr * dr
+        + (dtheta * dtheta + sin(theta) * sin(theta) * dphi * dphi) / mLambda;
     return sum;
 }
 
@@ -523,22 +524,23 @@ double MetricBertottiKasner::testConstraint(const double y[], const double kappa
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  *  'charge' represents the charge of the black hole.
  */
-bool MetricBertottiKasner::setParam(const char* pName, double val) {
+bool MetricBertottiKasner::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"lambda") == 0) {
+    if (strcmp(pName, "lambda") == 0) {
         mLambda = val;
     }
     return true;
 }
-
 
 /*! Generate report.
  * \param pos : initial position.
  * \param cdir : initial coordinate direction.
  * \param text : reference to report text.
  */
-bool MetricBertottiKasner::report(const vec4 pos, const vec4 cdir, std::string &text) {
+bool MetricBertottiKasner::report(const vec4 pos, const vec4 cdir, char*& text)
+{
     std::stringstream ss;
     ss << "Report for the  BertottiKasner metric\n\tcoordinates : (t,r,theta,phi)\n";
     ss << "---------------------------------------------------------------\n";
@@ -550,14 +552,15 @@ bool MetricBertottiKasner::report(const vec4 pos, const vec4 cdir, std::string &
     double h2 = cdir[3] / mLambda;
     ss << " constant of motion             h1 = " << h1 << std::endl;
     ss << " constant of motion             h2 = " << h2 << std::endl;
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricBertottiKasner::setStandardValues() {
+void MetricBertottiKasner::setStandardValues()
+{
     mInitPos[0] = -1.0;
     mInitPos[1] = 1.0;
     mInitPos[2] = M_PI_2;

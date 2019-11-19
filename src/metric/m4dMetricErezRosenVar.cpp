@@ -27,13 +27,14 @@
 
 namespace m4d {
 
-MetricErezRosenVar::MetricErezRosenVar(double mass, double q) {
-    mMetricName  = "ErezRosenVar";
+MetricErezRosenVar::MetricErezRosenVar(double mass, double q)
+{
+    mMetricName = "ErezRosenVar";
     setCoordType(enum_coordinate_spherical);
 
     mPhysicalUnits = enum_physical_constants_geom;
-    mSpeedOfLight   = 1.0;
-    mGravConstant   = 1.0;
+    mSpeedOfLight = 1.0;
+    mGravConstant = 1.0;
     mDielectricPerm = 1.0;
 
     addParam("mass", mass);
@@ -46,16 +47,13 @@ MetricErezRosenVar::MetricErezRosenVar(double mass, double q) {
     setStandardValues();
 }
 
-
-MetricErezRosenVar::~MetricErezRosenVar() {
-}
-
+MetricErezRosenVar::~MetricErezRosenVar() {}
 
 // *********************************** public methods ******************************
 
-
-bool MetricErezRosenVar::calculateMetric(const double* pos) {
-    double r     = pos[1];
+bool MetricErezRosenVar::calculateMetric(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double m = mMass;
@@ -64,15 +62,15 @@ bool MetricErezRosenVar::calculateMetric(const double* pos) {
         return false;
     }
 
-    double t1 = psi;         // psi(r,theta);
+    double t1 = psi; // psi(r,theta);
     double t2 = exp(t1);
     double t3 = t2 * t2;
-    double t4 = g;           // g(r,theta);
+    double t4 = g; // g(r,theta);
     double t5 = exp(t4);
     double t6 = t5 * t5;
     double t7 = 1 / t3;
     double t8 = t6 * t7;
-    double t9 = Delta;       // Delta(r,theta);
+    double t9 = Delta; // Delta(r,theta);
     double t10 = r * r;
     double t11 = m * r;
     double t18 = sin(theta);
@@ -99,9 +97,9 @@ bool MetricErezRosenVar::calculateMetric(const double* pos) {
     return true;
 }
 
-
-bool MetricErezRosenVar::calculateChristoffels(const double* pos) {
-    double r     = pos[1];
+bool MetricErezRosenVar::calculateChristoffels(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double m = mMass;
@@ -111,28 +109,28 @@ bool MetricErezRosenVar::calculateChristoffels(const double* pos) {
 
     double t2 = -r + 2.0 * m;
     double t3 = r * t2;
-    double t4 = psi;              // psi(r,theta);
+    double t4 = psi; // psi(r,theta);
     double t5 = exp(t4);
     double t6 = t5 * t5;
     double t7 = t6 * t6;
-    double t9 = g;                // g(r,theta);
+    double t9 = g; // g(r,theta);
     double t10 = exp(t9);
     double t11 = t10 * t10;
     double t12 = 1 / t11;
-    double t13 = Delta;           // Delta(r,theta);
+    double t13 = Delta; // Delta(r,theta);
     double t14 = 1 / t13;
     double t15 = t12 * t14;
-    double t16 = dpsidr;          // diff(psi(r,theta),r);
-    double t20 = dpsidtheta;      // diff(psi(r,theta),theta);
+    double t16 = dpsidr; // diff(psi(r,theta),r);
+    double t20 = dpsidtheta; // diff(psi(r,theta),theta);
     double t25 = 1 / r / t2;
-    double t26 = dgdr;            // diff(g(r,theta),r);
+    double t26 = dgdr; // diff(g(r,theta),r);
     double t27 = t13 * t26;
     double t28 = r * r;
     double t31 = m * r;
     double t34 = t13 * t16;
-    double t39 = dDdr;            // diff(Delta(r,theta),r);
-    double t52 = dgdtheta;        // diff(g(r,theta),theta);
-    double t57 = dDdtheta;        // diff(Delta(r,theta),theta);
+    double t39 = dDdr; // diff(Delta(r,theta),r);
+    double t52 = dgdtheta; // diff(g(r,theta),theta);
+    double t57 = dDdtheta; // diff(Delta(r,theta),theta);
     double t59 = t14 * (-2.0 * t13 * t52 + 2.0 * t13 * t20 - t57);
     double t62 = t59 / 2.0;
     double t66 = t14 * (-2.0 * t27 + 2.0 * t34 - t39);
@@ -166,7 +164,10 @@ bool MetricErezRosenVar::calculateChristoffels(const double* pos) {
     christoffel[1][0][2] = 0.0;
     christoffel[1][0][3] = 0.0;
     christoffel[1][1][0] = 0.0;
-    christoffel[1][1][1] = -t25 * t14 * (2.0 * t27 * t28 - 4.0 * t27 * t31 - 2.0 * t34 * t28 + 4.0 * t34 * t31 + t39 * t28 - 2.0 * t39 * r * m - 2.0 * t13 * r + 2.0 * t13 * m) / 2.0;
+    christoffel[1][1][1] = -t25 * t14
+        * (2.0 * t27 * t28 - 4.0 * t27 * t31 - 2.0 * t34 * t28 + 4.0 * t34 * t31 + t39 * t28 - 2.0 * t39 * r * m
+            - 2.0 * t13 * r + 2.0 * t13 * m)
+        / 2.0;
     christoffel[1][1][2] = -t59 * t25 / 2.0;
     christoffel[1][1][3] = 0.0;
     christoffel[1][2][0] = 0.0;
@@ -212,8 +213,8 @@ bool MetricErezRosenVar::calculateChristoffels(const double* pos) {
     return true;
 }
 
-
-bool MetricErezRosenVar::calculateChrisD(const double*) {
+bool MetricErezRosenVar::calculateChrisD(const double*)
+{
     /*
     double r     = pos[1];
     double theta = pos[2];
@@ -223,10 +224,9 @@ bool MetricErezRosenVar::calculateChrisD(const double*) {
     return true;
 }
 
-
-void MetricErezRosenVar::localToCoord(const double* pos, const double* ldir, double* dir,
-                                      enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricErezRosenVar::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double m = mMass;
@@ -239,68 +239,67 @@ void MetricErezRosenVar::localToCoord(const double* pos, const double* ldir, dou
     dir[3] = ldir[3] * exp(psi) / (sqrt(r * r - 2 * m * r) * sin(theta));
 }
 
-
-void MetricErezRosenVar::coordToLocal(const double* , const double* , double* ,
-                                      enum_nat_tetrad_type) {
-    //double r     = pos[1];
-    //double theta = pos[2];
+void MetricErezRosenVar::coordToLocal(const double*, const double*, double*, enum_nat_tetrad_type)
+{
+    // double r     = pos[1];
+    // double theta = pos[2];
 
     // TODO
-    //ldir[0] = cdir[0]*L*w;
-    //ldir[1] = cdir[1]*L/w;
-    //ldir[2] = cdir[2]*L*r;
-    //ldir[3] = cdir[3]*r*sin(theta)/L;
+    // ldir[0] = cdir[0]*L*w;
+    // ldir[1] = cdir[1]*L/w;
+    // ldir[2] = cdir[2]*L*r;
+    // ldir[3] = cdir[3]*r*sin(theta)/L;
 }
 
-
-bool MetricErezRosenVar::breakCondition(const double*) {
+bool MetricErezRosenVar::breakCondition(const double*)
+{
     bool br = false;
     // if ((pos[1]<0.0) || (pos[1]*pos[1]<=(1.0+eps)*4.0*mMass*mMass)) { br=true; }
     // TOOO
     return br;
 }
 
-
-double MetricErezRosenVar::testConstraint(const double y[], const double kappa) {
-    double r     = y[1];
+double MetricErezRosenVar::testConstraint(const double y[], const double kappa)
+{
+    double r = y[1];
     double theta = y[2];
 
     double m = mMass;
     double psi, g, Delta;
     calcPotentials(y, psi, g, Delta);
 
-    double dt     = y[4];
-    double dr     = y[5];
+    double dt = y[4];
+    double dr = y[5];
     double dtheta = y[6];
-    double dphi   = y[7];
+    double dphi = y[7];
 
     double st = sin(theta);
 
     double sum = -kappa * mSign;
-    sum += -exp(2 * psi) * dt * dt + exp(2 * g - 2 * psi) * Delta * (dr * dr / (r * r - 2 * m * r) + dtheta * dtheta) + exp(-2 * psi) * (r * r - 2 * m * r) * st * st * dphi * dphi;
+    sum += -exp(2 * psi) * dt * dt + exp(2 * g - 2 * psi) * Delta * (dr * dr / (r * r - 2 * m * r) + dtheta * dtheta)
+        + exp(-2 * psi) * (r * r - 2 * m * r) * st * st * dphi * dphi;
     return sum;
 }
 
-
-bool MetricErezRosenVar::setParam(const char* pName, double val) {
+bool MetricErezRosenVar::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
-    if (strcmp(pName,"mass") == 0) {
+    if (strcmp(pName, "mass") == 0) {
         mMass = val;
     }
-    else if (strcmp(pName,"q") == 0) {
+    else if (strcmp(pName, "q") == 0) {
         mQ = val;
     }
     return true;
 }
 
-
-bool MetricErezRosenVar::report(const vec4 pos, const vec4 , std::string &text) {
+bool MetricErezRosenVar::report(const vec4 pos, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for the  Erez-Rosen metric\n\tcoordinate : (t,r,theta,phi)\n";
     ss << "---------------------------------------------------------------\n";
     ss.precision(DEF_FIXED_REPORT_PRECISION);
     ss.setf(std::ios::fixed);
-
 
     ss << "Velocity for timelike circular orbits: beta = sqrt[f/(1+f)]" << std::endl;
     ss << "with f=(m(-2m^3q+m^2qr-5r^3))/(-8m^4q+6m^3q(2m-r)+4m^3qr+15mr^3-5r^4)" << std::endl;
@@ -310,11 +309,9 @@ bool MetricErezRosenVar::report(const vec4 pos, const vec4 , std::string &text) 
     ss << "Charge:                                   q=" << mQ << std::endl;
     ss << "Velocity for timelike circular orbits: beta=" << getCircularVelocity(pos[1]) << std::endl;
 
-    // TODO
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
-
 
 /*! Determine the velocity for a closed circular orbit if it exists.
  *   A circular timelike geodesic with respect to r-coordinate does exist
@@ -322,7 +319,8 @@ bool MetricErezRosenVar::report(const vec4 pos, const vec4 , std::string &text) 
  * \param r  Radial coordinate.
  * \param tedType type of tetrad.
  */
-double MetricErezRosenVar::getCircularVelocity(const double r, const enum_nat_tetrad_type) {
+double MetricErezRosenVar::getCircularVelocity(const double r, const enum_nat_tetrad_type)
+{
 
     double m = mMass;
     double q = mQ;
@@ -334,13 +332,14 @@ double MetricErezRosenVar::getCircularVelocity(const double r, const enum_nat_te
     double r3 = r * r * r;
     double r4 = r * r * r * r;
 
-    double f = (m * (-2.0 * m3 * q + m2 * q * r - 5.0 * r3)) / (-8.0 * m4 * q + 6.0 * m3 * q * (2.0 * m - r) + 4.0 * m3 * q * r + 15.0 * m * r3 - 5.0 * r4);
+    double f = (m * (-2.0 * m3 * q + m2 * q * r - 5.0 * r3))
+        / (-8.0 * m4 * q + 6.0 * m3 * q * (2.0 * m - r) + 4.0 * m3 * q * r + 15.0 * m * r3 - 5.0 * r4);
 
     return sqrt(f / (1.0 + f));
 }
 
-vec4
-MetricErezRosenVar::getCircularFourVel(const vec4 pos, const enum_nat_tetrad_type) {
+vec4 MetricErezRosenVar::getCircularFourVel(const vec4 pos, const enum_nat_tetrad_type)
+{
     double beta = getCircularVelocity(pos[1]);
     if (beta > 0.0 && beta < 1.0) {
         double gamma = 1.0 / sqrt(1.0 - beta * beta);
@@ -353,7 +352,8 @@ MetricErezRosenVar::getCircularFourVel(const vec4 pos, const enum_nat_tetrad_typ
 
 // ********************************* protected methods *****************************
 
-void MetricErezRosenVar::setStandardValues() {
+void MetricErezRosenVar::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 6.0;
     mInitPos[2] = M_PI_2;
@@ -368,15 +368,16 @@ void MetricErezRosenVar::setStandardValues() {
     mCoordNames[3] = std::string("phi");
 }
 
-bool MetricErezRosenVar::calcPotentials(const double* pos, double &psi, double &g, double &delta) {
+bool MetricErezRosenVar::calcPotentials(const double* pos, double& psi, double& g, double& delta)
+{
     double r = pos[1];
     double theta = pos[2];
     double m = mMass;
-    //double q = mQ;
+    // double q = mQ;
 
     double st = sin(theta);
     delta = r * r - 2.0 * m * r + m * m * st * st;
-    g     = 0.5 * log((r * r - 2.0 * m * r) / delta);
+    g = 0.5 * log((r * r - 2.0 * m * r) / delta);
 #if 1
     psi = 0.5 * log(1.0 - 2.0 * m / r);
 #else
@@ -386,14 +387,13 @@ bool MetricErezRosenVar::calcPotentials(const double* pos, double &psi, double &
     return true;
 }
 
-bool MetricErezRosenVar::calcDiffPots(const double* pos, double &psi, double &g, double &delta,
-                                      double &dpsidr, double &dpsidtheta,
-                                      double &dgdr, double &dgdtheta,
-                                      double &dDdr, double &dDdtheta) {
+bool MetricErezRosenVar::calcDiffPots(const double* pos, double& psi, double& g, double& delta, double& dpsidr,
+    double& dpsidtheta, double& dgdr, double& dgdtheta, double& dDdr, double& dDdtheta)
+{
     double r = pos[1];
     double theta = pos[2];
     double m = mMass;
-    //double q = mQ;
+    // double q = mQ;
 
     calcPotentials(pos, psi, g, delta);
 
@@ -403,7 +403,8 @@ bool MetricErezRosenVar::calcDiffPots(const double* pos, double &psi, double &g,
     dDdr = 2.0 * r - 2.0 * m;
     dDdtheta = 2.0 * m * m * st * ct;
 
-    dgdr = ((m * m * r - m * m * m) * st * st) / ((m * m * r * r - 2 * m * m * m * r) * st * st + r * r * r * r - 4 * m * r * r * r + 4 * m * m * r * r);
+    dgdr = ((m * m * r - m * m * m) * st * st)
+        / ((m * m * r * r - 2 * m * m * m * r) * st * st + r * r * r * r - 4 * m * r * r * r + 4 * m * m * r * r);
     dgdtheta = -(m * m * ct * st) / (m * m * st * st + r * r - 2 * m * r);
 
 #if 1

@@ -58,7 +58,7 @@ public:
 
     virtual bool   setParam(const char* pName, double val);
 
-    virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
+    virtual bool   report(const vec4 pos, const vec4 cdir, char*&text);
 
 public:
     void  calcTomimatsuSato(const double* pos);

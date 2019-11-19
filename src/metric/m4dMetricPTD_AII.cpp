@@ -29,13 +29,13 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the metric.
  *
  * \param  b : parameter b of the AII metric
  */
-MetricPTD_AII::MetricPTD_AII(double b) {
-    mMetricName  = "Petrov_Type_D_AII_ES";
+MetricPTD_AII::MetricPTD_AII(double b)
+{
+    mMetricName = "Petrov_Type_D_AII_ES";
     setCoordType(enum_coordinate_cylinder);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -47,26 +47,23 @@ MetricPTD_AII::MetricPTD_AII(double b) {
     addParam("b", Par_b);
 
     setStandardValues();
-
 }
 
 /*! Standard destructor for the metric.
  *
  */
 
-MetricPTD_AII::~MetricPTD_AII() {
-
-}
-
+MetricPTD_AII::~MetricPTD_AII() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricPTD_AII::calculateMetric(const double* pos) {
-    double r     = pos[1];
-    double z     = pos[3];
+bool MetricPTD_AII::calculateMetric(const double* pos)
+{
+    double r = pos[1];
+    double z = pos[3];
     double b = Par_b;
 
     double t1 = 1;
@@ -98,8 +95,9 @@ bool MetricPTD_AII::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricPTD_AII::calculateChristoffels(const double* pos) {
-    double r     = pos[1];
+bool MetricPTD_AII::calculateChristoffels(const double* pos)
+{
+    double r = pos[1];
     double z = pos[3];
     double b = Par_b;
 
@@ -184,24 +182,24 @@ bool MetricPTD_AII::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool
-MetricPTD_AII::calculateChrisD(const double* pos) {
-    double r     = pos[1];
+bool MetricPTD_AII::calculateChrisD(const double* pos)
+{
+    double r = pos[1];
     double z = pos[3];
     double b = Par_b;
 
     double t1 = 2.0 * z;
-    double  t5 = z * z;
-    double  t6 = t5 * t5;
-    double  t12 = -b + z;
-    double  t13 = t12 * t12;
-    double  t15 = 1 / t5;
-    double  t18 = b * (t1 - b) / t13 * t15 / 2.0;
-    double  t19 = cosh(r);
-    double  t20 = t19 * t19;
-    double  t21 = sinh(r);
-    double  t22 = t21 * t21;
-    double  t25 = (-t20 + t22) / t22;
+    double t5 = z * z;
+    double t6 = t5 * t5;
+    double t12 = -b + z;
+    double t13 = t12 * t12;
+    double t15 = 1 / t5;
+    double t18 = b * (t1 - b) / t13 * t15 / 2.0;
+    double t19 = cosh(r);
+    double t20 = t19 * t19;
+    double t21 = sinh(r);
+    double t22 = t21 * t21;
+    double t25 = (-t20 + t22) / t22;
     chrisD[0][0][0][0] = 0.0;
     chrisD[0][0][0][1] = 0.0;
     chrisD[0][0][0][2] = 0.0;
@@ -461,7 +459,6 @@ MetricPTD_AII::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -469,8 +466,8 @@ MetricPTD_AII::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricPTD_AII::localToCoord(const double* pos, const double* ldir, double* dir,
-                                 enum_nat_tetrad_type) {
+void MetricPTD_AII::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     double r = pos[1];
     double z = pos[3];
     double w = sqrt(Par_b / pos[3] - 1);
@@ -488,8 +485,8 @@ void MetricPTD_AII::localToCoord(const double* pos, const double* ldir, double* 
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricPTD_AII::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                 enum_nat_tetrad_type) {
+void MetricPTD_AII::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     double r = pos[1];
     double z = pos[3];
     double w = sqrt(Par_b / pos[3] - 1);
@@ -500,21 +497,20 @@ void MetricPTD_AII::coordToLocal(const double* pos, const double* cdir, double* 
     ldir[3] = cdir[3] / w;
 }
 
-
 /*! Tests break condition.
  *  \param pos  :  position.
  *  \return true  : position z < 0.0 or z reaches b
  *  \return false : position is valid.
  */
-bool MetricPTD_AII::breakCondition(const double* pos) {
+bool MetricPTD_AII::breakCondition(const double* pos)
+{
     bool br = false;
 
-    if ((pos[3] < 0.0) || (pos[3]*pos[3] >= (1.0 - eps)*Par_b * Par_b)) {
+    if ((pos[3] < 0.0) || (pos[3] * pos[3] >= (1.0 - eps) * Par_b * Par_b)) {
         br = true;
     }
     return br;
 }
-
 
 /*! Tests whether the constraint equation is fulfilled.
  *
@@ -526,8 +522,9 @@ bool MetricPTD_AII::breakCondition(const double* pos) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricPTD_AII::testConstraint(const double y[], const double kappa) {
-    double r     = y[1];
+double MetricPTD_AII::testConstraint(const double y[], const double kappa)
+{
+    double r = y[1];
     double z = y[3];
     double cm = 1.0 / mSpeedOfLight;
 
@@ -538,26 +535,27 @@ double MetricPTD_AII::testConstraint(const double y[], const double kappa) {
     double dz = y[7] * cm;
 
     double sum = -kappa;
-    sum += -(Par_b / z - 1.0) * dt * dt + dz * dz / (Par_b / z - 1.0) + z * z * (dr * dr + sinh(r) * sinh(r) * dph * dph);
+    sum += -(Par_b / z - 1.0) * dt * dt + dz * dz / (Par_b / z - 1.0)
+        + z * z * (dr * dr + sinh(r) * sinh(r) * dph * dph);
     return sum;
 }
 
 /*! Set parameter 'pName' to 'val'.
  *
  */
-bool MetricPTD_AII::setParam(const char* pName, double val) {
+bool MetricPTD_AII::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
-    if (strcmp(pName,"b") == 0) {
+    if (strcmp(pName, "b") == 0) {
         Par_b = val;
     }
     return true;
 }
 
-
-
 /*! Generate report.
  */
-bool MetricPTD_AII::report(const vec4 pos, const vec4 cdir, std::string &text) {
+bool MetricPTD_AII::report(const vec4 pos, const vec4 cdir, char*& text)
+{
     std::stringstream ss;
     ss << "Report for AII metric\n\tcoordinates : (t,r,phi,z)\n";
     ss << "---------------------------------------------------------------\n";
@@ -578,25 +576,26 @@ bool MetricPTD_AII::report(const vec4 pos, const vec4 cdir, std::string &text) {
 
     double C0 = cdir[0] * cdir[0] * (pos[3] - b) * (pos[3] - b) / pos[3] / pos[3];
     double C2 = cdir[2] * cdir[2] * p14 * sinp2 * sinp2 * sinp2 * sinp2;
-    double K  = cdir[1] * cdir[1] * p14 + cdir[2] * cdir[2] * p14 * sinp2 * sinp2;
-//  double m0 = -K/pos[3]/pos[3]  + cdir[3]*cdir[3]*pos[3]/(pos[3] - b) -  cdir[0]*cdir[0]*(pos[3] - b)/pos[3];
+    double K = cdir[1] * cdir[1] * p14 + cdir[2] * cdir[2] * p14 * sinp2 * sinp2;
+    //  double m0 = -K/pos[3]/pos[3]  + cdir[3]*cdir[3]*pos[3]/(pos[3] - b) -  cdir[0]*cdir[0]*(pos[3] - b)/pos[3];
     ss << "Constants of motion:" << std::endl;
     ss << "  C_0^2 = " << C0 << std::endl;
     ss << "  C_2^2 = " << C2 << std::endl;
-    ss << "      K = " << K  << std::endl;
-//  ss << "  m_0^2 = " << m0 << std::endl;
+    ss << "      K = " << K << std::endl;
+    //  ss << "  m_0^2 = " << m0 << std::endl;
     ss << "---------------------------------------------------------------\n";
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // *************************** specific  public methods ****************************
-//None
+// None
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricPTD_AII::setStandardValues() {
+void MetricPTD_AII::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 1.0;
     mInitPos[2] = 0.0;
@@ -611,6 +610,4 @@ void MetricPTD_AII::setStandardValues() {
     mCoordNames[3] = std::string("z");
 }
 
-
 } // end namespace m4d
-

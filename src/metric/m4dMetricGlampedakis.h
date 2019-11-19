@@ -50,32 +50,33 @@ namespace m4d {
 // ---------------------------------------------------
 //    class definition:   MetricGlampedakis
 // ---------------------------------------------------
-class MetricGlampedakis : public Metric {
+class MetricGlampedakis : public Metric
+{
 public:
     MetricGlampedakis(double mass = 1.0, double angmom = 0.0, double epsilon = 0.0);
     virtual ~MetricGlampedakis();
 
 public:
-    virtual bool   calculateMetric(const double* pos);
-    virtual bool   calculateChristoffels(const double* pos);
-    virtual bool   calculateChrisD(const double* pos);
-    virtual bool   calculateRiemann(const double* pos);
+    virtual bool calculateMetric(const double* pos);
+    virtual bool calculateChristoffels(const double* pos);
+    virtual bool calculateChrisD(const double* pos);
+    virtual bool calculateRiemann(const double* pos);
 
-    virtual void   localToCoord(const double* pos, const double* ldir, double* dir,
-                                enum_nat_tetrad_type  type = enum_nat_tetrad_default);
-    virtual void   coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                enum_nat_tetrad_type  type = enum_nat_tetrad_default);
+    virtual void localToCoord(
+        const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
+    virtual void coordToLocal(
+        const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
 
-    virtual bool   breakCondition(const double* pos);
+    virtual bool breakCondition(const double* pos);
 
-    virtual bool   setParam(const char* pName, double val);
+    virtual bool setParam(const char* pName, double val);
 
-    virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
+    virtual bool report(const vec4 pos, const vec4 cdir, char*& text);
 
 public:
-    void  calcGlampedakis(const double* pos);
-    void  calcGlampedakisDiff(const double* pos);
-    void  calcGlampedakisDiff2(const double* pos);
+    void calcGlampedakis(const double* pos);
+    void calcGlampedakisDiff(const double* pos);
+    void calcGlampedakisDiff2(const double* pos);
 
     void calcKerr(const double* pos);
     void calcKerrDiff(const double* pos);
@@ -90,7 +91,7 @@ protected:
     void initToZero();
 
 protected:
-    double  mMass, mAngmom, mEpsilon;
+    double mMass, mAngmom, mEpsilon;
     double rs, a, a2;
 
     double r, r2, r3, r4, r5, r6;
@@ -103,8 +104,8 @@ protected:
 
     double theta;
     double sth, cth; // sin(theta)
-    //double cth = cos(theta);
-    double sth2, cth2; //squared
+    // double cth = cos(theta);
+    double sth2, cth2; // squared
     double sth3, sth4;
     double cth3, cth4;
 
@@ -116,7 +117,7 @@ protected:
 
     double sigmadr, sigmadth, deltadr;
     double sigmad2r, deltad2r, sigmad2th;
-    //Kerr metric components
+    // Kerr metric components
     double ktt, ktph, krr, kthth, kphph;
 
     double ktt2, ktph2, krr2, kthth2, kphph2;
@@ -128,20 +129,19 @@ protected:
     double kththdr, kththdth;
     double kphphdr, kphphdth;
 
-    //their second derivatives
+    // their second derivatives
     double kttd2r, kttd2th, kttdrdth;
     double ktphd2r, ktphd2th, ktphdrdth;
     double krrd2r, krrd2th, krrdrdth;
     double kththd2r, kththd2th, kththdrdth;
     double kphphd2r, kphphd2th, kphphdrdth;
 
-
     // additional parameters by Glampedakis
     double htt, hrr, hthth, hphph;
     // their derivatives
     double httdr, httdth, hrrdr, hrrdth;
     double hththdr, hththdth, hphphdr, hphphdth;
-    //their second derivatives
+    // their second derivatives
     double httd2r, httd2th, httdrdth;
     double hrrd2r, hrrd2th, hrrdrdth;
     double hththd2r, hththd2th, hththdrdth;
@@ -157,7 +157,6 @@ protected:
     double glththdr, glththdth;
     double glphphdr, glphphdth;
 
-
     // their second derivatives
     double glttd2r, glttd2th, glttdrdth;
     double gltphd2r, gltphd2th, gltphdrdth;
@@ -169,10 +168,10 @@ protected:
     double F1, F2;
     // their derivatives
     double F1dr, F2dr;
-    //their second derivatives
+    // their second derivatives
     double F1d2r, F2d2r;
 
-    //the full metric components
+    // the full metric components
     double gtt, gtph, grr, gthth, gphph;
     // their derivatives
     double gttdr, gttdth;
@@ -228,10 +227,8 @@ protected:
 
     int glampdiff2skip;
     int glampdiff2called;
-
 };
 
 } // end namespace m4d
 
 #endif
-

@@ -89,7 +89,7 @@ public:
 
     virtual void   calculateRoots(vec3 & roots, double p, double q);
 
-    virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
+    virtual bool   report(const vec4 pos, const vec4 cdir, char*&text);
 
 
 // --------- specific public methods ----------

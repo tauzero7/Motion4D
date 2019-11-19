@@ -1,35 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dObject.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dObject.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dObject.h"
 
 namespace m4d {
 
-/**
- * @brief Standard constructor.
- */
 Object::Object()
     : currMetric(nullptr)
     , geodSolver(nullptr)
@@ -37,9 +15,6 @@ Object::Object()
     resetAll();
 }
 
-/**
- * @brief Standard destructor.
- */
 Object::~Object()
 {
     clearAll();
@@ -251,8 +226,8 @@ enum_break_condition Object::calcSachsJacobi()
     vec3 locZ = vec3(0.0, 0.0, 1.0);
 
     return geodSolver->calcSachsJacobi(this->startPos, this->coordDir, localNullDir, locX, locY, locZ, this->base[0],
-        this->base[1], this->base[2], this->base[3], this->tetradType, static_cast<int>(this->maxNumPoints), this->points, this->dirs,
-        this->lambda, this->sachs1, this->sachs2, this->jacobi, this->maxJacobi);
+        this->base[1], this->base[2], this->base[3], this->tetradType, static_cast<int>(this->maxNumPoints),
+        this->points, this->dirs, this->lambda, this->sachs1, this->sachs2, this->jacobi, this->maxJacobi);
 }
 
 void Object::printStatus()
@@ -326,9 +301,6 @@ void Object::clearAll()
     }
 }
 
-/**
- * @brief Reset all parameters.
- */
 void Object::resetAll()
 {
     if (currMetric != nullptr) {
@@ -382,13 +354,6 @@ void Object::resetAll()
     dielectric_perm = 1.0;
 }
 
-/**
- * @brief Get parameter value of Object.
- * @param paramName
- * @param paramValue
- * @return true : if parameter was found.\n
- *         false : parameter was not found.
- */
 bool Object::getParam(const char* paramName, int& paramValue)
 {
     if (strcmp(paramName, "axes_orient") == 0) {
@@ -406,13 +371,6 @@ bool Object::getParam(const char* paramName, int& paramValue)
     return false;
 }
 
-/**
- * @brief Get parameter value of Object.
- * @param paramName
- * @param paramValue
- * @return true : if parameter was found.\n
- *         false : parameter was not found.
- */
 bool Object::getParam(const char* paramName, double& paramValue)
 {
     if (strcmp(paramName, "stepsize") == 0) {
@@ -470,13 +428,6 @@ bool Object::getParam(const char* paramName, double& paramValue)
     return false;
 }
 
-/**
- * @brief Get parameter value of Object.
- * @param paramName
- * @param paramValue
- * @return true : if parameter was found.\n
- *         false : parameter was not found.
- */
 bool Object::getParam(const char* paramName, m4d::vec3& paramValue)
 {
     if (strcmp(paramName, "startDir") == 0) {
@@ -486,13 +437,6 @@ bool Object::getParam(const char* paramName, m4d::vec3& paramValue)
     return false;
 }
 
-/**
- * @brief Get parameter value of Object.
- * @param paramName
- * @param paramValue
- * @return true : if parameter was found.\n
- *         false : parameter was not found.
- */
 bool Object::getParam(const char* paramName, m4d::vec4& paramValue)
 {
     if (strcmp(paramName, "startPos") == 0) {
@@ -522,13 +466,6 @@ bool Object::getParam(const char* paramName, m4d::vec4& paramValue)
     return false;
 }
 
-/**
- * @brief Set Lorentz transformation.
- *
- *  \param  chi : angle in deg.
- *  \param  ksi : angle in deg.
- *  \param  beta : velocity (v/c).
- */
 bool Object::setLorentzTransf(const double chi, const double ksi, const double beta)
 {
     boost_ksi = ksi;
@@ -576,22 +513,11 @@ bool Object::setLorentzTransf(const m4d::vec3 beta)
     return true;
 }
 
-/**
- * @brief Reset Lorentz transformation.
- */
 void Object::resetLorentzTransf()
 {
     lorentz.setIdent();
 }
 
-/**
- * @brief Load settings.
- *
- *  \param filename : name of setting file.
- *  \param printset : print setting.
- *  \return true : success.
- *  \return false : error occured.
- */
 bool Object::loadSettings(const char* filename, bool printset)
 {
     setlocale(LC_NUMERIC, "C");
@@ -745,13 +671,6 @@ bool Object::loadSettings(const char* filename, bool printset)
     return ok;
 }
 
-/*!  Save settings.
- *
- *  \param filename : name of the settings file.
- *  \param dat      : current date.
- *  \return true : success.
- *  \return false : error occured.
- */
 bool Object::saveSettings(const char* filename, const char* dat)
 {
     if (currMetric == nullptr) {
@@ -826,10 +745,6 @@ bool Object::saveSettings(const char* filename, const char* dat)
     return true;
 }
 
-/*! Print settings to fptr.
- *
- *  \param fptr : pointer to file.
- */
 void Object::printSettings(FILE* fptr)
 {
     if (currMetric == nullptr || geodSolver == nullptr) {
@@ -883,12 +798,6 @@ void Object::printSettings(FILE* fptr)
     setlocale(LC_NUMERIC, oldlocale);
 }
 
-/*! Prepare a report for the current metric.
- *
- *  \param text : reference to string.
- *  \return true : success.
- *  \return false : no metric available.
- */
 bool Object::makeReport(char*& text)
 {
     if (currMetric == nullptr) {

@@ -29,14 +29,14 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the Kottler metric.
  *
  * \param  mass1 : mass of the first black hole.
  * \param  mass2 : mass of the second black hole.
  */
-MetricExtremeReissnerNordstromDihole::MetricExtremeReissnerNordstromDihole(double mass1, double mass2) {
-    mMetricName  = "ExtremeReissnerNordstromDihole";
+MetricExtremeReissnerNordstromDihole::MetricExtremeReissnerNordstromDihole(double mass1, double mass2)
+{
+    mMetricName = "ExtremeReissnerNordstromDihole";
     setCoordType(enum_coordinate_cartesian);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -58,18 +58,19 @@ MetricExtremeReissnerNordstromDihole::MetricExtremeReissnerNordstromDihole(doubl
     setStandardValues();
 }
 
-MetricExtremeReissnerNordstromDihole::~MetricExtremeReissnerNordstromDihole() {
+MetricExtremeReissnerNordstromDihole::~MetricExtremeReissnerNordstromDihole()
+{
     gsl_integration_workspace_free(w);
 }
-
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricExtremeReissnerNordstromDihole::calculateMetric(const double* pos) {
-    double t1 = calc_U(pos);  // U(x,y,z);
+bool MetricExtremeReissnerNordstromDihole::calculateMetric(const double* pos)
+{
+    double t1 = calc_U(pos); // U(x,y,z);
     double t2 = t1 * t1;
 
     g_compts[0][0] = -1 / t2;
@@ -96,17 +97,18 @@ bool MetricExtremeReissnerNordstromDihole::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricExtremeReissnerNordstromDihole::calculateChristoffels(const double* pos) {
-    double t1 = calc_U(pos);  // U(x,y,z);
+bool MetricExtremeReissnerNordstromDihole::calculateChristoffels(const double* pos)
+{
+    double t1 = calc_U(pos); // U(x,y,z);
     double Ux, Uy, Uz;
     calc_dU(pos, Ux, Uy, Uz);
 
     double t2 = t1 * t1;
     double t3 = t2 * t2;
     double t5 = 1 / t3 / t1;
-    double t6 = Ux;   // diff(U(x,y,z),x);
-    double t8 = Uy;   // diff(U(x,y,z),y);
-    double t10 = Uz;  // diff(U(x,y,z),z);
+    double t6 = Ux; // diff(U(x,y,z),x);
+    double t8 = Uy; // diff(U(x,y,z),y);
+    double t10 = Uz; // diff(U(x,y,z),z);
     double t12 = 1 / t1;
     double t13 = t12 * t6;
     double t14 = t12 * t8;
@@ -184,39 +186,40 @@ bool MetricExtremeReissnerNordstromDihole::calculateChristoffels(const double* p
  *
  *  \param pos : pointer to position.
  */
-bool MetricExtremeReissnerNordstromDihole::calculateChrisD(const double* pos) {
+bool MetricExtremeReissnerNordstromDihole::calculateChrisD(const double* pos)
+{
     double U = calc_U(pos);
     double Ux, Uy, Uz, Uxx, Uyy, Uzz, Uxy, Uxz, Uyz;
     calc_dU(pos, Ux, Uy, Uz);
     calc_ddU(pos, Uxx, Uyy, Uzz, Uxy, Uxz, Uyz);
 
-    double t1 = Ux;      //diff(U(x,y,z),x);
+    double t1 = Ux; // diff(U(x,y,z),x);
     double t2 = t1 * t1;
-    double t4 = Uxx;     // diff(diff(U(x,y,z),x),x);
-    double t5 = U;       // U(x,y,z);
+    double t4 = Uxx; // diff(diff(U(x,y,z),x),x);
+    double t5 = U; // U(x,y,z);
     double t6 = t4 * t5;
     double t8 = t5 * t5;
     double t9 = t8 * t8;
     double t11 = 1 / t9 / t8;
-    double t13 = Uy;     // diff(U(x,y,z),y);
+    double t13 = Uy; // diff(U(x,y,z),y);
     double t14 = t1 * t13;
-    double t16 = Uxy;    // diff(diff(U(x,y,z),x),y);
+    double t16 = Uxy; // diff(diff(U(x,y,z),x),y);
     double t17 = t16 * t5;
     double t19 = (-5.0 * t14 + t17) * t11;
-    double t20 = Uz;     // diff(U(x,y,z),z);
+    double t20 = Uz; // diff(U(x,y,z),z);
     double t21 = t1 * t20;
-    double t23 = Uxz;    // diff(diff(U(x,y,z),x),z);
+    double t23 = Uxz; // diff(diff(U(x,y,z),x),z);
     double t24 = t23 * t5;
     double t26 = (-5.0 * t21 + t24) * t11;
     double t27 = t13 * t13;
-    double t29 = Uyy;    // diff(diff(U(x,y,z),y),y);
+    double t29 = Uyy; // diff(diff(U(x,y,z),y),y);
     double t30 = t29 * t5;
     double t33 = t13 * t20;
-    double t35 = Uyz;    // diff(diff(U(x,y,z),y),z);
+    double t35 = Uyz; // diff(diff(U(x,y,z),y),z);
     double t36 = t35 * t5;
     double t38 = (-5.0 * t33 + t36) * t11;
     double t39 = t20 * t20;
-    double t41 = Uzz;    // diff(diff(U(x,y,z),z),z);
+    double t41 = Uzz; // diff(diff(U(x,y,z),z),z);
     double t42 = t41 * t5;
     double t46 = 1 / t8;
     double t47 = (-t2 + t6) * t46;
@@ -486,19 +489,19 @@ bool MetricExtremeReissnerNordstromDihole::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Calculate Riemann tensor.
  *  \todo use symmetries
  *  \param pos : pointer to position.
  */
-bool MetricExtremeReissnerNordstromDihole::calculateRiemann(const double* pos) {
+bool MetricExtremeReissnerNordstromDihole::calculateRiemann(const double* pos)
+{
     double U = calc_U(pos);
     double Ux, Uy, Uz, Uxx, Uyy, Uzz, Uxy, Uxz, Uyz;
     calc_dU(pos, Ux, Uy, Uz);
     calc_ddU(pos, Uxx, Uyy, Uzz, Uxy, Uxz, Uyz);
 
-    double U2  = U*U;
-    double U6  = U2*U2*U2;
+    double U2 = U * U;
+    double U6 = U2 * U2 * U2;
     double Ux2 = Ux * Ux;
     double Uy2 = Uy * Uy;
     double Uz2 = Uz * Uz;
@@ -508,42 +511,42 @@ bool MetricExtremeReissnerNordstromDihole::calculateRiemann(const double* pos) {
     int y = 2;
     int z = 3;
 
-    riem[t][x][x][t] = -1/U2*(-3*Ux2+Uxx*U+Uy2+Uz2);
-    riem[t][x][y][t] = -1/U2*(-4*Ux*Uy+Uxy*U);
-    riem[t][x][z][t] = -1/U2*(-4*Ux*Uz+Uxz*U);
-    riem[t][y][x][t] = -1/U2*(-4*Ux*Uy+Uxy*U);
-    riem[t][y][y][t] = 1/U2*(3*Uy2-Uyy*U-Ux2-Uz2);
-    riem[t][y][z][t] = 1/U2*(4*Uy*Uz-Uyz*U);
-    riem[t][z][x][t] = -1/U2*(-4*Ux*Uz+Uxz*U);
-    riem[t][z][y][t] = 1/U2*(4*Uy*Uz-Uyz*U);
-    riem[t][z][z][t] = -1/U2*(-3*Uz2+Uzz*U+Ux2+Uy2);
-    riem[x][y][x][y] = 1/U2*(Uy2-Uyy*U+Ux2-Uxx*U-Uz2);
-    riem[x][y][x][z] = 1/U2*(-Uyz*U+2*Uy*Uz);
-    riem[x][y][y][z] = 1/U2*(-2*Ux*Uz+Uxz*U);
-    riem[x][z][x][y] = 1/U2*(-Uyz*U+2*Uy*Uz);
-    riem[x][z][x][z] = -(-Uz2+Uzz*U-Ux2+Uxx*U+Uy2)/U2;
-    riem[x][z][y][z] = -(Uxy*U-2*Ux*Uy)/U2;
-    riem[x][t][x][t] = -1/U6*(-3*Ux2+Uxx*U+Uy2+Uz2);
-    riem[x][t][y][t] = -1/U6*(-4*Ux*Uy+Uxy*U);
-    riem[x][t][z][t] = -1/U6*(-4*Ux*Uz+Uxz*U);
-    riem[y][x][x][y] = (-Uy2+Uyy*U-Ux2+Uxx*U+Uz2)/U2;
-    riem[y][x][x][z] = (Uyz*U-2*Uy*Uz)/U2;
-    riem[y][x][y][z] = -1/U2*(-2*Ux*Uz+Uxz*U);
-    riem[y][z][x][y] = 1/U2*(-2*Ux*Uz+Uxz*U);
-    riem[y][z][x][z] = -(Uxy*U-2*Ux*Uy)/U2;
-    riem[y][z][y][z] = -(-Uz2+Uzz*U-Uy2+Uyy*U+Ux2)/U2;
-    riem[y][t][x][t] = -1/U6*(-4*Ux*Uy+Uxy*U);
-    riem[y][t][y][t] = 1/U6*(3*Uy2-Uyy*U-Ux2-Uz2);
-    riem[y][t][z][t] = 1/U6*(4*Uy*Uz-Uyz*U);
-    riem[z][x][x][y] = (Uyz*U-2*Uy*Uz)/U2;
-    riem[z][x][x][z] = (-Uz2+Uzz*U-Ux2+Uxx*U+Uy2)/U2;
-    riem[z][x][y][z] = (Uxy*U-2*Ux*Uy)/U2;
-    riem[z][y][x][y] = -1/U2*(-2*Ux*Uz+Uxz*U);
-    riem[z][y][x][z] = (Uxy*U-2*Ux*Uy)/U2;
-    riem[z][y][y][z] = (-Uz2+Uzz*U-Uy2+Uyy*U+Ux2)/U2;
-    riem[z][t][x][t] = -1/U6*(-4*Ux*Uz+Uxz*U);
-    riem[z][t][y][t] = 1/U6*(4*Uy*Uz-Uyz*U);
-    riem[z][t][z][t] = -1/U6*(-3*Uz2+Uzz*U+Ux2+Uy2);
+    riem[t][x][x][t] = -1 / U2 * (-3 * Ux2 + Uxx * U + Uy2 + Uz2);
+    riem[t][x][y][t] = -1 / U2 * (-4 * Ux * Uy + Uxy * U);
+    riem[t][x][z][t] = -1 / U2 * (-4 * Ux * Uz + Uxz * U);
+    riem[t][y][x][t] = -1 / U2 * (-4 * Ux * Uy + Uxy * U);
+    riem[t][y][y][t] = 1 / U2 * (3 * Uy2 - Uyy * U - Ux2 - Uz2);
+    riem[t][y][z][t] = 1 / U2 * (4 * Uy * Uz - Uyz * U);
+    riem[t][z][x][t] = -1 / U2 * (-4 * Ux * Uz + Uxz * U);
+    riem[t][z][y][t] = 1 / U2 * (4 * Uy * Uz - Uyz * U);
+    riem[t][z][z][t] = -1 / U2 * (-3 * Uz2 + Uzz * U + Ux2 + Uy2);
+    riem[x][y][x][y] = 1 / U2 * (Uy2 - Uyy * U + Ux2 - Uxx * U - Uz2);
+    riem[x][y][x][z] = 1 / U2 * (-Uyz * U + 2 * Uy * Uz);
+    riem[x][y][y][z] = 1 / U2 * (-2 * Ux * Uz + Uxz * U);
+    riem[x][z][x][y] = 1 / U2 * (-Uyz * U + 2 * Uy * Uz);
+    riem[x][z][x][z] = -(-Uz2 + Uzz * U - Ux2 + Uxx * U + Uy2) / U2;
+    riem[x][z][y][z] = -(Uxy * U - 2 * Ux * Uy) / U2;
+    riem[x][t][x][t] = -1 / U6 * (-3 * Ux2 + Uxx * U + Uy2 + Uz2);
+    riem[x][t][y][t] = -1 / U6 * (-4 * Ux * Uy + Uxy * U);
+    riem[x][t][z][t] = -1 / U6 * (-4 * Ux * Uz + Uxz * U);
+    riem[y][x][x][y] = (-Uy2 + Uyy * U - Ux2 + Uxx * U + Uz2) / U2;
+    riem[y][x][x][z] = (Uyz * U - 2 * Uy * Uz) / U2;
+    riem[y][x][y][z] = -1 / U2 * (-2 * Ux * Uz + Uxz * U);
+    riem[y][z][x][y] = 1 / U2 * (-2 * Ux * Uz + Uxz * U);
+    riem[y][z][x][z] = -(Uxy * U - 2 * Ux * Uy) / U2;
+    riem[y][z][y][z] = -(-Uz2 + Uzz * U - Uy2 + Uyy * U + Ux2) / U2;
+    riem[y][t][x][t] = -1 / U6 * (-4 * Ux * Uy + Uxy * U);
+    riem[y][t][y][t] = 1 / U6 * (3 * Uy2 - Uyy * U - Ux2 - Uz2);
+    riem[y][t][z][t] = 1 / U6 * (4 * Uy * Uz - Uyz * U);
+    riem[z][x][x][y] = (Uyz * U - 2 * Uy * Uz) / U2;
+    riem[z][x][x][z] = (-Uz2 + Uzz * U - Ux2 + Uxx * U + Uy2) / U2;
+    riem[z][x][y][z] = (Uxy * U - 2 * Ux * Uy) / U2;
+    riem[z][y][x][y] = -1 / U2 * (-2 * Ux * Uz + Uxz * U);
+    riem[z][y][x][z] = (Uxy * U - 2 * Ux * Uy) / U2;
+    riem[z][y][y][z] = (-Uz2 + Uzz * U - Uy2 + Uyy * U + Ux2) / U2;
+    riem[z][t][x][t] = -1 / U6 * (-4 * Ux * Uz + Uxz * U);
+    riem[z][t][y][t] = 1 / U6 * (4 * Uy * Uz - Uyz * U);
+    riem[z][t][z][t] = -1 / U6 * (-3 * Uz2 + Uzz * U + Ux2 + Uy2);
 
     return true;
 }
@@ -555,8 +558,9 @@ bool MetricExtremeReissnerNordstromDihole::calculateRiemann(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricExtremeReissnerNordstromDihole::localToCoord(const double* pos, const double* ldir, double* dir,
-        enum_nat_tetrad_type) {
+void MetricExtremeReissnerNordstromDihole::localToCoord(
+    const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     double U = calc_U(pos);
 
     dir[0] = ldir[0] * U;
@@ -572,8 +576,9 @@ void MetricExtremeReissnerNordstromDihole::localToCoord(const double* pos, const
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricExtremeReissnerNordstromDihole::coordToLocal(const double* pos, const double* cdir, double* ldir,
-        enum_nat_tetrad_type) {
+void MetricExtremeReissnerNordstromDihole::coordToLocal(
+    const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     double U = calc_U(pos);
 
     ldir[0] = cdir[0] / U;
@@ -582,14 +587,14 @@ void MetricExtremeReissnerNordstromDihole::coordToLocal(const double* pos, const
     ldir[3] = cdir[3] * U;
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricExtremeReissnerNordstromDihole::breakCondition(const double*) {
+bool MetricExtremeReissnerNordstromDihole::breakCondition(const double*)
+{
     bool br = false;
 
     return br;
@@ -605,7 +610,8 @@ bool MetricExtremeReissnerNordstromDihole::breakCondition(const double*) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricExtremeReissnerNordstromDihole::testConstraint(const double y[], const double kappa) {
+double MetricExtremeReissnerNordstromDihole::testConstraint(const double y[], const double kappa)
+{
     double U = calc_U(y);
 
     double dt = y[4];
@@ -618,15 +624,15 @@ double MetricExtremeReissnerNordstromDihole::testConstraint(const double y[], co
     return sum;
 }
 
-
 /*! Set parameter 'pName' to 'val'.
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricExtremeReissnerNordstromDihole::setParam(const char* pName, double val) {
+bool MetricExtremeReissnerNordstromDihole::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"m1") == 0) {
+    if (strcmp(pName, "m1") == 0) {
         mM1 = val;
     }
     else if (strcmp(pName, "m2") == 0) {
@@ -641,7 +647,8 @@ bool MetricExtremeReissnerNordstromDihole::setParam(const char* pName, double va
  *  \param  cp : reference to transformed point.
  *  \return true : success.
  */
-bool MetricExtremeReissnerNordstromDihole::transToTwoPlusOne(vec4 p, vec4 &cp) {
+bool MetricExtremeReissnerNordstromDihole::transToTwoPlusOne(vec4 p, vec4& cp)
+{
     double x = p[1];
     double y = p[2];
     double z = p[3];
@@ -653,7 +660,8 @@ bool MetricExtremeReissnerNordstromDihole::transToTwoPlusOne(vec4 p, vec4 &cp) {
 
 /*! Generate report.
  */
-bool MetricExtremeReissnerNordstromDihole::report(const vec4 pos, const vec4 cdir, std::string &text) {
+bool MetricExtremeReissnerNordstromDihole::report(const vec4 pos, const vec4 cdir, char*& text)
+{
     std::stringstream ss;
     ss << "Report for extreme ReissnerNordstrom Dihole metric\n\tcoordinate : (t,x,y,z)\n";
     ss << "The two singularities are fixed along the z-axis at z=-1 and z=+1. \n";
@@ -664,7 +672,8 @@ bool MetricExtremeReissnerNordstromDihole::report(const vec4 pos, const vec4 cdi
 
     double rho_init_square = pos[1] * pos[1] + pos[2] * pos[2];
     double rho_init = sqrt(rho_init_square);
-    double U = 1 + mM1 / sqrt(rho_init_square + (pos[3] - 1) * (pos[3] - 1.)) + mM2 / sqrt(rho_init_square + (pos[3] + 1) * (pos[3] + 1.));
+    double U = 1 + mM1 / sqrt(rho_init_square + (pos[3] - 1) * (pos[3] - 1.))
+        + mM2 / sqrt(rho_init_square + (pos[3] + 1) * (pos[3] + 1.));
     double k = (mSpeedOfLight * mSpeedOfLight * cdir[0]) / (U * U);
     double Lz = U * U * (pos[1] * cdir[2] - pos[2] * cdir[1]);
     ss << "  function from metric at initial psition .......... U = " << U << std::endl;
@@ -680,7 +689,8 @@ bool MetricExtremeReissnerNordstromDihole::report(const vec4 pos, const vec4 cdi
     ss << "for additional information about motion along the z-axis make sure that\n";
     ss << "x=y=0 and chi=0 or chi=180 in the standard tetrad direction ! \n";
 
-    if (pos[1] == 0.0 && pos[2] == 0.0 && cdir[1] < 0.00000000000001 && cdir[1] > -0.00000000000001 && cdir[2] < 0.00000000000001 && cdir[2] > -0.00000000000001) {
+    if (pos[1] == 0.0 && pos[2] == 0.0 && cdir[1] < 0.00000000000001 && cdir[1] > -0.00000000000001
+        && cdir[2] < 0.00000000000001 && cdir[2] > -0.00000000000001) {
         if (pos[3] > 1.0) {
             double betaEscapeAlongZ;
             calcEscapeVelocityAlongZ(pos, betaEscapeAlongZ, mM1, mM2);
@@ -689,7 +699,7 @@ bool MetricExtremeReissnerNordstromDihole::report(const vec4 pos, const vec4 cdi
         }
         if (pos[3] < -1.0) {
             double betaEscapeAlongZ;
-            calcEscapeVelocityAlongZ(pos, betaEscapeAlongZ , mM1, mM2);
+            calcEscapeVelocityAlongZ(pos, betaEscapeAlongZ, mM1, mM2);
             ss << "  \n";
             ss << "  escape velocity downward (chi=180) ............ beta = " << betaEscapeAlongZ << std::endl;
         }
@@ -707,18 +717,21 @@ bool MetricExtremeReissnerNordstromDihole::report(const vec4 pos, const vec4 cdi
             if (pos[3] == pointOfEquilibrium) {
                 betaEquilibrium = 0.0;
                 ss << "  \n";
-                ss << "  vel. for asymptotic motion to point of equilibrium ... beta = " << betaEquilibrium << std::endl;
+                ss << "  vel. for asymptotic motion to point of equilibrium ... beta = " << betaEquilibrium
+                   << std::endl;
             }
             if (pos[3] < pointOfEquilibrium) {
                 calcVelocityToEquilibriumPoint(pos, betaEquilibrium, pointOfEquilibrium, mM1, mM2);
                 ss << "  \n";
-                ss << "  vel. for asymptotic motion to point of equilibrium ... beta = " << betaEquilibrium << std::endl;
+                ss << "  vel. for asymptotic motion to point of equilibrium ... beta = " << betaEquilibrium
+                   << std::endl;
                 ss << "  appendant orientation ................................. chi = 0.00000000000000 \n";
             }
             if (pos[3] > pointOfEquilibrium) {
                 calcVelocityToEquilibriumPoint(pos, betaEquilibrium, pointOfEquilibrium, mM1, mM2);
                 ss << "  \n";
-                ss << "  vel. for asymptotic motion to point of equilibrium ... beta = " << betaEquilibrium << std::endl;
+                ss << "  vel. for asymptotic motion to point of equilibrium ... beta = " << betaEquilibrium
+                   << std::endl;
                 ss << "  appendant orientation ................................. chi = 180.000000000000 \n";
             }
         }
@@ -730,7 +743,8 @@ bool MetricExtremeReissnerNordstromDihole::report(const vec4 pos, const vec4 cdi
     ss << "for additional information about motion along the x-axis make sure that \n";
     ss << "m1=m2, y=z=0, chi=90 and ksi=0 or ksi=180 in the standard tetrad direction ! \n";
 
-    if (mM1 == mM2 && pos[2] == 0.0 && pos[3] == 0.0 && cdir[2] < 0.00000000000001 && cdir[2] > -0.00000000000001 && cdir[3] < 0.00000000000001 && cdir[3] > -0.00000000000001) {
+    if (mM1 == mM2 && pos[2] == 0.0 && pos[3] == 0.0 && cdir[2] < 0.00000000000001 && cdir[2] > -0.00000000000001
+        && cdir[3] < 0.00000000000001 && cdir[3] > -0.00000000000001) {
         double betaEscapeAlongX;
         calcEscapeVelocityAlongX(pos, betaEscapeAlongX, mM1);
         ss << "  \n";
@@ -797,7 +811,8 @@ bool MetricExtremeReissnerNordstromDihole::report(const vec4 pos, const vec4 cdi
         if (radius_pos >= r_Nm && mM1 >= mquer) {
             calcKsiCritXY(pos, ksicritXY, r_Np, mM1);
             ss << ksicritXY << std::endl;
-        } else {
+        }
+        else {
             ss << "not valid here \n";
         }
 
@@ -807,10 +822,10 @@ bool MetricExtremeReissnerNordstromDihole::report(const vec4 pos, const vec4 cdi
         calcBetaCoXY(betaCoXY, rho_init);
         if (betaCoXY <= 1.) {
             ss << betaCoXY << std::endl;
-        } else {
+        }
+        else {
             ss << "not valid here \n";
         }
-
 
         ss << "  \n";
         ss << "  (The terms stable and unstable refer here only to the motion in the x/y-plane.\n";
@@ -859,15 +874,15 @@ bool MetricExtremeReissnerNordstromDihole::report(const vec4 pos, const vec4 cdi
 
         if (mM1 < mM2) {
             ss << "  \n";
-            ss << "  Circular orbits exist only between ............ z = "  << minusEins << std::endl;
-            ss << "                                 and ............ z = "  << zSing << std::endl;
+            ss << "  Circular orbits exist only between ............ z = " << minusEins << std::endl;
+            ss << "                                 and ............ z = " << zSing << std::endl;
             ss << "                         and between ............ z =  " << zEqu << std::endl;
             ss << "                                 and ............ z =  " << plusEins << std::endl;
         }
         if (mM1 > mM2) {
             ss << "  \n";
-            ss << "  Circular orbits exist only between ............ z = "  << minusEins << std::endl;
-            ss << "                                 and ............ z = "  << zEqu << std::endl;
+            ss << "  Circular orbits exist only between ............ z = " << minusEins << std::endl;
+            ss << "                                 and ............ z = " << zEqu << std::endl;
             ss << "                         and between ............ z =  " << zSing << std::endl;
             ss << "                                 and ............ z =  " << plusEins << std::endl;
         }
@@ -877,7 +892,7 @@ bool MetricExtremeReissnerNordstromDihole::report(const vec4 pos, const vec4 cdi
         calcRadiusForOtherCoForUnequalMasses(rPhot1, zPhot1, mM1, mM2);
         calcRadiusForOtherCoForUnequalMasses(rPhot2, zPhot2, mM1, mM2);
         ss << "  \n";
-        ss << "  Photon orbit for .............................. z = "  << zPhot1 << std::endl;
+        ss << "  Photon orbit for .............................. z = " << zPhot1 << std::endl;
         ss << "       with radius .............................. r =  " << rPhot1 << std::endl;
         ss << "  Photon orbit for .............................. z =  " << zPhot2 << std::endl;
         ss << "       with radius .............................. r =  " << rPhot2 << std::endl;
@@ -892,7 +907,8 @@ bool MetricExtremeReissnerNordstromDihole::report(const vec4 pos, const vec4 cdi
                 ss << "  Timelike orbit at current z with radius ....... r =  " << rTime1 << std::endl;
                 ss << "                             and velocity .... beta =  " << betaTime1 << std::endl;
                 ss << "                   ( Attention: beta has to be between 0.0 and 1.0 ! ) \n";
-            } else {
+            }
+            else {
                 ss << "  \n";
                 ss << "  Timelike orbit at current z with radius ....... r =  not valid here \n";
                 ss << "                             and velocity .... beta =  not valid here \n";
@@ -908,7 +924,8 @@ bool MetricExtremeReissnerNordstromDihole::report(const vec4 pos, const vec4 cdi
                 ss << "  Timelike orbit at current z with radius ....... r =  " << rTime1 << std::endl;
                 ss << "                             and velocity .... beta =  " << betaTime1 << std::endl;
                 ss << "                   ( Attention: beta has to be between 0.0 and 1.0 ! ) \n";
-            } else {
+            }
+            else {
                 ss << "  \n";
                 ss << "  Timelike orbit at current z with radius ....... r =  not valid here \n";
                 ss << "                             and velocity .... beta =  not valid here \n";
@@ -916,10 +933,9 @@ bool MetricExtremeReissnerNordstromDihole::report(const vec4 pos, const vec4 cdi
         }
     }
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
-
 
 // ****************************** specific public methods **************************
 /*!  Calculate the escape velocity for motion only along the z-axis for initial
@@ -930,7 +946,9 @@ bool MetricExtremeReissnerNordstromDihole::report(const vec4 pos, const vec4 cdi
  *  \param m1 : value of the mass at z=+1
  *  \param m2 : value of the mass at z=-1
  */
-bool MetricExtremeReissnerNordstromDihole::calcEscapeVelocityAlongZ(const vec4 pos, double &betaEscape, double m1, double m2) {
+bool MetricExtremeReissnerNordstromDihole::calcEscapeVelocityAlongZ(
+    const vec4 pos, double& betaEscape, double m1, double m2)
+{
     double z = pos[3];
     double w1, w2;
 
@@ -948,8 +966,8 @@ bool MetricExtremeReissnerNordstromDihole::calcEscapeVelocityAlongZ(const vec4 p
     double w5 = w1 * w2;
     double w6 = w5 * w5;
 
-    double numerator = m1 * m1 * w3 + m2 * m2 * w4 + 2.*m1 * w2 * w3 + 2.*m2 * w1 * w4 + 2.*m1 * m2 * w5;
-    double denominator = w6 + m1 * m1 * w3 + m2 * m2 * w4 + 2.*m1 * w2 * w3 + 2.*m2 * w1 * w4 + 2.*m1 * m2 * w5;
+    double numerator = m1 * m1 * w3 + m2 * m2 * w4 + 2. * m1 * w2 * w3 + 2. * m2 * w1 * w4 + 2. * m1 * m2 * w5;
+    double denominator = w6 + m1 * m1 * w3 + m2 * m2 * w4 + 2. * m1 * w2 * w3 + 2. * m2 * w1 * w4 + 2. * m1 * m2 * w5;
 
     betaEscape = sqrt(numerator / denominator);
 
@@ -962,13 +980,14 @@ bool MetricExtremeReissnerNordstromDihole::calcEscapeVelocityAlongZ(const vec4 p
  *  \param betaEscape : reference to the escape velocity
  *  \param MASS : value of the two equal masses
  */
-bool MetricExtremeReissnerNordstromDihole::calcEscapeVelocityAlongX(const vec4 pos, double &betaEscape, double MASS) {
+bool MetricExtremeReissnerNordstromDihole::calcEscapeVelocityAlongX(const vec4 pos, double& betaEscape, double MASS)
+{
     double xSquare = pos[1] * pos[1];
     double MSquare = MASS * MASS;
     double w1 = xSquare + 1.;
     double w2 = sqrt(w1);
 
-    double numerator = 4.*MSquare + 4.*MASS * w2;
+    double numerator = 4. * MSquare + 4. * MASS * w2;
     double denominator = w1 + numerator;
 
     betaEscape = sqrt(numerator / denominator);
@@ -982,13 +1001,15 @@ bool MetricExtremeReissnerNordstromDihole::calcEscapeVelocityAlongX(const vec4 p
  *
  *  \param pointOfEquilibrium : reference to the point of equilibrium
  */
-bool MetricExtremeReissnerNordstromDihole::calcPointOfEquilibrium(double &pointOfEquilibrium) {
+bool MetricExtremeReissnerNordstromDihole::calcPointOfEquilibrium(double& pointOfEquilibrium)
+{
     if (mM1 == mM2) {
         pointOfEquilibrium = 0.0;
         return true;
-    } else {
+    }
+    else {
         double quot = mM1 / mM2;
-        pointOfEquilibrium = (1. + quot - 2.*sqrt(quot)) / (1. - quot);
+        pointOfEquilibrium = (1. + quot - 2. * sqrt(quot)) / (1. - quot);
         return true;
     }
 }
@@ -1001,7 +1022,8 @@ bool MetricExtremeReissnerNordstromDihole::calcPointOfEquilibrium(double &pointO
  *
  *  \param singularityPoint : reference to the singularity
  */
-bool MetricExtremeReissnerNordstromDihole::calcASingularityPoint(double &singularityPoint) {
+bool MetricExtremeReissnerNordstromDihole::calcASingularityPoint(double& singularityPoint)
+{
     double q = mM1 / mM2;
     singularityPoint = (q - 1.) / (q + 1.);
 
@@ -1019,7 +1041,9 @@ bool MetricExtremeReissnerNordstromDihole::calcASingularityPoint(double &singula
  *  \param mass1 : value of the mass at z = +1
  *  \param mass2 : value of the mass at z = -1
  */
-bool MetricExtremeReissnerNordstromDihole::calcVelocityToEquilibriumPoint(const vec4 pos, double &betaEquilibrium, double pointOfEquilibrium, double mass1, double mass2) {
+bool MetricExtremeReissnerNordstromDihole::calcVelocityToEquilibriumPoint(
+    const vec4 pos, double& betaEquilibrium, double pointOfEquilibrium, double mass1, double mass2)
+{
     double z0 = pos[3];
     double zE = pointOfEquilibrium;
     double Uz0 = 1. + mass1 / sqrt((z0 - 1.) * (z0 - 1.)) + mass2 / sqrt((z0 + 1.) * (z0 + 1.));
@@ -1043,20 +1067,22 @@ bool MetricExtremeReissnerNordstromDihole::calcVelocityToEquilibriumPoint(const 
  *  \param periodicAlongX : reference to the periodic time
  *  \param MASS : value of the two equal massea m1 and m2
  */
-bool MetricExtremeReissnerNordstromDihole::calcPeriodicAlongX(const vec4 pos, double &periodicAlongX, double MASS) {
+bool MetricExtremeReissnerNordstromDihole::calcPeriodicAlongX(const vec4 pos, double& periodicAlongX, double MASS)
+{
     double x0 = pos[1];
 
     if (x0 == 0.0) {
         periodicAlongX = 0.0;
-    } else {
+    }
+    else {
         double temp;
         double offset = 0.00000001;
 
-        struct integrandForPeriodicAlongX_params par = {MASS, x0};
+        struct integrandForPeriodicAlongX_params par = { MASS, x0 };
         F.params = &par;
 
         size_t limit = 1000;
-        int    key   = GSL_INTEG_GAUSS21;
+        int key = GSL_INTEG_GAUSS21;
         double error;
 
         gsl_set_error_handler_off();
@@ -1075,11 +1101,13 @@ bool MetricExtremeReissnerNordstromDihole::calcPeriodicAlongX(const vec4 pos, do
  *  \param betaAtOriginAlongX : reference to the searched velocity
  *  \param MASS : value of the two equal massea m1 and m2
  */
-bool MetricExtremeReissnerNordstromDihole::calcVelocityAtOriginAlongX(const vec4 pos, double &betaAtOriginAlongX, double MASS) {
+bool MetricExtremeReissnerNordstromDihole::calcVelocityAtOriginAlongX(
+    const vec4 pos, double& betaAtOriginAlongX, double MASS)
+{
     double xSquare = pos[1] * pos[1];
     double w1 = xSquare + 1.;
-    double w2 = 1. + 2.*MASS;
-    double w3 = 2.*MASS + sqrt(w1);
+    double w2 = 1. + 2. * MASS;
+    double w3 = 2. * MASS + sqrt(w1);
 
     double numerator = w3 * w3;
     double denominator = w2 * w2 * w1;
@@ -1098,19 +1126,21 @@ bool MetricExtremeReissnerNordstromDihole::calcVelocityAtOriginAlongX(const vec4
  *  \param r_Np : reference to the larger orbit
  *  \param mquer : mass parameter, for which the two orbits have the same value
  */
-bool MetricExtremeReissnerNordstromDihole::calcPhotOrbitsXY(double &r_Nm, double &r_Np, double mquer) {
+bool MetricExtremeReissnerNordstromDihole::calcPhotOrbitsXY(double& r_Nm, double& r_Np, double mquer)
+{
     if (mM1 >= mquer) {
         double m = mM1 * mM1;
-        double numerator = m * (27. - 36.*m + 8.*m * m);
-        double denominator = 8.*sqrt(m * m * m * (m - 3.) * (m - 3.) * (m - 3.));
+        double numerator = m * (27. - 36. * m + 8. * m * m);
+        double denominator = 8. * sqrt(m * m * m * (m - 3.) * (m - 3.) * (m - 3.));
         double w1 = acos(numerator / denominator);
         double w2 = sqrt(m * (m - 3.));
-        double w3 = (4. / 3.) * (m + 2.*w2 * cos(w1 / 3.));
-        double w4 = (4. / 3.) * (m - 2.*w2 * cos((M_PI + w1) / 3.));
+        double w3 = (4. / 3.) * (m + 2. * w2 * cos(w1 / 3.));
+        double w4 = (4. / 3.) * (m - 2. * w2 * cos((M_PI + w1) / 3.));
 
         r_Nm = sqrt(w4 - 1);
         r_Np = sqrt(w3 - 1);
-    } else {
+    }
+    else {
         r_Nm = 0.0;
         r_Np = 0.0;
     }
@@ -1130,17 +1160,19 @@ bool MetricExtremeReissnerNordstromDihole::calcPhotOrbitsXY(double &r_Nm, double
  *  \param r_Np : radius of the bigger one of the Photon-orbits
  *  \param MASS : value of the equal masses m1 and m2
  */
-bool MetricExtremeReissnerNordstromDihole::calcKsiCritXY(const vec4 pos, double &ksicritXY, double r_Np, double MASS) {
+bool MetricExtremeReissnerNordstromDihole::calcKsiCritXY(const vec4 pos, double& ksicritXY, double r_Np, double MASS)
+{
     double sqrt_Np = sqrt(1. + r_Np * r_Np);
-    double U_Np = 1. + 2.*MASS / sqrt_Np;
+    double U_Np = 1. + 2. * MASS / sqrt_Np;
 
     double radius_pos = sqrt(pos[1] * pos[1] + pos[2] * pos[2]);
     double sqrt_pos = sqrt(1. + radius_pos * radius_pos);
-    double U_pos = 1. + 2.*MASS / sqrt_pos;
+    double U_pos = 1. + 2. * MASS / sqrt_pos;
 
     if (radius_pos >= r_Np) {
         ksicritXY = 180 - (180 / M_PI) * asin((r_Np * U_Np * U_Np) / (radius_pos * U_pos * U_pos));
-    } else {
+    }
+    else {
         ksicritXY = (180 / M_PI) * asin((r_Np * U_Np * U_Np) / (radius_pos * U_pos * U_pos));
     }
 
@@ -1154,30 +1186,32 @@ bool MetricExtremeReissnerNordstromDihole::calcKsiCritXY(const vec4 pos, double 
  *                        circular orbit
  *  \param MASS : mass of the two equal masses m1 and m2
  */
-bool MetricExtremeReissnerNordstromDihole::calcRadiusIscoXY(double &radiusIscoXY, double MASS) {
+bool MetricExtremeReissnerNordstromDihole::calcRadiusIscoXY(double& radiusIscoXY, double MASS)
+{
     double mstern = 1.0294905868123894;
 
     if (MASS == mstern) {
         double x = 15.050471684120383;
-        radiusIscoXY  = sqrt(x - 1);
+        radiusIscoXY = sqrt(x - 1);
         return true;
-    } else {
-        //int status;
-        const gsl_root_fdfsolver_type *T;
-        gsl_root_fdfsolver *s;
+    }
+    else {
+        // int status;
+        const gsl_root_fdfsolver_type* T;
+        gsl_root_fdfsolver* s;
 
-        //double x0;
+        // double x0;
         double x;
-        double w1 = sqrt(25.*MASS * MASS - 6.);
-        double numerator = MASS * (250.*MASS * MASS - 387.);
-        double denominator = 2.*w1 * w1 * w1;
+        double w1 = sqrt(25. * MASS * MASS - 6.);
+        double numerator = MASS * (250. * MASS * MASS - 387.);
+        double denominator = 2. * w1 * w1 * w1;
         double w2 = acos(numerator / denominator);
         double w3 = cos(w2 / 3.);
-        double w4 = (5.*MASS + 2.*w1 * w3);
-        x = 100. + w4 * w4 / 9.;               // initial value
+        double w4 = (5. * MASS + 2. * w1 * w3);
+        x = 100. + w4 * w4 / 9.; // initial value
 
         gsl_function_fdf FDF;
-        struct inflectionPoints_params params = {MASS};
+        struct inflectionPoints_params params = { MASS };
 
         FDF.f = &m4d::inflectionPoints;
         FDF.df = &m4d::inflectionPoints_deriv;
@@ -1189,13 +1223,13 @@ bool MetricExtremeReissnerNordstromDihole::calcRadiusIscoXY(double &radiusIscoXY
         gsl_root_fdfsolver_set(s, &FDF, x);
 
         for (int iter = 1; iter <= 30; iter++) {
-            //status = gsl_root_fdfsolver_iterate (s);
+            // status = gsl_root_fdfsolver_iterate (s);
             gsl_root_fdfsolver_iterate(s);
-            //x0 = x;
+            // x0 = x;
             x = gsl_root_fdfsolver_root(s);
         }
 
-        radiusIscoXY  = sqrt(x - 1);
+        radiusIscoXY = sqrt(x - 1);
 
         gsl_root_fdfsolver_free(s);
         return true;
@@ -1209,31 +1243,33 @@ bool MetricExtremeReissnerNordstromDihole::calcRadiusIscoXY(double &radiusIscoXY
  *                        circular orbit
  *  \param MASS : mass of the two equal masses m1 and m2
  */
-bool MetricExtremeReissnerNordstromDihole::calcRadiusIucoXY(double &radiusIucoXY, double MASS) {
+bool MetricExtremeReissnerNordstromDihole::calcRadiusIucoXY(double& radiusIucoXY, double MASS)
+{
     double mstern = 1.0294905868123894;
 
     if (MASS == mstern) {
         double x = 15.050471684120383;
-        radiusIucoXY  = sqrt(x - 1);
+        radiusIucoXY = sqrt(x - 1);
         return true;
-    } else {
-        //int status;
-        const gsl_root_fdfsolver_type *T;
-        gsl_root_fdfsolver *s;
+    }
+    else {
+        // int status;
+        const gsl_root_fdfsolver_type* T;
+        gsl_root_fdfsolver* s;
 
-        //double x0;
+        // double x0;
         double x;
         double w1 = 16. / 3.;
-        double w2 = sqrt(25.*MASS * MASS - w1);
-        double numerator = MASS * (125.*MASS * MASS - 128.);
+        double w2 = sqrt(25. * MASS * MASS - w1);
+        double numerator = MASS * (125. * MASS * MASS - 128.);
         double denominator = w2 * w2 * w2;
         double w3 = acos(numerator / denominator);
         double w4 = cos(w3 / 3.);
         double w5 = 1.25 * MASS + 0.5 * w2 * w4;
-        x = w5 * w5;                          // initial value
+        x = w5 * w5; // initial value
 
         gsl_function_fdf FDF;
-        struct inflectionPoints_params params = {MASS};
+        struct inflectionPoints_params params = { MASS };
 
         FDF.f = &m4d::inflectionPoints;
         FDF.df = &m4d::inflectionPoints_deriv;
@@ -1245,13 +1281,13 @@ bool MetricExtremeReissnerNordstromDihole::calcRadiusIucoXY(double &radiusIucoXY
         gsl_root_fdfsolver_set(s, &FDF, x);
 
         for (int iter = 1; iter <= 30; iter++) {
-            //status = gsl_root_fdfsolver_iterate (s);
+            // status = gsl_root_fdfsolver_iterate (s);
             gsl_root_fdfsolver_iterate(s);
-            //x0 = x;
+            // x0 = x;
             x = gsl_root_fdfsolver_root(s);
         }
 
-        radiusIucoXY  = sqrt(x - 1);
+        radiusIucoXY = sqrt(x - 1);
 
         gsl_root_fdfsolver_free(s);
         return true;
@@ -1263,10 +1299,11 @@ bool MetricExtremeReissnerNordstromDihole::calcRadiusIucoXY(double &radiusIucoXY
  *  \param betaCoXY : reference to the velocity on the circular orbit
  *  \param radiusCoXY : radius of the circular orbit
  */
-bool MetricExtremeReissnerNordstromDihole::calcBetaCoXY(double &betaCoXY, double radiusCoXY) {
+bool MetricExtremeReissnerNordstromDihole::calcBetaCoXY(double& betaCoXY, double radiusCoXY)
+{
     double w1 = radiusCoXY * radiusCoXY + 1.;
-    double numerator = 2.*mM1 * (w1 - 1.);
-    double denominator = 2.*mM1 + sqrt(w1) * sqrt(w1) * sqrt(w1);
+    double numerator = 2. * mM1 * (w1 - 1.);
+    double denominator = 2. * mM1 + sqrt(w1) * sqrt(w1) * sqrt(w1);
 
     betaCoXY = sqrt(numerator / denominator);
 
@@ -1283,7 +1320,8 @@ bool MetricExtremeReissnerNordstromDihole::calcBetaCoXY(double &betaCoXY, double
  *  \param radiusForOtherCo : reference to the radius of circular orbits for z unequal to zero
  *  \param z : height of the circular orbit
  */
-bool MetricExtremeReissnerNordstromDihole::calcRadiusForOtherCo(double &radiusForOtherCo, double z) {
+bool MetricExtremeReissnerNordstromDihole::calcRadiusForOtherCo(double& radiusForOtherCo, double z)
+{
     double w1 = 1. + z;
     double w2 = 1. - z;
     double w3 = w1 * w1;
@@ -1291,7 +1329,7 @@ bool MetricExtremeReissnerNordstromDihole::calcRadiusForOtherCo(double &radiusFo
     double w5 = w4 / w3;
 
     double denominator = 1. - pow(w5, 1. / 3.);
-    double w6 = 4.*z / denominator - w3;
+    double w6 = 4. * z / denominator - w3;
 
     radiusForOtherCo = sqrt(w6);
     return true;
@@ -1309,7 +1347,9 @@ bool MetricExtremeReissnerNordstromDihole::calcRadiusForOtherCo(double &radiusFo
  *  \param M1 : value of the first mass at z=+1
  *  \param M2 : value of the second mass at z=-1
  */
-bool MetricExtremeReissnerNordstromDihole::calcRadiusForOtherCoForUnequalMasses(double &radiusForOtherCo, double z, double M1, double M2) {
+bool MetricExtremeReissnerNordstromDihole::calcRadiusForOtherCoForUnequalMasses(
+    double& radiusForOtherCo, double z, double M1, double M2)
+{
     double w1 = 1. + z;
     double w2 = 1. - z;
     double w3 = w1 * w1;
@@ -1317,7 +1357,7 @@ bool MetricExtremeReissnerNordstromDihole::calcRadiusForOtherCoForUnequalMasses(
     double w5 = w4 / w3;
 
     double denominator = 1. - pow(M1 / M2, 2. / 3.) * pow(w5, 1. / 3.);
-    double w6 = 4.*z / denominator - w3;
+    double w6 = 4. * z / denominator - w3;
 
     radiusForOtherCo = sqrt(w6);
     return true;
@@ -1333,16 +1373,17 @@ bool MetricExtremeReissnerNordstromDihole::calcRadiusForOtherCoForUnequalMasses(
  *  \param heightOfOtherPhotonOrbits : reference to the height of the Photon orbit
  *  \param M : value of the two equal masses m1 and m2
  */
-bool MetricExtremeReissnerNordstromDihole::calcHeightOfOtherPhotonOrbits(double &heightOfOtherPhotonOrbits, double M) {
-    //int status;
-    const gsl_root_fdfsolver_type *T;
-    gsl_root_fdfsolver *s;
+bool MetricExtremeReissnerNordstromDihole::calcHeightOfOtherPhotonOrbits(double& heightOfOtherPhotonOrbits, double M)
+{
+    // int status;
+    const gsl_root_fdfsolver_type* T;
+    gsl_root_fdfsolver* s;
 
-    //double x0;
-    double x = 0.99999999999999;        // initial value
+    // double x0;
+    double x = 0.99999999999999; // initial value
 
     gsl_function_fdf FDF;
-    struct heightOfOtherPhotonOrbits_params params = {M};
+    struct heightOfOtherPhotonOrbits_params params = { M };
 
     FDF.f = &m4d::heightOfOtherPhotonOrbits;
     FDF.df = &m4d::heightOfOtherPhotonOrbits_deriv;
@@ -1354,9 +1395,9 @@ bool MetricExtremeReissnerNordstromDihole::calcHeightOfOtherPhotonOrbits(double 
     gsl_root_fdfsolver_set(s, &FDF, x);
 
     for (int iter = 1; iter <= 100; iter++) {
-        //status = gsl_root_fdfsolver_iterate (s);
+        // status = gsl_root_fdfsolver_iterate (s);
         gsl_root_fdfsolver_iterate(s);
-        //x0 = x;
+        // x0 = x;
         x = gsl_root_fdfsolver_root(s);
     }
 
@@ -1374,7 +1415,9 @@ bool MetricExtremeReissnerNordstromDihole::calcHeightOfOtherPhotonOrbits(double 
  *  \param betaTimelike : reference to the necessary velocity
  *  \param M : mass-value of the two equal masses m1 and m2
  */
-bool MetricExtremeReissnerNordstromDihole::calcVelocityForOtherTimelikeCo(const vec4 pos, double &betaTimelike, double M) {
+bool MetricExtremeReissnerNordstromDihole::calcVelocityForOtherTimelikeCo(
+    const vec4 pos, double& betaTimelike, double M)
+{
     double rho;
     double z = pos[3];
     calcRadiusForOtherCo(rho, z);
@@ -1407,10 +1450,12 @@ bool MetricExtremeReissnerNordstromDihole::calcVelocityForOtherTimelikeCo(const 
  *  \param M1 : value of the mass at z=+1
  *  \param M2 : value of the mass at z=-1
  */
-bool MetricExtremeReissnerNordstromDihole::calcHeightOfOtherPhotonOrbitsForUnequalMasses(double &heightOfOtherPhotonOrbits1, double &heightOfOtherPhotonOrbits2, double M1, double M2) {
-    //int status;
-    const gsl_root_fsolver_type *T;
-    gsl_root_fsolver *s;
+bool MetricExtremeReissnerNordstromDihole::calcHeightOfOtherPhotonOrbitsForUnequalMasses(
+    double& heightOfOtherPhotonOrbits1, double& heightOfOtherPhotonOrbits2, double M1, double M2)
+{
+    // int status;
+    const gsl_root_fsolver_type* T;
+    gsl_root_fsolver* s;
     double r = 0.;
 
     double zEqu, zSing;
@@ -1424,14 +1469,15 @@ bool MetricExtremeReissnerNordstromDihole::calcHeightOfOtherPhotonOrbitsForUnequ
     if (M1 < M2) {
         zmax1 = zSing - 0.00000000000001;
         zmin2 = zEqu + 0.00000000000001;
-    } else {
+    }
+    else {
         zmax1 = zEqu - 0.00000000000001;
         zmin2 = zSing + 0.00000000000001;
     }
 
     gsl_function F;
 
-    struct heightOfOtherPhotonOrbitsForUnequalMasses_params params = {M1, M2};
+    struct heightOfOtherPhotonOrbitsForUnequalMasses_params params = { M1, M2 };
 
     F.function = &m4d::heightOfOtherPhotonOrbitsForUnequalMasses;
     F.params = &params;
@@ -1441,7 +1487,7 @@ bool MetricExtremeReissnerNordstromDihole::calcHeightOfOtherPhotonOrbitsForUnequ
     gsl_root_fsolver_set(s, &F, zmin1, zmax1);
 
     for (int iter = 1; iter <= 100; iter++) {
-        //status = gsl_root_fsolver_iterate (s);
+        // status = gsl_root_fsolver_iterate (s);
         gsl_root_fsolver_iterate(s);
         r = gsl_root_fsolver_root(s);
         zmin1 = gsl_root_fsolver_x_lower(s);
@@ -1450,11 +1496,10 @@ bool MetricExtremeReissnerNordstromDihole::calcHeightOfOtherPhotonOrbitsForUnequ
 
     heightOfOtherPhotonOrbits1 = r;
 
-
     gsl_root_fsolver_set(s, &F, zmin2, zmax2);
 
     for (int iter = 1; iter <= 100; iter++) {
-        //status = gsl_root_fsolver_iterate (s);
+        // status = gsl_root_fsolver_iterate (s);
         gsl_root_fsolver_iterate(s);
         r = gsl_root_fsolver_root(s);
         zmin1 = gsl_root_fsolver_x_lower(s);
@@ -1475,7 +1520,9 @@ bool MetricExtremeReissnerNordstromDihole::calcHeightOfOtherPhotonOrbitsForUnequ
  *  \param M1 : mass-value of the mass at z=+1
  *  \param M2 : mass-value of the mass at z=-1
  */
-bool MetricExtremeReissnerNordstromDihole::calcVelocityForOtherTimelikeCoForUnequalMasses(const vec4 pos, double &betaTimelike, double M1, double M2) {
+bool MetricExtremeReissnerNordstromDihole::calcVelocityForOtherTimelikeCoForUnequalMasses(
+    const vec4 pos, double& betaTimelike, double M1, double M2)
+{
     double rho;
     double z = pos[3];
     calcRadiusForOtherCoForUnequalMasses(rho, z, M1, M2);
@@ -1496,12 +1543,11 @@ bool MetricExtremeReissnerNordstromDihole::calcVelocityForOtherTimelikeCoForUneq
     return true;
 }
 
-
-
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricExtremeReissnerNordstromDihole::setStandardValues() {
+void MetricExtremeReissnerNordstromDihole::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 10.0;
     mInitPos[2] = 0.0;
@@ -1516,17 +1562,20 @@ void MetricExtremeReissnerNordstromDihole::setStandardValues() {
     mCoordNames[3] = std::string("z");
 }
 
-void MetricExtremeReissnerNordstromDihole::calc_r(const double y[]) {
+void MetricExtremeReissnerNordstromDihole::calc_r(const double y[])
+{
     r1 = sqrt(y[1] * y[1] + y[2] * y[2] + (y[3] - 1.0) * (y[3] - 1.0));
     r2 = sqrt(y[1] * y[1] + y[2] * y[2] + (y[3] + 1.0) * (y[3] + 1.0));
 }
 
-double MetricExtremeReissnerNordstromDihole::calc_U(const double y[]) {
+double MetricExtremeReissnerNordstromDihole::calc_U(const double y[])
+{
     calc_r(y);
     return 1.0 + mM1 / r1 + mM2 / r2;
 }
 
-void MetricExtremeReissnerNordstromDihole::calc_dU(const double y[], double &Ux, double &Uy, double &Uz) {
+void MetricExtremeReissnerNordstromDihole::calc_dU(const double y[], double& Ux, double& Uy, double& Uz)
+{
     double xx = y[1];
     double yy = y[2];
     double zz = y[3];
@@ -1539,8 +1588,9 @@ void MetricExtremeReissnerNordstromDihole::calc_dU(const double y[], double &Ux,
     Uz = -mM1 * (zz - 1.0) * r1hm3 - mM2 * (zz + 1.0) * r2hm3;
 }
 
-void MetricExtremeReissnerNordstromDihole::calc_ddU(const double y[], double &Uxx, double &Uyy, double &Uzz,
-        double &Uxy, double &Uxz, double &Uyz) {
+void MetricExtremeReissnerNordstromDihole::calc_ddU(
+    const double y[], double& Uxx, double& Uyy, double& Uzz, double& Uxy, double& Uxz, double& Uyz)
+{
     double xx = y[1];
     double yy = y[2];
     double zz = y[3];
@@ -1552,14 +1602,13 @@ void MetricExtremeReissnerNordstromDihole::calc_ddU(const double y[], double &Ux
 
     Uxx = 3.0 * mM1 * xx * xx * r1hm5 - mM1 * r1hm3 + 3.0 * mM2 * xx * xx * r2hm5 - mM2 * r2hm3;
     Uyy = 3.0 * mM1 * yy * yy * r1hm5 - mM1 * r1hm3 + 3.0 * mM2 * yy * yy * r2hm5 - mM2 * r2hm3;
-    Uzz = 3.0 * mM1 * (zz - 1.0) * (zz - 1.0) * r1hm5 - mM1 * r1hm3 + 3.0 * mM2 * (zz + 1.0) * (zz + 1.0) * r2hm5 - mM2 * r2hm3;
+    Uzz = 3.0 * mM1 * (zz - 1.0) * (zz - 1.0) * r1hm5 - mM1 * r1hm3 + 3.0 * mM2 * (zz + 1.0) * (zz + 1.0) * r2hm5
+        - mM2 * r2hm3;
 
     Uxy = 3.0 * mM1 * xx * yy * r1hm5 + 3.0 * mM2 * xx * yy * r2hm5;
     Uxz = 3.0 * mM1 * (zz - 1.0) * xx * r1hm5 + 3.0 * mM2 * (zz + 1.0) * xx * r2hm5;
     Uyz = 3.0 * mM1 * (zz - 1.0) * yy * r1hm5 + 3.0 * mM2 * (zz + 1.0) * yy * r2hm5;
 }
-
-
 
 // ************************ for some numerical calculations ************************
 /*!  The quantities radiusIscoXY and radiusIucoXY in the z=0-plane for equal masses
@@ -1574,27 +1623,27 @@ void MetricExtremeReissnerNordstromDihole::calc_ddU(const double y[], double &Ux
  *   The name inflectionPoints was chosen, because this function describes the
  *   inflection points of the appendant effective potential.
  */
-double
-inflectionPoints(double x, void *params) {
-    struct inflectionPoints_params *p  = (struct inflectionPoints_params *) params;
+double inflectionPoints(double x, void* params)
+{
+    struct inflectionPoints_params* p = (struct inflectionPoints_params*)params;
 
     double M = p->M;
     double sqrtx = sqrt(x);
 
     return x * x * x - 6.0 * M * x * x * sqrtx + 3.0 * x * x + 22.0 * M * x * sqrtx + 16.0 * M * M;
 }
-double
-inflectionPoints_deriv(double x, void *params) {
-    struct inflectionPoints_params *p = (struct inflectionPoints_params *) params;
+double inflectionPoints_deriv(double x, void* params)
+{
+    struct inflectionPoints_params* p = (struct inflectionPoints_params*)params;
 
     double M = p->M;
     double sqrtx = sqrt(x);
 
     return 3.0 * x * x - 15.0 * M * x * sqrtx + 6.0 * x + 33.0 * M * sqrtx;
 }
-void
-inflectionPoints_fdf(double x, void *params, double *y, double *dy) {
-    struct inflectionPoints_params *p = (struct inflectionPoints_params *) params;
+void inflectionPoints_fdf(double x, void* params, double* y, double* dy)
+{
+    struct inflectionPoints_params* p = (struct inflectionPoints_params*)params;
 
     double M = p->M;
     double sqrtx = sqrt(x);
@@ -1609,14 +1658,15 @@ inflectionPoints_fdf(double x, void *params, double *y, double *dy) {
  *   is the mass of the two equal masses. M is a parameter of the function, declared in a
  *   struct in the header-file.
  */
-double integrandForPeriodicAlongX(double x, void *params) {
-    struct integrandForPeriodicAlongX_params *par = (struct integrandForPeriodicAlongX_params*)params;
+double integrandForPeriodicAlongX(double x, void* params)
+{
+    struct integrandForPeriodicAlongX_params* par = (struct integrandForPeriodicAlongX_params*)params;
 
     double M = par->M;
     double x0 = par->x0;
 
-    double Ux = 1. + 2.*M / sqrt(x * x + 1.);
-    double Ux0 = 1. + 2.*M / sqrt(x0 * x0 + 1.);
+    double Ux = 1. + 2. * M / sqrt(x * x + 1.);
+    double Ux0 = 1. + 2. * M / sqrt(x0 * x0 + 1.);
     double Veffx = 0.5 / (Ux * Ux);
     double Veffx0 = 0.5 / (Ux0 * Ux0);
     double denominator = Veffx0 - Veffx;
@@ -1633,8 +1683,9 @@ double integrandForPeriodicAlongX(double x, void *params) {
  *   function is necessary, too. The derivative is defined in heightOfOtherPhotonOrbits_deriv(...).
  *   heightOfOtherPhotonOrbits_fdf(...) contains both, function and its derivative.
  */
-double heightOfOtherPhotonOrbits(double z, void *params) {
-    struct heightOfOtherPhotonOrbits_params *p  = (struct heightOfOtherPhotonOrbits_params *) params;
+double heightOfOtherPhotonOrbits(double z, void* params)
+{
+    struct heightOfOtherPhotonOrbits_params* p = (struct heightOfOtherPhotonOrbits_params*)params;
 
     double M = p->M;
 
@@ -1647,16 +1698,17 @@ double heightOfOtherPhotonOrbits(double z, void *params) {
     double w7 = 1. / (1. - w6);
     double w8 = z * w7;
 
-    double w9 = (4.*w8 - w3);
+    double w9 = (4. * w8 - w3);
     double w9b = M / pow(w8 - z, 3. / 2.);
     double w9c = M / pow(w8, 3. / 2.);
     double w10 = w9b + w9c;
     double w11 = (2. + M / pow(w8 - z, 1. / 2.) + M / pow(w8, 1. / 2.));
 
-    return w9 * w10 - 2.*w11;
+    return w9 * w10 - 2. * w11;
 }
-double heightOfOtherPhotonOrbits_deriv(double z, void *params) {
-    struct heightOfOtherPhotonOrbits_params *p  = (struct heightOfOtherPhotonOrbits_params *) params;
+double heightOfOtherPhotonOrbits_deriv(double z, void* params)
+{
+    struct heightOfOtherPhotonOrbits_params* p = (struct heightOfOtherPhotonOrbits_params*)params;
 
     double M = p->M;
 
@@ -1673,15 +1725,19 @@ double heightOfOtherPhotonOrbits_deriv(double z, void *params) {
     double w13 = sqrt(w6);
     double w14 = sqrt(w8 - z);
 
-    double summand1 = 6.*(w7 - 4.*z * w7 * w7 / (3.*w13 * w3)) / pow(w8, 3. / 2.);
-    double summand2 = (6.*w12 - 8.*z - 6.*z * z * w12) / (z * w1 * w2 * w12 * w14);
-    double summand3 = 6.*(4.*w7 - 2.*w1 - 16.*z * w7 * w7 / (3.*w3 * w13)) * (1. / pow(w8, 3. / 2.) + 1. / (w14 * w14 * w14));
-    double summand4 = 9.*(4.*z * w7 - w3) * ((3.*w12 - 4.*z - 3.*z * z * w12) / (3.*z * z * (z * z - 1.) * w6 * w14) - (w7 - 4.*z * w7 * w7 / (3.*w13 * w3)) / pow(w8, 5. / 2.));
+    double summand1 = 6. * (w7 - 4. * z * w7 * w7 / (3. * w13 * w3)) / pow(w8, 3. / 2.);
+    double summand2 = (6. * w12 - 8. * z - 6. * z * z * w12) / (z * w1 * w2 * w12 * w14);
+    double summand3 = 6. * (4. * w7 - 2. * w1 - 16. * z * w7 * w7 / (3. * w3 * w13))
+        * (1. / pow(w8, 3. / 2.) + 1. / (w14 * w14 * w14));
+    double summand4 = 9. * (4. * z * w7 - w3)
+        * ((3. * w12 - 4. * z - 3. * z * z * w12) / (3. * z * z * (z * z - 1.) * w6 * w14)
+            - (w7 - 4. * z * w7 * w7 / (3. * w13 * w3)) / pow(w8, 5. / 2.));
 
     return (M / 6.) * (summand1 + summand2 + summand3 + summand4);
 }
-void heightOfOtherPhotonOrbits_fdf(double z, void *params, double *y, double *dy) {
-    struct heightOfOtherPhotonOrbits_params *p  = (struct heightOfOtherPhotonOrbits_params *) params;
+void heightOfOtherPhotonOrbits_fdf(double z, void* params, double* y, double* dy)
+{
+    struct heightOfOtherPhotonOrbits_params* p = (struct heightOfOtherPhotonOrbits_params*)params;
 
     double M = p->M;
 
@@ -1694,7 +1750,7 @@ void heightOfOtherPhotonOrbits_fdf(double z, void *params, double *y, double *dy
     double w7 = 1. / (1. - w6);
     double w8 = z * w7;
 
-    double w9 = (4.*w8 - w3);
+    double w9 = (4. * w8 - w3);
     double w9b = M / pow(w8 - z, 3. / 2.);
     double w9c = M / pow(w8, 3. / 2.);
     double w10 = w9b + w9c;
@@ -1704,12 +1760,15 @@ void heightOfOtherPhotonOrbits_fdf(double z, void *params, double *y, double *dy
     double w13 = sqrt(w6);
     double w14 = sqrt(w8 - z);
 
-    double summand1 = 6.*(w7 - 4.*z * w7 * w7 / (3.*w13 * w3)) / pow(w8, 3. / 2.);
-    double summand2 = (6.*w12 - 8.*z - 6.*z * z * w12) / (z * w1 * w2 * w12 * w14);
-    double summand3 = 6.*(4.*w7 - 2.*w1 - 16.*z * w7 * w7 / (3.*w3 * w13)) * (1. / pow(w8, 3. / 2.) + 1. / (w14 * w14 * w14));
-    double summand4 = 9.*(4.*z * w7 - w3) * ((3.*w12 - 4.*z - 3.*z * z * w12) / (3.*z * z * (z * z - 1.) * w6 * w14) - (w7 - 4.*z * w7 * w7 / (3.*w13 * w3)) / pow(w8, 5. / 2.));
+    double summand1 = 6. * (w7 - 4. * z * w7 * w7 / (3. * w13 * w3)) / pow(w8, 3. / 2.);
+    double summand2 = (6. * w12 - 8. * z - 6. * z * z * w12) / (z * w1 * w2 * w12 * w14);
+    double summand3 = 6. * (4. * w7 - 2. * w1 - 16. * z * w7 * w7 / (3. * w3 * w13))
+        * (1. / pow(w8, 3. / 2.) + 1. / (w14 * w14 * w14));
+    double summand4 = 9. * (4. * z * w7 - w3)
+        * ((3. * w12 - 4. * z - 3. * z * z * w12) / (3. * z * z * (z * z - 1.) * w6 * w14)
+            - (w7 - 4. * z * w7 * w7 / (3. * w13 * w3)) / pow(w8, 5. / 2.));
 
-    *y = w9 * w10 - 2.*w11;
+    *y = w9 * w10 - 2. * w11;
     *dy = (M / 6.) * (summand1 + summand2 + summand3 + summand4);
 }
 
@@ -1722,8 +1781,10 @@ void heightOfOtherPhotonOrbits_fdf(double z, void *params, double *y, double *dy
  *   Newton-algorithm can not be guaranteed, so it is used a simple bisektion-algorithm for
  *   root-finding. Also the declaration of the derivative of the function is not necessary.
  */
-double heightOfOtherPhotonOrbitsForUnequalMasses(double z, void *params) {
-    struct heightOfOtherPhotonOrbitsForUnequalMasses_params *p  = (struct heightOfOtherPhotonOrbitsForUnequalMasses_params *) params;
+double heightOfOtherPhotonOrbitsForUnequalMasses(double z, void* params)
+{
+    struct heightOfOtherPhotonOrbitsForUnequalMasses_params* p
+        = (struct heightOfOtherPhotonOrbitsForUnequalMasses_params*)params;
 
     double M1 = p->M1;
     double M2 = p->M2;
@@ -1734,7 +1795,8 @@ double heightOfOtherPhotonOrbitsForUnequalMasses(double z, void *params) {
     double w4 = pow(w2 / w1, 2. / 3.);
     double w5 = z / (1. - w3 * w4);
 
-    return (4.*w5 - w1 * w1) * (M2 / pow(w5, 3. / 2.) + M1 / pow(w5 - z, 3. / 2.)) - 4. - 2.*M2 / sqrt(w5) - 2.*M1 / sqrt(w5 - z);
+    return (4. * w5 - w1 * w1) * (M2 / pow(w5, 3. / 2.) + M1 / pow(w5 - z, 3. / 2.)) - 4. - 2. * M2 / sqrt(w5)
+        - 2. * M1 / sqrt(w5 - z);
 }
 
 } // end namespace m4d

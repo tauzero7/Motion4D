@@ -331,7 +331,6 @@ bool Metric::breakCondition(const vec4 pos)
  */
 bool Metric::calcDerivs(const double* y, double* dydx)
 {
-    // register int mu,j,k,l;
     int mu, k, l;
 
     // double ch;

@@ -80,7 +80,7 @@ public:
     virtual bool   effPotentialValue(const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double &val);
     virtual bool   totEnergy(const vec4 pos, const vec4 cdir, const double x, double &val);
 
-    virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
+    virtual bool   report(const vec4 pos, const vec4 cdir, char*&text);
 
 // --------- protected methods -----------
 protected:

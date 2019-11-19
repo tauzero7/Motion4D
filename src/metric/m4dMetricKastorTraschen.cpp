@@ -27,8 +27,9 @@
 
 namespace m4d {
 
-MetricKastorTraschen::MetricKastorTraschen(double H) {
-    mMetricName  = "KastorTraschen";
+MetricKastorTraschen::MetricKastorTraschen(double H)
+{
+    mMetricName = "KastorTraschen";
     setCoordType(enum_coordinate_cartesian);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -53,17 +54,16 @@ MetricKastorTraschen::MetricKastorTraschen(double H) {
     setStandardValues();
 }
 
-MetricKastorTraschen::~MetricKastorTraschen() {
-}
+MetricKastorTraschen::~MetricKastorTraschen() {}
 
-
-bool MetricKastorTraschen::calculateMetric(const double* pos) {
+bool MetricKastorTraschen::calculateMetric(const double* pos)
+{
     double Omega, a;
     calcPotentials(pos, Omega, a);
 
-    double t1 = Omega;   // Omega(t,x,y,z);
+    double t1 = Omega; // Omega(t,x,y,z);
     double t2 = t1 * t1;
-    double t4 = a;       // a(t);
+    double t4 = a; // a(t);
     double t5 = t4 * t4;
     double t6 = t2 * t5;
 
@@ -87,24 +87,25 @@ bool MetricKastorTraschen::calculateMetric(const double* pos) {
     return true;
 }
 
-bool MetricKastorTraschen::calculateChristoffels(const double* pos) {
+bool MetricKastorTraschen::calculateChristoffels(const double* pos)
+{
     double Omega, a;
     double dOdx, dOdy, dOdz, dOdt, dadt;
     calcPotDiffs(pos, Omega, a, dOdx, dOdy, dOdz, dOdt, dadt);
 
-    double t1 = Omega;     // Omega(t,x,y,z);
+    double t1 = Omega; // Omega(t,x,y,z);
     double t2 = 1 / t1;
-    double t3 = dOdt;      // diff(Omega(t,x,y,z),t);
+    double t3 = dOdt; // diff(Omega(t,x,y,z),t);
     double t5 = t1 * t1;
     double t6 = t5 * t5;
-    double t9 = a;         // a(t);
+    double t9 = a; // a(t);
     double t10 = t9 * t9;
     double t12 = 1 / t6 / t1 / t10;
-    double t13 = dOdx;     // diff(Omega(t,x,y,z),x);
-    double t15 = dOdy;     // diff(Omega(t,x,y,z),y);
-    double t17 = dOdz;     // diff(Omega(t,x,y,z),z);
+    double t13 = dOdx; // diff(Omega(t,x,y,z),x);
+    double t15 = dOdy; // diff(Omega(t,x,y,z),y);
+    double t17 = dOdz; // diff(Omega(t,x,y,z),z);
     double t19 = t2 * t13;
-    double t23 = dadt;     // diff(a(t),t);
+    double t23 = dadt; // diff(a(t),t);
     double t25 = t9 * t3 + t1 * t23;
     double t26 = t2 / t9 * t25;
     double t27 = t2 * t15;
@@ -179,8 +180,8 @@ bool MetricKastorTraschen::calculateChristoffels(const double* pos) {
     return true;
 }
 
-
-bool MetricKastorTraschen::calculateChrisD(const double*) {
+bool MetricKastorTraschen::calculateChrisD(const double*)
+{
     return false;
     /*
       double t1 = diff(Omega(t,x,y,z),t);
@@ -519,8 +520,8 @@ bool MetricKastorTraschen::calculateChrisD(const double*) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricKastorTraschen::localToCoord(const double* pos, const double* ldir, double* dir,
-                                        enum_nat_tetrad_type) {
+void MetricKastorTraschen::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     double Omega, a;
     calcPotentials(pos, Omega, a);
 
@@ -538,8 +539,8 @@ void MetricKastorTraschen::localToCoord(const double* pos, const double* ldir, d
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricKastorTraschen::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                        enum_nat_tetrad_type) {
+void MetricKastorTraschen::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     double Omega, a;
     calcPotentials(pos, Omega, a);
 
@@ -551,18 +552,19 @@ void MetricKastorTraschen::coordToLocal(const double* pos, const double* cdir, d
     ldir[3] = cdir[3] * Oa;
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return false : position is valid.
  */
-bool MetricKastorTraschen::breakCondition(const double*) {
+bool MetricKastorTraschen::breakCondition(const double*)
+{
     bool br = false;
     return br;
 }
 
-double MetricKastorTraschen::testConstraint(const double y[], const double kappa) {
+double MetricKastorTraschen::testConstraint(const double y[], const double kappa)
+{
     double Omega, a;
     calcPotentials(y, Omega, a);
 
@@ -573,30 +575,30 @@ double MetricKastorTraschen::testConstraint(const double y[], const double kappa
 
     double sum = -kappa;
     sum += -dt * dt / (Omega * Omega) + Omega * Omega * a * a * (dx * dx + dy * dy + dz * dz);
-    //std::cerr << Omega << " " << a << " " << sum << std::endl;
+    // std::cerr << Omega << " " << a << " " << sum << std::endl;
     return sum;
 }
-
 
 /*! Set parameter 'pName' to 'val'.
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricKastorTraschen::setParam(const char* pName, double val) {
+bool MetricKastorTraschen::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
-    if (strcmp(pName,"m1") == 0) {
+    if (strcmp(pName, "m1") == 0) {
         m1 = val;
     }
-    else if (strcmp(pName,"z1") == 0) {
+    else if (strcmp(pName, "z1") == 0) {
         z1 = val;
     }
-    else if (strcmp(pName,"m2") == 0) {
+    else if (strcmp(pName, "m2") == 0) {
         m2 = val;
     }
-    else if (strcmp(pName,"z2") == 0) {
+    else if (strcmp(pName, "z2") == 0) {
         z2 = val;
     }
-    else if (strcmp(pName,"h") == 0) {
+    else if (strcmp(pName, "h") == 0) {
         mH = val;
     }
     return true;
@@ -604,7 +606,8 @@ bool MetricKastorTraschen::setParam(const char* pName, double val) {
 
 /*! Generate report.
  */
-bool MetricKastorTraschen::report(const vec4 , const vec4 , std::string &text) {
+bool MetricKastorTraschen::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Kastor-Traschen metric\n\tcoordinate : (t,x,y,z)\n";
     ss << "---------------------------------------------------------------\n";
@@ -612,11 +615,12 @@ bool MetricKastorTraschen::report(const vec4 , const vec4 , std::string &text) {
     ss.precision(DEF_FIXED_REPORT_PRECISION);
     ss.setf(std::ios::fixed);
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
-void MetricKastorTraschen::calcPotentials(const double* pos, double &Omega, double &a) {
+void MetricKastorTraschen::calcPotentials(const double* pos, double& Omega, double& a)
+{
     double t = pos[0];
     double x = pos[1];
     double y = pos[2];
@@ -629,9 +633,9 @@ void MetricKastorTraschen::calcPotentials(const double* pos, double &Omega, doub
     Omega = 1.0 + m1 / (r1 * a) + m2 / (r2 * a);
 }
 
-void MetricKastorTraschen::calcPotDiffs(const double* pos, double &Omega, double &a,
-                                        double &dOdx, double &dOdy, double &dOdz, double &dOdt,
-                                        double &dadt) {
+void MetricKastorTraschen::calcPotDiffs(
+    const double* pos, double& Omega, double& a, double& dOdx, double& dOdy, double& dOdz, double& dOdt, double& dadt)
+{
     double t = pos[0];
     double x = pos[1];
     double y = pos[2];
@@ -662,7 +666,8 @@ void MetricKastorTraschen::calcPotDiffs(const double* pos, double &Omega, double
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricKastorTraschen::setStandardValues() {
+void MetricKastorTraschen::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 30.0;
     mInitPos[2] = 0.0;

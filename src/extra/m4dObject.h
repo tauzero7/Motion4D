@@ -1,30 +1,8 @@
-// --------------------------------------------------------------------------------
-/*
-    m4dObject.h
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-
-/*!  \class  m4d::Object
-     \brief  Master object that stores all relevant data.
-
+/**
+ * @file    m4dObject.h
+ * @author  Thomas Mueller
+ *
+ * @brief  Master object that stores all relevant data.
 
      Settings file consist of:
    \verbatim
@@ -82,7 +60,6 @@
     \sa testDatabase.cpp
     \sa enum_nat_tetrad_type
 */
-// --------------------------------------------------------------------------------
 
 #ifndef M4D_OBJECT_H
 #define M4D_OBJECT_H
@@ -152,19 +129,81 @@ public:
     void clearAll();
     void resetAll();
 
+    /**
+     * @brief Get parameter value of Object.
+     * @param paramName
+     * @param paramValue
+     * @return true : if parameter was found.\n
+     *         false : parameter was not found.
+     */
     bool getParam(const char* paramName, int& paramValue);
+
+    /**
+     * @brief Get parameter value of Object.
+     * @param paramName
+     * @param paramValue
+     * @return true : if parameter was found.\n
+     *         false : parameter was not found.
+     */
     bool getParam(const char* paramName, double& paramValue);
+
+    /**
+     * @brief Get parameter value of Object.
+     * @param paramName
+     * @param paramValue
+     * @return true : if parameter was found.\n
+     *         false : parameter was not found.
+     */
     bool getParam(const char* paramName, m4d::vec3& paramValue);
+
+    /**
+     * @brief Get parameter value of Object.
+     * @param paramName
+     * @param paramValue
+     * @return true : if parameter was found.\n
+     *         false : parameter was not found.
+     */
     bool getParam(const char* paramName, m4d::vec4& paramValue);
 
+    /**
+     * @brief Set Lorentz transformation.
+     *  \param  chi : angle in deg.
+     *  \param  ksi : angle in deg.
+     *  \param  beta : velocity (v/c).
+     */
     bool setLorentzTransf(const double chi, const double ksi, const double beta);
     bool setLorentzTransf(const m4d::vec3 beta);
+
+    /// Reset Lorentz transformation.
     void resetLorentzTransf();
 
+    /**
+     * @brief Load settings.
+     *  \param filename : name of setting file.
+     *  \param printset : print setting.
+     *  \return true : success.
+     *  \return false : error occured.
+     */
     bool loadSettings(const char* filename, bool printset = false);
+
+    /*!  Save settings.
+     *  \param filename : name of the settings file.
+     *  \param dat      : current date.
+     *  \return true : success.
+     *  \return false : error occured.
+     */
     bool saveSettings(const char* filename, const char* dat = nullptr);
+
+    /*! Print settings to fptr.
+     *  \param fptr : pointer to file.
+     */
     void printSettings(FILE* fptr = stderr);
 
+    /*! Prepare a report for the current metric.
+     *  \param text : reference to string.
+     *  \return true : success.
+     *  \return false : no metric available.
+     */
     bool makeReport(char*& text);
     void printReport(FILE* fptr = stdout);
 

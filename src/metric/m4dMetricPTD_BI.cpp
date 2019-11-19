@@ -29,13 +29,13 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the metric.
  *
  * \param  b : parameter b of the BI metric
  */
-MetricPTD_BI::MetricPTD_BI(double b) {
-    mMetricName  = "Petrov_Type_D_BI_ES";
+MetricPTD_BI::MetricPTD_BI(double b)
+{
+    mMetricName = "Petrov_Type_D_BI_ES";
     setCoordType(enum_coordinate_spherical);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -50,32 +50,28 @@ MetricPTD_BI::MetricPTD_BI(double b) {
 
     setStandardValues();
 
-// mLocTeds.push_back(enum_nat_tetrad_static);
-
-
+    // mLocTeds.push_back(enum_nat_tetrad_static);
 }
 
 /*! Standard destructor for the metric.
  *
  */
-MetricPTD_BI::~MetricPTD_BI() {
-
-}
-
+MetricPTD_BI::~MetricPTD_BI() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricPTD_BI::calculateMetric(const double* pos) {
-    double r     = pos[1];
+bool MetricPTD_BI::calculateMetric(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
     double b = Par_b;
     double t1 = r * r;
-    double  t2 = sin(theta);
-    double  t3 = t2 * t2;
-    double  t5 = -r + b;
+    double t2 = sin(theta);
+    double t3 = t2 * t2;
+    double t5 = -r + b;
     g_compts[0][0] = -t1 * t3;
     g_compts[0][1] = 0.0;
     g_compts[0][2] = 0.0;
@@ -100,18 +96,19 @@ bool MetricPTD_BI::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricPTD_BI::calculateChristoffels(const double* pos) {
-    double r     = pos[1];
+bool MetricPTD_BI::calculateChristoffels(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
     double b = Par_b;
     double t1 = -r + b;
-    double  t2 = sin(theta);
-    double  t3 = t2 * t2;
-    double  t5 = cos(theta);
-    double  t7 = 1 / r;
-    double  t9 = 1 / t2 * t5;
-    double  t13 = 1 / t1 * t7 * b / 2.0;
-    double  t14 = r * r;
+    double t2 = sin(theta);
+    double t3 = t2 * t2;
+    double t5 = cos(theta);
+    double t7 = 1 / r;
+    double t9 = 1 / t2 * t5;
+    double t13 = 1 / t1 * t7 * b / 2.0;
+    double t14 = r * r;
     christoffel[0][0][0] = 0.0;
     christoffel[0][0][1] = -t1 * t3;
     christoffel[0][0][2] = t2 * t5;
@@ -184,23 +181,23 @@ bool MetricPTD_BI::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool
-MetricPTD_BI::calculateChrisD(const double* pos) {
-    double r     = pos[1];
+bool MetricPTD_BI::calculateChrisD(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
     double b = Par_b;
     double t1 = sin(theta);
-    double  t2 = t1 * t1;
-    double  t3 = -r + b;
-    double  t5 = cos(theta);
-    double  t8 = t5 * t5;
-    double  t10 = r * r;
-    double  t11 = 1 / t10;
-    double  t14 = (t8 + t2) / t2;
-    double  t15 = 2.0 * r;
-    double  t18 = t3 * t3;
-    double  t22 = b * (-t15 + b) / t18 * t11 / 2.0;
-    double  t26 = t10 * t10;
+    double t2 = t1 * t1;
+    double t3 = -r + b;
+    double t5 = cos(theta);
+    double t8 = t5 * t5;
+    double t10 = r * r;
+    double t11 = 1 / t10;
+    double t14 = (t8 + t2) / t2;
+    double t15 = 2.0 * r;
+    double t18 = t3 * t3;
+    double t22 = b * (-t15 + b) / t18 * t11 / 2.0;
+    double t26 = t10 * t10;
     chrisD[0][0][0][0] = 0.0;
     chrisD[0][0][0][1] = 0.0;
     chrisD[0][0][0][2] = 0.0;
@@ -468,9 +465,9 @@ MetricPTD_BI::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricPTD_BI::localToCoord(const double* pos, const double* ldir, double* dir,
-                                enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricPTD_BI::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
     double w = sqrt(1.0 - Par_b / r);
 
@@ -487,9 +484,9 @@ void MetricPTD_BI::localToCoord(const double* pos, const double* ldir, double* d
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricPTD_BI::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricPTD_BI::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
     double w = sqrt(1.0 - Par_b / r);
 
@@ -499,16 +496,16 @@ void MetricPTD_BI::coordToLocal(const double* pos, const double* cdir, double* l
     ldir[3] = cdir[3] * w;
 }
 
-
 /*! Tests break condition
  *  \param pos  :  position.
  *  \return true  : radial position r < 0.0 or r reaches b
  *  \return false : position is valid.
  */
-bool MetricPTD_BI::breakCondition(const double* pos) {
+bool MetricPTD_BI::breakCondition(const double* pos)
+{
     bool br = false;
 
-    if ((pos[1] < 0.0) || (pos[1]*pos[1] <= (1.0 + eps)*Par_b * Par_b)) {
+    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + eps) * Par_b * Par_b)) {
         br = true;
     }
     return br;
@@ -519,15 +516,16 @@ bool MetricPTD_BI::breakCondition(const double* pos) {
  *  \param pos : initial position.
  *  \param cdir : initial four-direction.
  */
-void MetricPTD_BI::calcConstantsOfMotion(const vec4 pos, const vec4 cdir) {
+void MetricPTD_BI::calcConstantsOfMotion(const vec4 pos, const vec4 cdir)
+{
     double sinp2 = sin(pos[2]);
     double p14 = pos[1] * pos[1] * pos[1] * pos[1];
     double b = Par_b;
 
     C0 = cdir[3] * cdir[3] * (pos[1] - b) * (pos[1] - b) / pos[1] / pos[1];
     C2 = cdir[0] * cdir[0] * p14 * sinp2 * sinp2 * sinp2 * sinp2;
-    K  = (cdir[2] * cdir[2] - cdir[0] * cdir[0] * sinp2 * sinp2) * p14;
-    m0 = -K / pos[1] / pos[1]  - cdir[1] * cdir[1] * pos[1] / (pos[1] - b) - cdir[3] * cdir[3] * (pos[1] - b) / pos[1];
+    K = (cdir[2] * cdir[2] - cdir[0] * cdir[0] * sinp2 * sinp2) * p14;
+    m0 = -K / pos[1] / pos[1] - cdir[1] * cdir[1] * pos[1] / (pos[1] - b) - cdir[3] * cdir[3] * (pos[1] - b) / pos[1];
 }
 
 /*! Effective potential.
@@ -538,7 +536,8 @@ void MetricPTD_BI::calcConstantsOfMotion(const vec4 pos, const vec4 cdir) {
  *  \param val : reference to effective potential value.
  *  \return true : effective potential exists at x.
  */
-bool MetricPTD_BI::effPotentialValue(const vec4 pos, const vec4 cdir , enum_geodesic_type , const double x, double &val) {
+bool MetricPTD_BI::effPotentialValue(const vec4 pos, const vec4 cdir, enum_geodesic_type, const double x, double& val)
+{
     /*
       double kappa = 0.0;
     if (type==enum_geodesic_timelike)
@@ -563,11 +562,11 @@ bool MetricPTD_BI::effPotentialValue(const vec4 pos, const vec4 cdir , enum_geod
  *  \param val : reference to total energy value.
  *  \return true : effective potential exists at x.
  */
-bool MetricPTD_BI::totEnergy(const vec4 , const vec4 , const double , double &val) {
+bool MetricPTD_BI::totEnergy(const vec4, const vec4, const double, double& val)
+{
     val = 0.0;
     return true;
 }
-
 
 /*! Calculates the root of the effective Potential left to r_0 for given constants of motion and m0=0 (lightlike)
  *
@@ -577,13 +576,15 @@ bool MetricPTD_BI::totEnergy(const vec4 , const vec4 , const double , double &va
  *  \return -1 if there is no root left to r_0.
  *
  */
-double MetricPTD_BI::calculateVeffRoot(double C02, double K, double r0) {
+double MetricPTD_BI::calculateVeffRoot(double C02, double K, double r0)
+{
     double r = 0;
     double b = Par_b;
 
     if (C02 == 0) { // only 1st-Order Polynom
         r = b;
-    } else {
+    }
+    else {
         double p = -K / C02;
         double q = -b * K / C02;
         double d = q * q / 4.0 - p * p * p / 27.0;
@@ -593,15 +594,16 @@ double MetricPTD_BI::calculateVeffRoot(double C02, double K, double r0) {
 
         if (d < 0) {
             double u = acos(-q * 0.5 * sqrt(27.0 / p / p / p));
-            z1 =  sqrt(4.0 / 3.0 * p) * cos((u) / 3.0);
-            z2 =  -sqrt(4.0 / 3.0 * p) * cos((u + M_PI) / 3.0);
-            z3 =  -sqrt(4.0 / 3.0 * p) * cos((u - M_PI) / 3.0);
+            z1 = sqrt(4.0 / 3.0 * p) * cos((u) / 3.0);
+            z2 = -sqrt(4.0 / 3.0 * p) * cos((u + M_PI) / 3.0);
+            z3 = -sqrt(4.0 / 3.0 * p) * cos((u - M_PI) / 3.0);
         }
         if (d == 0) {
             if (p == 0) {
                 z1 = 0.0;
                 z2 = 0.0;
-            } else {
+            }
+            else {
                 z1 = -3 * q / p;
                 z2 = 1.5 * q / p;
             }
@@ -630,18 +632,19 @@ double MetricPTD_BI::calculateVeffRoot(double C02, double K, double r0) {
  *
  *
  */
-bool MetricPTD_BI::setParam(const char* pName, double val) {
+bool MetricPTD_BI::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
-    if (strcmp(pName,"b") == 0) {
+    if (strcmp(pName, "b") == 0) {
         Par_b = val;
     }
     return true;
 }
 
-
 /*! Generate report.
  */
-bool MetricPTD_BI::report(const vec4 pos, const vec4 cdir, std::string &text) {
+bool MetricPTD_BI::report(const vec4 pos, const vec4 cdir, char*& text)
+{
     std::stringstream ss;
     ss << "Report for BI metric\n\tcoordinates : (t,r,theta,phi)\n";
     ss << "---------------------------------------------------------------\n";
@@ -656,34 +659,36 @@ bool MetricPTD_BI::report(const vec4 pos, const vec4 cdir, std::string &text) {
     ss.precision(DEF_FIXED_REPORT_PRECISION);
     ss.setf(std::ios::fixed);
 
-    //double b= Par_b;
+    // double b= Par_b;
     calcConstantsOfMotion(pos, cdir);
     ss << "Constants of motion:" << std::endl;
     ss << "  C_0^2 = " << C0 << std::endl;
     ss << "  C_2^2 = " << C2 << std::endl;
     ss << "      K = " << K << std::endl;
-//  ss << "  m_0^2 = " << m0 << std::endl;
+    //  ss << "  m_0^2 = " << m0 << std::endl;
     ss << "---------------------------------------------------------------\n";
     double maxrad = calculateVeffRoot(C0, K, pos[1]);
     if (maxrad >= 0) {
         ss << "  maximum distance for light from origin....r_max= " << maxrad << std::endl;
-    } else {
+    }
+    else {
         ss << "  maximum distance from origin..............r_max= infinity" << std::endl;
     }
 
-// int r= 30;
-// double xi = asin(sqrt((r-b)/r/r/r*pos[1]*pos[1]*pos[1]/(pos[1]-b)))*180/M_PI;
-// ss << "  maximum angle xi for light reaching radius r="<< r << ": " << xi << "." ;
-    text = ss.str();
-    return true;
+    // int r= 30;
+    // double xi = asin(sqrt((r-b)/r/r/r*pos[1]*pos[1]*pos[1]/(pos[1]-b)))*180/M_PI;
+    // ss << "  maximum angle xi for light reaching radius r="<< r << ": " << xi << "." ;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // *************************** specific  public methods ****************************
-//None
+// None
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricPTD_BI::setStandardValues() {
+void MetricPTD_BI::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 6.0 * Par_b;
     mInitPos[2] = M_PI_2;
@@ -698,6 +703,4 @@ void MetricPTD_BI::setStandardValues() {
     mCoordNames[3] = std::string("phi");
 }
 
-
 } // end namespace m4d
-

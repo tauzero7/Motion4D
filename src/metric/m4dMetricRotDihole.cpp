@@ -34,8 +34,9 @@ namespace m4d {
  * \param  mass2 : mass of black hole 2
  * \param  omega : angular frequency
  */
-MetricRotDihole::MetricRotDihole(double mass1, double mass2, double omega) {
-    mMetricName  = "RotDihole";
+MetricRotDihole::MetricRotDihole(double mass1, double mass2, double omega)
+{
+    mMetricName = "RotDihole";
     setCoordType(enum_coordinate_cartesian);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -54,16 +55,15 @@ MetricRotDihole::MetricRotDihole(double mass1, double mass2, double omega) {
     setStandardValues();
 }
 
-MetricRotDihole::~MetricRotDihole() {
-}
-
+MetricRotDihole::~MetricRotDihole() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricRotDihole::calculateMetric(const double* pos) {
+bool MetricRotDihole::calculateMetric(const double* pos)
+{
     double U = calc_U(pos);
 
     g_compts[0][0] = -1 / pow(U, 2);
@@ -90,7 +90,8 @@ bool MetricRotDihole::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricRotDihole::calculateChristoffels(const double* pos) {
+bool MetricRotDihole::calculateChristoffels(const double* pos)
+{
     double dUdt, dUdx, dUdy, dUdz;
     double U = calc_U(pos);
     calc_dU(pos, dUdt, dUdx, dUdy, dUdz);
@@ -167,12 +168,11 @@ bool MetricRotDihole::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricRotDihole::calculateChrisD(const double*) {
-
+bool MetricRotDihole::calculateChrisD(const double*)
+{
 
     return true;
 }
-
 
 /*! Transform local 4-direction to coordinate 4-direction.
  *
@@ -181,8 +181,8 @@ bool MetricRotDihole::calculateChrisD(const double*) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricRotDihole::localToCoord(const double* pos, const double* ldir, double* dir,
-                                   enum_nat_tetrad_type) {
+void MetricRotDihole::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     double U = calc_U(pos);
 
     dir[0] = ldir[0] * U;
@@ -198,8 +198,8 @@ void MetricRotDihole::localToCoord(const double* pos, const double* ldir, double
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricRotDihole::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                   enum_nat_tetrad_type) {
+void MetricRotDihole::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     double U = calc_U(pos);
 
     ldir[0] = cdir[0] / U;
@@ -208,42 +208,42 @@ void MetricRotDihole::coordToLocal(const double* pos, const double* cdir, double
     ldir[3] = cdir[3] * U;
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricRotDihole::breakCondition(const double*) {
+bool MetricRotDihole::breakCondition(const double*)
+{
     bool br = false;
     return br;
 }
-
 
 /*! Set parameter 'pName' to 'val'.
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricRotDihole::setParam(const char* pName, double val) {
+bool MetricRotDihole::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"mass1") == 0) {
+    if (strcmp(pName, "mass1") == 0) {
         mMass1 = val;
     }
-    else if (strcmp(pName,"mass2") == 0) {
+    else if (strcmp(pName, "mass2") == 0) {
         mMass2 = val;
     }
-    else if (strcmp(pName,"omega") == 0) {
+    else if (strcmp(pName, "omega") == 0) {
         mOmega = val;
     }
     return true;
 }
 
-
 /*! Generate report.
  */
-bool MetricRotDihole::report(const vec4 , const vec4 , std::string &text) {
+bool MetricRotDihole::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for RotDihole metric\n\tcoordinates : (t,x,y,z)\n";
     ss << "---------------------------------------------------------------\n";
@@ -251,15 +251,15 @@ bool MetricRotDihole::report(const vec4 , const vec4 , std::string &text) {
     ss.precision(DEF_FIXED_REPORT_PRECISION);
     ss.setf(std::ios::fixed);
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
-
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricRotDihole::setStandardValues() {
+void MetricRotDihole::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 10.0;
     mInitPos[2] = 0.0;
@@ -274,8 +274,8 @@ void MetricRotDihole::setStandardValues() {
     mCoordNames[3] = std::string("z");
 }
 
-
-void MetricRotDihole::calc_r(const double *pos, double &r1, double &r2) {
+void MetricRotDihole::calc_r(const double* pos, double& r1, double& r2)
+{
     double t = pos[0];
     double x = pos[1];
     double y = pos[2];
@@ -286,13 +286,15 @@ void MetricRotDihole::calc_r(const double *pos, double &r1, double &r2) {
     r2 = sqrt(M4D_SQR(x) + M4D_SQR(y - sin(omega * t)) + M4D_SQR(z + cos(omega * t)));
 }
 
-double MetricRotDihole::calc_U(const double *pos) {
+double MetricRotDihole::calc_U(const double* pos)
+{
     double r1, r2;
     calc_r(pos, r1, r2);
     return 1.0 + mMass1 / r1 + mMass2 / r2;
 }
 
-void MetricRotDihole::calc_dU(const double *pos, double &dUdt, double &dUdx, double &dUdy, double &dUdz) {
+void MetricRotDihole::calc_dU(const double* pos, double& dUdt, double& dUdx, double& dUdy, double& dUdz)
+{
     double t = pos[0];
     double x = pos[1];
     double y = pos[2];
@@ -305,11 +307,11 @@ void MetricRotDihole::calc_dU(const double *pos, double &dUdt, double &dUdx, dou
     double r1, r2;
     calc_r(pos, r1, r2);
 
-    dUdt = -M1 * omega * ((y + sin(omega * t)) * cos(omega * t) + (z - cos(omega * t)) * sin(omega * t)) / pow(r1, 3.0) + M2 * omega * ((y - sin(omega * t)) * cos(omega * t) + (z + cos(omega * t)) * sin(omega * t)) / pow(r2, 3.0);
+    dUdt = -M1 * omega * ((y + sin(omega * t)) * cos(omega * t) + (z - cos(omega * t)) * sin(omega * t)) / pow(r1, 3.0)
+        + M2 * omega * ((y - sin(omega * t)) * cos(omega * t) + (z + cos(omega * t)) * sin(omega * t)) / pow(r2, 3.0);
     dUdx = -M1 * x / pow(r1, 3.0) - M2 * x / pow(r2, 3.0);
     dUdy = -M1 * (y + sin(omega * t)) / pow(r1, 3.0) - M2 * (y - sin(omega * t)) / pow(r2, 3.0);
     dUdz = -M1 * (z - cos(omega * t)) / pow(r1, 3.0) - M2 * (z + cos(omega * t)) / pow(r2, 3.0);
-
 }
 
 } // end namespace m4d

@@ -629,7 +629,7 @@ double MetricPlaneGravWave::testConstraint(const double y[], const double kappa)
 
 /*! Generate report.
  */
-bool MetricPlaneGravWave::report(const vec4, const vec4, std::string& text)
+bool MetricPlaneGravWave::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
     ss << "Report for PlaneGravWave metric\n\tcoordinate : (t,x,y,z)\n";
@@ -640,8 +640,8 @@ bool MetricPlaneGravWave::report(const vec4, const vec4, std::string& text)
     ss << "  Longitudinal Extension ............. a = " << mLongExt << std::endl;
     ss << "  Degree of the Fourier polynomial ... n = " << static_cast<int>(mDegree) << std::endl;
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************

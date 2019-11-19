@@ -29,14 +29,14 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the Kottler metric.
  *
  * \param  mass : mass of the black hole.
  * \param  l : parameter.
  */
-MetricTaubNUT::MetricTaubNUT(double mass, double l) {
-    mMetricName  = "TaubNUT";
+MetricTaubNUT::MetricTaubNUT(double mass, double l)
+{
+    mMetricName = "TaubNUT";
     setCoordType(enum_coordinate_spherical);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -58,20 +58,19 @@ MetricTaubNUT::MetricTaubNUT(double mass, double l) {
     setStandardValues();
 }
 
-MetricTaubNUT::~MetricTaubNUT() {
-}
-
+MetricTaubNUT::~MetricTaubNUT() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricTaubNUT::calculateMetric(const double* pos) {
-    //double r     = pos[1];
+bool MetricTaubNUT::calculateMetric(const double* pos)
+{
+    // double r     = pos[1];
     double theta = pos[2];
     double l = mL;
-    //double M = mMass;
+    // double M = mMass;
 
     /*
     double t1 = r*r;
@@ -135,8 +134,9 @@ bool MetricTaubNUT::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricTaubNUT::calculateChristoffels(const double* pos) {
-    double r     = pos[1];
+bool MetricTaubNUT::calculateChristoffels(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
     double M = mMass;
     double l = mL;
@@ -245,38 +245,48 @@ bool MetricTaubNUT::calculateChristoffels(const double* pos) {
     */
 
     christoffel[0][0][0] = 0;
-    christoffel[0][0][1] = (-2 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) + (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2))) * (-2 * M * r - pow(l, 2) + pow(r, 2)) / (2 * pow(pow(l, 2) + pow(r, 2), 3));
+    christoffel[0][0][1] = (-2 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) + (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2)))
+        * (-2 * M * r - pow(l, 2) + pow(r, 2)) / (2 * pow(pow(l, 2) + pow(r, 2), 3));
     christoffel[0][0][2] = 0;
     christoffel[0][0][3] = 0;
-    christoffel[0][1][0] = (-2 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) + (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2))) / (2 * (pow(l, 2) + pow(r, 2)) * (-2 * M * r - pow(l, 2) + pow(r, 2)));
+    christoffel[0][1][0] = (-2 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) + (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2)))
+        / (2 * (pow(l, 2) + pow(r, 2)) * (-2 * M * r - pow(l, 2) + pow(r, 2)));
     christoffel[0][1][1] = 0;
     christoffel[0][1][2] = 0;
     christoffel[0][1][3] = 0;
-    christoffel[0][2][0] = -2 * pow(l, 2) * (-2 * M * r - pow(l, 2) + pow(r, 2)) / (pow(pow(l, 2) + pow(r, 2), 2) * tan(theta));
+    christoffel[0][2][0]
+        = -2 * pow(l, 2) * (-2 * M * r - pow(l, 2) + pow(r, 2)) / (pow(pow(l, 2) + pow(r, 2), 2) * tan(theta));
     christoffel[0][2][1] = 0;
     christoffel[0][2][2] = 0;
     christoffel[0][2][3] = l * (-2 * M * r - pow(l, 2) + pow(r, 2)) / (pow(pow(l, 2) + pow(r, 2), 2) * sin(theta));
     christoffel[0][3][0] = 0;
-    christoffel[0][3][1] = l * (-2 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) + (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2))) * (-2 * M * r - pow(l, 2) + pow(r, 2)) * cos(theta) / pow(pow(l, 2) + pow(r, 2), 3);
+    christoffel[0][3][1] = l
+        * (-2 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) + (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2)))
+        * (-2 * M * r - pow(l, 2) + pow(r, 2)) * cos(theta) / pow(pow(l, 2) + pow(r, 2), 3);
     christoffel[0][3][2] = -l * (-2 * M * r - pow(l, 2) + pow(r, 2)) * sin(theta) / pow(pow(l, 2) + pow(r, 2), 2);
     christoffel[0][3][3] = 0;
-    christoffel[1][0][0] = (-2 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) + (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2))) / (2 * (pow(l, 2) + pow(r, 2)) * (-2 * M * r - pow(l, 2) + pow(r, 2)));
+    christoffel[1][0][0] = (-2 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) + (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2)))
+        / (2 * (pow(l, 2) + pow(r, 2)) * (-2 * M * r - pow(l, 2) + pow(r, 2)));
     christoffel[1][0][1] = 0;
     christoffel[1][0][2] = 0;
     christoffel[1][0][3] = 0;
     christoffel[1][1][0] = 0;
-    christoffel[1][1][1] = (2 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) - (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2))) / (2 * (pow(l, 2) + pow(r, 2)) * (-2 * M * r - pow(l, 2) + pow(r, 2)));
+    christoffel[1][1][1] = (2 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) - (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2)))
+        / (2 * (pow(l, 2) + pow(r, 2)) * (-2 * M * r - pow(l, 2) + pow(r, 2)));
     christoffel[1][1][2] = 0;
     christoffel[1][1][3] = 0;
     christoffel[1][2][0] = 0;
     christoffel[1][2][1] = 0;
     christoffel[1][2][2] = r / (pow(l, 2) + pow(r, 2));
     christoffel[1][2][3] = 0;
-    christoffel[1][3][0] = l * (-4 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) + (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2))) * cos(theta) / ((pow(l, 2) + pow(r, 2)) * (-2 * M * r - pow(l, 2) + pow(r, 2)));
+    christoffel[1][3][0] = l
+        * (-4 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) + (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2))) * cos(theta)
+        / ((pow(l, 2) + pow(r, 2)) * (-2 * M * r - pow(l, 2) + pow(r, 2)));
     christoffel[1][3][1] = 0;
     christoffel[1][3][2] = 0;
     christoffel[1][3][3] = r / (pow(l, 2) + pow(r, 2));
-    christoffel[2][0][0] = -2 * pow(l, 2) * (-2 * M * r - pow(l, 2) + pow(r, 2)) / (pow(pow(l, 2) + pow(r, 2), 2) * tan(theta));
+    christoffel[2][0][0]
+        = -2 * pow(l, 2) * (-2 * M * r - pow(l, 2) + pow(r, 2)) / (pow(pow(l, 2) + pow(r, 2), 2) * tan(theta));
     christoffel[2][0][1] = 0;
     christoffel[2][0][2] = 0;
     christoffel[2][0][3] = l * (-2 * M * r - pow(l, 2) + pow(r, 2)) / (pow(pow(l, 2) + pow(r, 2), 2) * sin(theta));
@@ -288,27 +298,43 @@ bool MetricTaubNUT::calculateChristoffels(const double* pos) {
     christoffel[2][2][1] = -r * (-2 * M * r - pow(l, 2) + pow(r, 2)) / (pow(l, 2) + pow(r, 2));
     christoffel[2][2][2] = 0;
     christoffel[2][2][3] = 0;
-    christoffel[2][3][0] = l * (-4 * pow(l, 2) * (-2 * M * r - pow(l, 2) + pow(r, 2)) * pow(cos(theta), 2) + pow(pow(l, 2) + pow(r, 2), 2) * pow(sin(theta), 2) - 2 * pow(pow(l, 2) + pow(r, 2), 2)) / (pow(pow(l, 2) + pow(r, 2), 2) * sin(theta));
+    christoffel[2][3][0] = l
+        * (-4 * pow(l, 2) * (-2 * M * r - pow(l, 2) + pow(r, 2)) * pow(cos(theta), 2)
+            + pow(pow(l, 2) + pow(r, 2), 2) * pow(sin(theta), 2) - 2 * pow(pow(l, 2) + pow(r, 2), 2))
+        / (pow(pow(l, 2) + pow(r, 2), 2) * sin(theta));
     christoffel[2][3][1] = 0;
     christoffel[2][3][2] = 0;
-    christoffel[2][3][3] = (2 * pow(l, 2) * (-2 * M * r - pow(l, 2) + pow(r, 2)) + pow(pow(l, 2) + pow(r, 2), 2)) / (pow(pow(l, 2) + pow(r, 2), 2) * tan(theta));
+    christoffel[2][3][3] = (2 * pow(l, 2) * (-2 * M * r - pow(l, 2) + pow(r, 2)) + pow(pow(l, 2) + pow(r, 2), 2))
+        / (pow(pow(l, 2) + pow(r, 2), 2) * tan(theta));
     christoffel[3][0][0] = 0;
-    christoffel[3][0][1] = l * (-2 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) + (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2))) * (-2 * M * r - pow(l, 2) + pow(r, 2)) * cos(theta) / pow(pow(l, 2) + pow(r, 2), 3);
+    christoffel[3][0][1] = l
+        * (-2 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) + (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2)))
+        * (-2 * M * r - pow(l, 2) + pow(r, 2)) * cos(theta) / pow(pow(l, 2) + pow(r, 2), 3);
     christoffel[3][0][2] = -l * (-2 * M * r - pow(l, 2) + pow(r, 2)) * sin(theta) / pow(pow(l, 2) + pow(r, 2), 2);
     christoffel[3][0][3] = 0;
-    christoffel[3][1][0] = l * (-4 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) + (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2))) * cos(theta) / ((pow(l, 2) + pow(r, 2)) * (-2 * M * r - pow(l, 2) + pow(r, 2)));
+    christoffel[3][1][0] = l
+        * (-4 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) + (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2))) * cos(theta)
+        / ((pow(l, 2) + pow(r, 2)) * (-2 * M * r - pow(l, 2) + pow(r, 2)));
     christoffel[3][1][1] = 0;
     christoffel[3][1][2] = 0;
     christoffel[3][1][3] = r / (pow(l, 2) + pow(r, 2));
-    christoffel[3][2][0] = l * (-4 * pow(l, 2) * (-2 * M * r - pow(l, 2) + pow(r, 2)) * pow(cos(theta), 2) + pow(pow(l, 2) + pow(r, 2), 2) * pow(sin(theta), 2) - 2 * pow(pow(l, 2) + pow(r, 2), 2)) / (pow(pow(l, 2) + pow(r, 2), 2) * sin(theta));
+    christoffel[3][2][0] = l
+        * (-4 * pow(l, 2) * (-2 * M * r - pow(l, 2) + pow(r, 2)) * pow(cos(theta), 2)
+            + pow(pow(l, 2) + pow(r, 2), 2) * pow(sin(theta), 2) - 2 * pow(pow(l, 2) + pow(r, 2), 2))
+        / (pow(pow(l, 2) + pow(r, 2), 2) * sin(theta));
     christoffel[3][2][1] = 0;
     christoffel[3][2][2] = 0;
-    christoffel[3][2][3] = (2 * pow(l, 2) * (-2 * M * r - pow(l, 2) + pow(r, 2)) + pow(pow(l, 2) + pow(r, 2), 2)) / (pow(pow(l, 2) + pow(r, 2), 2) * tan(theta));
+    christoffel[3][2][3] = (2 * pow(l, 2) * (-2 * M * r - pow(l, 2) + pow(r, 2)) + pow(pow(l, 2) + pow(r, 2), 2))
+        / (pow(pow(l, 2) + pow(r, 2), 2) * tan(theta));
     christoffel[3][3][0] = 0;
-    christoffel[3][3][1] = (-2 * M * r - pow(l, 2) + pow(r, 2)) * (-8 * pow(l, 2) * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) * pow(cos(theta), 2) + 4 * pow(l, 2) * (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2)) * pow(cos(theta), 2) + 2 * r * pow(pow(l, 2) + pow(r, 2), 2) * pow(cos(theta), 2) - 2 * r * pow(pow(l, 2) + pow(r, 2), 2)) / (2 * pow(pow(l, 2) + pow(r, 2), 3));
-    christoffel[3][3][2] = (-4 * pow(l, 2) * (-2 * M * r - pow(l, 2) + pow(r, 2)) - pow(pow(l, 2) + pow(r, 2), 2)) * sin(theta) * cos(theta) / pow(pow(l, 2) + pow(r, 2), 2);
+    christoffel[3][3][1] = (-2 * M * r - pow(l, 2) + pow(r, 2))
+        * (-8 * pow(l, 2) * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) * pow(cos(theta), 2)
+            + 4 * pow(l, 2) * (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2)) * pow(cos(theta), 2)
+            + 2 * r * pow(pow(l, 2) + pow(r, 2), 2) * pow(cos(theta), 2) - 2 * r * pow(pow(l, 2) + pow(r, 2), 2))
+        / (2 * pow(pow(l, 2) + pow(r, 2), 3));
+    christoffel[3][3][2] = (-4 * pow(l, 2) * (-2 * M * r - pow(l, 2) + pow(r, 2)) - pow(pow(l, 2) + pow(r, 2), 2))
+        * sin(theta) * cos(theta) / pow(pow(l, 2) + pow(r, 2), 2);
     christoffel[3][3][3] = 0;
-
 
     return true;
 }
@@ -317,8 +343,9 @@ bool MetricTaubNUT::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricTaubNUT::calculateChrisD(const double* pos) {
-    double r     = pos[1];
+bool MetricTaubNUT::calculateChrisD(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
     double M = mMass;
     double l = mL;
@@ -380,7 +407,10 @@ bool MetricTaubNUT::calculateChrisD(const double* pos) {
     double t92 = t36 * t40 * t78;
     double t94 = (t1 - t3) * t36;
     double t95 = t2 * t1;
-    double t109 = 2.0 * t78 * (t95 - 6.0 * t10 - 9.0 * t4 + 6.0 * t19 + 3.0 * t7 - 12.0 * t23 - 6.0 * t16 - 3.0 * t25 + 20.0 * t13 - 2.0 * t21) * t36 * t42;
+    double t109 = 2.0 * t78
+        * (t95 - 6.0 * t10 - 9.0 * t4 + 6.0 * t19 + 3.0 * t7 - 12.0 * t23 - 6.0 * t16 - 3.0 * t25 + 20.0 * t13
+            - 2.0 * t21)
+        * t36 * t42;
     double t116 = 2.0 * t52 * t53 * l / t27 / t40;
     double t117 = t1 * t3;
     double t119 = t51 * r;
@@ -390,15 +420,20 @@ bool MetricTaubNUT::calculateChrisD(const double* pos) {
     double t133 = t62 * t6;
     double t137 = t3 * t63;
     double t142 = t6 * t63;
-    double t149 = t78 * (14.0 * t62 * t1 * t3 - 16.0 * t130 * t38 - 5.0 * t133 + 3.0 * t62 * t2 + 8.0 * t137 * t1 - 8.0 * t137 * t38 - 2.0 * t142 + 2.0 * t63 * t2) * t65 * t36;
+    double t149 = t78
+        * (14.0 * t62 * t1 * t3 - 16.0 * t130 * t38 - 5.0 * t133 + 3.0 * t62 * t2 + 8.0 * t137 * t1 - 8.0 * t137 * t38
+            - 2.0 * t142 + 2.0 * t63 * t2)
+        * t65 * t36;
     double t151 = t121 * t64 * t74;
     double t161 = t63 * M;
     double t172 = t2 * t6;
     double t177 = t1 * t25;
     double t183 = t2 * t2;
     double t185 = t6 * t6;
-    double t196 = -4.0 * t10 * t130 - 8.0 * t12 * t133 - 4.0 * M * t25 * t62 * r + 8.0 * t9 * t3 * t161 - 112.0 * t11 * t6 * t161 + 72.0 * r * t25 * t161 + 64.0 * t22 * t142 + 8.0 * t172 * t62 + 24.0 * t172 * t63 - 64.0 * t177 *
-                  t63 + 6.0 * t95 * t3 * t62 + t62 * t183 + 8.0 * t185 * t63 - t62 * t185 + 2.0 * t177 * t62 - 8.0 * t25 * t63 * t18 - 24.0 * t19 * t137;
+    double t196 = -4.0 * t10 * t130 - 8.0 * t12 * t133 - 4.0 * M * t25 * t62 * r + 8.0 * t9 * t3 * t161
+        - 112.0 * t11 * t6 * t161 + 72.0 * r * t25 * t161 + 64.0 * t22 * t142 + 8.0 * t172 * t62 + 24.0 * t172 * t63
+        - 64.0 * t177 * t63 + 6.0 * t95 * t3 * t62 + t62 * t183 + 8.0 * t185 * t63 - t62 * t185 + 2.0 * t177 * t62
+        - 8.0 * t25 * t63 * t18 - 24.0 * t19 * t137;
 
     chrisD[0][0][0][0] = 0.0;
     chrisD[0][0][0][1] = 0.0;
@@ -646,7 +681,8 @@ bool MetricTaubNUT::calculateChrisD(const double* pos) {
     chrisD[3][3][0][3] = 0.0;
     chrisD[3][3][1][0] = 0.0;
     chrisD[3][3][1][1] = -t196 * t30;
-    chrisD[3][3][1][2] = -2.0 * t40 * t45 * t53 * (9.0 * r * t6 + 4.0 * t47 * t3 - 4.0 * t15 + t9 + 2.0 * t11 * t3) * t57;
+    chrisD[3][3][1][2]
+        = -2.0 * t40 * t45 * t53 * (9.0 * r * t6 + 4.0 * t47 * t3 - 4.0 * t15 + t9 + 2.0 * t11 * t3) * t57;
     chrisD[3][3][1][3] = 0.0;
     chrisD[3][3][2][0] = 0.0;
     chrisD[3][3][2][1] = 8.0 * t45 * t53 * t3 * t52 * t57;
@@ -660,7 +696,6 @@ bool MetricTaubNUT::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -668,9 +703,9 @@ bool MetricTaubNUT::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricTaubNUT::localToCoord(const double* pos, const double* ldir, double* dir,
-                                 enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricTaubNUT::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
     double sigma = r * r + mL * mL;
     double delta = r * r - 2.0 * mMass * r - mL * mL;
@@ -688,9 +723,9 @@ void MetricTaubNUT::localToCoord(const double* pos, const double* ldir, double* 
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricTaubNUT::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                 enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricTaubNUT::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
     double sigma = r * r + mL * mL;
     double delta = r * r - 2.0 * mMass * r - mL * mL;
@@ -701,14 +736,14 @@ void MetricTaubNUT::coordToLocal(const double* pos, const double* cdir, double* 
     ldir[3] = sqrt(sigma) * sin(theta) * cdir[3];
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricTaubNUT::breakCondition(const double* pos) {
+bool MetricTaubNUT::breakCondition(const double* pos)
+{
     bool br = false;
 
     double r = pos[1];
@@ -719,54 +754,63 @@ bool MetricTaubNUT::breakCondition(const double* pos) {
     return br;
 }
 
-
 /*! Calculate right hand side of the geodesic equation in first order form.
  *
  *  \param  y[]   : pointer to position and direction coordinates.
  *  \param  dydx[] : pointer to right side of geodesic equation.
  */
 
-bool MetricTaubNUT::calcDerivs(const double y[], double dydx[]) {
+bool MetricTaubNUT::calcDerivs(const double y[], double dydx[])
+{
     return false;
     dydx[0] = y[4];
     dydx[1] = y[5];
     dydx[2] = y[6];
     dydx[3] = y[7];
 
-    double r     = y[1];
+    double r = y[1];
     double theta = y[2];
 
-    double st    = sin(theta);
-    double ct    = cos(theta);
+    double st = sin(theta);
+    double ct = cos(theta);
     double Sigma = r * r + mL * mL;
-    double S2    = Sigma * Sigma;
-    double S3    = S2 * Sigma;
+    double S2 = Sigma * Sigma;
+    double S3 = S2 * Sigma;
     double Delta = r * r - 2.0 * mMass * r - mL * mL;
-    double rho   = 2.0 * r * mL * mL + mMass * (r * r - mL * mL);
+    double rho = 2.0 * r * mL * mL + mMass * (r * r - mL * mL);
 
-    double G_t_t_r    = Delta * rho / S3;
-    double G_t_r_t    = rho / Delta / Sigma;
-    double G_t_th_t   = -2.0 * mL * mL * ct / st * Delta / S2;
-    double G_th_ph_ph = (r * r * r * r - mL * mL * mL * mL + 4.0 * r * r * mL * mL - 4.0 * mMass * r * mL * mL) * ct / st / S2;
-    double G_ph_ph_th = -(6.0 * r * r * mL * mL - 8.0 * mMass * r * mL * mL - 3.0 * mL * mL * mL * mL + r * r * r * r) * st * ct / S2;
-    double G_t_th_ph  = mL * Delta / S2 / st;
-    double G_t_ph_r   = 2.0 * mL * rho * Delta * ct / S3;
-    double G_t_ph_th  = -mL * Delta * st / S2;
-    double G_r_r_r    = -rho / Sigma / Delta;
-    double G_r_th_th  = r / Sigma;
-    double G_r_ph_t   = -2.0 * mL * (r * r * (r - 3.0 * mMass) - (3.0 * r - mMass) * mL * mL) * ct / Sigma / Delta;
-    double G_r_ph_ph  = r / Sigma;
-    double G_th_th_r  = -r * Delta / Sigma;
-    double G_th_ph_t  = -mL * (ct * ct * (6.0 * r * r * mL * mL - 8.0 * mL * mL * mMass * r - 3.0 * mL * mL * mL * mL + r * r * r * r) + S2) / S2 / st;
-    double G_ph_ph_r  = Delta / S3 * (ct * ct * (9.0 * r * mL * mL * mL * mL + 4.0 * mL * mL * mMass * r * r - 4.0 * mL * mL * mL * mL * mMass + r * r * r * (r * r + 2.0 * mL * mL)) - r * S2);
+    double G_t_t_r = Delta * rho / S3;
+    double G_t_r_t = rho / Delta / Sigma;
+    double G_t_th_t = -2.0 * mL * mL * ct / st * Delta / S2;
+    double G_th_ph_ph
+        = (r * r * r * r - mL * mL * mL * mL + 4.0 * r * r * mL * mL - 4.0 * mMass * r * mL * mL) * ct / st / S2;
+    double G_ph_ph_th
+        = -(6.0 * r * r * mL * mL - 8.0 * mMass * r * mL * mL - 3.0 * mL * mL * mL * mL + r * r * r * r) * st * ct / S2;
+    double G_t_th_ph = mL * Delta / S2 / st;
+    double G_t_ph_r = 2.0 * mL * rho * Delta * ct / S3;
+    double G_t_ph_th = -mL * Delta * st / S2;
+    double G_r_r_r = -rho / Sigma / Delta;
+    double G_r_th_th = r / Sigma;
+    double G_r_ph_t = -2.0 * mL * (r * r * (r - 3.0 * mMass) - (3.0 * r - mMass) * mL * mL) * ct / Sigma / Delta;
+    double G_r_ph_ph = r / Sigma;
+    double G_th_th_r = -r * Delta / Sigma;
+    double G_th_ph_t = -mL
+        * (ct * ct * (6.0 * r * r * mL * mL - 8.0 * mL * mL * mMass * r - 3.0 * mL * mL * mL * mL + r * r * r * r) + S2)
+        / S2 / st;
+    double G_ph_ph_r = Delta / S3
+        * (ct * ct
+                * (9.0 * r * mL * mL * mL * mL + 4.0 * mL * mL * mMass * r * r - 4.0 * mL * mL * mL * mL * mMass
+                    + r * r * r * (r * r + 2.0 * mL * mL))
+            - r * S2);
 
-    dydx[4] = -2.0 * G_t_r_t*y[4] * y[5] - 2.0 * G_r_ph_t*y[5] * y[7] - 2.0 * G_th_ph_t*y[6] * y[7] - 2.0 * G_t_th_t*y[4] * y[6];
-    dydx[5] = -G_t_t_r * y[4] * y[4] - 2.0 * G_t_ph_r * y[4] * y[7] - G_r_r_r * y[5] * y[5] - G_th_th_r * y[6] * y[6] - G_ph_ph_r * y[7] * y[7];
+    dydx[4] = -2.0 * G_t_r_t * y[4] * y[5] - 2.0 * G_r_ph_t * y[5] * y[7] - 2.0 * G_th_ph_t * y[6] * y[7]
+        - 2.0 * G_t_th_t * y[4] * y[6];
+    dydx[5] = -G_t_t_r * y[4] * y[4] - 2.0 * G_t_ph_r * y[4] * y[7] - G_r_r_r * y[5] * y[5] - G_th_th_r * y[6] * y[6]
+        - G_ph_ph_r * y[7] * y[7];
     dydx[6] = -2.0 * G_t_ph_th * y[4] * y[7] - 2.0 * G_r_th_th * y[5] * y[6] - G_ph_ph_th * y[7] * y[7];
     dydx[7] = -2.0 * G_t_th_ph * y[4] * y[6] - 2.0 * G_r_ph_ph * y[5] * y[7] - 2.0 * G_th_ph_ph * y[6] * y[7];
     return true;
 }
-
 
 /*! Tests whether the constraint equation is fulfilled.
  *
@@ -778,8 +822,9 @@ bool MetricTaubNUT::calcDerivs(const double y[], double dydx[]) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricTaubNUT::testConstraint(const double y[], const double kappa) {
-    double r     = y[1];
+double MetricTaubNUT::testConstraint(const double y[], const double kappa)
+{
+    double r = y[1];
     double theta = y[2];
 
     double dt = y[4];
@@ -795,23 +840,22 @@ double MetricTaubNUT::testConstraint(const double y[], const double kappa) {
     return sum;
 }
 
-
 /*! Set parameter 'pName' to 'val'.
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricTaubNUT::setParam(const char* pName, double val) {
+bool MetricTaubNUT::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"mass") == 0) {
+    if (strcmp(pName, "mass") == 0) {
         mMass = val;
     }
-    else if (strcmp(pName,"l") == 0) {
+    else if (strcmp(pName, "l") == 0) {
         mL = val;
     }
     return true;
 }
-
 
 /*! Effective potential.
  *  \param pos : initial position.
@@ -821,7 +865,9 @@ bool MetricTaubNUT::setParam(const char* pName, double val) {
  *  \param val : reference to effective potential value.
  *  \return true : effective potential exists at x.
  */
-bool MetricTaubNUT::effPotentialValue(const vec4 pos, const vec4 cdir , enum_geodesic_type type, const double x, double &val) {
+bool MetricTaubNUT::effPotentialValue(
+    const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double& val)
+{
     double kappa = 0.0;
     if (type == enum_geodesic_timelike) {
         kappa = -mSign;
@@ -845,7 +891,8 @@ bool MetricTaubNUT::effPotentialValue(const vec4 pos, const vec4 cdir , enum_geo
  *  \param val : reference to total energy value.
  *  \return true : effective potential exists at x.
  */
-bool MetricTaubNUT::totEnergy(const vec4 pos, const vec4 cdir, const double , double &val) {
+bool MetricTaubNUT::totEnergy(const vec4 pos, const vec4 cdir, const double, double& val)
+{
     double sigma = (pos[1] * pos[1] + mL * mL);
     double delta = (pos[1] * pos[1] - 2.0 * mMass * pos[1] - mL * mL);
 
@@ -855,10 +902,10 @@ bool MetricTaubNUT::totEnergy(const vec4 pos, const vec4 cdir, const double , do
     return true;
 }
 
-
 /*! Generate report.
  */
-bool MetricTaubNUT::report(const vec4 , const vec4 , std::string &text) {
+bool MetricTaubNUT::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for TaubNUT metric\n\tcoordinate : (t,r,theta,phi)\n";
     ss << "---------------------------------------------------------\n";
@@ -870,15 +917,15 @@ bool MetricTaubNUT::report(const vec4 , const vec4 , std::string &text) {
     ss << "  critical avalue ....................... r_crit = " << mCritRadius << std::endl;
     ss << "  photon orbit ............................ r_po = " << mPhotonOrbit << std::endl;
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
-
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricTaubNUT::setStandardValues() {
+void MetricTaubNUT::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 6.0;
     mInitPos[2] = M_PI_2;
@@ -895,20 +942,23 @@ void MetricTaubNUT::setStandardValues() {
 
 /*! Calculate critical radius.
  */
-void MetricTaubNUT::calcCriticalRadius() {
+void MetricTaubNUT::calcCriticalRadius()
+{
     mCritRadius = mMass + sqrt(mMass * mMass + mL * mL);
 }
 
 /*! Calculate radius of photon orbit.
  */
-void MetricTaubNUT::calcPhotonOrbit() {
+void MetricTaubNUT::calcPhotonOrbit()
+{
     double w = sqrt(mMass * mMass + mL * mL);
     double psi = acos(mMass / w);
 
     mPhotonOrbit = 2.0 * w * cos(psi / 3.0) + mMass;
 }
 
-void MetricTaubNUT::calcFunctions(const double* pos, double &D, double &S) {
+void MetricTaubNUT::calcFunctions(const double* pos, double& D, double& S)
+{
     double r = pos[1];
     D = r * r - 2.0 * mMass * r - mL * mL;
     S = r * r + mL * mL;

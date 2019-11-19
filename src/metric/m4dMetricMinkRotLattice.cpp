@@ -31,7 +31,8 @@ namespace m4d {
  *
  * \param  omega : rotation parameter.
  */
-MetricMinkRotLattice::MetricMinkRotLattice(double omega) {
+MetricMinkRotLattice::MetricMinkRotLattice(double omega)
+{
     mMetricName = "RotLattice";
     setCoordType(enum_coordinate_cylinder);
 
@@ -49,9 +50,7 @@ MetricMinkRotLattice::MetricMinkRotLattice(double omega) {
     setStandardValues();
 }
 
-MetricMinkRotLattice::~MetricMinkRotLattice() {
-}
-
+MetricMinkRotLattice::~MetricMinkRotLattice() {}
 
 // *********************************** public methods ******************************
 
@@ -59,7 +58,8 @@ MetricMinkRotLattice::~MetricMinkRotLattice() {
  *
  *  \param pos : pointer to position.
  */
-bool MetricMinkRotLattice::calculateMetric(const double* pos) {
+bool MetricMinkRotLattice::calculateMetric(const double* pos)
+{
     double c = mSpeedOfLight;
     double r = pos[1];
 
@@ -92,7 +92,8 @@ bool MetricMinkRotLattice::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricMinkRotLattice::calculateChristoffels(const double* pos) {
+bool MetricMinkRotLattice::calculateChristoffels(const double* pos)
+{
     double r = pos[1];
 
     double t1 = mOmega * mOmega;
@@ -166,7 +167,6 @@ bool MetricMinkRotLattice::calculateChristoffels(const double* pos) {
     christoffel[3][3][3] = 0.0;
 
     return true;
-
 }
 
 /*! Transform local 4-direction to coordinate 4-direction.
@@ -176,8 +176,8 @@ bool MetricMinkRotLattice::calculateChristoffels(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricMinkRotLattice::localToCoord(const double* pos, const double* ldir, double* dir,
-                                        enum_nat_tetrad_type  type) {
+void MetricMinkRotLattice::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type)
+{
     double r = pos[1];
     double wdc = mOmega / mSpeedOfLight;
 
@@ -188,7 +188,8 @@ void MetricMinkRotLattice::localToCoord(const double* pos, const double* ldir, d
         dir[1] = ldir[1];
         dir[2] = ldir[2] * sq / r;
         dir[3] = ldir[3];
-    } else if (type == enum_nat_tetrad_lnrf) {
+    }
+    else if (type == enum_nat_tetrad_lnrf) {
         dir[0] = ldir[0] / mSpeedOfLight;
         dir[1] = ldir[1];
         dir[2] = ldir[2] / r - wdc * ldir[0];
@@ -203,8 +204,8 @@ void MetricMinkRotLattice::localToCoord(const double* pos, const double* ldir, d
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricMinkRotLattice::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                        enum_nat_tetrad_type  type) {
+void MetricMinkRotLattice::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type)
+{
     double r = pos[1];
     double wdc = mOmega / mSpeedOfLight;
 
@@ -215,7 +216,8 @@ void MetricMinkRotLattice::coordToLocal(const double* pos, const double* cdir, d
         ldir[1] = cdir[1];
         ldir[2] = r / sq * cdir[2];
         ldir[3] = cdir[3];
-    } else if (type == enum_nat_tetrad_lnrf) {
+    }
+    else if (type == enum_nat_tetrad_lnrf) {
         ldir[0] = cdir[0] * mSpeedOfLight;
         ldir[1] = cdir[1];
         ldir[2] = r * (cdir[2] + mOmega * cdir[0]);
@@ -229,7 +231,8 @@ void MetricMinkRotLattice::coordToLocal(const double* pos, const double* cdir, d
  *  \return true  : radial position > c/omega.
  *  \return false : position is valid.
  */
-bool MetricMinkRotLattice::breakCondition(const double* pos) {
+bool MetricMinkRotLattice::breakCondition(const double* pos)
+{
     if (pos[1] >= fabs(mSpeedOfLight / mOmega)) {
         return true;
     }
@@ -237,13 +240,12 @@ bool MetricMinkRotLattice::breakCondition(const double* pos) {
     return false;
 }
 
-
-
 /*! Set parameter 'pName' to 'val'.
  *
  *  Set 'omega' parameter.
  */
-bool MetricMinkRotLattice::setParam(const char* pName, double val) {
+bool MetricMinkRotLattice::setParam(const char* pName, double val)
+{
     if (Metric::setParam(pName, val)) {
         mOmega = val;
     }
@@ -261,40 +263,44 @@ bool MetricMinkRotLattice::setParam(const char* pName, double val) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricMinkRotLattice::testConstraint(const double y[], const double kappa) {
+double MetricMinkRotLattice::testConstraint(const double y[], const double kappa)
+{
     double r = y[1];
     double cm = 1.0 / mSpeedOfLight;
 
     // Scale the directions with the speed of light before doubling them !!
-    double dt  = y[4];
-    double dr  = y[5] * cm;
+    double dt = y[4];
+    double dr = y[5] * cm;
     double dph = y[6] * cm;
-    double dz  = y[7] * cm;
+    double dz = y[7] * cm;
 
     double wdc = mOmega * cm;
 
     double sum = -kappa;
-    sum += -(1.0 - wdc * wdc * r * r) * dt * dt + 2.0 * r * r * cm * mOmega * dt * dph + r * r * dph * dph +  dr * dr + dz * dz;
+    sum += -(1.0 - wdc * wdc * r * r) * dt * dt + 2.0 * r * r * cm * mOmega * dt * dph + r * r * dph * dph + dr * dr
+        + dz * dz;
 
     return sum;
 }
 
 /*! Generate report.
  */
-bool MetricMinkRotLattice::report(const vec4 , const vec4 , std::string &text) {
+bool MetricMinkRotLattice::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Minkowski as rotating lattice metric\n\tcoordinate : (t,r,phi,z)\n";
     ss << "--------------------------------------------------------\n";
     ss << "  physical units ................................. no\n";
     ss << "  points outside  r=c/omega are not allowed ...... " << mSpeedOfLight / mOmega << std::endl;
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricMinkRotLattice::setStandardValues() {
+void MetricMinkRotLattice::setStandardValues()
+{
 
     mInitPos[0] = 0.0;
     mInitPos[1] = 1.0;

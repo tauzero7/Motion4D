@@ -45,43 +45,43 @@ namespace m4d {
 // ---------------------------------------------------
 //    class definition:   MetricGoedelCart
 // ---------------------------------------------------
-class MetricGoedelCart : public Metric {
+class MetricGoedelCart : public Metric
+{
 public:
     //! Standard constructor for the GoedelCart metric.
     MetricGoedelCart(double a = 1.0, double zeta = 0.0);
     virtual ~MetricGoedelCart();
 
-// --------- public methods -----------
+    // --------- public methods -----------
 public:
-    virtual bool  calculateMetric(const double* pos);
-    virtual bool  calculateChristoffels(const double* pos);
+    virtual bool calculateMetric(const double* pos);
+    virtual bool calculateChristoffels(const double* pos);
 
-    virtual void  localToCoord(const double* pos, const double* ldir, double* dir,
-                               enum_nat_tetrad_type  type = enum_nat_tetrad_default);
-    virtual void  coordToLocal(const double* pos, const double* cdir, double* ldir,
-                               enum_nat_tetrad_type  type = enum_nat_tetrad_default);
+    virtual void localToCoord(
+        const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
+    virtual void coordToLocal(
+        const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
 
+    virtual bool breakCondition(const double* pos);
 
-    virtual bool  breakCondition(const double* pos);
+    virtual bool transToTwoPlusOne(vec4 p, vec4& cp);
 
-    virtual bool  transToTwoPlusOne(vec4 p, vec4 &cp);
+    virtual bool setParam(const char* pName, double val);
+    virtual bool report(const vec4 pos, const vec4 cdir, char*& text);
 
-    virtual bool  setParam(const char* pName, double val);
-    virtual bool  report(const vec4 pos, const vec4 cdir, std::string &text);
-
-// --------- protected methods -----------
+    // --------- protected methods -----------
 protected:
     virtual void setStandardValues();
 
     //! calc helper variables
-    void    calcVars(const double* pos);
+    void calcVars(const double* pos);
 
-// -------- protected attribute ---------
+    // -------- protected attribute ---------
 protected:
     double mA;
     double mZeta;
 
-    //helpers
+    // helpers
     double Gamma, Delta, F1, F2;
 };
 

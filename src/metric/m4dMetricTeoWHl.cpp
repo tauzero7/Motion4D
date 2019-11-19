@@ -29,13 +29,13 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the TeoWHl metric.
  *
  * \param  b0 : throat size.
  */
-MetricTeoWHl::MetricTeoWHl(double b0) {
-    mMetricName  = "TeoWHl";
+MetricTeoWHl::MetricTeoWHl(double b0)
+{
+    mMetricName = "TeoWHl";
     setCoordType(enum_coordinate_spherical);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -52,18 +52,16 @@ MetricTeoWHl::MetricTeoWHl(double b0) {
     pm = 1.0;
 }
 
-MetricTeoWHl::~MetricTeoWHl() {
-
-}
-
+MetricTeoWHl::~MetricTeoWHl() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricTeoWHl::calculateMetric(const double* pos) {
-    double l     = pos[1];
+bool MetricTeoWHl::calculateMetric(const double* pos)
+{
+    double l = pos[1];
     double theta = pos[2];
     double c = 1.0;
 
@@ -105,14 +103,15 @@ bool MetricTeoWHl::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricTeoWHl::calculateChristoffels(const double* pos) {
-    double l     = pos[1];
+bool MetricTeoWHl::calculateChristoffels(const double* pos)
+{
+    double l = pos[1];
     double theta = pos[2];
     double c = 1.0;
 
     double t1 = calc_N(l);
     double t2 = c * c;
-    double t4 = calc_dN(l);  // diff(N(l),l);
+    double t4 = calc_dN(l); // diff(N(l),l);
     double t6 = calc_r(l);
     double t7 = calc_K(l);
     double t8 = t7 * t7;
@@ -123,14 +122,14 @@ bool MetricTeoWHl::calculateChristoffels(const double* pos) {
     double t13 = calc_omega(l);
     double t14 = t13 * t13;
     double t15 = t14 * t2;
-    double t16 = calc_dr(l);  // diff(r(l),l);
+    double t16 = calc_dr(l); // diff(r(l),l);
     double t19 = t6 * t6;
     double t20 = t19 * t7;
     double t21 = t20 * t11;
-    double t22 = calc_dK(l);  // diff(K(l),l);
+    double t22 = calc_dK(l); // diff(K(l),l);
     double t25 = t19 * t8;
     double t26 = t25 * t11;
-    double t28 = calc_domega(l);  // diff(omega(l),l);
+    double t28 = calc_domega(l); // diff(omega(l),l);
     double t33 = cos(theta);
     double t42 = t1 * t1;
     double t43 = 1 / t42;
@@ -141,7 +140,10 @@ bool MetricTeoWHl::calculateChristoffels(const double* pos) {
     double t58 = t8 * t7 * t11 * t28;
     double t60 = t42 * t7;
     double t64 = t42 * t6;
-    double t74 = c * t46 * t48 * (2.0 * t13 * t6 * t7 * t1 * t4 - t14 * t54 * t58 - 2.0 * t60 * t13 * t16 - 2.0 * t64 * t13 * t22 - t64 * t7 * t28) * t43 / 2.0;
+    double t74 = c * t46 * t48
+        * (2.0 * t13 * t6 * t7 * t1 * t4 - t14 * t54 * t58 - 2.0 * t60 * t13 * t16 - 2.0 * t64 * t13 * t22
+            - t64 * t7 * t28)
+        * t43 / 2.0;
     double t75 = t13 * c;
     double t77 = t33 / t10;
     double t78 = t75 * t77;
@@ -224,19 +226,20 @@ bool MetricTeoWHl::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricTeoWHl::calculateChrisD(const double* pos) {
-    double l     = pos[1];
+bool MetricTeoWHl::calculateChrisD(const double* pos)
+{
+    double l = pos[1];
     double theta = pos[2];
     double c = 1.0;
 
-    double t1 = calc_dN(l);  //diff(N(l),l);
+    double t1 = calc_dN(l); // diff(N(l),l);
     double t2 = t1 * t1;
     double t3 = c * c;
     double t5 = calc_N(l);
-    double t7 = calc_d2N(l);  // diff(diff(N(l),l),l);
+    double t7 = calc_d2N(l); // diff(diff(N(l),l),l);
     double t9 = calc_K(l);
     double t10 = t9 * t9;
-    double t11 = calc_dr(l);  // diff(r(l),l);
+    double t11 = calc_dr(l); // diff(r(l),l);
     double t12 = t11 * t11;
     double t13 = t10 * t12;
     double t14 = sin(theta);
@@ -249,25 +252,26 @@ bool MetricTeoWHl::calculateChrisD(const double* pos) {
     double t22 = t21 * t9;
     double t23 = t22 * t15;
     double t24 = t17 * t3;
-    double t25 = calc_dK(l);  // diff(K(l),l);
+    double t25 = calc_dK(l); // diff(K(l),l);
     double t26 = t11 * t25;
     double t30 = t21 * t10;
     double t31 = t30 * t15;
     double t32 = t16 * t3;
-    double t33 = calc_domega(l);  // diff(omega(l),l);
+    double t33 = calc_domega(l); // diff(omega(l),l);
     double t34 = t11 * t33;
-    double t38 = calc_d2r(l);     // diff(diff(r(l),l),l);
+    double t38 = calc_d2r(l); // diff(diff(r(l),l),l);
     double t41 = t21 * t21;
     double t42 = t25 * t25;
     double t43 = t41 * t42;
     double t45 = t41 * t9;
     double t46 = t45 * t15;
     double t47 = t25 * t33;
-    double t51 = calc_d2K(l);     // diff(diff(K(l),l),l);
+    double t51 = calc_d2K(l); // diff(diff(K(l),l),l);
     double t54 = t41 * t10;
     double t55 = t33 * t33;
     double t60 = calc_d2omega(l); // diff(diff(omega(l),l),l);
-    double t63 = t2 * t3 + t5 * t3 * t7 - t13 * t19 - 4.0 * t23 * t24 * t26 - 4.0 * t31 * t32 * t34 - t31 * t24 * t38 - t43 * t19 - 4.0 * t46 * t32 * t47 - t46 * t24 * t51 - t54 * t15 * t55 * t3 - t54 * t15 * t32 * t60;
+    double t63 = t2 * t3 + t5 * t3 * t7 - t13 * t19 - 4.0 * t23 * t24 * t26 - 4.0 * t31 * t32 * t34 - t31 * t24 * t38
+        - t43 * t19 - 4.0 * t46 * t32 * t47 - t46 * t24 * t51 - t54 * t15 * t55 * t3 - t54 * t15 * t32 * t60;
     double t64 = t30 * t14;
     double t65 = cos(theta);
     double t66 = t11 * t65;
@@ -283,7 +287,9 @@ bool MetricTeoWHl::calculateChrisD(const double* pos) {
     double t111 = t94 * t33;
     double t115 = t89 * t5;
     double t116 = 1 / t115;
-    double t118 = (2.0 * t5 * t2 - 2.0 * t89 * t7 + 2.0 * t5 * t21 * t10 * t94 * t34 + 2.0 * t98 * t9 * t94 * t47 + t98 * t10 * t15 * t55 + t98 * t10 * t107 - 2.0 * t109 * t10 * t111) * t116 / 2.0;
+    double t118 = (2.0 * t5 * t2 - 2.0 * t89 * t7 + 2.0 * t5 * t21 * t10 * t94 * t34 + 2.0 * t98 * t9 * t94 * t47
+                      + t98 * t10 * t15 * t55 + t98 * t10 * t107 - 2.0 * t109 * t10 * t111)
+        * t116 / 2.0;
     double t121 = t65 / t89;
     double t123 = t73 * t16 * t33 * t121;
     double t124 = t115 * t16;
@@ -297,7 +303,10 @@ bool MetricTeoWHl::calculateChrisD(const double* pos) {
     double t166 = t145 * t131;
     double t167 = t166 * t5;
     double t180 = t1 * t145 * t131;
-    double t188 = -2.0 * t13 * t124 - 2.0 * t43 * t124 + t54 * t115 * t60 + 2.0 * t133 * t17 * t134 * t136 + 2.0 * t11 * t10 * t115 * t21 * t33 + 2.0 * t147 * t17 * t148 * t136 + 2.0 * t25 * t41 * t115 * t9 * t33 + 2.0 * t54 * t5 * t16 * t2 - 2.0 * t54 * t89 * t16 * t7 + 2.0 * t167 * t94 * t55 + t167 * t18 * t60 + 2.0 * t30 * t124 * t38 + 2.0 * t45 * t124 * t51 - 2.0 * t180 * t18 * t33 - 2.0 * t109 * t10 * t89 * t33;
+    double t188 = -2.0 * t13 * t124 - 2.0 * t43 * t124 + t54 * t115 * t60 + 2.0 * t133 * t17 * t134 * t136
+        + 2.0 * t11 * t10 * t115 * t21 * t33 + 2.0 * t147 * t17 * t148 * t136 + 2.0 * t25 * t41 * t115 * t9 * t33
+        + 2.0 * t54 * t5 * t16 * t2 - 2.0 * t54 * t89 * t16 * t7 + 2.0 * t167 * t94 * t55 + t167 * t18 * t60
+        + 2.0 * t30 * t124 * t38 + 2.0 * t45 * t124 * t51 - 2.0 * t180 * t18 * t33 - 2.0 * t109 * t10 * t89 * t33;
     double t190 = 1 / t41;
     double t191 = 1 / t10;
     double t195 = c * t188 * t190 * t191 * t116 / 2.0;
@@ -309,7 +318,8 @@ bool MetricTeoWHl::calculateChrisD(const double* pos) {
     double t209 = (t15 + t83) / t15;
     double t210 = t206 * t209;
     double t211 = t94 * c;
-    double t231 = t13 * t211 + 4.0 * t23 * t206 * t26 + 2.0 * t31 * t202 * t11 + t31 * t206 * t38 + t43 * t211 + 2.0 * t46 * t202 * t25 + t46 * t206 * t51 + t54 * t15 * t60 * c / 2.0;
+    double t231 = t13 * t211 + 4.0 * t23 * t206 * t26 + 2.0 * t31 * t202 * t11 + t31 * t206 * t38 + t43 * t211
+        + 2.0 * t46 * t202 * t25 + t46 * t206 * t51 + t54 * t15 * t60 * c / 2.0;
     double t240 = 2.0 * t64 * t206 * t66 + 2.0 * t69 * t206 * t70 + t73 * t202 * t65;
     double t242 = t199 * c * t65;
     double t245 = t83 * t16 * c - t211;
@@ -317,9 +327,14 @@ bool MetricTeoWHl::calculateChrisD(const double* pos) {
     double t247 = t45 * t51;
     double t250 = (t13 + t43 - t246 - t247) * t190 * t191;
     double t265 = 1 / c;
-    double t269 = t23 * (-2.0 * t9 * t33 * t11 * t5 - 2.0 * t21 * t33 * t25 * t5 - t22 * t60 * t5 + 2.0 * t22 * t33 * t1) * t265 * t116 / 2.0;
+    double t269 = t23
+        * (-2.0 * t9 * t33 * t11 * t5 - 2.0 * t21 * t33 * t25 * t5 - t22 * t60 * t5 + 2.0 * t22 * t33 * t1) * t265
+        * t116 / 2.0;
     double t272 = t73 * t33 * t265 * t121;
-    double t301 = (-2.0 * t133 * t16 * t134 * t136 + 2.0 * t13 * t115 - 2.0 * t147 * t16 * t148 * t136 + 2.0 * t43 * t115 - t166 * t5 * t55 * t15 - t167 * t107 - 2.0 * t30 * t115 * t38 - 2.0 * t45 * t115 * t51 + 2.0 * t180 * t111) * t190 * t191 * t116 / 2.0;
+    double t301 = (-2.0 * t133 * t16 * t134 * t136 + 2.0 * t13 * t115 - 2.0 * t147 * t16 * t148 * t136
+                      + 2.0 * t43 * t115 - t166 * t5 * t55 * t15 - t167 * t107 - 2.0 * t30 * t115 * t38
+                      - 2.0 * t45 * t115 * t51 + 2.0 * t180 * t111)
+        * t190 * t191 * t116 / 2.0;
 
     chrisD[0][0][0][0] = 0.0;
     chrisD[0][0][0][1] = 0.0;
@@ -581,7 +596,6 @@ bool MetricTeoWHl::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -589,9 +603,9 @@ bool MetricTeoWHl::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricTeoWHl::localToCoord(const double* pos, const double* ldir, double* dir,
-                                enum_nat_tetrad_type  type) {
-    double l     = pos[1];
+void MetricTeoWHl::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type)
+{
+    double l = pos[1];
     double theta = pos[2];
 
     calc_N(l);
@@ -604,8 +618,10 @@ void MetricTeoWHl::localToCoord(const double* pos, const double* ldir, double* d
         dir[1] = ldir[1];
         dir[2] = ldir[2] / (curr_r * curr_K);
         dir[3] = ldir[0] * curr_omega / curr_N + ldir[3] / (curr_r * curr_K * sin(theta));
-    } else {
-        double w = sqrt(curr_N * curr_N - curr_r * curr_r * curr_K * curr_K * sin(theta) * sin(theta) * curr_omega * curr_omega);
+    }
+    else {
+        double w = sqrt(
+            curr_N * curr_N - curr_r * curr_r * curr_K * curr_K * sin(theta) * sin(theta) * curr_omega * curr_omega);
         dir[0] = ldir[0] / w - ldir[3] * pm * curr_r * curr_K * sin(theta) * curr_omega / curr_N / w;
         dir[1] = ldir[1];
         dir[2] = ldir[2] / (curr_r * curr_K);
@@ -620,11 +636,10 @@ void MetricTeoWHl::localToCoord(const double* pos, const double* ldir, double* d
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricTeoWHl::coordToLocal(const double* , const double* , double* ,
-                                enum_nat_tetrad_type) {
+void MetricTeoWHl::coordToLocal(const double*, const double*, double*, enum_nat_tetrad_type)
+{
     // TODO
 }
-
 
 /*! Test break condition.
  *
@@ -632,7 +647,8 @@ void MetricTeoWHl::coordToLocal(const double* , const double* , double* ,
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricTeoWHl::breakCondition(const double*) {
+bool MetricTeoWHl::breakCondition(const double*)
+{
     bool br = false;
     return br;
 }
@@ -642,7 +658,8 @@ bool MetricTeoWHl::breakCondition(const double*) {
  * \param cp
  * \return chart ID
  */
-int MetricTeoWHl::transToPseudoCart(vec4 p, vec4 &cp) {
+int MetricTeoWHl::transToPseudoCart(vec4 p, vec4& cp)
+{
     TransCoordinates::toCartesianCoord(mCoordType, p, cp);
     if (p[1] > 0) {
         return 0;
@@ -653,7 +670,8 @@ int MetricTeoWHl::transToPseudoCart(vec4 p, vec4 &cp) {
 /*!
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  */
-bool MetricTeoWHl::setParam(const char* pName, double val) {
+bool MetricTeoWHl::setParam(const char* pName, double val)
+{
     bool ok = Metric::setParam(pName, val);
 
     return ok;
@@ -661,7 +679,8 @@ bool MetricTeoWHl::setParam(const char* pName, double val) {
 
 /*! Generate report.
  */
-bool MetricTeoWHl::report(const vec4 , const vec4 , std::string &text) {
+bool MetricTeoWHl::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Teo wormhole metric\n\tcoordinate : (t,l,theta,phi)\n";
     ss << "---------------------------------------------------------------\n";
@@ -669,14 +688,15 @@ bool MetricTeoWHl::report(const vec4 , const vec4 , std::string &text) {
     ss.precision(DEF_FIXED_REPORT_PRECISION);
     ss.setf(std::ios::fixed);
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricTeoWHl::setStandardValues() {
+void MetricTeoWHl::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 10.0;
     mInitPos[2] = M_PI_2;
@@ -694,7 +714,8 @@ void MetricTeoWHl::setStandardValues() {
 /*!
  *  \param l : proper radial coordinate.
  */
-double MetricTeoWHl::calc_N(double) {
+double MetricTeoWHl::calc_N(double)
+{
     curr_N = 1.0;
     return curr_N;
 }
@@ -702,7 +723,8 @@ double MetricTeoWHl::calc_N(double) {
 /*!
  *  \param l : proper radial coordinate.
  */
-double MetricTeoWHl::calc_dN(double) {
+double MetricTeoWHl::calc_dN(double)
+{
     curr_dNdl = 0.0;
     return curr_dNdl;
 }
@@ -710,14 +732,16 @@ double MetricTeoWHl::calc_dN(double) {
 /*!
  *  \param l : proper radial coordinate.
  */
-double MetricTeoWHl::calc_d2N(double) {
+double MetricTeoWHl::calc_d2N(double)
+{
     return 0.0;
 }
 
 /*!
  *  \param l : proper radial coordinate.
  */
-double MetricTeoWHl::calc_K(double) {
+double MetricTeoWHl::calc_K(double)
+{
     curr_K = 1.0;
     return curr_K;
 }
@@ -725,7 +749,8 @@ double MetricTeoWHl::calc_K(double) {
 /*!
  *  \param l : proper radial coordinate.
  */
-double MetricTeoWHl::calc_dK(double) {
+double MetricTeoWHl::calc_dK(double)
+{
     curr_dKdl = 0.0;
     return curr_dKdl;
 }
@@ -733,14 +758,16 @@ double MetricTeoWHl::calc_dK(double) {
 /*!
  *  \param l : proper radial coordinate.
  */
-double MetricTeoWHl::calc_d2K(double) {
+double MetricTeoWHl::calc_d2K(double)
+{
     return 0.0;
 }
 
 /*!
  *  \param l : proper radial coordinate.
  */
-double MetricTeoWHl::calc_r(double l) {
+double MetricTeoWHl::calc_r(double l)
+{
     curr_r = sqrt(l * l + mb0 * mb0);
     return curr_r;
 }
@@ -748,7 +775,8 @@ double MetricTeoWHl::calc_r(double l) {
 /*!
  *  \param l : proper radial coordinate.
  */
-double MetricTeoWHl::calc_dr(double l) {
+double MetricTeoWHl::calc_dr(double l)
+{
     curr_drdl = l / sqrt(l * l + mb0 * mb0);
     return curr_drdl;
 }
@@ -756,14 +784,16 @@ double MetricTeoWHl::calc_dr(double l) {
 /*!
  *  \param l : proper radial coordinate.
  */
-double MetricTeoWHl::calc_d2r(double l) {
+double MetricTeoWHl::calc_d2r(double l)
+{
     return mb0 * mb0 / pow(l * l + mb0 * mb0, 1.5);
 }
 
 /*!
  *  \param l : proper radial coordinate.
  */
-double MetricTeoWHl::calc_omega(double l) {
+double MetricTeoWHl::calc_omega(double l)
+{
     double r = calc_r(l);
     curr_omega = 0.5 * mb0 * mb0 * pow(r, -3.0);
     return curr_omega;
@@ -772,7 +802,8 @@ double MetricTeoWHl::calc_omega(double l) {
 /*!
  *  \param l : proper radial coordinate.
  */
-double MetricTeoWHl::calc_domega(double l) {
+double MetricTeoWHl::calc_domega(double l)
+{
     curr_domegadl = -1.5 * mb0 * mb0 * l * pow(l * l + mb0 * mb0, -2.5);
     return curr_domegadl;
 }
@@ -780,7 +811,8 @@ double MetricTeoWHl::calc_domega(double l) {
 /*!
  *  \param l : proper radial coordinate.
  */
-double MetricTeoWHl::calc_d2omega(double) {
+double MetricTeoWHl::calc_d2omega(double)
+{
     return 0.0;
 }
 

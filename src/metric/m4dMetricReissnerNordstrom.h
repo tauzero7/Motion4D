@@ -98,7 +98,7 @@ public:
     virtual void   usePhysicalUnits(const enum_physical_constants  units);
     virtual void   setUnits(const double speed_of_light, const double grav_const, const double diel_perm);
 
-    virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
+    virtual bool   report(const vec4 pos, const vec4 cdir, char*&text);
 
 // --------- specific public methods ----------
 public:

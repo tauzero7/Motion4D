@@ -1,33 +1,8 @@
-// --------------------------------------------------------------------------------
-/*
-    TransfMat.h
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-
-/*!
-     \class  m4d::TranslateMat3D
-     \brief  Translation matrix in 3 dimensions.
-
-                    TranslateMat3D ( float, float, float )
-                                   ( vec3 )
+/**
+ * @file    TransfMat.h
+ * @author  Thomas Mueller
+ *
+ * @brief  Translation matrix in 3 dimensions.
 
      \class  m4d::TranslateMat2D
      \brief  Translation matrix in 2 dimensions.
@@ -56,14 +31,13 @@
            Transformation matrices have to be Matrix<float,3,4> or
            Matrix<float,2,3> !
 */
-// --------------------------------------------------------------------------------
 
 #ifndef M4D_TRANSF_MAT_H
 #define M4D_TRANSF_MAT_H
 
+#include <cassert>
 #include <string>
 #include <typeinfo>
-#include <cassert>
 
 #include <m4dGlobalDefs.h>
 
@@ -77,10 +51,11 @@ namespace m4d {
 //  TranslateMat3D =  (  0  1  0  ty )
 //                    (  0  0  0  tz )
 //
-class API_M4D_EXPORT TranslateMat3D : public Matrix<double,3,4> {
+class API_M4D_EXPORT TranslateMat3D : public Matrix<double, 3, 4>
+{
 public:
     TranslateMat3D(double tx, double ty, double tz);
-    TranslateMat3D(const vec3 &translat);
+    explicit TranslateMat3D(const vec3& translat);
 };
 
 //----------------------------------------------------------------------------
@@ -88,27 +63,28 @@ public:
 //
 //  angles in radiant!
 //----------------------------------------------------------------------------
-class API_M4D_EXPORT RotateMat3D : public Matrix<double,3,4> {
+class API_M4D_EXPORT RotateMat3D : public Matrix<double, 3, 4>
+{
 public:
-    RotateMat3D(const vec3 &rotAxis, double rotAngle);
-    RotateMat3D(enum_axisID  mainAxis, double rotAngle);
+    RotateMat3D(const vec3& rotAxis, double rotAngle);
+    RotateMat3D(enum_axisID mainAxis, double rotAngle);
 };
 
-class API_M4D_EXPORT RotateMat3Dd : public Matrix<double,3,3> {
+class API_M4D_EXPORT RotateMat3Dd : public Matrix<double, 3, 3>
+{
 public:
     RotateMat3Dd();
-    RotateMat3Dd(const vec3  &rotAxis,  double rotAngle);
-    RotateMat3Dd(enum_axisID  mainAxis, double rotAngle);
+    RotateMat3Dd(const vec3& rotAxis, double rotAngle);
+    RotateMat3Dd(enum_axisID mainAxis, double rotAngle);
 };
 
-
-class API_M4D_EXPORT RotateMat3Df : public Matrix<float,3,3> {
+class API_M4D_EXPORT RotateMat3Df : public Matrix<float, 3, 3>
+{
 public:
     RotateMat3Df();
-    RotateMat3Df(const vec3f &rotAxis,  float rotAngle);
-    RotateMat3Df(enum_axisID  mainAxis, float rotAngle);
+    RotateMat3Df(const vec3f& rotAxis, float rotAngle);
+    RotateMat3Df(enum_axisID mainAxis, float rotAngle);
 };
-
 
 //----------------------------------------------------------------------------
 //         ScaleMat3D
@@ -118,17 +94,18 @@ public:
 //  ScaleMat3D =  (  0 sy  0  0  )
 //                (  0  0 sz  0  )
 //
-class API_M4D_EXPORT ScaleMat3D : public Matrix<double,3,4> {
+class API_M4D_EXPORT ScaleMat3D : public Matrix<double, 3, 4>
+{
 public:
     ScaleMat3D(double sx, double sy, double sz);
-    ScaleMat3D(const vec3 &scale);
+    explicit ScaleMat3D(const vec3& scale);
 };
-
 
 //----------------------------------------------------------------------------
 //         TranslateMat2D
 //----------------------------------------------------------------------------
-class API_M4D_EXPORT TranslateMat2D : public Matrix<double,2,3> {
+class API_M4D_EXPORT TranslateMat2D : public Matrix<double, 2, 3>
+{
 public:
     TranslateMat2D(double tx, double ty);
 };
@@ -136,16 +113,18 @@ public:
 //----------------------------------------------------------------------------
 //         RotateMat2D
 //----------------------------------------------------------------------------
-class API_M4D_EXPORT RotateMat2D : public Matrix<double,2,3> {
+class API_M4D_EXPORT RotateMat2D : public Matrix<double, 2, 3>
+{
 public:
-    RotateMat2D(double rotAngle);
+    explicit RotateMat2D(double rotAngle);
     RotateMat2D(double rotCenterX, double rotCenterY, double rotAngle);
 };
 
 //----------------------------------------------------------------------------
 //         ScaleMat2D
 //----------------------------------------------------------------------------
-class API_M4D_EXPORT ScaleMat2D : public Matrix<double,2,3> {
+class API_M4D_EXPORT ScaleMat2D : public Matrix<double, 2, 3>
+{
 public:
     ScaleMat2D(double sx, double sy);
 };
@@ -153,12 +132,12 @@ public:
 //----------------------------------------------------------------------------
 //         Lorentz matrix
 //----------------------------------------------------------------------------
-class API_M4D_EXPORT LorentzTransf : public Matrix<double,4,4> {
+class API_M4D_EXPORT LorentzTransf : public Matrix<double, 4, 4>
+{
 public:
-    LorentzTransf(double beta, VnD<double,3> n);
+    LorentzTransf(double beta, VnD<double, 3> n);
 };
 
 } // end namespace m4d
 
 #endif
-

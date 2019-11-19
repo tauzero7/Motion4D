@@ -26,19 +26,19 @@
 #include "m4dMetricSchwarzschildWT.h"
 #include <cmath>
 
-#define sign(x) ( (x>=0) ? 1.0 : -1.0 )
+#define sign(x) ((x >= 0) ? 1.0 : -1.0)
 
 namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the Schwarzschild metric.
  *
  * \param  mass : mass of the black hole.
  */
-MetricSchwarzschildWT::MetricSchwarzschildWT(double mass) {
-    mMetricName  = "SchwarzschildWT";
+MetricSchwarzschildWT::MetricSchwarzschildWT(double mass)
+{
+    mMetricName = "SchwarzschildWT";
     mMetricCPPfilename = "m4dMetricSchwarzschildWT.cpp";
     setCoordType(enum_coordinate_spherical);
 
@@ -58,9 +58,7 @@ MetricSchwarzschildWT::MetricSchwarzschildWT(double mass) {
 
 /*!
  */
-MetricSchwarzschildWT::~MetricSchwarzschildWT() {
-}
-
+MetricSchwarzschildWT::~MetricSchwarzschildWT() {}
 
 // *********************************** public methods ******************************
 
@@ -68,8 +66,9 @@ MetricSchwarzschildWT::~MetricSchwarzschildWT() {
  *
  *  \param pos : pointer to position.
  */
-bool MetricSchwarzschildWT::calculateMetric(const double* pos) {
-    double r     = pos[1];
+bool MetricSchwarzschildWT::calculateMetric(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
     double c = mSpeedOfLight;
@@ -97,7 +96,7 @@ bool MetricSchwarzschildWT::calculateMetric(const double* pos) {
     g_compts[3][1] = 0.0;
     g_compts[3][2] = 0.0;
     g_compts[3][3] = t9 * t11;
-    
+
     return true;
 }
 
@@ -105,15 +104,16 @@ bool MetricSchwarzschildWT::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricSchwarzschildWT::calculateChristoffels(const double* pos) {
-    double r     = pos[1];
+bool MetricSchwarzschildWT::calculateChristoffels(const double* pos)
+{
+    double r = pos[1];
     double theta = pos[2];
 
-    //double c = mSpeedOfLight;
-    
+    // double c = mSpeedOfLight;
+
     double t1 = r - rs;
-  //  double t2 = r * r;
-    //double t6 = c * c;
+    //  double t2 = r * r;
+    // double t6 = c * c;
     double t10 = 1.0 / r;
     //  double t14 = t10/t1*rs/2.0;
     double t14 = t10 / t1 * rs * 0.5;
@@ -121,7 +121,7 @@ bool MetricSchwarzschildWT::calculateChristoffels(const double* pos) {
     double t17 = cos(theta);
     double t18 = 1.0 / t15 * t17;
     double t19 = t15 * t15;
-    
+
     christoffel[0][0][0] = 0.0;
     christoffel[0][0][1] = 0.0;
     christoffel[0][0][2] = 0.0;
@@ -189,7 +189,6 @@ bool MetricSchwarzschildWT::calculateChristoffels(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -197,9 +196,9 @@ bool MetricSchwarzschildWT::calculateChristoffels(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricSchwarzschildWT::localToCoord(const double* pos, const double* ldir, double* dir,
-                                       enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricSchwarzschildWT::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
     double w = sqrt(1.0 - rs / r);
 
@@ -216,9 +215,9 @@ void MetricSchwarzschildWT::localToCoord(const double* pos, const double* ldir, 
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricSchwarzschildWT::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                       enum_nat_tetrad_type) {
-    double r     = pos[1];
+void MetricSchwarzschildWT::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
+    double r = pos[1];
     double theta = pos[2];
     double w = sqrt(1.0 - rs / r);
 
@@ -228,17 +227,17 @@ void MetricSchwarzschildWT::coordToLocal(const double* pos, const double* cdir, 
     ldir[3] = cdir[3] * r * sin(theta);
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricSchwarzschildWT::breakCondition(const double* pos) {
+bool MetricSchwarzschildWT::breakCondition(const double* pos)
+{
     bool br = false;
 
-    if ((pos[1] < 0.0) || (pos[1]*pos[1] <= (1.0 + eps)*rs * rs)) {
+    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + eps) * rs * rs)) {
         br = true;
     }
     return br;
@@ -249,22 +248,22 @@ bool MetricSchwarzschildWT::breakCondition(const double* pos) {
  *  \param  y[]   : pointer to position and direction coordinates.
  *  \param  dydx[] : pointer to right side of geodesic equation.
  */
- /*
+/*
 bool MetricSchwarzschildWT::calcDerivs(const double y[], double dydx[]) {
-    dydx[0] = y[4];
-    dydx[1] = y[5];
-    dydx[2] = y[6];
-    dydx[3] = y[7];
+   dydx[0] = y[4];
+   dydx[1] = y[5];
+   dydx[2] = y[6];
+   dydx[3] = y[7];
 
-    double r     = y[1];
-    double theta = y[2];
+   double r     = y[1];
+   double theta = y[2];
 
-    dydx[4] = -rs / (r * (r - rs)) * y[4] * y[5];
-    dydx[5] = -0.5 * mSpeedOfLight * mSpeedOfLight * rs * (r - rs) / pow(r, 3.0) * y[4] * y[4] + 0.5 * rs / (r * (r - rs)) * y[5] * y[5] + (r - rs) * (y[6] * y[6] + sin(theta) * sin(theta) * y[7] * y[7]);
-    dydx[6] = -2.0 / r * y[5] * y[6] + sin(theta) * cos(theta) * y[7] * y[7];
-    dydx[7] = -2.0 / r * y[5] * y[7] - 2.0 * cos(theta) / sin(theta) * y[6] * y[7];
+   dydx[4] = -rs / (r * (r - rs)) * y[4] * y[5];
+   dydx[5] = -0.5 * mSpeedOfLight * mSpeedOfLight * rs * (r - rs) / pow(r, 3.0) * y[4] * y[4] + 0.5 * rs / (r * (r -
+rs)) * y[5] * y[5] + (r - rs) * (y[6] * y[6] + sin(theta) * sin(theta) * y[7] * y[7]); dydx[6] = -2.0 / r * y[5] * y[6]
++ sin(theta) * cos(theta) * y[7] * y[7]; dydx[7] = -2.0 / r * y[5] * y[7] - 2.0 * cos(theta) / sin(theta) * y[6] * y[7];
 
-    return true;
+   return true;
 }
 */
 
@@ -279,8 +278,9 @@ bool MetricSchwarzschildWT::calcDerivs(const double y[], double dydx[]) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricSchwarzschildWT::testConstraint(const double y[], const double kappa) {
-    double r     = y[1];
+double MetricSchwarzschildWT::testConstraint(const double y[], const double kappa)
+{
+    double r = y[1];
     double theta = y[2];
     double cm = 1.0 / mSpeedOfLight;
 
@@ -295,13 +295,13 @@ double MetricSchwarzschildWT::testConstraint(const double y[], const double kapp
     return sum;
 }
 
-
 /*! Set parameter 'pName' to 'val'.
  *
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  */
-bool MetricSchwarzschildWT::setParam(const char* pName, double val) {    
-    if (Metric::setParam(pName,val)) {
+bool MetricSchwarzschildWT::setParam(const char* pName, double val)
+{
+    if (Metric::setParam(pName, val)) {
         mMass = val;
         rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
         return true;
@@ -310,27 +310,29 @@ bool MetricSchwarzschildWT::setParam(const char* pName, double val) {
     return false;
 }
 
-
 /*! Generate report.
  * \param pos : initial position.
  * \param cdir : initial coordinate direction.
  * \param text : reference to report text.
  */
-bool MetricSchwarzschildWT::report(const vec4 pos, const vec4 cdir, std::string &text) {
+bool MetricSchwarzschildWT::report(const vec4 pos, const vec4 cdir, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Schwarzschild metric\n\tcoordinates : (t,r,theta,phi)\n";
     ss << "---------------------------------------------------------------\n";
     ss << "  physical units ................................. yes\n";
     ss.precision(DEF_FIXED_REPORT_PRECISION);
     ss.setf(std::ios::fixed);
-text = ss.str();
-    return true;
+
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricSchwarzschildWT::setStandardValues() {
+void MetricSchwarzschildWT::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 3.0 * rs;
     mInitPos[2] = M_PI_2;

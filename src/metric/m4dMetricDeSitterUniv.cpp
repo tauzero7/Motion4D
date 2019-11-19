@@ -29,13 +29,13 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the Kottler metric.
  *
  * \param  h : Hubble parameter.
  */
-MetricDeSitterUniv::MetricDeSitterUniv(double h) {
-    mMetricName  = "DeSitterUniv";
+MetricDeSitterUniv::MetricDeSitterUniv(double h)
+{
+    mMetricName = "DeSitterUniv";
     setCoordType(enum_coordinate_cartesian);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -52,16 +52,15 @@ MetricDeSitterUniv::MetricDeSitterUniv(double h) {
     setStandardValues();
 }
 
-MetricDeSitterUniv::~MetricDeSitterUniv() {
-}
-
+MetricDeSitterUniv::~MetricDeSitterUniv() {}
 
 // *********************************** public methods ******************************
 /*! Calculate the contravariant metric components at position 'pos'.
  *
  *  \param pos : pointer to position.
  */
-bool MetricDeSitterUniv::calculateMetric(const double* pos) {
+bool MetricDeSitterUniv::calculateMetric(const double* pos)
+{
     double t = pos[0];
     double H = mHubble;
     double c = mSpeedOfLight;
@@ -94,7 +93,8 @@ bool MetricDeSitterUniv::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricDeSitterUniv::calculateChristoffels(const double* pos) {
+bool MetricDeSitterUniv::calculateChristoffels(const double* pos)
+{
     double t = pos[0];
     double H = mHubble;
     double c = mSpeedOfLight;
@@ -176,7 +176,8 @@ bool MetricDeSitterUniv::calculateChristoffels(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricDeSitterUniv::calculateChrisD(const double* pos) {
+bool MetricDeSitterUniv::calculateChrisD(const double* pos)
+{
     double t = pos[0];
     double H = mHubble;
     double c = mSpeedOfLight;
@@ -447,7 +448,6 @@ bool MetricDeSitterUniv::calculateChrisD(const double* pos) {
     return true;
 }
 
-
 /*! Transform local 4-direction to coordinate 4-direction.
  *
  *  \param  pos  :  pointer to position array.
@@ -455,8 +455,8 @@ bool MetricDeSitterUniv::calculateChrisD(const double* pos) {
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricDeSitterUniv::localToCoord(const double* pos, const double* ldir, double* dir,
-                                      enum_nat_tetrad_type) {
+void MetricDeSitterUniv::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     double t = pos[0];
     double f = exp(-mHubble * t);
 
@@ -473,8 +473,8 @@ void MetricDeSitterUniv::localToCoord(const double* pos, const double* ldir, dou
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricDeSitterUniv::coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                      enum_nat_tetrad_type) {
+void MetricDeSitterUniv::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     double t = pos[0];
     double f = exp(mHubble * t);
 
@@ -484,17 +484,16 @@ void MetricDeSitterUniv::coordToLocal(const double* pos, const double* cdir, dou
     ldir[3] = cdir[3] * f;
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricDeSitterUniv::breakCondition(const double*) {
+bool MetricDeSitterUniv::breakCondition(const double*)
+{
     return false;
 }
-
 
 /*! Tests whether the constraint equation is fulfilled.
  *
@@ -506,10 +505,11 @@ bool MetricDeSitterUniv::breakCondition(const double*) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricDeSitterUniv::testConstraint(const double y[], const double kappa) {
+double MetricDeSitterUniv::testConstraint(const double y[], const double kappa)
+{
     double t = y[0];
     double f = exp(2.0 * mHubble * t);
-    double cm  = 1.0 / mSpeedOfLight;
+    double cm = 1.0 / mSpeedOfLight;
 
     // Scale the directions with the speed of light before doubling them !!
     double dt = y[4];
@@ -522,14 +522,14 @@ double MetricDeSitterUniv::testConstraint(const double y[], const double kappa) 
     return sum;
 }
 
-
 /*! Transform point p to 2+1 coordinates.
  *
  *  \param  p  : point in proper metric coordinates.
  *  \param  cp : reference to transformed point.
  *  \return true : success.
  */
-bool MetricDeSitterUniv::transToTwoPlusOne(vec4 p, vec4 &cp) {
+bool MetricDeSitterUniv::transToTwoPlusOne(vec4 p, vec4& cp)
+{
     cp = vec4(p[0], p[1], p[2], p[0]);
     return true;
 }
@@ -538,33 +538,34 @@ bool MetricDeSitterUniv::transToTwoPlusOne(vec4 p, vec4 &cp) {
  *
  *  Set 'mass' or 'lambda' parameter.
  */
-bool MetricDeSitterUniv::setParam(const char* pName, double val) {
+bool MetricDeSitterUniv::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
 
-    if (strcmp(pName,"hubble") == 0) {
+    if (strcmp(pName, "hubble") == 0) {
         mHubble = val;
     }
     return true;
 }
 
-
 /*! Generate report.
  */
-bool MetricDeSitterUniv::report(const vec4 , const vec4 , std::string &text) {
+bool MetricDeSitterUniv::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for de Sitter universe metric\n\tcoordinate : (t,x,y,z)\n";
     ss << "---------------------------------------------------------\n";
     ss << "  physical units ................................. no\n";
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
-
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricDeSitterUniv::setStandardValues() {
+void MetricDeSitterUniv::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 0.0;
     mInitPos[2] = 0.0;

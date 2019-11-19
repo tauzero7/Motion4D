@@ -31,13 +31,13 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-
 /*! Standard constructor for the Schwarzschild metric.
  *
  * \param  mass : mass of the black hole.
  */
-MetricSchwarzschildCart::MetricSchwarzschildCart(double mass) {
-    mMetricName  = "SchwarzschildCart";
+MetricSchwarzschildCart::MetricSchwarzschildCart(double mass)
+{
+    mMetricName = "SchwarzschildCart";
     setCoordType(enum_coordinate_cartesian);
 
     mPhysicalUnits = enum_physical_constants_geom;
@@ -52,9 +52,7 @@ MetricSchwarzschildCart::MetricSchwarzschildCart(double mass) {
     setStandardValues();
 }
 
-MetricSchwarzschildCart::~MetricSchwarzschildCart() {
-}
-
+MetricSchwarzschildCart::~MetricSchwarzschildCart() {}
 
 // *********************************** public methods ******************************
 
@@ -62,7 +60,8 @@ MetricSchwarzschildCart::~MetricSchwarzschildCart() {
  *
  *  \param pos : pointer to position.
  */
-bool MetricSchwarzschildCart::calculateMetric(const double* pos) {
+bool MetricSchwarzschildCart::calculateMetric(const double* pos)
+{
     double x = pos[1];
     double y = pos[2];
     double z = pos[3];
@@ -112,7 +111,8 @@ bool MetricSchwarzschildCart::calculateMetric(const double* pos) {
  *
  *  \param pos : pointer to position.
  */
-bool MetricSchwarzschildCart::calculateChristoffels(const double* pos) {
+bool MetricSchwarzschildCart::calculateChristoffels(const double* pos)
+{
     double x = pos[1];
     double y = pos[2];
     double z = pos[3];
@@ -245,19 +245,19 @@ bool MetricSchwarzschildCart::calculateChristoffels(const double* pos) {
     return true;
 }
 
-void MetricSchwarzschildCart::coutChristoffel(){
+void MetricSchwarzschildCart::coutChristoffel()
+{
     cout << "\n";
-    for(int i = 0; i<4; ++i){
-        for(int j = 0; j<4; ++j){
-            for(int k = 0; k<4; ++k){
-                if(abs(christoffel[i][j][k]) > 1e-14){
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 4; ++j) {
+            for (int k = 0; k < 4; ++k) {
+                if (abs(christoffel[i][j][k]) > 1e-14) {
                     cout << "christoffel[" << i << "][" << j << "][" << k << "]=" << christoffel[i][j][k] << "\n";
                 }
             }
         }
     }
 }
-
 
 /*! Transform local 4-direction to coordinate 4-direction.
  *
@@ -266,8 +266,8 @@ void MetricSchwarzschildCart::coutChristoffel(){
  *  \param  dir  :  pointer to calculated coordinate direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricSchwarzschildCart::localToCoord(const double* pos, const double* ldir, double* dir,
-        enum_nat_tetrad_type) {
+void MetricSchwarzschildCart::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+{
     double x = pos[1];
     double y = pos[2];
     double z = pos[3];
@@ -291,8 +291,8 @@ void MetricSchwarzschildCart::localToCoord(const double* pos, const double* ldir
  *  \param  ldir :  pointer to calculated local direction array.
  *  \param  type :  type of tetrad.
  */
-void MetricSchwarzschildCart::coordToLocal(const double* pos, const double* cdir, double* ldir,
-        enum_nat_tetrad_type) {
+void MetricSchwarzschildCart::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+{
     double x = pos[1];
     double y = pos[2];
     double z = pos[3];
@@ -309,25 +309,24 @@ void MetricSchwarzschildCart::coordToLocal(const double* pos, const double* cdir
     ldir[3] = 1.0 / F * cdir[3];
 }
 
-
 /*! Test break condition.
  *
  *  \param pos    : pointer to position array.
  *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
  *  \return false : position is valid.
  */
-bool MetricSchwarzschildCart::breakCondition(const double* pos) {
+bool MetricSchwarzschildCart::breakCondition(const double* pos)
+{
     bool br = false;
     double r2 = pos[1] * pos[1] + pos[2] * pos[2] + pos[3] * pos[3];
-//if (r2 < 0.01) {
+    // if (r2 < 0.01) {
     //  std::cerr << pos[1] << " " << pos[2] << " " << pos[3] << " " << r2 << " " << rs*rs << std::endl;
-//}
-    if (r2 <= (1.0 + eps)*rs * rs) {
+    //}
+    if (r2 <= (1.0 + eps) * rs * rs) {
         br = true;
     }
     return br;
 }
-
 
 /*! Tests whether the constraint equation is fulfilled.
  *
@@ -339,7 +338,8 @@ bool MetricSchwarzschildCart::breakCondition(const double* pos) {
  *  \param  kappa : timelike (-1.0), lightlike (0.0).
  *  \return double : sum.
  */
-double MetricSchwarzschildCart::testConstraint(const double y[], const double kappa) {
+double MetricSchwarzschildCart::testConstraint(const double y[], const double kappa)
+{
     double xx = y[1];
     double yy = y[2];
     double zz = y[3];
@@ -347,15 +347,14 @@ double MetricSchwarzschildCart::testConstraint(const double y[], const double ka
     double c = 1.0;
 
     double edrq = 1.0 / (r * r);
-    double f    = 1.0 - rs / r;
+    double f = 1.0 - rs / r;
 
     double sum = -kappa;
 
-    sum += - c * c * f * y[4] * y[4]
-           + (xx * xx / f + yy * yy + zz * zz) * edrq * y[5] * y[5]
-           + (xx * xx + yy * yy / f + zz * zz) * edrq * y[6] * y[6]
-           + (xx * xx + yy * yy + zz * zz / f) * edrq * y[7] * y[7]
-           + 2.0 * rs / (r * r * (r - rs)) * (xx * yy * y[5] * y[6] + xx * zz * y[5] * y[7] + yy * zz * y[6] * y[7]);
+    sum += -c * c * f * y[4] * y[4] + (xx * xx / f + yy * yy + zz * zz) * edrq * y[5] * y[5]
+        + (xx * xx + yy * yy / f + zz * zz) * edrq * y[6] * y[6]
+        + (xx * xx + yy * yy + zz * zz / f) * edrq * y[7] * y[7]
+        + 2.0 * rs / (r * r * (r - rs)) * (xx * yy * y[5] * y[6] + xx * zz * y[5] * y[7] + yy * zz * y[6] * y[7]);
 
     return sum;
 }
@@ -364,10 +363,11 @@ double MetricSchwarzschildCart::testConstraint(const double y[], const double ka
  *
  *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
  */
-bool MetricSchwarzschildCart::setParam(const char* pName, double val) {    
+bool MetricSchwarzschildCart::setParam(const char* pName, double val)
+{
     Metric::setParam(pName, val);
-    if (strcmp(pName,"mass") == 0) {
-        rs = 2.0 * mGravConstant * val / (mSpeedOfLight * mSpeedOfLight);        
+    if (strcmp(pName, "mass") == 0) {
+        rs = 2.0 * mGravConstant * val / (mSpeedOfLight * mSpeedOfLight);
         return true;
     }
     return false;
@@ -375,7 +375,8 @@ bool MetricSchwarzschildCart::setParam(const char* pName, double val) {
 
 /*! Generate report.
  */
-bool MetricSchwarzschildCart::report(const vec4 , const vec4 , std::string &text) {
+bool MetricSchwarzschildCart::report(const vec4, const vec4, char*& text)
+{
     std::stringstream ss;
     ss << "Report for Schwarzschild metric\n\tcoordinate : (t,x,y,z)\n";
     ss << "---------------------------------------------------------------\n";
@@ -386,14 +387,15 @@ bool MetricSchwarzschildCart::report(const vec4 , const vec4 , std::string &text
     ss << "  Photon orbit ................... r_ph = 3/2*rs = " << 1.5 * rs << std::endl;
     ss << "  innermost stable circular orbit  r_isco = 3r_s = " << 3.0 * rs << std::endl;
 
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // ********************************* protected methods *****************************
 /*!
  */
-void MetricSchwarzschildCart::setStandardValues() {
+void MetricSchwarzschildCart::setStandardValues()
+{
     mInitPos[0] = 0.0;
     mInitPos[1] = 3.0 * rs;
     mInitPos[2] = 0.0;
@@ -412,7 +414,8 @@ void MetricSchwarzschildCart::setStandardValues() {
  *
  *  \param pos : pointer to position.
  */
-void MetricSchwarzschildCart::calcLTcoeffs(const double* pos) {
+void MetricSchwarzschildCart::calcLTcoeffs(const double* pos)
+{
     calculateMetric(pos);
 
     double gxx = g_compts[1][1];

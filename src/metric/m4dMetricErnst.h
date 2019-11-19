@@ -80,7 +80,7 @@ public:
 
     virtual void   calcFmu_nu(const double* pos);
 
-    virtual bool   report(const vec4 pos, const vec4 cdir, std::string &text);
+    virtual bool   report(const vec4 pos, const vec4 cdir, char*&text);
 
 // --------- protected methods -----------
 protected:
