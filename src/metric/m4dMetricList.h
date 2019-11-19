@@ -112,18 +112,7 @@ public:
  *   given in the constructor of the metric: mMetricName
  * -------------------------------------------------------- */
 #ifdef ALL_METRICS_AVAILABLE
-    static const char stl_metric_names[NUM_METRICS][63] = { "unknown", "Minkowski", "MinkowskiConformal",
-        "MinkowskiRotLattice", "Schwarzschild", "SchwarzschildCart", "SchwarzschildCartNew", "SchwarzschildGravWave",
-        "SchwarzschildTortoise", "SchwarzschildWT", "EddFinkIn", "PainleveGullstrand", "AlcubierreWarp",
-        "AlcubierreWarpSimple", "BarriolaVilenkin", "BertottiKasner", "BesselGravWaveCart", "Bonnor", "ChazyCurzonRot",
-        "CosmicStringSchwarzschild", "Curzon", "EinsteinRosenWaveWWB", "ErezRosenVar", "Ernst",
-        "ExtremeReissnerNordstromDihole", "FriedmanNonEmptyNull", "Glampedakis", "Goedel", "GoedelCart", "GoedelScaled",
-        "GoedelScaledCart", "HalilsoyWave", "HartleThorneGB", "JanisNewmanWinicour", "Kasner", "KastorTraschen",
-        "KerrBL", "Kottler", "MorrisThorne", "Petrov_Type_D_AI_ES", "Petrov_Type_D_AII_ES", "Petrov_Type_D_AIII_ES",
-        "Petrov_Type_D_BI_ES", "Petrov_Type_D_BII_ES", "Petrov_Type_D_BIII_ES", "Petrov_Type_D_C_ES", "PlaneGravWave",
-        "Pravda_C-Metric", "Pravda_C-Metric_Canonical_Coords", "ReissnerNordstrom", "RotDihole", "DeSitterUniv",
-        "DeSitterUnivConformal", "StraightSpinningString", "SultanaDyerBlackhole", "TaubNUT", "TeoSimpleWH", "TeoWHl",
-        "TomimatsuSato", "VaidyaIncRad" };
+    static const char* stl_metric_names[];
 
     enum enum_metric {
         enum_metric_unknown = 0,
@@ -146,6 +135,7 @@ public:
         enum_metric_bessel_grav_wave_cart,
         enum_metric_bonnor,
         enum_metric_chazy_curzon_rot,
+        enum_metric_cosmic_string_schwarzschild,
         enum_metric_curzon,
         enum_metric_einstein_rosen_wave_wwb,
         enum_metric_erezrosenvar,

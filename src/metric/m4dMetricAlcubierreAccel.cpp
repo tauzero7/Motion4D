@@ -1128,7 +1128,7 @@ bool MetricAlcubierreAccel::transToTwoPlusOne(vec4 p, vec4 &cp) {
 
 /*! Generate report.
  */
-bool MetricAlcubierreAccel::report(const vec4 , const vec4 , std::string &text) {
+bool MetricAlcubierreAccel::report(const vec4 , const vec4 , char* &text) {
     std::stringstream ss;
     ss << "Report for AlcubierreWarp metric\n\tcoordinate : (t,x,y,z)\n";
     ss << "---------------------------------------------------------------\n";
@@ -1136,9 +1136,8 @@ bool MetricAlcubierreAccel::report(const vec4 , const vec4 , std::string &text) 
     ss.precision(DEF_FIXED_REPORT_PRECISION);
     ss.setf(std::ios::fixed);
 
-
-    text = ss.str();
-    return true;
+    text = new char[ss.str().length() + 2];
+    return CopyString(ss.str().c_str(), text);
 }
 
 // *************************** specific  public methods ****************************
