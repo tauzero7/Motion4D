@@ -1,28 +1,9 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricDatabase.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricDatabase.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dMetricDatabase.h"
 
 namespace m4d {
@@ -138,7 +119,7 @@ Metric* MetricDatabase::initializeMetric(MetricList::enum_metric num)
         case MetricList::enum_metric_unknown:
             currMetric = nullptr;
             break;
-                    
+
         case MetricList::enum_metric_minkowski:
             currMetric = new MetricMinkowski;
             break;
@@ -161,7 +142,7 @@ Metric* MetricDatabase::initializeMetric(MetricList::enum_metric num)
 
         case MetricList::enum_metric_cosmic_string_schwarzschild:
             currMetric = new MetricCosmicStringSchwarzschild;
-            break; 
+            break;
 
 #ifdef ALL_METRICS_AVAILABLE
         case MetricList::enum_metric_alcubierre:
@@ -263,12 +244,6 @@ Metric* MetricDatabase::initializeMetric(MetricList::enum_metric num)
         case MetricList::enum_metric_rotdihole:
             currMetric = new MetricRotDihole;
             break;
-        case MetricList::enum_metric_schwarzschild_cart:
-            currMetric = new MetricSchwarzschildCart;
-            break;
-        case MetricList::enum_metric_schwarzschild_cartnew:
-            currMetric = new MetricSchwarzschildCartNew;
-            break;
         case MetricList::enum_metric_schwarzschild_gravwave:
             currMetric = new MetricSchwarzschildGravWave;
             break;
@@ -326,7 +301,7 @@ Metric* MetricDatabase::initializeMetric(MetricList::enum_metric num)
         case MetricList::enum_metric_vaidyaincrad:
             currMetric = new MetricVaidyaIncRad;
             break;
-                       
+
 #endif // ALL_METRICS_AVAILABLE
     }
 

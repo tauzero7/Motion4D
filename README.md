@@ -72,14 +72,14 @@ You have to have cmake 2.6 or higher available.
     * Set the installation path.
     * Adjust the path to the GNU Scientific Library and its library.  
       For example:  
-         `GSL_DIR       /usr/local/gsl/1.15`  
-         `GSL_LIB_DIR   /usr/local/gsl/1.15/lib`
+         `GSL_DIR       /usr/local/gsl/2.5`  
+         `GSL_LIB_DIR   /usr/local/gsl/2.5/lib64`
     * If the test programs shall be build, then set  
          `COMPILE_TEST_PRGS   ON`
     * If you have 'lua' available, then set  
          `LUA_AVAILABLE   ON`  
-         `LUA_DIR         /usr/local/lua/5.3`  
-         `LUA_LIB_DIR     /usr/local/lua/5.3/lib`  
+         `LUA_DIR         /usr/local/lua/5.3.5`  
+         `LUA_LIB_DIR     /usr/local/lua/5.3.5/lib`  
 
   Press 'c' and 'g' when you are finished.
 
@@ -115,13 +115,6 @@ for all libraries.
 4. Go to the "INSTALL" entry and run 'Build INSTALL' to install into "CMAKE_INSTALL_PREFIX".
 
 
-### Compile LUA 
-1. Download "CMakeLists.txt" for LUA from [here](TODO) and copy it into the root path of LUA.
-2. TODO
-3. TODO
-4. Go to the "INSTALL" entry and run 'Build INSTALL'  to install into "CMAKE_INSTALL_PREFIX".
-
-
 ### Compile libMotion4D
 1. Open "CMakeLists.txt" in cmake-gui and adjust the corresponding paths.
    - Use .\build\Debug  or .\build\Release as build paths.
@@ -134,4 +127,26 @@ for all libraries.
 3. Run 'Build Solution'
 4. Go to the "INSTALL" entry and run 'Build INSTALL' to install into "CMAKE_INSTALL_PREFIX".
    
+
+## Add new metric
+First, a few preliminary steps which are necessary to find your metric.
+1. Open "m4dMetricList.h" and increase 'NUM_METRICS'.
+   Append an 'enum' entry at the end of the 'enum_metric' list.
+   Append an 'include' entry at the end of the '#include's.
+2. Open "m4dMetricList.cpp" and append the name of the new metric at the end
+   of the "stl_metric_names" list.
+3. Open "m4dMetricDatabase.cpp" and append a 'case' entry for your new metric.
+
+4. You can now start writing your own metric class. 
+   For that, have a look e.g. into 'm4dMetricMinkowski' or copy the header and
+   source file and rename the class.
+   Take care that 'mMetricName' and the name of your metric in "stl_metric_names"
+   are the same.
+   
+   There are a few abstract methods, which you have to overwrite (see m4dMetric.h):
+    - calculateMetric
+    - calculateChristoffels
+    - localToCoord
+    - coordToLocal
+    - breakCondition
 

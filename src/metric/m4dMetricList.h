@@ -1,28 +1,11 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricList.h
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricList.h
+ * @author  Thomas Mueller
+ *
+ * @brief  Base class for each metric class.
+ *
+ *  This file is part of libMotion4D.
+ */
 #ifndef M4D_METRIC_LIST_H
 #define M4D_METRIC_LIST_H
 
@@ -77,8 +60,6 @@
 #include "m4dMetricPravda_C_Can.h"
 #include "m4dMetricReissnerNordstrom.h"
 #include "m4dMetricRotDihole.h"
-#include "m4dMetricSchwarzschildCart.h"
-#include "m4dMetricSchwarzschildCartNew.h"
 #include "m4dMetricSchwarzschildGravWave.h"
 #include "m4dMetricSchwarzschildTortoise.h"
 #include "m4dMetricSchwarzschildWT.h"
@@ -98,7 +79,7 @@ class API_M4D_EXPORT MetricList
 {
 public:
 #ifdef ALL_METRICS_AVAILABLE
-    static const int NUM_METRICS = 60;
+    static const int NUM_METRICS = 58;
 #else
     static const int NUM_METRICS = 7;
 #endif // ALL_METRICS_AVAILABLE
@@ -120,8 +101,6 @@ public:
         enum_metric_minkowski_conf,
         enum_metric_minkowski_rotlattice,
         enum_metric_schwarzschild,
-        enum_metric_schwarzschild_cart,
-        enum_metric_schwarzschild_cartnew,
         enum_metric_schwarzschild_gravwave,
         enum_metric_schwarzschild_isotropic,
         enum_metric_schwarzschild_tortoise,

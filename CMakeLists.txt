@@ -1,21 +1,40 @@
-
+# -----------------------------------------------------------------------------
+#   CMakeLists.txt  for libMotion4D
+# -----------------------------------------------------------------------------
 cmake_minimum_required(VERSION 2.6)
 project(libmotion4d)
 
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY  ${CMAKE_SOURCE_DIR})
 
-# set(GSL_DIR $ENV{HOME}/local/gsl/1.15)
+# ---------------------------------------------
+#  Build type
+# ---------------------------------------------
+set(CMAKE_BUILD_TYPE  "Debug"  CACHE STRING "Debug type")
+set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS  Debug  Release)
+
+set(COMPILE_ALL_METRICS  OFF  CACHE  BOOL  "Compile all metrics")
+
+
+# ---------------------------------------------
+#  GNU Scientific Library (GSL)
+# ---------------------------------------------
 set(GSL_DIR      $ENV{GSL_INSTALL_PATH}  CACHE FILEPATH "GSL_DIR")
 set(GSL_LIB_DIR  $ENV{GSL_LIB_PATH}      CACHE FILEPATH "GSL_LIB_DIR")
-#set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-rpath ${GSL_LIB_DIR}")
 
+# ---------------------------------------------
+#  LUA
+# ---------------------------------------------
 set(LUA_AVAILABLE OFF CACHE BOOL "have lua library available")
 set(LUA_DIR       $ENV{LUA_HOME}        CACHE FILEPATH "Lua root path")
 set(LUA_LIB_DIR   $ENV{LUA_HOME}/lib    CACHE FILEPATH "Lua library path")
 
+# ---------------------------------------------
 set(COMPILE_TEST_PRGS OFF CACHE BOOL "Do compile all test programs")
 
+# ---------------------------------------------
+#  source dirs
+# ---------------------------------------------
 set(M4D_ROOT_DIR   src)
 set(M4D_EXTRA_DIR  src/extra)
 set(M4D_MATH_DIR   src/math)
@@ -27,8 +46,10 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${GSL_DIR}/include)
 link_directories(${GSL_LIB_DIR})
 
+# ---------------------------------------------
 # Gather source files and store the result 
 # in the variable 'm4d_source_files'.
+# ---------------------------------------------
 file( GLOB m4d_source_files ${M4D_ROOT_DIR}/*.h 
     ${M4D_EXTRA_DIR}/*.cpp ${M4D_EXTRA_DIR}/*.h
     ${M4D_MATH_DIR}/*.cpp ${M4D_MATH_DIR}/*.h
@@ -38,6 +59,10 @@ file( GLOB m4d_source_files ${M4D_ROOT_DIR}/*.h
 list( REMOVE_ITEM m4d_source_files 
     ${CMAKE_SOURCE_DIR}/${M4D_METRIC_DIR}/m4dMetricAlcubierreAccel.cpp )
 
+
+if (COMPILE_ALL_METRICS) 
+    add_definitions(-DALL_METRICS_AVAILABLE)
+endif()
 
 if (LUA_AVAILABLE)
     set(M4D_LUA_DIR src/lua)
@@ -68,7 +93,9 @@ if(WIN32)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DM4D_LIB -D_m4d_EXPORTS")
 endif(WIN32)
 
-# build m4d library
+# ---------------------------------------------
+#   build m4d library
+# ---------------------------------------------
 add_library(m4d${DAR} SHARED ${m4d_source_files})
 target_link_libraries(m4d${DAR} gsl gslcblas)
 set_target_properties(m4d${DAR} 
@@ -83,7 +110,9 @@ install(DIRECTORY ${M4D_MATH_DIR}   DESTINATION include FILES_MATCHING PATTERN "
 install(DIRECTORY ${M4D_METRIC_DIR} DESTINATION include FILES_MATCHING PATTERN "*.h" PATTERN .svn EXCLUDE PATTERN .deps EXCLUDE PATTERN kickedout EXCLUDE)
 install(DIRECTORY ${M4D_MOTION_DIR} DESTINATION include FILES_MATCHING PATTERN "*.h" PATTERN .svn EXCLUDE PATTERN .deps EXCLUDE)
 
-# If also test programs shall be compiled
+# ---------------------------------------------
+#  If also test programs shall be compiled
+# ---------------------------------------------
 if (COMPILE_TEST_PRGS)
     set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
     #link_directories(${CMAKE_CACHEFILE_DIR}/Debug)
@@ -173,9 +202,10 @@ if (COMPILE_TEST_PRGS)
 
 endif(COMPILE_TEST_PRGS)
 
-
+# ---------------------------------------------
+#  build m4d_lua_library
+# ---------------------------------------------
 if (LUA_AVAILABLE)
-    # build m4d_lua_library
     add_library(m4d_lua${DAR} ${lua_source_files})
     target_link_libraries(m4d_lua${DAR} m4d${DAR} lua${WDAR})
     set_target_properties(m4d_lua${DAR} PROPERTIES  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
