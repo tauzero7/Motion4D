@@ -32,7 +32,7 @@ namespace m4d {
  * \param  R     : size of warp bubble.
  * \param  vs    : velocity of warp bubble.
  */
-MetricAlcubierreSimple::MetricAlcubierreSimple(double R, double vs)
+MetricAlcubierreSimple::MetricAlcubierreSimple(double R, double dR, double vs)
 {
     mMetricName = "AlcubierreWarpSimple";
     mMetricCPPfilename = "m4dMetricAlcubierreSimple.cpp";
@@ -43,9 +43,11 @@ MetricAlcubierreSimple::MetricAlcubierreSimple(double R, double vs)
     mGravConstant = 1.0;
 
     mR = R;
+    mDR = dR;
     mvs = vs;
 
     addParam("r", R);
+    addParam("dr", dR);
     addParam("vs", vs);
 
     // mDrawTypes.push_back(enum_draw_twoplusone);
@@ -320,9 +322,27 @@ double MetricAlcubierreSimple::testConstraint(const double y[], const double kap
     double sum = -kappa;
     sum += -c * c * y[4] * y[4] + pow(y[5] - mvs * f * y[4], 2.0) + y[6] * y[6] + y[7] * y[7];
 
+    // double k = -c * c * y[4] + mvs * (1 - f) * (y[5] - mvs * f * y[4]);
+    // std::cerr << k << std::endl;
+
+    double dxdt = y[5] / y[4];
+    double dydt = y[6] / y[4];
+    double w = (dxdt - mvs * f) * (dxdt - mvs * f) + dydt * dydt;
+    std::cerr << y[4] << " " << y[5] << " " << y[6] << " " << w << std::endl;
+
     // double A = 1.0-mvs*mvs*(1.0-f)*(1.0-f);
     // fprintf(stderr,"%e %e %e %e  %e %e %e %e\n",y[4],y[5],y[6],y[7],f,A,mvs*f+1,mvs*f-1);
     return sum;
+}
+
+bool MetricAlcubierreSimple::resize(double* y, double kappa, double factor)
+{
+    double a = 1 / fabs(y[4]);
+    y[4] *= a;
+    y[5] *= a;
+    y[6] *= a;
+    y[7] *= a;
+    return true;
 }
 
 /*! Set parameter 'pName' to 'val'.
@@ -334,6 +354,9 @@ bool MetricAlcubierreSimple::setParam(const char* pName, double val)
     Metric::setParam(pName, val);
     if (strcmp(pName, "r") == 0) {
         mR = val;
+    }
+    else if (strcmp(pName, "dr") == 0) {
+        mDR = val;
     }
     else if (strcmp(pName, "vs") == 0) {
         mvs = val;
@@ -395,20 +418,37 @@ void MetricAlcubierreSimple::setStandardValues()
 double MetricAlcubierreSimple::calcRs(const double* pos)
 {
     double t = pos[0];
-    double x = pos[1];
+    double x = pos[1] - mvs * t;
     double y = pos[2];
     double z = pos[3];
 
-    return sqrt((x - mvs * t) * (x - mvs * t) + y * y + z * z);
+    return sqrt(x * x + y * y + z * z);
 }
 
 double MetricAlcubierreSimple::calcF(const double* pos)
 {
     double rs = calcRs(pos);
+
+#if 0
     if (rs <= mR) {
         return 1.0 - pow(rs / mR, 4.0);
     }
     return 0.0;
+#else
+    double R1 = mR - 0.5 * mDR;
+    double R2 = mR + 0.5 * mDR;
+    if (rs <= R1) {
+        return 1.0;
+    }
+
+    if (rs >= R1 && rs < R2) {
+        double w = (rs - R1) / (R2 - R1);
+        double y = 1 - w * w;
+        return y * y;
+    }
+
+    return 0.0;
+#endif
 }
 
 void MetricAlcubierreSimple::calcDF(const double* pos, double& ft, double& fx, double& fy, double& fz)
@@ -416,10 +456,11 @@ void MetricAlcubierreSimple::calcDF(const double* pos, double& ft, double& fx, d
     double rs = calcRs(pos);
 
     double t = pos[0];
-    double x = pos[1];
+    double x = pos[1] - mvs * t;
     double y = pos[2];
     double z = pos[3];
 
+#if 0
     double dfdr = 0.0;
     if (rs <= mR) {
         dfdr = -4.0 * pow(rs / mR, 3.0) / mR;
@@ -427,10 +468,26 @@ void MetricAlcubierreSimple::calcDF(const double* pos, double& ft, double& fx, d
     double df = dfdr / rs;
 
     // ft = df/dr * dr/dt ...
-    ft = -mvs * (x - mvs * t) * df;
-    fx = (x - mvs * t) * df;
+    ft = -mvs * x * df;
+    fx = x * df;
     fy = y * df;
     fz = z * df;
+#else
+    double R1 = mR - 0.5 * mDR;
+    double R2 = mR + 0.5 * mDR;
+
+    double dfdr = 0.0;
+
+    if (rs >= R1 && rs < R2) {
+        double w = (rs - R1) / (R2 - R1);
+        dfdr = -4.0 * (1 - w * w) * w / (R2 - R1);
+    }
+
+    ft = dfdr * x / rs * (-mvs);
+    fx = dfdr * x / rs;
+    fy = dfdr * y / rs;
+    fz = dfdr * z / rs;
+#endif
 }
 
 /*

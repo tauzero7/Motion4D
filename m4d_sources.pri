@@ -102,8 +102,6 @@ use_all_metrics {
             $$M4D_SRC_DIR/metric/m4dMetricPTD_C.h \
             $$M4D_SRC_DIR/metric/m4dMetricReissnerNordstrom.h \
             $$M4D_SRC_DIR/metric/m4dMetricRotDihole.h \
-            $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildCart.h \
-            $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildCartNew.h \
             $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildGravWave.h \
             $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildTortoise.h \
             $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildWT.h \
@@ -159,8 +157,6 @@ use_all_metrics {
             $$M4D_SRC_DIR/metric/m4dMetricPTD_C.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricReissnerNordstrom.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricRotDihole.cpp \
-            $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildCart.cpp \
-            $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildCartNew.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildGravWave.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildTortoise.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricSchwarzschildWT.cpp \

@@ -158,7 +158,7 @@ enum_break_condition GeodesicGSL::calculateGeodesic(const vec4 initPos, const ve
 
     double tc;
     int status;
-    while ((int)points.size() < maxNumPoints && breakType == enum_break_none) {
+    while (static_cast<int>(points.size()) < maxNumPoints && breakType == enum_break_none) {
         if (!nextStep(status)) {
             breakType = enum_break_cond;
             if (status == GSL_EBADFUNC) {
@@ -175,7 +175,8 @@ enum_break_condition GeodesicGSL::calculateGeodesic(const vec4 initPos, const ve
                     breakType = enum_break_constraint;
                 }
 
-                if (tc > resizeEps) {
+                // if (tc > resizeEps)
+                {
                     mMetric->resize(y, mKappa, resizeFac);
                     GSL_ODEIV_FN_EVAL(&mSys, mLambda, y, dydt_in);
                 }
@@ -186,7 +187,7 @@ enum_break_condition GeodesicGSL::calculateGeodesic(const vec4 initPos, const ve
         }
     }
 
-    if ((int)points.size() >= maxNumPoints) {
+    if (static_cast<int>(points.size()) >= maxNumPoints) {
         breakType = enum_break_num_exceed;
     }
 
@@ -627,7 +628,7 @@ enum_break_condition GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4
         }
     }
 
-    if ((int)points.size() >= maxNumPoints) {
+    if (static_cast<int>(points.size()) >= maxNumPoints) {
         breakType = enum_break_num_exceed;
     }
 
@@ -852,8 +853,8 @@ int GeodesicGSL::jac_geod(double, const double y[], double* dfdy, double dfdt[],
 
         // TODO: incorporarte null/id-matrix from subsets
         double diff1, diff2;
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
+        for (size_t i = 0; i < 4; i++) {
+            for (size_t j = 0; j < 4; j++) {
                 // null-matrix
                 gsl_matrix_set(m, i, j, 0.0);
 
@@ -1026,7 +1027,7 @@ bool GeodesicGSL::nextStep(int& status)
     if (mMetric->breakCondition(&y[0])) {
         return false;
     }
-    register int i;
+
     double y_err[DEF_MAX_YS];
     double lambda1 = DEF_GSL_LAMBDA_MAX;
 
@@ -1041,7 +1042,7 @@ bool GeodesicGSL::nextStep(int& status)
     else {
         status = gsl_odeiv_step_apply(mStep, mLambda, mLambdaStep, y, y_err, dydt_in, dydt_out, &mSys);
 
-        for (i = 0; i < (int)mSys.dimension; i++) {
+        for (size_t i = 0; i < mSys.dimension; i++) {
             dydt_in[i] = dydt_out[i];
         }
         mLambda += mLambdaStep;
@@ -1072,7 +1073,7 @@ bool GeodesicGSL::nextStepPar(int& status)
     if (mMetric->breakCondition(&y[0])) {
         return false;
     }
-    register int i;
+
     double y_err[DEF_MAX_YS_PAR];
     double lambda1 = DEF_GSL_LAMBDA_MAX;
 
@@ -1083,7 +1084,7 @@ bool GeodesicGSL::nextStepPar(int& status)
     else {
         status = gsl_odeiv_step_apply(mStep, mLambda, mLambdaStep, y, y_err, dydt_in, dydt_out, &mSys);
 
-        for (i = 0; i < (int)mSys.dimension; i++) {
+        for (size_t i = 0; i < mSys.dimension; i++) {
             dydt_in[i] = dydt_out[i];
         }
 
@@ -1105,7 +1106,7 @@ bool GeodesicGSL::nextStepSachsJacobi(int& status)
     if (mMetric->breakCondition(&y[0])) {
         return false;
     }
-    register int i;
+
     double y_err[DEF_MAX_YS_JAC];
     double lambda1 = DEF_GSL_LAMBDA_MAX;
 
@@ -1117,7 +1118,7 @@ bool GeodesicGSL::nextStepSachsJacobi(int& status)
     else {
         status = gsl_odeiv_step_apply(mStep, mLambda, mLambdaStep, y, y_err, dydt_in, dydt_out, &mSys);
 
-        for (i = 0; i < DEF_MAX_YS_JAC; i++) {
+        for (size_t i = 0; i < DEF_MAX_YS_JAC; i++) {
             dydt_in[i] = dydt_out[i];
         }
 

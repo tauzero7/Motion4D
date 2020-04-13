@@ -1,5 +1,7 @@
 # -----------------------------------------------------------------------------
 #   CMakeLists.txt  for libMotion4D
+#
+#   Run cmake-gui to select a generator.
 # -----------------------------------------------------------------------------
 cmake_minimum_required(VERSION 2.6)
 project(libmotion4d)
