@@ -5,8 +5,8 @@ CXX   = g++
 SWIG = /usr/local/misc/swig/3.0.12/bin/swig
 
 #INC_PATH = /usr/include/python2.7
-INC_PATH = /usr/local/python/3.7.3/include/python3.7m
-LIB_PATH = /usr/local/python/3.7.3/lib
+INC_PATH = /usr/local/python/3.8.5/include/python3.8
+LIB_PATH = /usr/local/python/3.8.5/lib
 CXXFLAGS = -std=c++11 -O2 -fPIC
 
 BASEFILE = m4d

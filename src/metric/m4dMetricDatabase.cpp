@@ -20,6 +20,15 @@ MetricDatabase::~MetricDatabase()
     }
 }
 
+bool MetricDatabase::allMetricsAvailable()
+{
+#ifdef ALL_METRICS_AVAILABLE
+    return true;
+#else
+    return false;
+#endif
+}
+
 int MetricDatabase::getNumMetrics()
 {
     return MetricList::NUM_METRICS;

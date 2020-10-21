@@ -30,6 +30,8 @@ public:
     MetricDatabase();
     ~MetricDatabase();
 
+    bool allMetricsAvailable();
+
     /**
      * @brief Get number of implementred metrics.
      * @return
