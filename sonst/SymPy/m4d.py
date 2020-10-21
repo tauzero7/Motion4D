@@ -133,22 +133,24 @@ def pprint_riemann_down(Riemann):
                         pprint(Eq(Symbol('R_%i%i%i%i' % (i,j,k,m)), Riemann.dddd(i,j,k,m)))
 
 def pprint_ricci(Ricci):
-	for i in [0,1,2,3]:
-		for j in [0,1,2,3]:
-			if (Ricci.dd(i,j)!=0):
-				pprint(Eq(Symbol('R_%i%i' % (i,j)), Ricci.dd(i,j)))
+    for i in [0,1,2,3]:
+        for j in [0,1,2,3]:
+            if (Ricci.dd(i,j)!=0):
+                pprint(Eq(Symbol('R_%i%i' % (i,j)), Ricci.dd(i,j)))
 
 def codeprint_metric(g,f=sys.stdout):
     for i in [0,1,2,3]:
         for j in [0,1,2,3]:
-            print >>f, "g_compts[{0}][{1}] = {2};".format(i,j,ccode(g.dd(i,j)))
+            #print >>f, "g_compts[{0}][{1}] = {2};".format(i,j,ccode(g.dd(i,j)))
+            print("g_compts[{0}][{1}] = {2};".format(i,j,ccode(g.dd(i,j))))
 
 
 def codeprint_christoffels(Gamma,f=sys.stdout):
     for i in [0,1,2,3]:
         for j in [0,1,2,3]:
             for k in [0,1,2,3]:
-                print >>f, "christoffel[{0}][{1}][{2}] = {3};".format(i,j,k,ccode(Gamma.ddu(i,j,k)))
+                #print >>f, "christoffel[{0}][{1}][{2}] = {3};".format(i,j,k,ccode(Gamma.ddu(i,j,k)))
+                print("christoffel[{0}][{1}][{2}] = {3};".format(i,j,k,ccode(Gamma.ddu(i,j,k))))
 
         
 def codeprint_chrisD(Gamma,X,f=sys.stdout):

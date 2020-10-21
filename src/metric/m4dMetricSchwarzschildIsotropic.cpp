@@ -22,7 +22,7 @@ MetricSchwarzschildIsotropic::MetricSchwarzschildIsotropic(double mass)
 
     addParam("mass", mass);
     mMass = mass;
-    rho_s = 0.5 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
+    rho_s = 0.5 * mMass;
     calc_orbits();
 
     //  Only a static tetrad is defined
@@ -57,7 +57,7 @@ bool MetricSchwarzschildIsotropic::calculateMetric(const double* pos)
 {
     double rho = calc_rho(pos);
 
-    double c = mSpeedOfLight;
+    double c = 1.0;
 
     double t1 = rho; // rho(x,y,z);
     double t3 = rho_s / t1;
@@ -96,7 +96,7 @@ bool MetricSchwarzschildIsotropic::calculateChristoffels(const double* pos)
     double drdx, drdy, drdz;
     calc_drho(pos, drdx, drdy, drdz);
 
-    double c = mSpeedOfLight;
+    double c = 1.0;
 
     double t1 = rho; // rho(x,y,z);
     double t2 = t1 * t1;
@@ -201,7 +201,7 @@ bool MetricSchwarzschildIsotropic::calculateChrisD(const double* pos)
     double drdxdx, drdxdy, drdxdz, drdydy, drdydz, drdzdz;
     calc_d2rho(pos, drdxdx, drdxdy, drdxdz, drdydy, drdydz, drdzdz);
 
-    double c = mSpeedOfLight;
+    double c = 1.0;
 
     double t1 = rho_s * rho_s;
     double t2 = drdx; // diff(rho(x,y,z),x);
@@ -542,7 +542,7 @@ void MetricSchwarzschildIsotropic::localToCoord(
     double A = (1.0 - rho_s / rho) / B;
     double edb2 = 1.0 / (B * B);
 
-    dir[0] = ldir[0] / A / mSpeedOfLight;
+    dir[0] = ldir[0] / A;
     dir[1] = ldir[1] * edb2;
     dir[2] = ldir[2] * edb2;
     dir[3] = ldir[3] * edb2;
@@ -557,7 +557,7 @@ void MetricSchwarzschildIsotropic::coordToLocal(
     double A = (1.0 - rho_s / rho) / B;
     double b2 = B * B;
 
-    ldir[0] = cdir[0] * A * mSpeedOfLight;
+    ldir[0] = cdir[0] * A;
     ldir[1] = cdir[1] * b2;
     ldir[2] = cdir[2] * b2;
     ldir[3] = cdir[3] * b2;
@@ -574,15 +574,141 @@ bool MetricSchwarzschildIsotropic::breakCondition(const double* pos)
     return br;
 }
 
+bool MetricSchwarzschildIsotropic::calcDerivs(const double y[], double dydx[])
+{
+    dydx[0] = y[4];
+    dydx[1] = y[5];
+    dydx[2] = y[6];
+    dydx[3] = y[7];
+
+    double G[4][4][4];
+
+    double rho = calc_rho(y);
+
+    double drdx = y[1] / rho;
+    double drdy = y[2] / rho;
+    double drdz = y[3] / rho;
+
+    double c = 1.0;
+    double t1 = rho; // rho(x,y,z);
+    double t2 = t1 * t1;
+    double t3 = t2 * t2;
+    double t7 = rho_s * rho_s;
+    double t13 = t7 * t7;
+    double t17 = c * c;
+    double t18 = t3 / (t3 + 4.0 * rho_s * t2 * t1 + 6.0 * t7 * t2 + 4.0 * t7 * rho_s * t1 + t13) * t17;
+    double t19 = drdx; // diff(rho(x,y,z),x);
+    double t20 = rho_s * t19;
+    double t21 = t1 - rho_s;
+    double t22 = t1 + rho_s;
+    double t23 = t22 * t22;
+    double t26 = t21 / t23 / t22;
+    double t30 = drdy; // diff(rho(x,y,z),y);
+    double t31 = rho_s * t30;
+    double t35 = drdz; // diff(rho(x,y,z),z);
+    double t36 = rho_s * t35;
+    double t40 = 1.0 / t22;
+    double t42 = t40 / t21;
+    double t44 = 2.0 * t20 * t42;
+    double t46 = 2.0 * t31 * t42;
+    double t48 = 2.0 * t36 * t42;
+    double t50 = 1 / t1 * t40;
+    double t52 = 2.0 * t20 * t50;
+    double t54 = 2.0 * t31 * t50;
+    double t56 = 2.0 * t36 * t50;
+
+    G[0][0][0] = 0.0;
+    G[0][0][1] = 2.0 * t18 * t20 * t26;
+    G[0][0][2] = 2.0 * t18 * t31 * t26;
+    G[0][0][3] = 2.0 * t18 * t36 * t26;
+    G[0][1][0] = t44;
+    G[0][1][1] = 0.0;
+    G[0][1][2] = 0.0;
+    G[0][1][3] = 0.0;
+    G[0][2][0] = t46;
+    G[0][2][1] = 0.0;
+    G[0][2][2] = 0.0;
+    G[0][2][3] = 0.0;
+    G[0][3][0] = t48;
+    G[0][3][1] = 0.0;
+    G[0][3][2] = 0.0;
+    G[0][3][3] = 0.0;
+    G[1][0][0] = t44;
+    G[1][0][1] = 0.0;
+    G[1][0][2] = 0.0;
+    G[1][0][3] = 0.0;
+    G[1][1][0] = 0.0;
+    G[1][1][1] = -t52;
+    G[1][1][2] = t54;
+    G[1][1][3] = t56;
+    G[1][2][0] = 0.0;
+    G[1][2][1] = -t54;
+    G[1][2][2] = -t52;
+    G[1][2][3] = 0.0;
+    G[1][3][0] = 0.0;
+    G[1][3][1] = -t56;
+    G[1][3][2] = 0.0;
+    G[1][3][3] = -t52;
+    G[2][0][0] = t46;
+    G[2][0][1] = 0.0;
+    G[2][0][2] = 0.0;
+    G[2][0][3] = 0.0;
+    G[2][1][0] = 0.0;
+    G[2][1][1] = -t54;
+    G[2][1][2] = -t52;
+    G[2][1][3] = 0.0;
+    G[2][2][0] = 0.0;
+    G[2][2][1] = t52;
+    G[2][2][2] = -t54;
+    G[2][2][3] = t56;
+    G[2][3][0] = 0.0;
+    G[2][3][1] = 0.0;
+    G[2][3][2] = -t56;
+    G[2][3][3] = -t54;
+    G[3][0][0] = t48;
+    G[3][0][1] = 0.0;
+    G[3][0][2] = 0.0;
+    G[3][0][3] = 0.0;
+    G[3][1][0] = 0.0;
+    G[3][1][1] = -t56;
+    G[3][1][2] = 0.0;
+    G[3][1][3] = -t52;
+    G[3][2][0] = 0.0;
+    G[3][2][1] = 0.0;
+    G[3][2][2] = -t56;
+    G[3][2][3] = -t54;
+    G[3][3][0] = 0.0;
+    G[3][3][1] = t52;
+    G[3][3][2] = t54;
+    G[3][3][3] = -t56;
+
+    double f4 = 2 * G[0][1][0] * y[4] * y[5] + 2 * G[0][2][0] * y[4] * y[6] + 2 * G[0][3][0] * y[4] * y[7];
+
+    double f5 = G[0][0][1] * y[4] * y[4] + G[1][1][1] * y[5] * y[5] + G[2][2][1] * y[6] * y[6]
+        + G[3][3][1] * y[7] * y[7] + 2 * G[1][2][1] * y[5] * y[6] + 2 * G[1][3][1] * y[5] * y[7];
+
+    double f6 = G[0][0][2] * y[4] * y[4] + 2 * G[1][2][2] * y[5] * y[6] + G[1][1][2] * y[5] * y[5]
+        + G[2][2][2] * y[6] * y[6] + G[3][3][2] * y[7] * y[7] + 2 * G[2][3][2] * y[6] * y[7];
+
+    double f7 = G[0][0][3] * y[4] * y[4] + 2 * G[1][3][3] * y[5] * y[7] + 2 * G[2][3][3] * y[6] * y[7]
+        + G[1][1][3] * y[5] * y[5] + G[2][2][3] * y[6] * y[6] + G[3][3][3] * y[7] * y[7];
+
+    dydx[4] = -f4;
+    dydx[5] = -f5;
+    dydx[6] = -f6;
+    dydx[7] = -f7;
+
+    return true;
+}
+
 double MetricSchwarzschildIsotropic::testConstraint(const double y[], const double kappa)
 {
     double rho = calc_rho(y);
-    double cm = 1.0 / mSpeedOfLight;
 
     double dt = y[4];
-    double dx = y[5] * cm;
-    double dy = y[6] * cm;
-    double dz = y[7] * cm;
+    double dx = y[5];
+    double dy = y[6];
+    double dz = y[7];
 
     double B = (1.0 + rho_s / rho);
     double A = (1.0 - rho_s / rho) / B;
@@ -605,7 +731,7 @@ bool MetricSchwarzschildIsotropic::calcProduct(const double* pos, const double* 
     double A = (1.0 - rho_s / rho) / B;
     double b4 = B * B * B * B;
 
-    prod = -mSpeedOfLight * mSpeedOfLight * A * A * u[0] * v[0] + b4 * (u[1] * v[1] + u[2] * v[2] + u[3] * v[3]);
+    prod = -A * A * u[0] * v[0] + b4 * (u[1] * v[1] + u[2] * v[2] + u[3] * v[3]);
     return true;
 }
 
@@ -613,10 +739,11 @@ bool MetricSchwarzschildIsotropic::setParam(const char* pName, double val)
 {
     if (Metric::setParam(pName, val)) {
         mMass = val;
-        rho_s = 0.5 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
+        rho_s = 0.5 * mMass;
         calc_orbits();
+        return true;
     }
-    return true;
+    return false;
 }
 
 bool MetricSchwarzschildIsotropic::transToEmbedding(vec4 p, vec4& ep)

@@ -52,6 +52,8 @@ public:
 
     virtual bool breakCondition(const double* pos);
 
+    virtual bool calcDerivs(const double y[], double dydx[]);
+
     virtual double testConstraint(const double y[], const double kappa);
 
     virtual bool calcProduct(
