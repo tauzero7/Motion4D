@@ -82,17 +82,15 @@
 
 namespace m4d {
 
-// ---------------------------------------------------
-//    class definition:   Object
-// ---------------------------------------------------
+/**
+ * @brief The Object class
+ */
 class API_M4D_EXPORT Object
 {
 public:
     Object();
     ~Object();
 
-    // --------- public methods -----------
-public:
     bool setMetric(const char* metricName);
     bool setMetricParam(const char* paramName, double value);
 
@@ -207,7 +205,6 @@ public:
     bool makeReport(char*& text);
     void printReport(FILE* fptr = stdout);
 
-    // --------- public attributes --------
 public:
     MetricDatabase metricDB;
     Metric* currMetric;

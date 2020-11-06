@@ -1,28 +1,9 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dGeodesicDP65.cpp
-
-  Copyright (c) 2011  Thomas Mueller
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dGeodesicDP65.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dGeodesicDP65.h"
 #include <algorithm>
 
@@ -35,8 +16,9 @@ namespace m4d {
  *  \param  metric : Metric of the spacetime where the geodesic has to be calculated.
  *  \param  type   : Type of geodesic:  kappa=-1 (timelike), kappa=0 (lightlike).
  */
-GeodesicDP65::GeodesicDP65(Metric* metric, enum_geodesic_type  type)
-    : Geodesic(metric, type) {
+GeodesicDP65::GeodesicDP65(Metric* metric, enum_geodesic_type type)
+    : Geodesic(metric, type)
+{
     mCalcWithParTransport = false;
     mNumCoords = 8;
 
@@ -48,33 +30,33 @@ GeodesicDP65::GeodesicDP65(Metric* metric, enum_geodesic_type  type)
 
     mMaxLambdaStep = 1.0;
 
-    mOrder         = 5;
-    stepFac        = 1.0 / (1.0 - pow(2.0, -(double)mOrder));
-    stepSigma      = 0.5;
+    mOrder = 5;
+    stepFac = 1.0 / (1.0 - pow(2.0, -(double)mOrder));
+    stepSigma = 0.5;
 
     a21 = 1.0 / 10.0;
 
     a31 = -2.0 / 81.0;
     a32 = 20.0 / 81.0;
-    //fprintf(stderr,"%12.10e\n",a31+a32);  // = 2/9
+    // fprintf(stderr,"%12.10e\n",a31+a32);  // = 2/9
 
     a41 = 615.0 / 1372.0;
     a42 = -270.0 / 343.0;
     a43 = 1053.0 / 1372.0;
-    //fprintf(stderr,"%12.10e\n",a41+a42+a43);  // = 3/7
+    // fprintf(stderr,"%12.10e\n",a41+a42+a43);  // = 3/7
 
     a51 = 3243.0 / 5500.0;
     a52 = -54.0 / 55.0;
     a53 = 50949.0 / 71500.0;
     a54 = 4998.0 / 17875.0;
-    //fprintf(stderr,"%12.10e\n",a51+a52+a53+a54);  // = 3/5
+    // fprintf(stderr,"%12.10e\n",a51+a52+a53+a54);  // = 3/5
 
     a61 = -26492.0 / 37125.0;
     a62 = 72.0 / 55.0;
     a63 = 2808.0 / 23375.0;
     a64 = -24206.0 / 37125.0;
     a65 = 338.0 / 459.0;
-    //fprintf(stderr,"%12.10e\n",a61+a62+a63+a64+a65);  // = 4/5
+    // fprintf(stderr,"%12.10e\n",a61+a62+a63+a64+a65);  // = 4/5
 
     a71 = 5561.0 / 2376.0;
     a72 = -35.0 / 11.0;
@@ -82,7 +64,7 @@ GeodesicDP65::GeodesicDP65(Metric* metric, enum_geodesic_type  type)
     a74 = 899983.0 / 200772.0;
     a75 = -5225. / 1836.0;
     a76 = 3925.0 / 4056.0;
-    //fprintf(stderr,"%12.10e\n",a71+a72+a73+a74+a75+a76);  // = 1
+    // fprintf(stderr,"%12.10e\n",a71+a72+a73+a74+a75+a76);  // = 1
 
     a81 = 465467.0 / 266112.0;
     a82 = -2945.0 / 1232.0;
@@ -91,17 +73,17 @@ GeodesicDP65::GeodesicDP65(Metric* metric, enum_geodesic_type  type)
     a85 = -424325.0 / 205632.0;
     a86 = 376225.0 / 454272.0;
     a87 = 0.0;
-    //fprintf(stderr,"%12.10e\n",a81+a82+a83+a84+a85+a86+a87);  // = 1
+    // fprintf(stderr,"%12.10e\n",a81+a82+a83+a84+a85+a86+a87);  // = 1
 
-    b1  = 821.0 / 10800.0;
-    b2  = 0.0;
-    b3  = 19683.0 / 71825.0;
-    b4  = 175273.0 / 912600.0;
-    b5  = 395.0 / 3672.0;
-    b6  = 785.0 / 2704.0;
-    b7  = 3.0 / 50.0;
-    b8  = 0.0;
-    //fprintf(stderr,"%12.10e\n",b1+b2+b3+b4+b5+b6+b7+b8);  // = 1
+    b1 = 821.0 / 10800.0;
+    b2 = 0.0;
+    b3 = 19683.0 / 71825.0;
+    b4 = 175273.0 / 912600.0;
+    b5 = 395.0 / 3672.0;
+    b6 = 785.0 / 2704.0;
+    b7 = 3.0 / 50.0;
+    b8 = 0.0;
+    // fprintf(stderr,"%12.10e\n",b1+b2+b3+b4+b5+b6+b7+b8);  // = 1
 
     db1 = 61.0 / 864.0;
     db2 = 0.0;
@@ -111,12 +93,10 @@ GeodesicDP65::GeodesicDP65(Metric* metric, enum_geodesic_type  type)
     db6 = 1375.0 / 5408.0;
     db7 = -37.0 / 1120.0;
     db8 = 1.0 / 10.0;
-    //fprintf(stderr,"%12.10e\n",db1+db2+db3+db4+db5+db6+db7+db8);  // = 1
+    // fprintf(stderr,"%12.10e\n",db1+db2+db3+db4+db5+db6+db7+db8);  // = 1
 }
 
-
-GeodesicDP65::~GeodesicDP65() {
-}
+GeodesicDP65::~GeodesicDP65() {}
 
 // *********************************** public methods ******************************
 
@@ -132,9 +112,9 @@ GeodesicDP65::~GeodesicDP65() {
  *  \return enum_break_condition : break condition.
  *  \sa enum_break_condition
  */
-enum_break_condition
-GeodesicDP65::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
-                                  std::vector<vec4> &points, std::vector<vec4> &dirs, std::vector<double> &lambda) {
+enum_break_condition GeodesicDP65::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
+    std::vector<vec4>& points, std::vector<vec4>& dirs, std::vector<double>& lambda)
+{
     if (!points.empty()) {
         points.clear();
     }
@@ -145,7 +125,7 @@ GeodesicDP65::calculateGeodesic(const vec4 initPos, const vec4 initDir, const in
         lambda.clear();
     }
 
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
     double cstr;
     breakType = initializeGeodesic(initPos, initDir, cstr);
     if (breakType == enum_break_constraint) {
@@ -167,7 +147,8 @@ GeodesicDP65::calculateGeodesic(const vec4 initPos, const vec4 initDir, const in
         h = mLambdaStep;
         if (!mStepsizeControlled) {
             nextStep(status);
-        } else {
+        }
+        else {
             int maxAttempts = 3;
             for (int n = 0; n < maxAttempts; n++) {
                 nextStep(status);
@@ -203,7 +184,8 @@ GeodesicDP65::calculateGeodesic(const vec4 initPos, const vec4 initDir, const in
             if (cstr > resizeEps) {
                 mMetric->resize(y, mKappa, resizeFac);
             }
-        } else {
+        }
+        else {
             breakType = enum_break_outside;
         }
     }
@@ -216,11 +198,11 @@ GeodesicDP65::calculateGeodesic(const vec4 initPos, const vec4 initDir, const in
     return breakType;
 }
 
-enum_break_condition
-GeodesicDP65::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
-                                vec4 *&points, vec4 *&dirs, int &numPoints) {
+enum_break_condition GeodesicDP65::calculateGeodesic(
+    const vec4 initPos, const vec4 initDir, const int maxNumPoints, vec4*& points, vec4*& dirs, int& numPoints)
+{
     // TODO
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
     return breakType;
 }
 
@@ -237,10 +219,9 @@ GeodesicDP65::calculateGeodesic(const vec4 initPos, const vec4 initDir, const in
  *  \return enum_break_condition : break condition.
  *  \sa enum_break_condition
  */
-enum_break_condition
-GeodesicDP65::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
-                                      std::vector<vec4> &points, std::vector<vec4> &dirs,
-                                      std::vector<double> &epsilons, std::vector<double> &lambda) {
+enum_break_condition GeodesicDP65::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
+    std::vector<vec4>& points, std::vector<vec4>& dirs, std::vector<double>& epsilons, std::vector<double>& lambda)
+{
     if (!points.empty()) {
         points.clear();
     }
@@ -254,7 +235,7 @@ GeodesicDP65::calculateGeodesicData(const vec4 initPos, const vec4 initDir, cons
         lambda.clear();
     }
 
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
     double cstr;
     breakType = initializeGeodesic(initPos, initDir, cstr);
     if (breakType == enum_break_constraint) {
@@ -278,7 +259,8 @@ GeodesicDP65::calculateGeodesicData(const vec4 initPos, const vec4 initDir, cons
         h = mLambdaStep;
         if (!mStepsizeControlled) {
             nextStep(status);
-        } else {
+        }
+        else {
             int maxAttempts = 3;
             for (int n = 0; n < maxAttempts; n++) {
                 nextStep(status);
@@ -317,7 +299,8 @@ GeodesicDP65::calculateGeodesicData(const vec4 initPos, const vec4 initDir, cons
             if (cstr > resizeEps) {
                 mMetric->resize(y, mKappa, resizeFac);
             }
-        } else {
+        }
+        else {
             breakType = enum_break_outside;
         }
     }
@@ -329,7 +312,6 @@ GeodesicDP65::calculateGeodesicData(const vec4 initPos, const vec4 initDir, cons
     mCalcTime = (t2 - t1) * 1e-6;
     return breakType;
 }
-
 
 /*! Calculate a geodesic and the parallel transported local tetrad of the observer.
  *
@@ -351,14 +333,11 @@ GeodesicDP65::calculateGeodesicData(const vec4 initPos, const vec4 initDir, cons
  *  \return enum_break_condition : break condition.
  *  \sa enum_break_condition
  */
-enum_break_condition
-GeodesicDP65::calcParTransport(const vec4 initPos, const vec4 initDir,
-                                 const vec4 e0, const vec4 e1, const vec4 e2, const vec4 e3,
-                                 const int maxNumPoints,
-                                 std::vector<vec4> &points,  std::vector<vec4> &dirs,
-                                 std::vector<double> &lambda,
-                                 std::vector<vec4> &base0, std::vector<vec4> &base1,
-                                 std::vector<vec4> &base2, std::vector<vec4> &base3) {
+enum_break_condition GeodesicDP65::calcParTransport(const vec4 initPos, const vec4 initDir, const vec4 e0,
+    const vec4 e1, const vec4 e2, const vec4 e3, const int maxNumPoints, std::vector<vec4>& points,
+    std::vector<vec4>& dirs, std::vector<double>& lambda, std::vector<vec4>& base0, std::vector<vec4>& base1,
+    std::vector<vec4>& base2, std::vector<vec4>& base3)
+{
     setCalcWithParTransport(true);
 
     if (!points.empty()) {
@@ -390,15 +369,14 @@ GeodesicDP65::calcParTransport(const vec4 initPos, const vec4 initDir,
     setInitialDirection(initDir);
     setInitialTetrad(e0, e1, e2, e3);
 
+    //  initPos.print(std::cerr);
+    //  initDir.print(std::cerr);
+    //   e0.print(std::cerr);
+    //   e1.print(std::cerr);
+    //   e2.print(std::cerr);
+    //   e3.print(std::cerr);
 
-//  initPos.print(std::cerr);
-//  initDir.print(std::cerr);
-//   e0.print(std::cerr);
-//   e1.print(std::cerr);
-//   e2.print(std::cerr);
-//   e3.print(std::cerr);
-
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
 
     double cstr;
     if ((cstr = fabs(testConstraint())) > mConstraintEpsilon) {
@@ -424,7 +402,8 @@ GeodesicDP65::calcParTransport(const vec4 initPos, const vec4 initDir,
         h = mLambdaStep;
         if (!mStepsizeControlled) {
             nextStep(status);
-        } else {
+        }
+        else {
 
             int maxAttempts = 3;
             for (int n = 0; n < maxAttempts; n++) {
@@ -465,7 +444,8 @@ GeodesicDP65::calcParTransport(const vec4 initPos, const vec4 initDir,
             if (cstr > resizeEps) {
                 mMetric->resize(y, mKappa, resizeFac);
             }
-        } else {
+        }
+        else {
             breakType = enum_break_outside;
         }
     }
@@ -503,16 +483,12 @@ GeodesicDP65::calcParTransport(const vec4 initPos, const vec4 initDir,
  *  \return enum_break_condition : break condition.
  *  \sa enum_break_condition
  */
-enum_break_condition
-GeodesicDP65::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
-                                const vec3 localNullDir, const vec3 locX, const vec3 locY, const vec3 locZ,
-                                const vec4 b0, const vec4 b1, const vec4 b2, const vec4 b3,
-                                const enum_nat_tetrad_type  tetrad_type,
-                                const int maxNumPoints,
-                                std::vector<vec4> &points,  std::vector<vec4> &dirs,
-                                std::vector<double> &lambda,
-                                std::vector<vec4> &sachs0, std::vector<vec4> &sachs1,
-                                std::vector<vec5> &jacobi, vec5 &maxJacobi) {
+enum_break_condition GeodesicDP65::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir, const vec3 localNullDir,
+    const vec3 locX, const vec3 locY, const vec3 locZ, const vec4 b0, const vec4 b1, const vec4 b2, const vec4 b3,
+    const enum_nat_tetrad_type tetrad_type, const int maxNumPoints, std::vector<vec4>& points, std::vector<vec4>& dirs,
+    std::vector<double>& lambda, std::vector<vec4>& sachs0, std::vector<vec4>& sachs1, std::vector<vec5>& jacobi,
+    vec5& maxJacobi)
+{
     setCalcWithParTransport(true);
 
     if (!points.empty()) {
@@ -558,13 +534,13 @@ GeodesicDP65::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
 
     for (int i = 0; i < 4; i++) {
         y[DEF_JAC1_IDX + i] = 0.0;
-        y[DEF_DJ1_IDX + i]  = bb1[i];
+        y[DEF_DJ1_IDX + i] = bb1[i];
 
         y[DEF_JAC2_IDX + i] = 0.0;
-        y[DEF_DJ2_IDX + i]  = bb2[i];
+        y[DEF_DJ2_IDX + i] = bb2[i];
     }
 
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
     double cstr;
     if ((cstr = fabs(testConstraint())) > mConstraintEpsilon) {
         return enum_break_constraint;
@@ -591,7 +567,8 @@ GeodesicDP65::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
         h = mLambdaStep;
         if (!mStepsizeControlled) {
             nextStepSachsJacobi(status);
-        } else {
+        }
+        else {
             int maxAttempts = 3;
             for (int n = 0; n < maxAttempts; n++) {
                 nextStepSachsJacobi(status);
@@ -637,7 +614,8 @@ GeodesicDP65::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
             if (cstr > resizeEps) {
                 mMetric->resize(y, mKappa, resizeFac);
             }
-        } else {
+        }
+        else {
             breakType = enum_break_outside;
         }
     }
@@ -650,18 +628,13 @@ GeodesicDP65::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
     return breakType;
 }
 
-enum_break_condition
-GeodesicDP65::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
-                              const vec3 localNullDir, const vec3 locX, const vec3 locY, const vec3 locZ,
-                              const vec4 b0, const vec4 b1, const vec4 b2, const vec4 b3,
-                              const enum_nat_tetrad_type  tetrad_type,
-                              const int maxNumPoints,
-                              vec4 *&points, vec4 *&dirs,
-                              double *&lambda,
-                              vec4 *&sachs0, vec4 *&sachs1,
-                              vec5 *&jacobi, vec5 &maxJacobi, int &numPoints) {
+enum_break_condition GeodesicDP65::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir, const vec3 localNullDir,
+    const vec3 locX, const vec3 locY, const vec3 locZ, const vec4 b0, const vec4 b1, const vec4 b2, const vec4 b3,
+    const enum_nat_tetrad_type tetrad_type, const int maxNumPoints, vec4*& points, vec4*& dirs, double*& lambda,
+    vec4*& sachs0, vec4*& sachs1, vec5*& jacobi, vec5& maxJacobi, int& numPoints)
+{
     // TODO
-    enum_break_condition  breakType = enum_break_none;
+    enum_break_condition breakType = enum_break_none;
     return breakType;
 }
 
@@ -673,8 +646,9 @@ GeodesicDP65::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir,
  *  \param h : parameter step.
  */
 bool
-//GeodesicDP65::nextStep ( double* yo, double* yn, double* yerr, double h )
-GeodesicDP65::nextStep(int &status) {
+// GeodesicDP65::nextStep ( double* yo, double* yn, double* yerr, double h )
+GeodesicDP65::nextStep(int& status)
+{
     register int i;
     double k1[8], k2[8], k3[8], k4[8], k5[8], k6[8], k7[8], k8[8], yy[8], dydx[8];
 
@@ -688,7 +662,7 @@ GeodesicDP65::nextStep(int &status) {
     calcDerivs(yy, dydx);
     for (i = 0; i < 8; i++) {
         k2[i] = h * dydx[i];
-        yy[i] = yo[i] + a31 * k1[i]  + a32 * k2[i];
+        yy[i] = yo[i] + a31 * k1[i] + a32 * k2[i];
     }
 
     calcDerivs(yy, dydx);
@@ -724,8 +698,11 @@ GeodesicDP65::nextStep(int &status) {
     calcDerivs(yy, dydx);
     for (int i = 0; i < 8; i++) {
         k8[i] = h * dydx[i];
-        yn[i] = yo[i] + b1 * k1[i] + b2 * k2[i] + b3 * k3[i] + b4 * k4[i] + b5 * k5[i] + b6 * k6[i] + b7 * k7[i] + b8 * k8[i];
-        yerr[i] = yn[i] - (yo[i] + db1 * k1[i] + db2 * k2[i] + db3 * k3[i] + db4 * k4[i] + db5 * k5[i] + db6 * k6[i] + db7 * k7[i] + db8 * k8[i]);
+        yn[i] = yo[i] + b1 * k1[i] + b2 * k2[i] + b3 * k3[i] + b4 * k4[i] + b5 * k5[i] + b6 * k6[i] + b7 * k7[i]
+            + b8 * k8[i];
+        yerr[i] = yn[i]
+            - (yo[i] + db1 * k1[i] + db2 * k2[i] + db3 * k3[i] + db4 * k4[i] + db5 * k5[i] + db6 * k6[i] + db7 * k7[i]
+                + db8 * k8[i]);
     }
     status = 1;
     return true;
@@ -739,12 +716,12 @@ GeodesicDP65::nextStep(int &status) {
  *  \param h : parameter step.
  */
 bool
-//GeodesicDP65::nextStepPar ( double* yo, double* yn, double* yerr, double h )
-GeodesicDP65::nextStepPar(int &status) {
+// GeodesicDP65::nextStepPar ( double* yo, double* yn, double* yerr, double h )
+GeodesicDP65::nextStepPar(int& status)
+{
     register int i;
-    double k1[DEF_MAX_YS_PAR], k2[DEF_MAX_YS_PAR], k3[DEF_MAX_YS_PAR], k4[DEF_MAX_YS_PAR],
-           k5[DEF_MAX_YS_PAR], k6[DEF_MAX_YS_PAR], k7[DEF_MAX_YS_PAR], yy[DEF_MAX_YS_PAR],
-           dydx[DEF_MAX_YS_PAR];
+    double k1[DEF_MAX_YS_PAR], k2[DEF_MAX_YS_PAR], k3[DEF_MAX_YS_PAR], k4[DEF_MAX_YS_PAR], k5[DEF_MAX_YS_PAR],
+        k6[DEF_MAX_YS_PAR], k7[DEF_MAX_YS_PAR], yy[DEF_MAX_YS_PAR], dydx[DEF_MAX_YS_PAR];
 
     double* yo = y;
     calcDerivsPar(yo, dydx);
@@ -756,7 +733,7 @@ GeodesicDP65::nextStepPar(int &status) {
     calcDerivsPar(yy, dydx);
     for (i = 0; i < DEF_MAX_YS_PAR; i++) {
         k2[i] = h * dydx[i];
-        yy[i] = yo[i] + a31 * k1[i]  + a32 * k2[i];
+        yy[i] = yo[i] + a31 * k1[i] + a32 * k2[i];
     }
 
     calcDerivsPar(yy, dydx);
@@ -787,7 +764,8 @@ GeodesicDP65::nextStepPar(int &status) {
     for (i = 0; i < DEF_MAX_YS_PAR; i++) {
         k7[i] = h * dydx[i];
         yn[i] = yo[i] + b1 * k1[i] + b2 * k2[i] + b3 * k3[i] + b4 * k4[i] + b5 * k5[i] + b6 * k6[i] + b7 * k7[i];
-        yerr[i] = yn[i] - (yo[i] + db1 * k1[i] + db2 * k2[i] + db3 * k3[i] + db4 * k4[i] + db5 * k5[i] + db6 * k6[i] + db7 * k7[i]);
+        yerr[i] = yn[i]
+            - (yo[i] + db1 * k1[i] + db2 * k2[i] + db3 * k3[i] + db4 * k4[i] + db5 * k5[i] + db6 * k6[i] + db7 * k7[i]);
     }
 
     status = 1;
@@ -802,12 +780,12 @@ GeodesicDP65::nextStepPar(int &status) {
  *  \param h : parameter step.
  */
 bool
-//GeodesicDP65::nextStepSachsJacobi ( double* yo, double* yn, double* yerr, double h )
-GeodesicDP65::nextStepSachsJacobi(int &status) {
+// GeodesicDP65::nextStepSachsJacobi ( double* yo, double* yn, double* yerr, double h )
+GeodesicDP65::nextStepSachsJacobi(int& status)
+{
     register int i;
-    double k1[DEF_MAX_YS_JAC], k2[DEF_MAX_YS_JAC], k3[DEF_MAX_YS_JAC], k4[DEF_MAX_YS_JAC],
-           k5[DEF_MAX_YS_JAC], k6[DEF_MAX_YS_JAC], k7[DEF_MAX_YS_JAC], k8[DEF_MAX_YS_JAC],
-           yy[DEF_MAX_YS_JAC], dydx[DEF_MAX_YS_JAC];
+    double k1[DEF_MAX_YS_JAC], k2[DEF_MAX_YS_JAC], k3[DEF_MAX_YS_JAC], k4[DEF_MAX_YS_JAC], k5[DEF_MAX_YS_JAC],
+        k6[DEF_MAX_YS_JAC], k7[DEF_MAX_YS_JAC], k8[DEF_MAX_YS_JAC], yy[DEF_MAX_YS_JAC], dydx[DEF_MAX_YS_JAC];
 
     double* yo = y;
     calcDerivsSachsJacobi(yo, dydx);
@@ -819,7 +797,7 @@ GeodesicDP65::nextStepSachsJacobi(int &status) {
     calcDerivsSachsJacobi(yy, dydx);
     for (i = 0; i < DEF_MAX_YS_JAC; i++) {
         k2[i] = h * dydx[i];
-        yy[i] = yo[i] + a31 * k1[i]  + a32 * k2[i];
+        yy[i] = yo[i] + a31 * k1[i] + a32 * k2[i];
     }
 
     calcDerivsSachsJacobi(yy, dydx);
@@ -855,8 +833,11 @@ GeodesicDP65::nextStepSachsJacobi(int &status) {
     calcDerivsSachsJacobi(yy, dydx);
     for (int i = 0; i < DEF_MAX_YS_JAC; i++) {
         k8[i] = h * dydx[i];
-        yn[i] = yo[i] + b1 * k1[i] + b2 * k2[i] + b3 * k3[i] + b4 * k4[i] + b5 * k5[i] + b6 * k6[i] + b7 * k7[i] + b8 * k8[i];
-        yerr[i] = yn[i] - (yo[i] + db1 * k1[i] + db2 * k2[i] + db3 * k3[i] + db4 * k4[i] + db5 * k5[i] + db6 * k6[i] + db7 * k7[i] + db8 * k8[i]);
+        yn[i] = yo[i] + b1 * k1[i] + b2 * k2[i] + b3 * k3[i] + b4 * k4[i] + b5 * k5[i] + b6 * k6[i] + b7 * k7[i]
+            + b8 * k8[i];
+        yerr[i] = yn[i]
+            - (yo[i] + db1 * k1[i] + db2 * k2[i] + db3 * k3[i] + db4 * k4[i] + db5 * k5[i] + db6 * k6[i] + db7 * k7[i]
+                + db8 * k8[i]);
     }
 
     status = 1;
@@ -866,15 +847,17 @@ GeodesicDP65::nextStepSachsJacobi(int &status) {
 /*! Print geodesic solver properties.
  * \param fptr : file pointer.
  */
-void
-GeodesicDP65::print(FILE* fptr) {
+void GeodesicDP65::print(FILE* fptr)
+{
     fprintf(fptr, "\nGeodesicDP - RK6(5):\n--------------------\n");
     fprintf(fptr, "\tstepsize controlled : %s\n", ((mStepsizeControlled) ? "yes" : "no"));
     fprintf(fptr, "\tstep size           : %12.8e\n", mLambdaStep);
     fprintf(fptr, "\tepsilon             : %12.8e\n", epsilon_abs);
     fprintf(fptr, "\tconstraint epsilon  : %12.8e\n", mConstraintEpsilon);
-    fprintf(fptr, "\tbounding box min    : %14.6e %14.6e %14.6e %14.6e\n", mBoundBoxMin[0], mBoundBoxMin[1], mBoundBoxMin[2], mBoundBoxMin[3]);
-    fprintf(fptr, "\tbounding box max    : %14.6e %14.6e %14.6e %14.6e\n", mBoundBoxMax[0], mBoundBoxMax[1], mBoundBoxMax[2], mBoundBoxMax[3]);
+    fprintf(fptr, "\tbounding box min    : %14.6e %14.6e %14.6e %14.6e\n", mBoundBoxMin[0], mBoundBoxMin[1],
+        mBoundBoxMin[2], mBoundBoxMin[3]);
+    fprintf(fptr, "\tbounding box max    : %14.6e %14.6e %14.6e %14.6e\n", mBoundBoxMax[0], mBoundBoxMax[1],
+        mBoundBoxMax[2], mBoundBoxMax[3]);
 }
 
 } // end namespace m4d

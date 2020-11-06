@@ -1,36 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dMotion.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMotion.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dMotion.h"
 
 namespace m4d {
 
-/*!  Standard constructor.
- *
- *  \param  metric : pointer to metric.
- */
 Motion::Motion(Metric* metric)
 {
     assert(metric != nullptr);
@@ -56,13 +33,6 @@ Motion::Motion(Metric* metric)
 
 Motion::~Motion() {}
 
-// *********************************** public methods ******************************
-/*! Set initial position in coordinates.
- *
- * \param ipos : pointer to initial position.
- * \return true : position is valid.
- * \return false : position is not valid.
- */
 bool Motion::setInitialPosition(double ipos[4])
 {
     for (int i = 0; i < 4; i++) {
@@ -72,12 +42,6 @@ bool Motion::setInitialPosition(double ipos[4])
     return mMetric->breakCondition(ipos);
 }
 
-/*! Set initial position in coordinates.
- *
- * \param ipos : initial position.
- * \return true : position is valid.
- * \return false : position is not valid.
- */
 bool Motion::setInitialPosition(vec4 ipos)
 {
     for (int i = 0; i < 4; i++) {
@@ -88,15 +52,6 @@ bool Motion::setInitialPosition(vec4 ipos)
     return mMetric->breakCondition(ipos);
 }
 
-/*! Set the initial direction in coordinates.
- *
- *  \param d0: 0-component of initial direction.
- *  \param d1: 1-component of initial direction.
- *  \param d2: 2-component of initial direction.
- *  \param d3: 3-component of initial direction.
- *  \return true : direction fulfills constraint equation.
- *  \return false : direction does not fulfill constraint equation.
- */
 bool Motion::setInitialDirection(double d0, double d1, double d2, double d3)
 {
     y[4] = d0;
@@ -110,24 +65,11 @@ bool Motion::setInitialDirection(double d0, double d1, double d2, double d3)
     return false;
 }
 
-/*! Set the initial direction in coordinates.
- *
- *  \param dir: initial direction.
- *  \return true : direction fulfills constraint equation.
- *  \return false : direction does not fulfill constraint equation.
- */
 bool Motion::setInitialDirection(vec4 dir)
 {
     return setInitialDirection(dir.x(0), dir.x(1), dir.x(2), dir.x(3));
 }
 
-/*!  Set the initial tetrad of the observer.
- *
- *  \param e0:  pointer to first tetrad vector.
- *  \param e1:  pointer to second tetrad vector.
- *  \param e2:  pointer to third tetrad vector.
- *  \param e3:  pointer to fourth tetrad vector.
- */
 void Motion::setInitialTetrad(double e0[4], double e1[4], double e2[4], double e3[4])
 {
     for (int i = 0; i < 4; i++) {
@@ -138,13 +80,6 @@ void Motion::setInitialTetrad(double e0[4], double e1[4], double e2[4], double e
     }
 }
 
-/*! Set the initial tetrad of the observer.
- *
- *  \param e0: first tetrad vector.
- *  \param e1: second tetrad vector.
- *  \param e2: third tetrad vector.
- *  \param e3: fourth tetrad vector.
- */
 void Motion::setInitialTetrad(vec4 e0, vec4 e1, vec4 e2, vec4 e3)
 {
     for (int i = 0; i < 4; i++) {
@@ -155,14 +90,6 @@ void Motion::setInitialTetrad(vec4 e0, vec4 e1, vec4 e2, vec4 e3)
     }
 }
 
-/*! Set the initial direction with respect to the local initial tetrad.
- *
- * \param d1 : 1-component of local initial direction.
- * \param d2 : 2-component of local initial direction.
- * \param d3 : 3-component of local initial direction.
- * \param beta : initial velocity.
- * \return false : always.
- */
 bool Motion::setLocalInitialDir(double, double, double, double)
 {
     fprintf(stderr,
@@ -170,32 +97,18 @@ bool Motion::setLocalInitialDir(double, double, double, double)
     return false;
 }
 
-/*! Set the initial direction with respect to the local initial tetrad.
- *
- * \param dir : local initial direction.
- * \param beta : initial velocity.
- * \return false : always.
- */
 bool Motion::setLocalInitialDir(vec3, double)
 {
     fprintf(stderr, "Motion::setLocalInitialDir  ( vec3 dir, double beta ) ... not implemented yet!\n");
     return false;
 }
 
-/*! Set the metric.
- *
- * \param metric : pointer to metric.
- */
 void Motion::setMetric(Metric* metric)
 {
     assert(metric != nullptr);
     mMetric = metric;
 }
 
-/*! Get the metric.
- *
- * \return pointer to metric.
- */
 Metric* Motion::getMetric()
 {
     return mMetric;
@@ -253,10 +166,6 @@ bool Motion::setParam(std::string paramName, double v0, double v1, double v2, do
     return false;
 }
 
-/*! Get the current position.
- *
- * \param p : pointer to position.
- */
 void Motion::getPosition(double* p)
 {
     for (int i = 0; i < 4; i++) {
@@ -264,19 +173,11 @@ void Motion::getPosition(double* p)
     }
 }
 
-/*! Get the current position.
- *
- *  \return position vector.
- */
 vec4 Motion::getPosition()
 {
     return vec4(y[0], y[1], y[2], y[3]);
 }
 
-/*! Get the current direction.
- *
- * \param p : pointer to direction.
- */
 void Motion::getDirection(double* p)
 {
     for (int i = 0; i < 4; i++) {
@@ -284,92 +185,57 @@ void Motion::getDirection(double* p)
     }
 }
 
-/*! Get the current direction.
- *
- *  \return direction vector.
- */
 vec4 Motion::getDirection()
 {
     return vec4(y[4], y[5], y[6], y[7]);
 }
 
-/*! Reset the affine parameter (proper time).
- *
- *  \param  pt : reset affine parameter to value pt.
- */
 void Motion::resetAffineParam(double pt)
 {
     mLambda = pt;
 }
 
-/*! Get the affine parameter (proper time).
- *
- * \return affine parameter.
- */
 double Motion::getAffineParam()
 {
     return mLambda;
 }
 
-/*! Set the affine parameter step (proper time step).
- *
- *  \param step : new affine parameter stepsize.
- */
 void Motion::setAffineParamStep(double step)
 {
     mLambdaStep = step;
     mLambdaStepInit = step;
 }
 
-/*! Get the affine parameter step (proper time step).
- *
- *  \return affine parameter stepsize.
- */
 double Motion::getAffineParamStep()
 {
     return mLambdaStep;
 }
 
-/*! Reset affine parameter stepsize.
- */
 void Motion::resetAffineParamStep()
 {
     mLambdaStep = mLambdaStepInit;
 }
 
-/*! Set maxmimum affine parameter stepsize.
- */
 void Motion::setMaxAffineParamStep(double step)
 {
     mMaxLambdaStep = step;
 }
 
-/*! Get maximum affine parameter stepsize.
- */
 double Motion::getMaxAffineParamStep()
 {
     return mMaxLambdaStep;
 }
 
-/*! Set minimum affine parameter stepsize.
- */
 void Motion::setMinAffineParamStep(double step)
 {
     mMinLambdaStep = step;
 }
 
-/*! Get minimum affine parameter stepsize.
- */
 double Motion::getMinAffineParamStep()
 {
     return mMinLambdaStep;
 }
 
-/*! Set i-th tetrad vector.
- *
- *  param i : number of tetrad vector.
- *  param ee : new tetrad vector.
- */
 void Motion::setE(unsigned int i, vec4 ee)
 {
     for (int j = 0; j < 4; j++) {
@@ -377,11 +243,6 @@ void Motion::setE(unsigned int i, vec4 ee)
     }
 }
 
-/*! Get i-th tetrad vector.
- *
- *  \param i : tetrad index.
- *  \return tetrad vector i.
- */
 vec4 Motion::getE(unsigned int i)
 {
     if (i > 3) {
@@ -395,10 +256,6 @@ vec4 Motion::getE(unsigned int i)
     return e;
 }
 
-/*! Get 0-th tetrad vector.
- *
- *  \param p : pointer to e0 tetrad vector.
- */
 void Motion::getE0(double* p)
 {
     for (int i = 0; i < 4; i++) {
@@ -406,10 +263,6 @@ void Motion::getE0(double* p)
     }
 }
 
-/*! Get 1-th tetrad vector.
- *
- *  \param p : pointer to e1 tetrad vector.
- */
 void Motion::getE1(double* p)
 {
     for (int i = 0; i < 4; i++) {
@@ -417,10 +270,6 @@ void Motion::getE1(double* p)
     }
 }
 
-/*! Get 2-th tetrad vector.
- *
- *  \param p : pointer to e2 tetrad vector.
- */
 void Motion::getE2(double* p)
 {
     for (int i = 0; i < 4; i++) {
@@ -428,10 +277,6 @@ void Motion::getE2(double* p)
     }
 }
 
-/*! Get 3-th tetrad vector.
- *
- *  \param p : pointer to e3 tetrad vector.
- */
 void Motion::getE3(double* p)
 {
     for (int i = 0; i < 4; i++) {
@@ -439,13 +284,6 @@ void Motion::getE3(double* p)
     }
 }
 
-/*! Get all tetrad vectors.
- *
- *  \param e0 : pointer to e0 tetrad vector.
- *  \param e1 : pointer to e1 tetrad vector.
- *  \param e2 : pointer to e2 tetrad vector.
- *  \param e3 : pointer to e3 tetrad vector.
- */
 void Motion::getTetrad(double* e0, double* e1, double* e2, double* e3)
 {
     for (int i = 0; i < 4; i++) {
@@ -456,13 +294,6 @@ void Motion::getTetrad(double* e0, double* e1, double* e2, double* e3)
     }
 }
 
-/*! Get all tetrad vectors.
- *
- *  \param e0 : reference to e0 tetrad vector.
- *  \param e1 : reference to e1 tetrad vector.
- *  \param e2 : reference to e2 tetrad vector.
- *  \param e3 : reference to e3 tetrad vector.
- */
 void Motion::getTetrad(vec4& e0, vec4& e1, vec4& e2, vec4& e3)
 {
     e0.set(&y[8]);
@@ -471,10 +302,6 @@ void Motion::getTetrad(vec4& e0, vec4& e1, vec4& e2, vec4& e3)
     e3.set(&y[20]);
 }
 
-/*! Get all tetrad vectors as one matrix.
- *
- *  \param m : reference to tetrad matrix.
- */
 void Motion::getTetrad(mat4& m)
 {
     vec4 e0, e1, e2, e3;
@@ -485,20 +312,12 @@ void Motion::getTetrad(mat4& m)
     m.setCol(3, e3);
 }
 
-/*! Get all tetrad vectors as one matrix (inverse).
- *
- *  \param m : reference to inverse tetrad matrix.
- */
 void Motion::getTetradInv(mat4& m)
 {
     getTetrad(m);
     m.invert();
 }
 
-/*! Get tetrad as matrix.
- *
- *  \param m : pointer to tetrad matrix.
- */
 void Motion::getTetrad(float* m)
 {
     assert(m != nullptr);
@@ -513,10 +332,6 @@ void Motion::getTetrad(float* m)
     }
 }
 
-/*! Get inverse tetrad as matrix.
- *
- *  \param m : pointer to inverse tetrad matrix.
- */
 void Motion::getTetradInv(float* m)
 {
     assert(m != nullptr);
@@ -526,11 +341,6 @@ void Motion::getTetradInv(float* m)
     matrix.getFloatArray(m);
 }
 
-/*! Transform coordinate vector to local vecor.
- *
- * \param cv : coordinate vector.
- * \return local vector.
- */
 vec4 Motion::coordToLocal(vec4 cv)
 {
     mat4 imat;
@@ -539,11 +349,6 @@ vec4 Motion::coordToLocal(vec4 cv)
     return (imat * cv);
 }
 
-/*! Test whether tetrad is orthonormal.
- *
- *  \return true : local tetrad is orthonormalized.
- *  \return false : local tetrad is not orthonormal.
- */
 bool Motion::isOrthonormal()
 {
     bool itIs = true;
@@ -568,11 +373,6 @@ bool Motion::isOrthonormal()
     return itIs;
 }
 
-/*! The bounding box represents the domain for integration.
- *
- * \param p1 : pointer to bounding box.
- * \param p2 : pointer to bounding box.
- */
 void Motion::setBoundingBox(double p1[4], double p2[4])
 {
     for (int i = 0; i < 4; i++) {
@@ -587,11 +387,6 @@ void Motion::setBoundingBox(double p1[4], double p2[4])
     }
 }
 
-/*! The bounding box represents the domain for integration.
- *
- * \param p1 : vector of bounding box.
- * \param p2 : vector of bounding box.
- */
 void Motion::setBoundingBox(vec4 p1, vec4 p2)
 {
     for (int i = 0; i < 4; i++) {
@@ -606,11 +401,6 @@ void Motion::setBoundingBox(vec4 p1, vec4 p2)
     }
 }
 
-/*! The bounding box represents the domain for integration.
- *
- *  \param p1 : reference to bounding box vector.
- *  \param p2 : reference to bounding box vector.
- */
 void Motion::getBoundingBox(vec4& p1, vec4& p2)
 {
     for (int i = 0; i < 4; i++) {
@@ -619,11 +409,6 @@ void Motion::getBoundingBox(vec4& p1, vec4& p2)
     }
 }
 
-/*! Checks whether the current position 'y' is outside the bounding box.
- *
- *  \return true : point y is outside bounding box.
- *  \return false : point lies inside bounding box.
- */
 bool Motion::outsideBoundBox()
 {
     return ((y[0] < mBoundBoxMin[0]) || (y[0] > mBoundBoxMax[0]) || (y[1] < mBoundBoxMin[1]) || (y[1] > mBoundBoxMax[1])
@@ -631,27 +416,16 @@ bool Motion::outsideBoundBox()
         || (y[3] > mBoundBoxMax[3]));
 }
 
-/*! Set epsilon for the constraint equation.
- *
- *  \param eps : constraint epsilon.
- */
 void Motion::setConstrEps(double eps)
 {
     mConstraintEpsilon = fabs(eps);
 }
 
-/*! Get epsilon for the constraint equation.
- */
 double Motion::getConstrEps()
 {
     return mConstraintEpsilon;
 }
 
-/*! Tests, whether the local tetrad is right handed.
- *
- * \return true : local tetrad is right handed.
- * \return false : local tetrad is not right handed.
- */
 bool Motion::isRightHanded()
 {
     gsl_matrix* m = gsl_matrix_alloc(4, 4);
@@ -674,14 +448,6 @@ bool Motion::isRightHanded()
     return ((det > 0.0) ? true : false);
 }
 
-/*! Do a Gram-Schmidt orthonormalization.
- *
- *  Note that the base vectors will be normalized with respect to the euclidean norm.
- *  Thus, the orthonormalization can be used only for local tetrads that are given
- *  with respect to a natural local tetrad!
- *
- *  \return true : always.
- */
 bool Motion::gramSchmidtOrth()
 {
     vec4 pos = vec4(y[0], y[1], y[2], y[3]);
@@ -715,20 +481,12 @@ bool Motion::gramSchmidtOrth()
     return true;
 }
 
-/*! Test constraint condition.
- *
- * \return 0.0
- */
 double Motion::testConstraint()
 {
     // fprintf(stderr,"Motion::testConstraint ( ) ... does nothing here! Only implemented in m4dGeodesic...\n");
     return 0.0;
 }
 
-/*! Get current array y.
- *
- * \param cy : pointer to array (must be of size DEF_MAX_YS).
- */
 void Motion::getCurrentArray(double* cy)
 {
     if (cy == nullptr) {
@@ -739,10 +497,6 @@ void Motion::getCurrentArray(double* cy)
     }
 }
 
-/*! Print local tetrad.
- *
- * \param fptr : file pointer.
- */
 void Motion::printTetrad(FILE* fptr)
 {
     for (int i = 0; i < 4; i++) {

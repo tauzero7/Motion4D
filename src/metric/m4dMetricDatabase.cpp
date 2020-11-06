@@ -235,6 +235,9 @@ Metric* MetricDatabase::initializeMetric(MetricList::enum_metric num)
         case MetricList::enum_metric_kottler:
             currMetric = new MetricKottler;
             break;
+        case MetricList::enum_metric_kruskal:
+            currMetric = new MetricKruskal;
+            break;
         case MetricList::enum_metric_minkowski_conf:
             currMetric = new MetricMinkowskiConformal;
             break;

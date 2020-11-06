@@ -45,6 +45,7 @@
 #include "m4dMetricKasner.h"
 #include "m4dMetricKastorTraschen.h"
 #include "m4dMetricKottler.h"
+#include "m4dMetricKruskal.h"
 #include "m4dMetricMinkRotLattice.h"
 #include "m4dMetricMinkowskiConformal.h"
 #include "m4dMetricPTD_AI.h"
@@ -79,7 +80,7 @@ class API_M4D_EXPORT MetricList
 {
 public:
 #ifdef ALL_METRICS_AVAILABLE
-    static const int NUM_METRICS = 58;
+    static const int NUM_METRICS = 59;
 #else
     static const int NUM_METRICS = 7;
 #endif // ALL_METRICS_AVAILABLE
@@ -133,6 +134,7 @@ public:
         enum_metric_kastortraschen,
         enum_metric_kerrbl,
         enum_metric_kottler,
+        enum_metric_kruskal,
         enum_metric_morristhorne,
         enum_metric_Petrov_TD_AI,
         enum_metric_Petrov_TD_AII,

@@ -1,28 +1,9 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricEddFinkIn.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricEddFinkIn.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dMetricEddFinkIn.h"
 
 #include <gsl/gsl_errno.h>
@@ -41,10 +22,6 @@ double tau_of_r(double r, void* params)
 
 #define eps 1.0e-6
 
-/*! Standard constructor for the Eddington-Finkelstein metric.
- *
- * \param  mass : mass of the black hole.
- */
 MetricEddFinkIn::MetricEddFinkIn(double mass)
 {
     mMetricName = "EddFinkIn";
@@ -66,11 +43,6 @@ MetricEddFinkIn::MetricEddFinkIn(double mass)
 
 MetricEddFinkIn::~MetricEddFinkIn() {}
 
-// *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricEddFinkIn::calculateMetric(const double* pos)
 {
     double r = pos[1];
@@ -103,10 +75,6 @@ bool MetricEddFinkIn::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricEddFinkIn::calculateChristoffels(const double* pos)
 {
     double r = pos[1];
@@ -193,10 +161,6 @@ bool MetricEddFinkIn::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricEddFinkIn::calculateChrisD(const double* pos)
 {
     double r = pos[1];
@@ -476,13 +440,6 @@ bool MetricEddFinkIn::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricEddFinkIn::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type)
 {
     double r = pos[1];
@@ -503,13 +460,6 @@ void MetricEddFinkIn::localToCoord(const double* pos, const double* ldir, double
     dir[3] = ldir[3] / (r * sin(theta));
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricEddFinkIn::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type)
 {
     double r = pos[1];
@@ -530,12 +480,6 @@ void MetricEddFinkIn::coordToLocal(const double* pos, const double* cdir, double
     ldir[3] = cdir[3] * r * sin(theta);
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0.
- *  \return false : position is valid.
- */
 bool MetricEddFinkIn::breakCondition(const double* pos)
 {
     bool br = false;
@@ -546,8 +490,36 @@ bool MetricEddFinkIn::breakCondition(const double* pos)
     return br;
 }
 
-/*! Calculate right hand side of parallel transport and Jocobi equation.
- */
+bool MetricEddFinkIn::calcDerivs(const double y[], double dydx[])
+{
+    dydx[0] = y[4];
+    dydx[1] = y[5];
+    dydx[2] = y[6];
+    dydx[3] = y[7];
+
+    double r = y[1];
+    double theta = y[2];
+
+    double Gnn_n = 0.5 * rs / (r * r);
+    double Gnn_r = 0.5 * rs * (r - rs) / (r * r * r);
+    double Gnr_r = -0.5 * rs / (r * r);
+    double Grt_t = 1.0 / r;
+    double Grp_p = 1.0 / r;
+    double Gtt_n = -r;
+    double Gtt_r = -(r - rs);
+    double Gtp_p = cos(theta) / sin(theta);
+    double Gpp_n = -r * sin(theta) * sin(theta);
+    double Gpp_r = -(r - rs) * sin(theta) * sin(theta);
+    double Gpp_t = -sin(theta) * cos(theta);
+
+    dydx[4] = -Gnn_n * y[4] * y[4] - Gtt_n * y[6] * y[6] - Gpp_n * y[7] * y[7];
+    dydx[5] = -Gnn_r * y[4] * y[4] - 2.0 * Gnr_r * y[4] * y[5] - Gpp_r * y[7] * y[7] - Gtt_r * y[6] * y[6];
+    dydx[6] = -2.0 * Grt_t * y[6] * y[5] - Gpp_t * y[7] * y[7];
+    dydx[7] = -2.0 * Gtp_p * y[6] * y[7] - 2.0 * Grp_p * y[5] * y[7];
+
+    return true;
+}
+
 bool MetricEddFinkIn::calcDerivsSachsJacobi(const double y[], double dydx[])
 {
     const double* u = &y[DEF_TG_IDX];
@@ -586,17 +558,6 @@ bool MetricEddFinkIn::calcDerivsSachsJacobi(const double y[], double dydx[])
     return true;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  However, take care of the limited double precision.
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricEddFinkIn::testConstraint(const double y[], const double kappa)
 {
     double r = y[1];
@@ -614,10 +575,31 @@ double MetricEddFinkIn::testConstraint(const double y[], const double kappa)
     return sum;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
- */
+bool MetricEddFinkIn::calcSepDist(const vec4 p1, const vec4 p2, double& spaceDist, double& timeDist)
+{
+    spaceDist = 0.0;
+    timeDist = 0.0;
+
+    double pos[4] = { p1[0], p1[1], p1[2], p1[3] };
+    if (!calculateMetric(pos)) {
+        return false;
+    }
+
+    double dv = coordDiff(0, p1[0], p2[0]);
+    double dr = coordDiff(1, p1[1], p2[1]);
+    double dth = coordDiff(2, p1[2], p2[2]);
+    double dph = coordDiff(3, p1[3], p2[3]);
+
+    timeDist = -g_compts[0][0] * dv * dv;
+    spaceDist = g_compts[1][1] * dr * dr;
+    spaceDist += g_compts[2][2] * dth * dth;
+    spaceDist += g_compts[3][3] * dph * dph;
+
+    spaceDist = sqrt(fabs(spaceDist));
+    timeDist = sqrt(fabs(timeDist));
+    return true;
+}
+
 bool MetricEddFinkIn::setParam(const char* pName, double val)
 {
     if (Metric::setParam(pName, val)) {
@@ -627,28 +609,18 @@ bool MetricEddFinkIn::setParam(const char* pName, double val)
     return true;
 }
 
-/*!
- *  \param units : type of physical constants.
- */
 void MetricEddFinkIn::usePhysicalUnits(const enum_physical_constants units)
 {
     Metric::usePhysicalUnits(units);
     rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
 }
 
-/*!
- *  \param speed_of_light : value for speed of light.
- *  \param grav_const : value for gravitational constant.
- *  \param diel_perm : value for dielectric permittivity.
- */
 void MetricEddFinkIn::setUnits(const double speed_of_light, const double grav_const, const double diel_perm)
 {
     Metric::setUnits(speed_of_light, grav_const, diel_perm);
     rs = 2.0 * mGravConstant * mMass / (mSpeedOfLight * mSpeedOfLight);
 }
 
-/*! Generate report.
- */
 bool MetricEddFinkIn::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -758,9 +730,6 @@ bool MetricEddFinkIn::GetTauCrash(const double r0, double& tau)
     return true;
 }
 
-// ********************************* protected methods *****************************
-/*!
- */
 void MetricEddFinkIn::setStandardValues()
 {
     mInitPos[0] = 0.0;
@@ -777,15 +746,6 @@ void MetricEddFinkIn::setStandardValues()
     mCoordNames[3] = std::string("phi");
 }
 
-/*! Contract Christoffel symbol with two vectors.
- *  \param y : pointer to full data
- *  \param u : pointer to first vector
- *  \param w : pointer to second vector
- *  \param z : pointer to contraction
- *  \param calc : calculate the Christoffels before using them
- *
- *  The Christoffel symbols do not have to be calculated before this function can be evaluated!
- */
 void MetricEddFinkIn::contrChrisVecVec(const double y[], const double u[], const double w[], double* z, bool)
 {
     double r = y[1];
@@ -815,17 +775,6 @@ void MetricEddFinkIn::contrChrisVecVec(const double y[], const double u[], const
     z[3] = t41 * u[3] * w[1] + t53 * u[3] * w[2] + t44 * w[3] + t53 * u[2] * w[3];
 }
 
-/*! Contract partially derived Christoffel symbols with three vectors.
- *  \param y : pointer to full data
- *  \param u : pointer to first vector
- *  \param v : pointer to second vector
- *  \param w : pointer to third vector
- *  \param z : pointer to contraction
- *  \param calc : calculate the Christoffels before using them
- *
- * The partial derivatives of the Christoffel symbols do not have to be calculated before this function can be
- * evaluated!
- */
 void MetricEddFinkIn::contrChrDVecVecVec(
     const double y[], const double u[], const double v[], const double w[], double* z, bool)
 {

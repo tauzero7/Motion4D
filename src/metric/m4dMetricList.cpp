@@ -15,7 +15,7 @@ const char* MetricList::stl_metric_names[] = { "unknown", "Minkowski", "Minkowsk
     "BesselGravWaveCart", "Bonnor", "ChazyCurzonRot", "CosmicStringSchwarzschild", "Curzon", "EinsteinRosenWaveWWB",
     "ErezRosenVar", "Ernst", "ExtremeReissnerNordstromDihole", "FriedmanNonEmptyNull", "Glampedakis", "Goedel",
     "GoedelCart", "GoedelScaled", "GoedelScaledCart", "HalilsoyWave", "HartleThorneGB", "JanisNewmanWinicour", "Kasner",
-    "KastorTraschen", "KerrBL", "Kottler", "MorrisThorne", "Petrov_Type_D_AI_ES", "Petrov_Type_D_AII_ES",
+    "KastorTraschen", "KerrBL", "Kottler", "Kruskal", "MorrisThorne", "Petrov_Type_D_AI_ES", "Petrov_Type_D_AII_ES",
     "Petrov_Type_D_AIII_ES", "Petrov_Type_D_BI_ES", "Petrov_Type_D_BII_ES", "Petrov_Type_D_BIII_ES",
     "Petrov_Type_D_C_ES", "PlaneGravWave", "Pravda_C-Metric", "Pravda_C-Metric_Canonical_Coords", "ReissnerNordstrom",
     "RotDihole", "DeSitterUniv", "DeSitterUnivConformal", "StraightSpinningString", "SultanaDyerBlackhole", "TaubNUT",

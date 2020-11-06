@@ -1,28 +1,9 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dGeodesic.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dGeodesic.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dGeodesic.h"
 #include <limits>
 
@@ -56,23 +37,12 @@ Geodesic::Geodesic(Metric* metric, enum_geodesic_type type)
 
 Geodesic::~Geodesic() {}
 
-// *********************************** public methods ******************************
-
-/*! Set type of geodesic.
- *
- *  \param type   : type of geodesic.
- *  \sa enum_geodesic_type.
- */
 void Geodesic::setGeodesicType(enum_geodesic_type type)
 {
     mType = type;
     setKappa();
 }
 
-/*! Get type of geodesic.
- *
- * \return type of geodesic.
- */
 enum_geodesic_type Geodesic::type()
 {
     return mType;
@@ -120,19 +90,11 @@ void Geodesic::getEpsilons(double& eps_a, double& eps_r)
     eps_r = epsilon_rel;
 }
 
-/*! Set/Unset stepsize control.
- *
- *  \param  control  :  if true then stepsize control is activated.
- */
 void Geodesic::setStepSizeControlled(bool control)
 {
     mStepsizeControlled = control;
 }
 
-/*! Set to 'true' if the local tetrad of the observer should be parallely transported along the null geodesic.
- *
- * \param calcwith : calculate with parallel transport.
- */
 void Geodesic::setCalcWithParTransport(bool calcwith)
 {
     mCalcWithParTransport = calcwith;
@@ -144,38 +106,23 @@ void Geodesic::setCalcWithParTransport(bool calcwith)
     }
 }
 
-/*!
- * \return calculate with parallel transport.
- */
 bool Geodesic::calcWithParTransport()
 {
     return mCalcWithParTransport;
 }
 
-/*!
- * \param eps: epsilon for resize.
- * \param factor: factor for resize.
- */
 void Geodesic::setResize(double eps, double factor)
 {
     resizeEps = eps;
     resizeFac = factor;
 }
 
-/*!
- * \return epsilong for resize.
- */
 void Geodesic::getResize(double& eps, double& fac)
 {
     eps = resizeEps;
     fac = resizeFac;
 }
 
-/*! Initialize geodesic.
- * \param initPos : initial position.
- * \param initDir : initial coordinate direction.
- * \param cstr
- */
 enum_break_condition Geodesic::initializeGeodesic(const vec4 initPos, const vec4 initDir, double& cstr)
 {
     resetAffineParam();
@@ -190,18 +137,11 @@ enum_break_condition Geodesic::initializeGeodesic(const vec4 initPos, const vec4
     return enum_break_none;
 }
 
-/*! Test, whether the constraint condition is fulfilled:  approx=0 (yes)
- *
- * \return constraint value.
- */
 double Geodesic::testConstraint()
 {
     return mMetric->testConstraint(y, mKappa);
 }
 
-/*! Print geodesic solver properties.
- * \param fptr : file pointer.
- */
 void Geodesic::printF(FILE* fptr)
 {
     fprintf(fptr, "\nGeodesic:\n");
@@ -232,14 +172,8 @@ void Geodesic::setKappa()
     }
 }
 
-/*! Calculate the right side of the geodesic equation.
- *
- * \param y[] : pointer to y.
- * \param dydx[] : pointer to right hand side of geodesic equation.
- */
 bool Geodesic::calcDerivs(const double y[], double dydx[])
 {
-    // register int mu,j,k,l;
     int mu, k, l;
 
     if (!mMetric->calcDerivs(y, dydx)) {
@@ -259,11 +193,6 @@ bool Geodesic::calcDerivs(const double y[], double dydx[])
     return true;
 }
 
-/*! Calculate the right side of the geodesic equation with parallel transport.
- *
- * \param y[] : pointer to y.
- * \param dydx[] : pointer to right hand side of parallel transport equation.
- */
 bool Geodesic::calcDerivsPar(const double y[], double dydx[])
 {
     int mu, j, k, l, bidx;
@@ -294,11 +223,6 @@ bool Geodesic::calcDerivsPar(const double y[], double dydx[])
     return true;
 }
 
-/*! Calculate the right side of the geodesic equation with parallel transport and Jacobi equation
- *
- * \param y[] : pointer to y.
- * \param dydx[] : pointer to right hand side of parallel transport equation.
- */
 bool Geodesic::calcDerivsSachsJacobi(const double y[], double dydx[])
 {
     if (!mMetric->calcDerivsSachsJacobi(y, dydx)) {
@@ -348,12 +272,6 @@ bool Geodesic::calcDerivsSachsJacobi(const double y[], double dydx[])
     return true;
 }
 
-/*! Calculate Sachs basis from the initial local direction.
- * \param localNullDir: initial local direction of the light ray.
- * \param locX : local x-direction.
- * \param locY : local y-direction.
- * \param locZ : local z-direction.
- */
 void Geodesic::calcSachsBasis(const vec3 localNullDir, const vec3 locX, const vec3 locY, const vec3 locZ)
 {
     vec3 b1, b2;
@@ -366,17 +284,11 @@ void Geodesic::calcSachsBasis(const vec3 localNullDir, const vec3 locX, const ve
         b1 = (locZ ^ localNullDir).getNormalized();
         b2 = (b1 ^ localNullDir).getNormalized();
     }
-    // k.print(std::cerr,"k:  ");
-    // b1.print(std::cerr,"b1: ");
-    // b2.print(std::cerr,"b2: ");
+
     mSachsBasisB1 = vec3(b1[0], b1[1], b1[2]);
     mSachsBasisB2 = vec3(b2[0], b2[1], b2[2]);
 }
 
-/*! Set Sachs basis.
- * \param s1 : first sachs vector.
- * \param s2 : second sachs vector.
- */
 void Geodesic::setSachsBasis(const vec4 s1, const vec4 s2)
 {
     for (int mu = 0; mu < 4; mu++) {
@@ -385,11 +297,6 @@ void Geodesic::setSachsBasis(const vec4 s1, const vec4 s2)
     }
 }
 
-/*! Calculate the Jacobi parameters.
- * \param lambda : affine parameter.
- * \param y[]    : array
- * \param currJacobi : reference to jacobi values.
- */
 void Geodesic::calcJacobiParams(const double lambda, const double y[], vec5& currJacobi)
 {
     vec4 pos = vec4(&y[0]);
@@ -454,8 +361,6 @@ void Geodesic::calcJacobiParams(const double lambda, const double y[], vec5& cur
     currJacobi = vec5(dp, dm, mu, angle, elipt);
 }
 
-/*!
- */
 void Geodesic::findMaxJacobi(vec5& currJacobi, vec5& maxJacobi)
 {
     for (int i = 0; i < 5; i++)

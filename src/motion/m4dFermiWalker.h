@@ -24,10 +24,9 @@
 
 
         Note that e0 is tangential to four-velocity : y[8]..y[11] = y[4]..y[7].
-
+ *
+ *  This file is part of libMotion4D.
  */
-// --------------------------------------------------------------------------------
-
 #ifndef M4D_MOTION_FERMIWALKER_H
 #define M4D_MOTION_FERMIWALKER_H
 
@@ -37,16 +36,15 @@
 
 namespace m4d {
 
-// ---------------------------------------------------
-//    class definition:   FermiWalker
-// ---------------------------------------------------
+/**
+ * @brief The FermiWalker class
+ */
 class API_M4D_EXPORT FermiWalker : public Motion
 {
 public:
     explicit FermiWalker(Metric* metric);
     virtual ~FermiWalker();
 
-public:
     /*! Set acceleration with respect to local tetrad.
      *
      *  \param a1 : proper acceleration in e1-direction.
@@ -191,7 +189,6 @@ protected:
      */
     bool calcDerivsWL(const double y[], double dydx[]);
 
-    // -------- protected attribute ---------
 protected:
     //! Acceleration with respect to local tetrad.
     double mPropAcc[4];

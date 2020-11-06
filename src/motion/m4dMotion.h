@@ -1,30 +1,9 @@
-// --------------------------------------------------------------------------------
-/*
-    m4dMotion.h
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-
-/*!  \class  m4d::Motion
-     \brief  Base class for motion/geodesics in 4d spacetimes.
-
+/**
+ * @file    m4dMotion.h
+ * @author  Thomas Mueller
+ *
+ *   Base class for motion/geodesics in 4d spacetimes.
+ *
              The Motion class cannot be used itself due to the pure virtual
              method calcDerivs().
 
@@ -45,152 +24,233 @@
                y[16..19]  :  e2.
                y[20..23]  :  e3. \endverbatim
 
-
-*/
-// --------------------------------------------------------------------------------
-
+ *  This file is part of libMotion4D.
+ */
 #ifndef M4D_MOTION_H
 #define M4D_MOTION_H
 
-#include <iostream>
 #include <cassert>
 #include <cmath>
+#include <iostream>
 
+#include <extra/m4dUtilities.h>
 #include <m4dGlobalDefs.h>
 #include <metric/m4dMetric.h>
-#include <extra/m4dUtilities.h>
 
 #include <gsl/gsl_linalg.h>
 #include <gsl/gsl_matrix.h>
 
 #ifdef _WIN32
 #ifndef __GNUC__
-#pragma warning (disable: 4244 )
+#pragma warning(disable : 4244)
 #endif
 #endif
 
 namespace m4d {
 
-// ---------------------------------------------------
-//    class definition:   Motion
-// ---------------------------------------------------
-class API_M4D_EXPORT Motion {
+/**
+ * @brief The Motion class
+ */
+class API_M4D_EXPORT Motion
+{
 public:
     Motion(Metric* metric);
     virtual ~Motion();
 
-// --------- public methods -----------
-public:
-    virtual bool  setInitialPosition(double ipos[4]);
-    virtual bool  setInitialPosition(vec4 ipos);
+    /**
+     * @brief Set initial position in coordinates.
+     * @return false if position is not valid.
+     */
+    virtual bool setInitialPosition(double ipos[4]);
+    virtual bool setInitialPosition(vec4 ipos);
 
-    virtual bool  setInitialDirection(double d0, double d1, double d2, double d3);
-    virtual bool  setInitialDirection(vec4 dir);
+    /**
+     * @brief Set the initial direction in coordinates.
+     *  @param d0: 0-component of initial direction.
+     *  @param d1: 1-component of initial direction.
+     *  @param d2: 2-component of initial direction.
+     *  @param d3: 3-component of initial direction.
+     *  @return false if direction does not fulfill constraint equation.
+     */
+    virtual bool setInitialDirection(double d0, double d1, double d2, double d3);
 
-    virtual void  setInitialTetrad(double e0[4], double e1[4], double e2[4], double e3[4]);
-    virtual void  setInitialTetrad(vec4 e0, vec4 e1, vec4 e2, vec4 e3);
+    /**
+     * @brief Set the initial direction in coordinates.
+     *  @param dir: initial direction.
+     *  @return false if direction does not fulfill constraint equation.
+     */
+    virtual bool setInitialDirection(vec4 dir);
 
-    virtual bool  setLocalInitialDir(double d1, double d2, double d3, double beta = 1.0);
-    virtual bool  setLocalInitialDir(vec3 dir, double beta = 1.0);
+    /**
+     * @brief Set the initial tetrad of the observer.
+     *  @param e0:  pointer to first tetrad vector.
+     *  @param e1:  pointer to second tetrad vector.
+     *  @param e2:  pointer to third tetrad vector.
+     *  @param e3:  pointer to fourth tetrad vector.
+     */
+    virtual void setInitialTetrad(double e0[4], double e1[4], double e2[4], double e3[4]);
+    virtual void setInitialTetrad(vec4 e0, vec4 e1, vec4 e2, vec4 e3);
 
-    virtual  void        setMetric(Metric* metric);
-    virtual  Metric*     getMetric();
+    /**
+     * @brief Set the initial direction with respect to the local initial tetrad.
+     * @param d1 : 1-component of local initial direction.
+     * @param d2 : 2-component of local initial direction.
+     * @param d3 : 3-component of local initial direction.
+     * @param beta : initial velocity.
+     */
+    virtual bool setLocalInitialDir(double d1, double d2, double d3, double beta = 1.0);
 
-    virtual bool  setParam(std::string paramName, double val);
-    virtual bool  setParam(std::string paramName, double v0, double v1, double v2, double v3);
+    /**
+     * @brief Set the initial direction with respect to the local initial tetrad.
+     * @param dir : local initial direction.
+     * @param beta : initial velocity.
+     */
+    virtual bool setLocalInitialDir(vec3 dir, double beta = 1.0);
 
-    void    getPosition(double* p);
-    vec4    getPosition();
+    virtual void setMetric(Metric* metric);
+    virtual Metric* getMetric();
 
-    void    getDirection(double* p);
-    vec4    getDirection();
+    virtual bool setParam(std::string paramName, double val);
+    virtual bool setParam(std::string paramName, double v0, double v1, double v2, double v3);
 
-    void    resetAffineParam(double pt = 0.0);
-    double  getAffineParam();
-    void    setAffineParamStep(double step);
-    double  getAffineParamStep();
-    void    resetAffineParamStep();
+    /**
+     * @brief Get the current position.
+     * @param p : pointer to position.
+     */
+    void getPosition(double* p);
 
-    virtual void    setMaxAffineParamStep(double step);
-    double  getMaxAffineParamStep();
-    virtual void    setMinAffineParamStep(double step);
-    double  getMinAffineParamStep();
+    /// Get the current position.
+    vec4 getPosition();
 
-    void    setE(unsigned int i, vec4 ee);
-    vec4    getE(unsigned int i);
-    void    getE0(double* p);
-    void    getE1(double* p);
-    void    getE2(double* p);
-    void    getE3(double* p);
-    void    getTetrad(double* e0, double* e1, double* e2, double* e3);
-    void    getTetrad(vec4 &e0, vec4 &e1, vec4 &e2, vec4 &e3);
-    void    getTetrad(mat4 &m);
-    void    getTetradInv(mat4 &m);
-    void    getTetrad(float* m);
-    void    getTetradInv(float* m);
+    /**
+     * @brief Get the current direction.
+     * @param p : pointer to direction.
+     */
+    void getDirection(double* p);
 
-    vec4    coordToLocal(vec4 cv);
+    /// Get the current direction.
+    vec4 getDirection();
 
-    bool    isOrthonormal();
+    /**
+     * @brief Reset the affine parameter (proper time).
+     * @param  pt : reset affine parameter to value pt.
+     */
+    void resetAffineParam(double pt = 0.0);
 
-    void    setBoundingBox(double p1[4], double p2[4]);
-    void    setBoundingBox(vec4 p1, vec4 p2);
-    void    getBoundingBox(vec4 &p1, vec4 &p2);
-    bool    outsideBoundBox();
+    /// Get the affine parameter (proper time).
+    double getAffineParam();
 
-    void    setConstrEps(double eps);
-    double  getConstrEps();
+    /// Set the affine parameter step (proper time step).
+    void setAffineParamStep(double step);
 
-    bool    isRightHanded();
-    bool    gramSchmidtOrth();
+    /// Get the affine parameter step (proper time step).
+    double getAffineParamStep();
 
-    virtual double  testConstraint();
+    /// Reset affine parameter stepsize.
+    void resetAffineParamStep();
 
-    void    getCurrentArray(double* cy);
+    /// Set maxmimum affine parameter stepsize.
+    virtual void setMaxAffineParamStep(double step);
+
+    /// Get maximum affine parameter stepsize.
+    double getMaxAffineParamStep();
+
+    /// Set minimum affine parameter stepsize.
+    virtual void setMinAffineParamStep(double step);
+
+    /// Get minimum affine parameter stepsize.
+    double getMinAffineParamStep();
+
+    void setE(unsigned int i, vec4 ee);
+    vec4 getE(unsigned int i);
+    void getE0(double* p);
+    void getE1(double* p);
+    void getE2(double* p);
+    void getE3(double* p);
+    void getTetrad(double* e0, double* e1, double* e2, double* e3);
+    void getTetrad(vec4& e0, vec4& e1, vec4& e2, vec4& e3);
+    void getTetrad(mat4& m);
+    void getTetradInv(mat4& m);
+    void getTetrad(float* m);
+    void getTetradInv(float* m);
+
+    vec4 coordToLocal(vec4 cv);
+
+    /// Test whether tetrad is orthonormal.
+    bool isOrthonormal();
+
+    /**
+     * @brief The bounding box represents the domain for integration.
+     * @param p1 : pointer to bounding box.
+     * @param p2 : pointer to bounding box.
+     */
+    void setBoundingBox(double p1[4], double p2[4]);
+    void setBoundingBox(vec4 p1, vec4 p2);
+    void getBoundingBox(vec4& p1, vec4& p2);
+
+    /// Checks whether the current position 'y' is outside the bounding box.
+    bool outsideBoundBox();
+
+    /// Set epsilon for the constraint equation.
+    void setConstrEps(double eps);
+
+    /// Get epsilon for the constraint equation.
+    double getConstrEps();
+
+    /// Checks whether the local tetrad is right handed.
+    bool isRightHanded();
+
+    /**
+     * @brief Do a Gram-Schmidt orthonormalization.
+     *  Note that the base vectors will be normalized with respect to the euclidean norm.
+     *  Thus, the orthonormalization can be used only for local tetrads that are given
+     *  with respect to a natural local tetrad!
+     */
+    bool gramSchmidtOrth();
+
+    /// Test constraint condition.
+    virtual double testConstraint();
+
+    void getCurrentArray(double* cy);
 
     //! Get duration of calculation.
-    double  getCalcTime() {
-        return mCalcTime;
-    }
+    double getCalcTime() { return mCalcTime; }
 
-    void    printTetrad(FILE* fptr = stderr);
+    void printTetrad(FILE* fptr = stderr);
 
-// --------- protected methods -----------
 protected:
     //! Calculate the right side of the parallel transport.
     virtual bool calcDerivs(const double yn[], double dydx[]) = 0;
 
-// -------- protected attribute ---------
 protected:
     //! Pointer to the actual metric.
-    Metric*    mMetric;
+    Metric* mMetric;
 
     //! Affine parameter.
-    double     mLambda;
+    double mLambda;
     //! Affine parameter stepsize.
-    double     mLambdaStep;
+    double mLambdaStep;
     //! Initial affine parameter stepsize.
-    double     mLambdaStepInit;
+    double mLambdaStepInit;
     //! Maximum affine parameter stepsize.
-    double     mMaxLambdaStep;
+    double mMaxLambdaStep;
     //! Minimum affine parameter stepsize.
-    double     mMinLambdaStep;
+    double mMinLambdaStep;
 
     //! This array holds the current position, direction, and all tetrad vectors.
-    double     y[DEF_MAX_YS];
+    double y[DEF_MAX_YS];
     //! Epsilon for the constraint equation.
-    double     mConstraintEpsilon;
+    double mConstraintEpsilon;
 
     //! Bounding box minimum.
-    double     mBoundBoxMin[4];
+    double mBoundBoxMin[4];
     //! Bounding box maximum.
-    double     mBoundBoxMax[4];
+    double mBoundBoxMax[4];
 
     //! Time in seconds for calculation of geodesic.
-    double     mCalcTime;
+    double mCalcTime;
 };
 
 } // end namespace m4d
 
 #endif
-

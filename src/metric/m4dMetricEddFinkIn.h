@@ -1,29 +1,8 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dMetricEddFinkIn.h
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-
-/*!  \class  m4d::MetricEddFinkIn
-     \brief  Ingoing Eddington-Finkelstein metric in spherical coordinates
+/**
+ * @file    m4dMetricEddFinkIn.h
+ * @author  Thomas Mueller
+ *
+ * \brief  Ingoing Eddington-Finkelstein metric in spherical coordinates
              with advanced null coordinate (v,r,theta,phi).
 
         The line element is given by
@@ -44,9 +23,9 @@
 
              Detailed discussions about the Eddington-Finkelstein metric can be found
              in the standard literature, e.g. \ref lit_rindler "Rindler", \ref lit_mtw "MTW".
-*/
-// -------------------------------------------------------------------------------
-
+ *
+ *  This file is part of libMotion4D.
+ */
 #ifndef M4D_METRIC_EDDINGTON_FINKELSTEIN_IN_H
 #define M4D_METRIC_EDDINGTON_FINKELSTEIN_IN_H
 
@@ -63,7 +42,6 @@ public:
     MetricEddFinkIn(double mass = 1.0);
     virtual ~MetricEddFinkIn();
 
-    // --------- public methods -----------
 public:
     virtual bool calculateMetric(const double* pos);
     virtual bool calculateChristoffels(const double* pos);
@@ -76,9 +54,12 @@ public:
 
     virtual bool breakCondition(const double* pos);
 
+    virtual bool calcDerivs(const double y[], double dydx[]);
     virtual bool calcDerivsSachsJacobi(const double y[], double dydx[]);
 
     virtual double testConstraint(const double y[], const double kappa);
+
+    virtual bool calcSepDist(const vec4 p1, const vec4 p2, double& spaceDist, double& timeDist);
 
     virtual bool setParam(const char* pName, double val);
 
@@ -92,14 +73,12 @@ public:
     bool GetFreefallVel(const double r0, const double r, double& beta);
     bool GetTauCrash(const double r0, double& tau);
 
-    // --------- protected methods -----------
 protected:
     virtual void setStandardValues();
     virtual void contrChrisVecVec(const double y[], const double v[], const double w[], double* z, bool calc = true);
     virtual void contrChrDVecVecVec(
         const double y[], const double u[], const double v[], const double w[], double* z, bool calc = true);
 
-    // -------- protected attribute ---------
 protected:
     double rs;
     double mMass;

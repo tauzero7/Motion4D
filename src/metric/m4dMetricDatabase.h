@@ -32,44 +32,22 @@ public:
 
     bool allMetricsAvailable();
 
-    /**
-     * @brief Get number of implementred metrics.
-     * @return
-     */
+    /// Get number of implementred metrics.
     int getNumMetrics();
 
-    /**
-     * @brief Initialize metric and get pointer to it.
-     * @param num
-     * @return
-     */
+    /// Initialize metric by enum and get pointer to it.
     Metric* getMetric(MetricList::enum_metric num);
 
-    /**
-     * @brief Initialize metric and get pointer to it.
-     * @param mName
-     * @return
-     */
+    /// Initialize metric by name and get pointer to it.
     Metric* getMetric(const char* mName);
 
-    /**
-     * @brief Get name of metric by id.
-     * @param num
-     * @return
-     */
+    /// Get name of metric by id.
     const char* getMetricName(MetricList::enum_metric num);
 
-    /**
-     * @brief Get metric id by name.
-     * @param mName
-     * @return
-     */
+    /// Get metric id by name.
     MetricList::enum_metric getMetricNr(const char* mName);
 
-    /**
-     * @brief Print list of all available metrics
-     * @param fptr
-     */
+    /// Print list of all available metrics
     void printMetricList(FILE* fptr = stderr);
 
 protected:

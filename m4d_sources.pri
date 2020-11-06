@@ -87,6 +87,7 @@ use_all_metrics {
             $$M4D_SRC_DIR/metric/m4dMetricKasner.h \
             $$M4D_SRC_DIR/metric/m4dMetricKastorTraschen.h \
             $$M4D_SRC_DIR/metric/m4dMetricKottler.h \
+            $$M4D_SRC_DIR/metric/m4dMetricKruskal.h \
             $$M4D_SRC_DIR/metric/m4dMetricMinkowskiConformal.h \
             $$M4D_SRC_DIR/metric/m4dMetricMinkRotLattice.h \
             $$M4D_SRC_DIR/metric/m4dMetricPainleveGullstrand.h \
@@ -142,6 +143,7 @@ use_all_metrics {
             $$M4D_SRC_DIR/metric/m4dMetricKasner.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricKastorTraschen.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricKottler.cpp \
+            $$M4D_SRC_DIR/metric/m4dMetricKruskal.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricMinkowskiConformal.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricMinkRotLattice.cpp \
             $$M4D_SRC_DIR/metric/m4dMetricPainleveGullstrand.cpp \

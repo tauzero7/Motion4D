@@ -1,28 +1,9 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricMinkowski.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricMinkowski.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dMetricMinkowski.h"
 
 namespace m4d {
@@ -45,11 +26,6 @@ MetricMinkowski::MetricMinkowski()
 
 MetricMinkowski::~MetricMinkowski() {}
 
-// *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricMinkowski::calculateMetric(const double*)
 {
     double c = mSpeedOfLight;
@@ -74,10 +50,6 @@ bool MetricMinkowski::calculateMetric(const double*)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricMinkowski::calculateChristoffels(const double*)
 {
     christoffel[0][0][0] = 0.0;
@@ -148,10 +120,6 @@ bool MetricMinkowski::calculateChristoffels(const double*)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricMinkowski::calculateChrisD(const double*)
 {
     chrisD[0][0][0][0] = 0.0;
@@ -414,13 +382,6 @@ bool MetricMinkowski::calculateChrisD(const double*)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricMinkowski::localToCoord(const double*, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     dir[0] = ldir[0] / mSpeedOfLight;
@@ -429,13 +390,6 @@ void MetricMinkowski::localToCoord(const double*, const double* ldir, double* di
     dir[3] = ldir[3];
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricMinkowski::coordToLocal(const double*, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     ldir[0] = cdir[0] * mSpeedOfLight;
@@ -444,21 +398,11 @@ void MetricMinkowski::coordToLocal(const double*, const double* cdir, double* ld
     ldir[3] = cdir[3];
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return false : position is always valid.
- */
 bool MetricMinkowski::breakCondition(const double*)
 {
     return false;
 }
 
-/*! Calculate right hand side of the geodesic equation in first order form.
- *
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  dydx[] : pointer to right side of geodesic equation.
- */
 bool MetricMinkowski::calcDerivs(const double y[], double dydx[])
 {
     dydx[0] = y[4];
@@ -474,11 +418,6 @@ bool MetricMinkowski::calcDerivs(const double y[], double dydx[])
     return true;
 }
 
-/*! Calculate right hand side of the geodesic equation in first order form with parallel transport.
- *
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  dydx[] : pointer to right side of parallel transport equation.
- */
 bool MetricMinkowski::calcDerivsPar(const double y[], double dydx[])
 {
     dydx[0] = y[4];
@@ -501,16 +440,6 @@ bool MetricMinkowski::calcDerivsPar(const double y[], double dydx[])
     return true;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricMinkowski::testConstraint(const double y[], const double kappa)
 {
     double cm = 1.0 / mSpeedOfLight;
@@ -526,20 +455,12 @@ double MetricMinkowski::testConstraint(const double y[], const double kappa)
     return sum;
 }
 
-/*! Transform point p to 2+1 coordinates.
- *
- *  \param  p  : point in proper metric coordinates.
- *  \param  cp : reference to transformed point.
- *  \return true : success.
- */
 bool MetricMinkowski::transToTwoPlusOne(vec4 p, vec4& cp)
 {
     cp = vec4(p[0], p[1], p[2], p[0]);
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricMinkowski::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -551,9 +472,6 @@ bool MetricMinkowski::report(const vec4, const vec4, char*& text)
     return CopyString(ss.str().c_str(), text);
 }
 
-// ********************************* protected methods *****************************
-/*!
- */
 void MetricMinkowski::setStandardValues()
 {
     mInitPos[0] = 0.0;

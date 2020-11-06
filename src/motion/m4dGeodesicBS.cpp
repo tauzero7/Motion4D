@@ -1,39 +1,15 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dGeodesicBS.cpp
-
-  Copyright (c) 2010  Thomas Mueller
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   aith the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dGeodesicBS.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dGeodesicBS.h"
 #include <algorithm>
 #include <limits>
 
 namespace m4d {
 
-/*! Standard constructor for geodesic motion.
- *
- *  \param  metric : Metric of the spacetime where the geodesic has to be calculated.
- *  \param  type   : Type of geodesic:  kappa=-1 (timelike), kappa=0 (lightlike).
- */
 GeodesicBS::GeodesicBS(Metric* metric, enum_geodesic_type type)
     : Geodesic(metric, type)
 {
@@ -63,8 +39,6 @@ GeodesicBS::~GeodesicBS()
     dd = nullptr;
 }
 
-// *********************************** public methods ******************************
-
 void GeodesicBS::setNumberOfSteps(int numSteps)
 {
     mNumSteps = numSteps;
@@ -76,18 +50,6 @@ void GeodesicBS::setMaxAffineParamStep(double hmax)
     std::cerr << "BS max step: " << mhmax << std::endl;
 }
 
-/*! Calculate a geodesic.
- *
- *  \param  initPos      :  initial position of the geodesic in coordinates.
- *  \param  initDir      :  initial direction of the geodesic in coordinates.
- *  \param  maxNumPoints :  maximum number of points.
- *  \param  points       :  reference to the calculated points.
- *  \param  dirs         :  reference to the calculated tangents.
- *  \param  lambda       :  reference to the affine parameters.
- *
- *  \return enum_break_condition : break condition.
- *  \sa enum_break_condition
- */
 enum_break_condition GeodesicBS::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
     std::vector<vec4>& points, std::vector<vec4>& dirs, std::vector<double>& lambda)
 {
@@ -269,19 +231,6 @@ enum_break_condition GeodesicBS::calculateGeodesic(
     return breakType;
 }
 
-/*! Calculate a geodesic and store points, directions, and constraint.
- *
- *  \param  initPos      :  initial position of the geodesic in coordinates.
- *  \param  initDir      :  initial direction of the geodesic in coordinates.
- *  \param  maxNumPoints :  maximum number of points.
- *  \param  points       :  reference to the calculated points.
- *  \param  dirs         :  reference to the calculated tangents.
- *  \param  epsilons     :  reference to the epsilons.
- *  \param  lambda       :  reference to the affine parameters.
- *
- *  \return enum_break_condition : break condition.
- *  \sa enum_break_condition
- */
 enum_break_condition GeodesicBS::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
     std::vector<vec4>& points, std::vector<vec4>& dirs, std::vector<double>& epsilons, std::vector<double>& lambda)
 {
@@ -689,13 +638,6 @@ enum_break_condition GeodesicBS::calcSachsJacobi(const vec4 initPos, const vec4 
     return breakType;
 }
 
-/*! Calculate next Runge-Kutta step of the geodesic.
- *
- *  \param  htry : try stepsize.
- *  \param  hdid : did stepsize.
- *  \param  hnext : next stepsize.
- *  \param  constraint : reference to result of constraint equation.
- */
 enum_break_condition GeodesicBS::nextStep(double htry, double& hdid, double& hnext, double& constraint)
 {
     if (mMetric->breakCondition(&y[0])) {
@@ -835,13 +777,6 @@ enum_break_condition GeodesicBS::nextStep(double htry, double& hdid, double& hne
     return enum_break_none;
 }
 
-/*! Calculate next BS step of the geodesic.
- *
- *  \param  htry : try stepsize.
- *  \param  hdid : did stepsize.
- *  \param  hnext : next stepsize.
- *  \param  constraint : reference to result of constraint equation.
- */
 enum_break_condition GeodesicBS::nextStepSachsJacobi(double htry, double& hdid, double& hnext, double& constraint)
 {
     if (mMetric->breakCondition(&y[0])) {
@@ -1007,9 +942,6 @@ bool GeodesicBS::nextStepSachsJacobi(int& status)
     return true;
 }
 
-/*! Print geodesic solver properties.
- * \param fptr : file pointer.
- */
 void GeodesicBS::print(FILE* fptr)
 {
     fprintf(fptr, "\nGeodesicBS:\n------------\n");
@@ -1025,16 +957,6 @@ void GeodesicBS::print(FILE* fptr)
         mBoundBoxMax[2], mBoundBoxMax[3]);
 }
 
-// *********************************** protected methods ******************************
-
-/*! Modified midpoint method.
- *
- * \param yy : yy
- * \param dydx : dydx.
- * \param H : total step size
- * \param numSteps : number of steps
- * \param yout : pointer to yout.
- */
 void GeodesicBS::modMidPoint(double* yy, double* dydx, double H, int numSteps, double* yout)
 {
     register int i, n;
@@ -1066,14 +988,6 @@ void GeodesicBS::modMidPoint(double* yy, double* dydx, double H, int numSteps, d
     }
 }
 
-/*! Modified midpoint method for jacobi-sachs.
- *
- * \param yy : yy
- * \param dydx : dydx.
- * \param H : total step size
- * \param numSteps : number of steps
- * \param yout : pointer to yout.
- */
 void GeodesicBS::modMidPointJS(double* yy, double* dydx, double H, int numSteps, double* yout)
 {
     register int i, n;
@@ -1101,12 +1015,10 @@ void GeodesicBS::modMidPointJS(double* yy, double* dydx, double H, int numSteps,
     }
 
     for (i = 0; i < mNumCoords; i++) {
-        yout[i] = 0.5 * (ym[i] + yn[i] + h * yout[i]); // lambda*y[i]); //geändert
+        yout[i] = 0.5 * (ym[i] + yn[i] + h * yout[i]);
     }
 }
 
-/*! Polynomial extrapolation
- */
 void GeodesicBS::polyExtrpol(int iest, double xest, double* yest, double* yz, double* dy)
 {
     register int k, j;
@@ -1123,12 +1035,11 @@ void GeodesicBS::polyExtrpol(int iest, double xest, double* yest, double* yz, do
             cc[j] = yest[j];
         }
         for (k = 0; k < iest; k++) {
-            delta = 1.0
-                / (x[iest - k - 1] - xest); // Teilen durch 0, da x[iest] = xest!!! -> geändert (iest -k) in iest -k-1
+            delta = 1.0 / (x[iest - k - 1] - xest);
             f1 = xest * delta;
             f2 = x[iest - k - 1] * delta;
             for (j = 0; j < mNumCoords; j++) {
-                q = dd[j][k]; // Ist dd initialisiert??
+                q = dd[j][k]; // Is dd initialized?
                 dd[j][k] = dy[j];
                 delta = cc[j] - q;
                 dy[j] = f1 * delta;

@@ -1,37 +1,15 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dGeodesicGSL.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dGeodesicGSL.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dGeodesicGSL.h"
 #include "m4dMotionList.h"
 #include <limits>
 
 namespace m4d {
 
-//----------------------------------------------------------------------------
-//         func-,jac-adaptor
-//----------------------------------------------------------------------------
 int func_adaptor_geod(double x, const double y[], double f[], void* params)
 {
     GeodesicGSL* obj = reinterpret_cast<GeodesicGSL*>(params);
@@ -56,14 +34,6 @@ int func_adaptor_jacobi(double x, const double y[], double f[], void* params)
     return obj->func_jacobi(x, y, f, nullptr);
 }
 
-/*! Standard constructor for geodesic motion.
- *
- *  \param metric : pointer to metric.
- *  \param step_type   : integrator step type.
- *  \param solver_type : solver type number.
- *  \param type : type of geodesic.
- *  \sa enum_geodesic_type.
- */
 GeodesicGSL::GeodesicGSL(Metric* metric, const gsl_odeiv_step_type* step_type, int solver_type, enum_geodesic_type type)
     : Geodesic(metric, type)
 {
@@ -86,13 +56,6 @@ GeodesicGSL::~GeodesicGSL()
     freeMemory();
 }
 
-// *********************************** public methods ******************************
-
-/*! Initialize geodesic.
- * \param initPos : initial position.
- * \param initDir : initial coordinate direction.
- * \param cstr
- */
 enum_break_condition GeodesicGSL::initializeGeodesic(const vec4 initPos, const vec4 initDir, double& cstr)
 {
     resetAffineParam();
@@ -118,18 +81,6 @@ enum_break_condition GeodesicGSL::initializeGeodesic(const vec4 initPos, const v
     return enum_break_none;
 }
 
-/*! Calculate a geodesic.
- *
- *  \param  initPos      :  initial position of the geodesic in coordinates.
- *  \param  initDir      :  initial direction of the geodesic in coordinates.
- *  \param  maxNumPoints :  maximum number of points.
- *  \param  points       :  reference to the calculated points.
- *  \param  dirs         :  reference to the calculated tangents.
- *  \param  lambda       :  reference to the affine parameters.
- *
- *  \return enum_break_condition : break condition.
- *  \sa enum_break_condition
- */
 enum_break_condition GeodesicGSL::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
     std::vector<vec4>& points, std::vector<vec4>& dirs, std::vector<double>& lambda)
 {
@@ -263,19 +214,6 @@ enum_break_condition GeodesicGSL ::calculateGeodesic(
     return breakType;
 }
 
-/*! Calculate a geodesic and store points, directions, and constraint.
- *
- *  \param  initPos      :  initial position of the geodesic in coordinates.
- *  \param  initDir      :  initial direction of the geodesic in coordinates.
- *  \param  maxNumPoints :  maximum number of points.
- *  \param  points       :  reference to the calculated points.
- *  \param  dirs         :  reference to the calculated tangents.
- *  \param  epsilons     :  reference to the epsilons.
- *  \param  lambda       :  reference to the affine parameters.
- *
- *  \return enum_break_condition : break condition.
- *  \sa enum_break_condition
- */
 enum_break_condition GeodesicGSL::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
     std::vector<vec4>& points, std::vector<vec4>& dirs, std::vector<double>& epsilons, std::vector<double>& lambda)
 {
@@ -359,9 +297,6 @@ enum_break_condition GeodesicGSL::calculateGeodesicData(const vec4 initPos, cons
     return breakType;
 }
 
-/*! Calculate a geodesic and the parallel transported local tetrad of the observer.
- *
- */
 enum_break_condition GeodesicGSL::calcParTransport(const vec4 initPos, const vec4 initDir, const vec4 e0, const vec4 e1,
     const vec4 e2, const vec4 e3, const int maxNumPoints, std::vector<vec4>& points, std::vector<vec4>& dirs,
     std::vector<double>& lambda, std::vector<vec4>& base0, std::vector<vec4>& base1, std::vector<vec4>& base2,
@@ -461,31 +396,6 @@ enum_break_condition GeodesicGSL::calcParTransport(const vec4 initPos, const vec
     return breakType;
 }
 
-/*! Calculate a geodesic and the parallel transported local tetrad of the observer.
- *
- *  \param  initPos      :  initial position of the geodesic in coordinates.
- *  \param  initCoordDir :  initial coordinate direction of the geodesic in coordinates.
- *  \param  localNullDir :  initial local direction of the geodesic in coordinates.
- *  \param  locX
- *  \param  locY
- *  \param  locZ
- *  \param  b0           :  b0 base vectors of local tetrad.
- *  \param  b1           :  b1 base vectors of local tetrad.
- *  \param  b2           :  b2 base vectors of local tetrad.
- *  \param  b3           :  b3 base vectors of local tetrad.
- *  \param  tetrad_type  :  type of local tetrad.
- *  \param  maxNumPoints :  maximum number of points.
- *  \param  points       :  reference to the calculated points.
- *  \param  dirs         :  reference to the calculated directions.
- *  \param  lambda       :  reference to the affine parameters.
- *  \param  sachs0       :  references to Sachs basis 0.
- *  \param  sachs1       :  references to Sachs basis 1.
- *  \param  jacobi       :  references to Jacobi parameters.
- *  \param  maxJacobi    :  references to maximum Jacobi parameter.
- *
- *  \return enum_break_condition : break condition.
- *  \sa enum_break_condition
- */
 enum_break_condition GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir, const vec3 localNullDir,
     const vec3 locX, const vec3 locY, const vec3 locZ, const vec4 b0, const vec4 b1, const vec4 b2, const vec4 b3,
     const enum_nat_tetrad_type tetrad_type, const int maxNumPoints, std::vector<vec4>& points, std::vector<vec4>& dirs,
@@ -775,12 +685,6 @@ enum_break_condition GeodesicGSL::calcSachsJacobi(const vec4 initPos, const vec4
     return breakType;
 }
 
-/*! Right-hand-side of the geodesic equation.
- *  \param x
- *  \param y[]
- *  \param f[]
- *  \param params
- */
 int GeodesicGSL::func_geod(double, const double y[], double f[], void*)
 {
     if (mMetric->calcDerivs(y, f)) {
@@ -804,12 +708,6 @@ int GeodesicGSL::func_geod(double, const double y[], double f[], void*)
     return GSL_SUCCESS;
 }
 
-/*! Right-hand-side of the parallel transport.
- *  \param x
- *  \param y[]
- *  \param f[]
- *  \param params
- */
 int GeodesicGSL::func_par(double, const double y[], double f[], void*)
 {
     if (mMetric->calcDerivsPar(y, f)) {
@@ -822,13 +720,6 @@ int GeodesicGSL::func_par(double, const double y[], double f[], void*)
     return 0;
 }
 
-/*!
- *  \param x
- *  \param y[]
- *  \param dfdy
- *  \param dfdt
- *  \param params
- */
 int GeodesicGSL::jac_geod(double, const double y[], double* dfdy, double dfdt[], void*)
 {
     int dimension = 8;
@@ -933,9 +824,6 @@ int GeodesicGSL::func_jacobi(double, const double y[], double dydx[], void*)
     return GSL_SUCCESS;
 }
 
-/*! Print geodesic solver properties.
- * \param fptr : file pointer.
- */
 void GeodesicGSL::printF(FILE* fptr)
 {
     fprintf(fptr, "\nGeodesicGSL:\n------------\n");
@@ -952,13 +840,6 @@ void GeodesicGSL::printF(FILE* fptr)
     fprintf(fptr, "\tgeodesic type       : %s\n", stl_geodesic_type[mType]);
 }
 
-// ********************************* protected methods *****************************
-
-/*! Initialize function and jacobi adaptor for the GSL integration.
- *
- *  \param  step_type :  constant pointer to a GSL step type.
- *  \param  type : type of gsl integration.
- */
 void GeodesicGSL::initialize(const gsl_odeiv_step_type* step_type, enum_gslint_type type)
 {
     mStepType = step_type;
@@ -985,8 +866,6 @@ void GeodesicGSL::initialize(const gsl_odeiv_step_type* step_type, enum_gslint_t
     mSys.params = this;
 }
 
-/*! Allocate memory for the GSL integration.
- */
 void GeodesicGSL::allocMemory()
 {
     mStep = gsl_odeiv_step_alloc(mStepType, mSys.dimension);
@@ -997,8 +876,6 @@ void GeodesicGSL::allocMemory()
     }
 }
 
-/*! Free memory after GSL integration.
- */
 void GeodesicGSL::freeMemory()
 {
     if (mStepsizeControlled) {
@@ -1018,10 +895,6 @@ void GeodesicGSL::freeMemory()
     mStep = nullptr;
 }
 
-/*! Calculate next step of the geodesic.
- *
- *  \param status : gsl status after this step.
- */
 bool GeodesicGSL::nextStep(int& status)
 {
     if (mMetric->breakCondition(&y[0])) {
@@ -1097,10 +970,6 @@ bool GeodesicGSL::nextStepPar(int& status)
     return true;
 }
 
-/*! Calculate next step of the parallel and Jacobi equation step.
- *
- *  \param status : gsl status after this step.
- */
 bool GeodesicGSL::nextStepSachsJacobi(int& status)
 {
     if (mMetric->breakCondition(&y[0])) {

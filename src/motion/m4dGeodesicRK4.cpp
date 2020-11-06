@@ -1,37 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dGeodesicRK4.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dGeodesicRK4.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dGeodesicRK4.h"
 
 namespace m4d {
 
-/*! Standard constructor for geodesic motion.
- *
- *  \param  metric : Metric of the spacetime where the geodesic has to be calculated.
- *  \param  type   : Type of geodesic:  kappa=-1 (timelike), kappa=0 (lightlike).
- */
 GeodesicRK4::GeodesicRK4(Metric* metric, enum_geodesic_type type)
     : Geodesic(metric, type)
 {
@@ -43,20 +19,6 @@ GeodesicRK4::GeodesicRK4(Metric* metric, enum_geodesic_type type)
 
 GeodesicRK4::~GeodesicRK4() {}
 
-// *********************************** public methods ******************************
-
-/*! Calculate a geodesic.
- *
- *  \param  initPos      :  initial position of the geodesic in coordinates.
- *  \param  initDir      :  initial direction of the geodesic in coordinates.
- *  \param  maxNumPoints :  maximum number of points.
- *  \param  points       :  reference to the calculated points.
- *  \param  dirs         :  reference to the calculated tangents.
- *  \param  lambda       :  reference to the affine parameters.
- *
- *  \return enum_break_condition : break condition.
- *  \sa enum_break_condition
- */
 enum_break_condition GeodesicRK4::calculateGeodesic(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
     std::vector<vec4>& points, std::vector<vec4>& dirs, std::vector<double>& lambda)
 {
@@ -166,19 +128,6 @@ enum_break_condition GeodesicRK4::calculateGeodesic(
     return breakType;
 }
 
-/*! Calculate a geodesic and store points, directions, and constraint.
- *
- *  \param  initPos      :  initial position of the geodesic in coordinates.
- *  \param  initDir      :  initial direction of the geodesic in coordinates.
- *  \param  maxNumPoints :  maximum number of points.
- *  \param  points       :  reference to the calculated points.
- *  \param  dirs         :  reference to the calculated tangents.
- *  \param  epsilons     :  reference to the epsilons.
- *  \param  lambda       :  reference to the affine parameters.
- *
- *  \return enum_break_condition : break condition.
- *  \sa enum_break_condition
- */
 enum_break_condition GeodesicRK4::calculateGeodesicData(const vec4 initPos, const vec4 initDir, const int maxNumPoints,
     std::vector<vec4>& points, std::vector<vec4>& dirs, std::vector<double>& epsilons, std::vector<double>& lambda)
 {
@@ -241,26 +190,6 @@ enum_break_condition GeodesicRK4::calculateGeodesicData(const vec4 initPos, cons
     return breakType;
 }
 
-/*! Calculate a geodesic and the parallel transported local tetrad of the observer.
- *
- *  \param  initPos      :  initial position of the geodesic in coordinates.
- *  \param  initDir      :  initial direction of the geodesic in coordinates.
- *  \param  e0           :  e0 base vectors of local tetrad.
- *  \param  e1           :  e1 base vectors of local tetrad.
- *  \param  e2           :  e2 base vectors of local tetrad.
- *  \param  e3           :  e3 base vectors of local tetrad.
- *  \param  maxNumPoints :  maximum number of points.
- *  \param  points       :  reference to the calculated points.
- *  \param  lambda       :  reference to the affine parameters.
- *  \param  dirs         :  reference to the calculated directions.
- *  \param  base0        :  references to the 0-base vectors of local tetrad.
- *  \param  base1        :  references to the 1-base vectors of local tetrad.
- *  \param  base2        :  references to the 2-base vectors of local tetrad.
- *  \param  base3        :  references to the 3-base vectors of local tetrad.
- *
- *  \return enum_break_condition : break condition.
- *  \sa enum_break_condition
- */
 enum_break_condition GeodesicRK4::calcParTransport(const vec4 initPos, const vec4 initDir, const vec4 e0, const vec4 e1,
     const vec4 e2, const vec4 e3, const int maxNumPoints, std::vector<vec4>& points, std::vector<vec4>& dirs,
     std::vector<double>& lambda, std::vector<vec4>& base0, std::vector<vec4>& base1, std::vector<vec4>& base2,
@@ -299,13 +228,6 @@ enum_break_condition GeodesicRK4::calcParTransport(const vec4 initPos, const vec
     }
 
     setInitialTetrad(e0, e1, e2, e3);
-
-    //  initPos.print(std::cerr);
-    //  initDir.print(std::cerr);
-    //   e0.print(std::cerr);
-    //   e1.print(std::cerr);
-    //   e2.print(std::cerr);
-    //   e3.print(std::cerr);
 
     points.push_back(vec4(y[0], y[1], y[2], y[3]));
     dirs.push_back(vec4(y[4], y[5], y[6], y[7]));
@@ -348,31 +270,6 @@ enum_break_condition GeodesicRK4::calcParTransport(const vec4 initPos, const vec
     return breakType;
 }
 
-/*! Calculate a geodesic and the parallel transported local tetrad of the observer.
- *
- *  \param  initPos      :  initial position of the geodesic in coordinates.
- *  \param  initCoordDir :  initial coordinate direction of the geodesic in coordinates.
- *  \param  localNullDir :  initial local direction of the geodesic in coordinates.
- *  \param  locX
- *  \param  locY
- *  \param  locZ
- *  \param  b0           :  b0 base vectors of local tetrad.
- *  \param  b1           :  b1 base vectors of local tetrad.
- *  \param  b2           :  b2 base vectors of local tetrad.
- *  \param  b3           :  b3 base vectors of local tetrad.
- *  \param  tetrad_type  :  type of local tetrad.
- *  \param  maxNumPoints :  maximum number of points.
- *  \param  points       :  reference to the calculated points.
- *  \param  dirs         :  reference to the calculated directions.
- *  \param  lambda       :  reference to the affine parameters.
- *  \param  sachs0       :  references to Sachs basis 0.
- *  \param  sachs1       :  references to Sachs basis 1.
- *  \param  jacobi       :  references to Jacobi parameters.
- *  \param  maxJacobi    :  references to maximum Jacobi parameter.
- *
- *  \return enum_break_condition : break condition.
- *  \sa enum_break_condition
- */
 enum_break_condition GeodesicRK4::calcSachsJacobi(const vec4 initPos, const vec4 initCoordDir, const vec3 localNullDir,
     const vec3 locX, const vec3 locY, const vec3 locZ, const vec4 b0, const vec4 b1, const vec4 b2, const vec4 b3,
     const enum_nat_tetrad_type tetrad_type, const int maxNumPoints, std::vector<vec4>& points, std::vector<vec4>& dirs,
@@ -590,10 +487,6 @@ enum_break_condition GeodesicRK4::calcSachsJacobi(const vec4 initPos, const vec4
     return breakType;
 }
 
-/*! Calculate next Runge-Kutta step of the geodesic.
- *
- *  \param status
- */
 bool GeodesicRK4::nextStep(int& status)
 {
     if (mMetric->breakCondition(&y[0])) {
@@ -633,10 +526,6 @@ bool GeodesicRK4::nextStep(int& status)
     return true;
 }
 
-/*! Calculate next Runge-Kutta step of the geodesic with parallel transport.
- *
- *  \param status
- */
 bool GeodesicRK4::nextStepPar(int& status)
 {
     if (mMetric->breakCondition(&y[0])) {
@@ -677,10 +566,6 @@ bool GeodesicRK4::nextStepPar(int& status)
     return true;
 }
 
-/*! Calculate next Runge-Kutta step of the geodesic with parallel transport and Jacobi equation.
- *
- *  \param status
- */
 bool GeodesicRK4::nextStepSachsJacobi(int& status)
 {
     if (mMetric->breakCondition(&y[0])) {
@@ -723,9 +608,6 @@ bool GeodesicRK4::nextStepSachsJacobi(int& status)
     return true;
 }
 
-/*! Print geodesic solver properties.
- * \param fptr : file pointer.
- */
 void GeodesicRK4::printF(FILE* fptr)
 {
     fprintf(fptr, "\nGeodesicRK4:\n------------\n");

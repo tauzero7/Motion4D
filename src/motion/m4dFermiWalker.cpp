@@ -12,10 +12,6 @@
 
 namespace m4d {
 
-/*! Standard constructor for Fermi-Walker motion.
- *
- *  \param metric : pointer to metric.
- */
 FermiWalker::FermiWalker(Metric* metric)
     : Motion(metric)
 {
