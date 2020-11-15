@@ -290,14 +290,14 @@ void Metric::getNatDualTetrad(const vec4 pos, vec4& t0, vec4& t1, vec4& t2, vec4
 }
 
 /*! Transform local 4-direction to coordinate 4-direction.
- *
+ *   Note the '&', otherwise it could lead to memory problems on windows.
  *  \param  pos  :  position.
  *  \param  ldir :  local direction.
  *  \param  cdir :  reference to coordinate direction.
  *  \param  type :  type of local tetrad.
  *  \sa enum_nat_tetrad_type
  */
-void Metric::localToCoord(const vec4 pos, const vec4 ldir, vec4& cdir, enum_nat_tetrad_type type)
+void Metric::localToCoord(const vec4 &pos, const vec4 &ldir, vec4& cdir, enum_nat_tetrad_type type)
 {
     localToCoord(pos.data(), ldir.data(), cdir.data(), type);
 }

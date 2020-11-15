@@ -207,7 +207,7 @@ public:
         const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type = enum_nat_tetrad_default)
         = 0;
     virtual void localToCoord(
-        const vec4 pos, const vec4 ldir, vec4& cdir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
+        const vec4 &pos, const vec4 &ldir, vec4& cdir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
     virtual void coordToLocal(
         const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type = enum_nat_tetrad_default)
         = 0;

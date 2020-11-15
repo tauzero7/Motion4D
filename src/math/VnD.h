@@ -9,6 +9,19 @@
 #ifndef M4D_VnD_H
 #define M4D_VnD_H
 
+#if defined _WIN32 && defined(M4D_LIB)
+#if defined(m4d_EXPORTS) || defined(m4d_lua_EXPORTS) || defined(m4dd_EXPORTS) || defined(m4d_luad_EXPORTS)             \
+    || defined(_m4d_EXPORTS)
+#define API_M4D_EXPORT __declspec(dllexport)
+#else
+#define API_M4D_EXPORT __declspec(dllimport)
+#endif
+#define M4D_CALL __stdcall
+#else // _WIN32
+#define M4D_CALL
+#define API_M4D_EXPORT
+#endif // _WIN32
+
 #include <cassert>
 #include <cmath>
 #include <cstdio>
@@ -24,7 +37,7 @@ static double epsilon = 1.0e-8;
 //---------------------------------------------------------------------------
 //    class-template  vType
 //---------------------------------------------------------------------------
-template <class vType, int size> class VnD
+template <class vType, int size> class API_M4D_EXPORT VnD
 {
     vType v[size];
     std::string classType;
@@ -216,7 +229,7 @@ public:
 //---------------------------------------------------------------------------
 //      set
 //---------------------------------------------------------------------------
-template <class vType, int size> void VnD<vType, size>::set(vType y[size])
+template <class vType, int size> void API_M4D_EXPORT VnD<vType, size>::set(vType y[size])
 {
     for (int i = 0; i < size; i++) {
         v[i] = y[i];
@@ -226,12 +239,12 @@ template <class vType, int size> void VnD<vType, size>::set(vType y[size])
 //---------------------------------------------------------------------------
 //      operator[]
 //---------------------------------------------------------------------------
-template <class vType, int size> const vType& VnD<vType, size>::operator[](int i) const
+template <class vType, int size> const API_M4D_EXPORT vType& VnD<vType, size>::operator[](int i) const
 {
     return v[i];
 }
 
-template <class vType, int size> vType& VnD<vType, size>::operator[](int i)
+template <class vType, int size> API_M4D_EXPORT vType& VnD<vType, size>::operator[](int i)
 {
     return v[i];
 }
@@ -239,7 +252,7 @@ template <class vType, int size> vType& VnD<vType, size>::operator[](int i)
 //---------------------------------------------------------------------------
 //      operator=
 //---------------------------------------------------------------------------
-template <class vType, int size> void VnD<vType, size>::operator=(const VnD<vType, size>& vec)
+template <class vType, int size> void API_M4D_EXPORT VnD<vType, size>::operator=(const VnD<vType, size>& vec)
 {
     for (int i = 0; i < size; i++) {
         v[i] = vec.x(i);
@@ -249,7 +262,8 @@ template <class vType, int size> void VnD<vType, size>::operator=(const VnD<vTyp
 //---------------------------------------------------------------------------
 //      operator+
 //---------------------------------------------------------------------------
-template <class vType, int size> VnD<vType, size> VnD<vType, size>::operator+(const VnD<vType, size>& vec) const
+template <class vType, int size>
+VnD<vType, size> API_M4D_EXPORT VnD<vType, size>::operator+(const VnD<vType, size>& vec) const
 {
     VnD<vType, size> q;
     for (int i = 0; i < size; i++) {
@@ -261,7 +275,7 @@ template <class vType, int size> VnD<vType, size> VnD<vType, size>::operator+(co
 //---------------------------------------------------------------------------
 //      operator+=
 //---------------------------------------------------------------------------
-template <class vType, int size> void VnD<vType, size>::operator+=(const VnD<vType, size>& vec)
+template <class vType, int size> void API_M4D_EXPORT VnD<vType, size>::operator+=(const VnD<vType, size>& vec)
 {
     for (int i = 0; i < size; i++) {
         v[i] += vec[i];
@@ -271,7 +285,8 @@ template <class vType, int size> void VnD<vType, size>::operator+=(const VnD<vTy
 //---------------------------------------------------------------------------
 //      operator-
 //---------------------------------------------------------------------------
-template <class vType, int size> VnD<vType, size> VnD<vType, size>::operator-(const VnD<vType, size>& vec) const
+template <class vType, int size>
+VnD<vType, size> API_M4D_EXPORT VnD<vType, size>::operator-(const VnD<vType, size>& vec) const
 {
     VnD<vType, size> q;
     for (int i = 0; i < size; i++) {
@@ -280,7 +295,7 @@ template <class vType, int size> VnD<vType, size> VnD<vType, size>::operator-(co
     return q;
 }
 
-template <class vType, int size> VnD<vType, size> VnD<vType, size>::operator-() const
+template <class vType, int size> API_M4D_EXPORT VnD<vType, size> VnD<vType, size>::operator-() const
 {
     VnD<vType, size> q;
     for (int i = 0; i < size; i++) {
@@ -292,7 +307,7 @@ template <class vType, int size> VnD<vType, size> VnD<vType, size>::operator-() 
 //---------------------------------------------------------------------------
 //      operator* vType
 //---------------------------------------------------------------------------
-template <class vType, int size> VnD<vType, size> VnD<vType, size>::operator*(const vType a) const
+template <class vType, int size> VnD<vType, size> API_M4D_EXPORT VnD<vType, size>::operator*(const vType a) const
 {
     VnD<vType, size> q;
     for (int i = 0; i < size; i++) {
@@ -301,7 +316,7 @@ template <class vType, int size> VnD<vType, size> VnD<vType, size>::operator*(co
     return q;
 }
 
-template <class vType, int size> vType VnD<vType, size>::operator|(const VnD<vType, size>& vec) const
+template <class vType, int size> vType API_M4D_EXPORT VnD<vType, size>::operator|(const VnD<vType, size>& vec) const
 {
     vType q = 0;
     for (int i = 0; i < size; i++) {
@@ -310,21 +325,21 @@ template <class vType, int size> vType VnD<vType, size>::operator|(const VnD<vTy
     return q;
 }
 
-template <class vType, int size> void VnD<vType, size>::operator*=(const vType a)
+template <class vType, int size> void API_M4D_EXPORT VnD<vType, size>::operator*=(const vType a)
 {
     for (int i = 0; i < size; i++) {
         v[i] *= a;
     }
 }
 
-template <class vType, int size> void VnD<vType, size>::operator*=(const VnD<vType, size>& vec)
+template <class vType, int size> void API_M4D_EXPORT VnD<vType, size>::operator*=(const VnD<vType, size>& vec)
 {
     for (int i = 0; i < size; i++) {
         v[i] *= vec[i];
     }
 }
 
-template <class vType, int size> VnD<vType, size> VnD<vType, size>::operator/(const vType a) const
+template <class vType, int size> VnD<vType, size> API_M4D_EXPORT VnD<vType, size>::operator/(const vType a) const
 {
     VnD<vType, size> q;
     for (int i = 0; i < size; i++) {
@@ -333,7 +348,7 @@ template <class vType, int size> VnD<vType, size> VnD<vType, size>::operator/(co
     return q;
 }
 
-template <class vType, int size> void VnD<vType, size>::operator/=(const vType a)
+template <class vType, int size> void API_M4D_EXPORT VnD<vType, size>::operator/=(const vType a)
 {
     for (int i = 0; i < size; i++) {
         v[i] /= a;
@@ -344,7 +359,8 @@ template <class vType, int size> void VnD<vType, size>::operator/=(const vType a
 //      operator^ vType
 //---------------------------------------------------------------------------
 
-template <class vType, int size> VnD<vType, size> VnD<vType, size>::operator^(const VnD<vType, size>& vec) const
+template <class vType, int size>
+VnD<vType, size> API_M4D_EXPORT VnD<vType, size>::operator^(const VnD<vType, size>& vec) const
 {
     if (size == 3) {
         VnD<vType, size> q;
@@ -362,7 +378,7 @@ template <class vType, int size> VnD<vType, size> VnD<vType, size>::operator^(co
 //---------------------------------------------------------------------------
 //      operator==
 //---------------------------------------------------------------------------
-template <class vType, int size> int VnD<vType, size>::operator==(const VnD<vType, size>& vec) const
+template <class vType, int size> int API_M4D_EXPORT VnD<vType, size>::operator==(const VnD<vType, size>& vec) const
 {
     bool isOkay = true;
     for (int i = 0; i < size; i++) {
@@ -373,7 +389,7 @@ template <class vType, int size> int VnD<vType, size>::operator==(const VnD<vTyp
 //---------------------------------------------------------------------------
 //      operator!=
 //---------------------------------------------------------------------------
-template <class vType, int size> int VnD<vType, size>::operator!=(const VnD<vType, size>& vec) const
+template <class vType, int size> int API_M4D_EXPORT VnD<vType, size>::operator!=(const VnD<vType, size>& vec) const
 {
     return !(*this == vec);
 }
@@ -381,7 +397,7 @@ template <class vType, int size> int VnD<vType, size>::operator!=(const VnD<vTyp
 //---------------------------------------------------------------------------
 //     getNorm()
 //---------------------------------------------------------------------------
-template <class vType, int size> vType VnD<vType, size>::getNorm() const
+template <class vType, int size> vType API_M4D_EXPORT VnD<vType, size>::getNorm() const
 {
     vType sum = static_cast<vType>(0);
     for (int i = 0; i < size; i++) {
@@ -393,7 +409,7 @@ template <class vType, int size> vType VnD<vType, size>::getNorm() const
 //---------------------------------------------------------------------------
 //     normalize()
 //---------------------------------------------------------------------------
-template <class vType, int size> vType VnD<vType, size>::normalize()
+template <class vType, int size> vType API_M4D_EXPORT VnD<vType, size>::normalize()
 {
     vType n = getNorm();
     if (n <= epsilon) {
@@ -411,7 +427,7 @@ template <class vType, int size> vType VnD<vType, size>::normalize()
 //---------------------------------------------------------------------------
 //     getNormalized()
 //---------------------------------------------------------------------------
-template <class vType, int size> VnD<vType, size> VnD<vType, size>::getNormalized() const
+template <class vType, int size> VnD<vType, size> API_M4D_EXPORT  VnD<vType, size>::getNormalized() const
 {
     VnD<vType, size> q;
 
@@ -431,14 +447,14 @@ template <class vType, int size> VnD<vType, size> VnD<vType, size>::getNormalize
 //---------------------------------------------------------------------------
 //     vabs(), getVabs()
 //---------------------------------------------------------------------------
-template <class vType, int size> void VnD<vType, size>::vabs()
+template <class vType, int size> void API_M4D_EXPORT VnD<vType, size>::vabs()
 {
     for (int i = 0; i < size; i++) {
         v[i] = fabs(static_cast<double>(v[i]));
     }
 }
 
-template <class vType, int size> VnD<vType, size> VnD<vType, size>::getVabs() const
+template <class vType, int size> VnD<vType, size> API_M4D_EXPORT VnD<vType, size>::getVabs() const
 {
     VnD<vType, size> q;
     for (int i = 0; i < size; i++) {
@@ -450,7 +466,7 @@ template <class vType, int size> VnD<vType, size> VnD<vType, size>::getVabs() co
 //---------------------------------------------------------------------------
 //     DominantCoord
 //---------------------------------------------------------------------------
-template <class vType, int size> int VnD<vType, size>::mostDominantCoord() const
+template <class vType, int size> int API_M4D_EXPORT VnD<vType, size>::mostDominantCoord() const
 {
     VnD<vType, size> q;
     int dominant = -1;
@@ -465,7 +481,7 @@ template <class vType, int size> int VnD<vType, size>::mostDominantCoord() const
     return dominant;
 }
 
-template <class vType, int size> int VnD<vType, size>::leastDominantCoord() const
+template <class vType, int size> int API_M4D_EXPORT VnD<vType, size>::leastDominantCoord() const
 {
     VnD<vType, size> q;
     int dominant = -1;
@@ -483,7 +499,7 @@ template <class vType, int size> int VnD<vType, size>::leastDominantCoord() cons
 //---------------------------------------------------------------------------
 //      isZero()
 //---------------------------------------------------------------------------
-template <class vType, int size> bool VnD<vType, size>::isZero() const
+template <class vType, int size> bool API_M4D_EXPORT VnD<vType, size>::isZero() const
 {
     double val = 0.0;
     for (int i = 0; i < size; i++) {
@@ -499,7 +515,7 @@ template <class vType, int size> bool VnD<vType, size>::isZero() const
 //---------------------------------------------------------------------------
 //      type()
 //---------------------------------------------------------------------------
-template <class vType, int size> void VnD<vType, size>::type() const
+template <class vType, int size> void API_M4D_EXPORT VnD<vType, size>::type() const
 {
     std::cout << "Type: VnD { " << typeid(vType).name() << " of size " << size << " }" << std::endl;
 }
@@ -507,7 +523,7 @@ template <class vType, int size> void VnD<vType, size>::type() const
 //---------------------------------------------------------------------------
 //      print()
 //---------------------------------------------------------------------------
-template <class vType, int size> void VnD<vType, size>::printC(int nks) const
+template <class vType, int size> void API_M4D_EXPORT VnD<vType, size>::printC(int nks) const
 {
     // nks = Zahl der Nachkommastellen
     std::cout.precision(nks);
@@ -520,7 +536,8 @@ template <class vType, int size> void VnD<vType, size>::printC(int nks) const
     // std::cout << "Class if of type " <<  classType << std::endl;
 }
 
-template <class vType, int size> void VnD<vType, size>::printS(FILE* fptr, const std::string& format) const
+template <class vType, int size>
+void API_M4D_EXPORT VnD<vType, size>::printS(FILE* fptr, const std::string& format) const
 {
     for (int i = 0; i < size; i++) {
         fprintf(fptr, format.c_str(), v[i]);
@@ -528,7 +545,8 @@ template <class vType, int size> void VnD<vType, size>::printS(FILE* fptr, const
     fprintf(fptr, "\n");
 }
 
-template <class vType, int size> void VnD<vType, size>::printO(std::ostream& os, std::string text, int nks) const
+template <class vType, int size>
+void API_M4D_EXPORT VnD<vType, size>::printO(std::ostream& os, std::string text, int nks) const
 {
     // nks = Zahl der Nachkommastellen
     os.precision(nks);
@@ -541,7 +559,7 @@ template <class vType, int size> void VnD<vType, size>::printO(std::ostream& os,
     // std::cout << "Class if of type " <<  classType << std::endl;
 }
 
-template <class vType, int size> void VnD<vType, size>::printF(std::ostream& os) const
+template <class vType, int size> void API_M4D_EXPORT VnD<vType, size>::printF(std::ostream& os) const
 {
     os.setf(std::ios::showpoint);
     for (int i = 0; i < size; i++) {
@@ -554,7 +572,7 @@ template <class vType, int size> void VnD<vType, size>::printF(std::ostream& os)
 //---------------------------------------------------------------------------
 //      conversions
 //---------------------------------------------------------------------------
-template <class vType, int size> VnD<vType, 3> VnD<vType, size>::getAsV3D() const
+template <class vType, int size> VnD<vType, 3> API_M4D_EXPORT VnD<vType, size>::getAsV3D() const
 {
     VnD<vType, 3> nv;
     int k = 0;
@@ -572,7 +590,7 @@ template <class vType, int size> VnD<vType, 3> VnD<vType, size>::getAsV3D() cons
     return nv;
 }
 
-template <class vType, int size> VnD<vType, 4> VnD<vType, size>::getAsV4D() const
+template <class vType, int size> VnD<vType, 4> API_M4D_EXPORT VnD<vType, size>::getAsV4D() const
 {
     VnD<vType, 4> nv;
     int k = 0;
@@ -589,7 +607,7 @@ template <class vType, int size> VnD<vType, 4> VnD<vType, size>::getAsV4D() cons
     return nv;
 }
 
-template <class vType, int size> VnD<vType, 4> VnD<vType, size>::get3As4() const
+template <class vType, int size> VnD<vType, 4> API_M4D_EXPORT VnD<vType, size>::get3As4() const
 {
     assert(size == 3);
 
