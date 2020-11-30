@@ -250,8 +250,7 @@ public:
      * @param  type :  type of local tetrad.
      */
     virtual void localToCoord(
-        const vec4 pos, const vec4 ldir, vec4& cdir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
-
+        const vec4 &pos, const vec4 &ldir, vec4& cdir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
     virtual void coordToLocal(
         const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type = enum_nat_tetrad_default)
         = 0;
@@ -264,7 +263,7 @@ public:
      * @param  type :  type of local tetrad.
      */
     virtual void coordToLocal(
-        const vec4 pos, const vec4 cdir, vec4& ldir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
+        const vec4 &pos, const vec4 &cdir, vec4& ldir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
 
     virtual bool breakCondition(const double* pos) = 0;
 

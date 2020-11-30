@@ -62,13 +62,6 @@ bool tokenizeFile(
     return true;
 }
 
-// ---------------------------------------------------
-/*!  Tokenize file
- *  \param filename : name of file.
- *  \param ignores  : vector of strings which indicates lines that have to be ignored.
- *  \param tokens   : reference to vector of vector of string.
- *  \return  true : success.
- */
 bool tokenizeFile(
     const std::string& filename, const std::vector<std::string>& ignores, std::vector<std::vector<std::string>>& tokens)
 {
@@ -111,9 +104,6 @@ bool tokenizeFile(
     return true;
 }
 
-// ---------------------------------------------------
-/*!  get integer from tokens
- */
 bool getIntFromTokens(const std::vector<std::string>& tokenRow, std::string name, int& val)
 {
     std::string baseString = tokenRow[0];
@@ -176,20 +166,8 @@ bool writeFloatArray(std::string filename, const float* array, int x, int y, int
         return false;
     }
 
-    std::string hdr = "HEAD";
-    char buf[5];
-#ifdef _WIN32
-    sprintf_s(buf, "%s", hdr.c_str());
-#else
-    sprintf(buf, "%s", hdr.c_str());
-#endif
-    std::string hdrd = "DATA";
-    char bufd[5];
-#ifdef _WIN32
-    sprintf_s(bufd, "%s", hdrd.c_str());
-#else
-    sprintf(bufd, "%s", hdrd.c_str());
-#endif
+    const char* buf = "HEAD";
+    const char* bufd = "DATA";
 
     int hdrSize = 24;
     out.write((char*)&buf[0], sizeof(char) * 4);
@@ -203,14 +181,6 @@ bool writeFloatArray(std::string filename, const float* array, int x, int y, int
     return true;
 }
 
-/*! Read a binary float array.
- *   \param   filename  :  name of the file.
- *   \param          x  :  reference to width of array.
- *   \param          y  :  reference to height of array.
- *   \param          c  :  reference to number of channels.
- *   \return      true  :  success.
- *   \return     false  :  error occured.
- */
 float* readFloatArray(std::string filename, int& x, int& y, int& c)
 {
     std::ifstream in(filename.c_str(), std::ios::binary);

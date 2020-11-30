@@ -258,12 +258,12 @@ void Metric::getNatDualTetrad(const vec4 pos, vec4& t0, vec4& t1, vec4& t2, vec4
     coordToLocal(pos, cdir3, t3, type);
 }
 
-void Metric::localToCoord(const vec4 pos, const vec4 ldir, vec4& cdir, enum_nat_tetrad_type type)
+void Metric::localToCoord(const vec4 &pos, const vec4 &ldir, vec4& cdir, enum_nat_tetrad_type type)
 {
     localToCoord(pos.data(), ldir.data(), cdir.data(), type);
 }
 
-void Metric::coordToLocal(const vec4 pos, const vec4 cdir, vec4& ldir, enum_nat_tetrad_type type)
+void Metric::coordToLocal(const vec4 &pos, const vec4 &cdir, vec4& ldir, enum_nat_tetrad_type type)
 {
     coordToLocal(pos.data(), cdir.data(), ldir.data(), type);
 }

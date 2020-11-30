@@ -47,6 +47,12 @@ int64_t get_system_clock();
 bool tokenizeFile(
     const std::string& filename, std::vector<std::vector<std::string>>& tokens, bool useStandardIgnoreTokens = true);
 
+/*!  Tokenize file
+ *  \param filename : name of file.
+ *  \param ignores  : vector of strings which indicates lines that have to be ignored.
+ *  \param tokens   : reference to vector of vector of string.
+ *  \return  true : success.
+ */
 bool tokenizeFile(const std::string& filename, const std::vector<std::string>& ignores,
     std::vector<std::vector<std::string>>& tokens);
 
@@ -66,6 +72,15 @@ bool getStringFromTokens(const std::vector<std::string>& tokenRow, std::string n
  *   \return     false  :  error occured.
  */
 bool writeFloatArray(std::string filename, const float* array, int x, int y, int c);
+
+/*! Read a binary float array.
+ *   \param   filename  :  name of the file.
+ *   \param          x  :  reference to width of array.
+ *   \param          y  :  reference to height of array.
+ *   \param          c  :  reference to number of channels.
+ *   \return      true  :  success.
+ *   \return     false  :  error occured.
+ */
 float* readFloatArray(std::string filename, int& x, int& y, int& c);
 
 // prototype of functions
