@@ -192,11 +192,46 @@ public:
      * @param  sigma :  fourth index.
      */
     double getRiemCoeff(const int mu, const int nu, const int rho, const int sigma);
+
+    /**
+     * @brief Return a Weyl tensor component.
+     * @param  mu :  first index.
+     * @param  nu :  second index.
+     * @param  rho : third index.
+     * @param  sigma :  fourth index.
+     */
     double getWeylCoeff(const int mu, const int nu, const int rho, const int sigma);
+
+    /**
+     * @brief Return a Ricci tensor component.
+     * @param  mu :  first index.
+     * @param  nu :  second index.
+     */
     double getRicciCoeff(const int mu, const int nu);
+
+    /**
+     * @brief Return a Ricci rotation coefficient.
+     * @param  i : first index.
+     * @param  j : second index.
+     * @param  k : third index.
+     */
     double getRicRotCoeff(const int i, const int j, const int k);
+
+    /**
+     * @brief Return a contracted Ricci rotation coefficient.
+     * @param  j :  index.
+     */
     double getContrRRCCoeff(const int j);
 
+    /**
+     * @brief Get natural local tetrad at position 'pos'.
+     * @param  pos  :  position.
+     * @param  e0   :  reference to base vector 0.
+     * @param  e1   :  reference to base vector 1.
+     * @param  e2   :  reference to base vector 2.
+     * @param  e3   :  reference to base vector 3.
+     * @param  type :  type of local tetrad.
+     */
     virtual void getNatTetrad(
         const vec4 pos, vec4& e0, vec4& e1, vec4& e2, vec4& e3, enum_nat_tetrad_type type = enum_nat_tetrad_default);
 
@@ -206,22 +241,78 @@ public:
     virtual void localToCoord(
         const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type = enum_nat_tetrad_default)
         = 0;
+
+    /**
+     * @brief Transform local 4-direction to coordinate 4-direction.
+     * @param  pos  :  position.
+     * @param  ldir :  local direction.
+     * @param  cdir :  reference to coordinate direction.
+     * @param  type :  type of local tetrad.
+     */
     virtual void localToCoord(
         const vec4 pos, const vec4 ldir, vec4& cdir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
+
     virtual void coordToLocal(
         const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type = enum_nat_tetrad_default)
         = 0;
+
+    /**
+     * @brief Transform coordinate 4-direction to local 4-direction.
+     * @param  pos  :  position.
+     * @param  cdir :  coordinate direction.
+     * @param  ldir :  reference to local direction.
+     * @param  type :  type of local tetrad.
+     */
     virtual void coordToLocal(
         const vec4 pos, const vec4 cdir, vec4& ldir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
 
     virtual bool breakCondition(const double* pos) = 0;
+
+    /**
+     * @brief Test break condition.
+     * @param pos position.
+     */
     virtual bool breakCondition(const vec4 pos);
 
+    /**
+     * @brief Calculate right hand side of the geodesic equation in first order form.
+     * @param  y[]    : pointer to position and direction coordinates.
+     * @param  dydx[] : pointer to right side of geodesic equation.
+     */
     virtual bool calcDerivs(const double* y, double* dydx);
+
+    /**
+     * @brief Calculate right hand side of the geodesic equation in first order form with parallel transport.
+     * @param  y[]    : pointer to position and direction coordinates.
+     * @param  dydx[] : pointer to right side of parallel transport equation.
+     */
     virtual bool calcDerivsPar(const double* y, double* dydx);
+
+    /// Calculate right hand side of parallel transport and Jocobi equation.
     virtual bool calcDerivsSachsJacobi(const double* y, double* dydx);
+
+    /**
+     * @brief Calculate right hand side of the Fermi-Walker transport equation.
+     *  This method has to be overwritten by the metric child classes. Otherwise, the standard form of
+     *  the Fermi-Walker transport equation will be used.
+     * @param  a[]    : pointer to proper acceleration.
+     * @param  y[]    : pointer to position and direction coordinates.
+     * @param  dydx[] : pointer to right hand side of Fermi-Walker transport equation.
+     * @return false : always.
+     */
     virtual bool calcDerivsFW(const double* a, const double* y, double* dydx);
 
+    /**
+     * @brief Tests whether the constraint equation is fulfilled.
+     * The constraint equation for lightlike and timelike geodesics reads:
+     \verbatim
+           sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
+     \endverbatim
+     *  This cause problems because of the limited precision of double.
+     * @param  y[]   : pointer to position and direction coordinates.
+     * @param  kappa : timelike (-1.0), lightlike (0.0).
+     * @return double : sum.
+     */
     virtual double testConstraint(const double y[], const double kappa);
     virtual bool resize(double* y, double kappa, double factor = DEF_RESIZE_FACTOR);
 
@@ -261,10 +352,10 @@ public:
     virtual bool addParam(const char* pName, double val = 0.0);
     virtual bool setParam(const char* pName, double val);
     virtual bool getParam(const char* pName, double& val);
-    // virtual bool    getParam(int pNr, std::string& pName, double& val);
     virtual bool getParam(int pNr, char*& pName, double& val);
     virtual bool setParam(int pNr, double val);
 
+    /// Get number of metric parameters.
     int getNumParams();
     void getParamNames(std::vector<std::string>& names);
     int getParamNum(const char* name);

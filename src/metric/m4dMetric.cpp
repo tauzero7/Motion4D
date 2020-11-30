@@ -35,6 +35,7 @@ Metric::Metric()
             }
         }
     }
+
     // init minkowski
     g_compts[0][0] = -1.0;
     g_compts[1][1] = g_compts[2][2] = g_compts[3][3] = 1.0;
@@ -211,58 +212,26 @@ double Metric::getRiemCoeff(const int mu, const int nu, const int rho, const int
     return riem[mu][nu][rho][sigma];
 }
 
-/*!   Return a Weyl tensor component.
- *
- *  \param  mu :  first index.
- *  \param  nu :  second index.
- *  \param  rho : third index.
- *  \param  sigma :  fourth index.
- */
 double Metric::getWeylCoeff(const int mu, const int nu, const int rho, const int sigma)
 {
     return weyl[mu][nu][rho][sigma];
 }
 
-/*!   Return a Ricci tensor component.
- *
- *  \param  mu :  first index.
- *  \param  nu :  second index.
- */
 double Metric::getRicciCoeff(const int mu, const int nu)
 {
     return ric[mu][nu];
 }
 
-/*!   Return a Ricci rotation coefficient.
- *
- *  \param  i : first index.
- *  \param  j : second index.
- *  \param  k : third index.
- */
 double Metric::getRicRotCoeff(const int i, const int j, const int k)
 {
     return rrc[i][j][k];
 }
 
-/*!   Return a contracted Ricci rotation coefficient.
- *
- *  \param  j :  index.
- */
 double Metric::getContrRRCCoeff(const int j)
 {
     return crrc[j];
 }
 
-/*! Get natural local tetrad.
- *
- *  \param  pos  :  position.
- *  \param  e0   :  reference to base vector 0.
- *  \param  e1   :  reference to base vector 1.
- *  \param  e2   :  reference to base vector 2.
- *  \param  e3   :  reference to base vector 3.
- *  \param  type :  type of local tetrad.
- *  \sa enum_nat_tetrad_type
- */
 void Metric::getNatTetrad(const vec4 pos, vec4& e0, vec4& e1, vec4& e2, vec4& e3, enum_nat_tetrad_type type)
 {
     vec4 ldir0 = vec4(1.0, 0.0, 0.0, 0.0);
@@ -289,46 +258,21 @@ void Metric::getNatDualTetrad(const vec4 pos, vec4& t0, vec4& t1, vec4& t2, vec4
     coordToLocal(pos, cdir3, t3, type);
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  position.
- *  \param  ldir :  local direction.
- *  \param  cdir :  reference to coordinate direction.
- *  \param  type :  type of local tetrad.
- *  \sa enum_nat_tetrad_type
- */
 void Metric::localToCoord(const vec4 pos, const vec4 ldir, vec4& cdir, enum_nat_tetrad_type type)
 {
     localToCoord(pos.data(), ldir.data(), cdir.data(), type);
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  position.
- *  \param  cdir :  coordinate direction.
- *  \param  ldir :  reference to local direction.
- *  \param  type :  type of local tetrad.
- *  \sa enum_nat_tetrad_type
- */
 void Metric::coordToLocal(const vec4 pos, const vec4 cdir, vec4& ldir, enum_nat_tetrad_type type)
 {
     coordToLocal(pos.data(), cdir.data(), ldir.data(), type);
 }
 
-/*! Test break condition.
- *
- *  \param pos :  position.
- */
 bool Metric::breakCondition(const vec4 pos)
 {
     return breakCondition(pos.data());
 }
 
-/*! Calculate right hand side of the geodesic equation in first order form.
- *
- *  \param  y[]    : pointer to position and direction coordinates.
- *  \param  dydx[] : pointer to right side of geodesic equation.
- */
 bool Metric::calcDerivs(const double* y, double* dydx)
 {
     int mu, k, l;
@@ -342,18 +286,12 @@ bool Metric::calcDerivs(const double* y, double* dydx)
 
         for (k = 0; k < 4; k++)
             for (l = 0; l < 4; l++) {
-                // ch += christoffel[k][l][mu]*yn[4+k]*yn[4+4*j+l];
                 dydx[mu + 4] -= getChristoffel(k, l, mu) * y[4 + k] * y[4 + l];
             }
     }
     return true;
 }
 
-/*! Calculate right hand side of the geodesic equation in first order form with parallel transport.
- *
- *  \param  y[]    : pointer to position and direction coordinates.
- *  \param  dydx[] : pointer to right side of parallel transport equation.
- */
 bool Metric::calcDerivsPar(const double* y, double* dydx)
 {
     int mu, j, k, l;
@@ -381,39 +319,16 @@ bool Metric::calcDerivsPar(const double* y, double* dydx)
     return true;
 }
 
-/*! Calculate right hand side of parallel transport and Jocobi equation.
- */
 bool Metric::calcDerivsSachsJacobi(const double*, double*)
 {
     return false;
 }
 
-/*! Calculate right hand side of the Fermi-Walker transport equation.
- *
- *  This method has to be overwritten by the metric child classes. Otherwise, the standard form of
- *  the Fermi-Walker transport equation will be used.
- *  \sa FermiWalker::calcDerivs().
- *  \param  a[]    : pointer to proper acceleration.
- *  \param  y[]    : pointer to position and direction coordinates.
- *  \param  dydx[] : pointer to right hand side of Fermi-Walker transport equation.
- *  \return false : always.
- */
 bool Metric::calcDerivsFW(const double*, const double*, double*)
 {
     return false;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-       sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  This cause problems because of the limited precision of double.
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double Metric::testConstraint(const double y[], const double kappa)
 {
     calculateMetric(y);
@@ -923,28 +838,6 @@ bool Metric::getParam(const char* pName, double& val)
     }
 }
 
-/*! Get parameter number 'pNr'.
- *
- *  \param pNr   : parameter number.
- *  \param pName : name of parameter.
- *  \param val   : value of parameter.
- *  \return true  : parameter exists.
- *  \return false : parameter do not exist.
- */
-// bool Metric::getParam(int pNr, std::string& pName, double& val) {
-//    if (pNr >= 0 && pNr < mNumParam) {
-//        std::map<std::string, double>::iterator p_itr = mParam.begin();
-//        for (int i = 0; i < pNr; i++) {
-//            p_itr++;
-//        }
-//        pName = (*p_itr).first;
-//        val   = (*p_itr).second;
-
-//        return true;
-//    }
-//    return false;
-//}
-
 bool Metric::getParam(int pNr, char*& pName, double& val)
 {
     if (pNr >= 0 && pNr < mNumParam) {
@@ -986,10 +879,6 @@ bool Metric::setParam(int pNr, double val)
     return false;
 }
 
-/*! Get number of parameters.
- *
- * \return number of parameters.
- */
 int Metric::getNumParams()
 {
     return mNumParam;
