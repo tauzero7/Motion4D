@@ -2,7 +2,7 @@
 
 DR=""
 if [ "$1" == "debug" ]; then
-	DR="d"
+	DR="_d"
 fi
 
 if [ -d testDatabase ]; then
