@@ -50,7 +50,7 @@ Details to the implemented spacetimes can be found also in the
 ## Prerequisits:
 
 * You need the GNU Scientific Library which is available [here](http://www.gnu.org/software/gsl/)  
-  for Linux systems. A cmake-Version which can also be used for Windows/Visual Studio 2015 can 
+  for Linux systems. A cmake-Version which can also be used for Windows/Visual Studio 2019 can 
   be found [here](https://github.com/ampl/gsl).
 * If you want to use lua scripting, then you also need [lua](http://www.lua.org/).
 
@@ -94,7 +94,7 @@ You have to have cmake 2.6 or higher available.
   running `testAll`!
 
 
-## Install with cmake and Visual Studio 2015
+## Install with cmake and Visual Studio 2019
 You need GSL for Windows. There is a cmake-Version which can be found [here](https://github.com/ampl/gsl).  
 If you also want to use LUA, download the sources from [here](https://www.lua.org/). 
 You might need 7-zip or something else to extract the .tar.gz file.
@@ -102,30 +102,30 @@ You might need 7-zip or something else to extract the .tar.gz file.
 Take care that you always choose the same configuration (Debug/Release), (Win32/x64) 
 for all libraries.
 
-### Compile this GSL version with cmake/vs 2015 (32 or 64bit):
-1. Open "CMakeLists.txt" in cmake-gui and adjust the corresponding paths.
-    - Use ".\build\Debug" or ".\build\Release"  as build paths
-    - Set CMAKE_BUILD_TYPE  to either Debug or Release
-    - Set CMAKE_CONFIGURATION_TYPES  to either Debug or Release
-    - Set CMAKE_INSTALL_PREFIX  to e.g. "D:/local/ampl_gsl_vs2015"
+### Compile this GSL version with cmake/vs 2019 (64bit):
+1. Open "CMakeLists.txt" in cmake-gui and set source code and build paths.
+    - Run 'Configure' and select Visual Studio version as well as platform (x64).
+    - Set CMAKE_INSTALL_PREFIX  to e.g. "D:/local/ampl_gsl_vs2019"
     - Run 'Configure'
     - Run 'Generate'
-2. Open ".\build\Debug\GSL.sln" or ".\build\Release\GSL.sln" with Visual Studio 2015
+2. Click 'Open Project' or open "GSL.sln" within Visual Studio 2019
+3. Set 'Solution Configurations' to 'Release'.
 3. Run 'Build Solution'
 4. Go to the "INSTALL" entry and run 'Build INSTALL' to install into "CMAKE_INSTALL_PREFIX".
 
 
 ### Compile libMotion4D
-1. Open "CMakeLists.txt" in cmake-gui and adjust the corresponding paths.
-   - Use .\build\Debug  or .\build\Release as build paths.
-   - Set CMAKE_CONFIGURATION_TYPES to either Debug or Release
-   - Set GSL_DIR to e.g. "D:\local\ampl_gsl_vs2015"
-   - Set GSL_LIB_DIR to e.g. "D:\local\ampl_gsl_vs2015\lib"
-   - Run 'Configure'
-   - Run 'Generate'
-2. Open ".\build\Debug\libmotion4d.sln" or ".\build\Release\libmotion4d.sln" with Visual Studio 2015
+1. Open "CMakeLists.txt" in cmake-gui and set source code and build paths.
+    - Run 'Configure' and select Visual Studio version as well as platform (x64).
+    - Check 'COMPILE_ALL_METRICS' (voluntary) and 'COMPILE_TEST_PRGS'
+    - Set GSL_DIR to e.g. "D:\local\ampl_gsl_vs2019"
+    - Set GSL_LIB_DIR to e.g. "D:\local\ampl_gsl_vs2019\lib"
+    - Run 'Configure'
+    - Run 'Generate'
+2. Click 'Open Project' or open "libmotion4d.sln" within Visual Studio 2019
 3. Run 'Build Solution'
-4. Go to the "INSTALL" entry and run 'Build INSTALL' to install into "CMAKE_INSTALL_PREFIX".
+4. If you like, go to the "INSTALL" entry and run 'Build INSTALL' to install 
+   into "CMAKE_INSTALL_PREFIX".
    
 
 ## Add new metric

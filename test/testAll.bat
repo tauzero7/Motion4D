@@ -1,38 +1,38 @@
 @ rem ------------------------
 @ rem  Run all test programs
 @ rem ------------------------
-@ SET CONFIG=Debug
-@ IF "%1"=="Release" SET CONFIG=Release
+@ SET CONFIG=Release
+@ IF "%1"=="Debug" SET CONFIG=Debug
 @ echo Run %CONFIG% test programs
 
 @ SET DAR=
-@ IF %CONFIG%==Debug  SET DAR=d
+@ IF %CONFIG%==Debug  SET DAR=_d
 
 @ cd testDatabase
-.\%CONFIG%\m4dTestDatabase%DAR%.exe
+.\m4dTestDatabase%DAR%.exe
 @ cd ..
 
 @ cd calcGeodesic
-.\%CONFIG%\m4dCalcGeodesic%DAR%.exe kerr.ini  > points_kerr.dat
+.\m4dCalcGeodesic%DAR%.exe kerr.ini  > points_kerr.dat
 @ cd ..
 
 @ cd calcParallel
-.\%CONFIG%\m4dCalcParallel%DAR%.exe kerr_timelike.ini > points_par.dat
+.\m4dCalcParallel%DAR%.exe kerr_timelike.ini > points_par.dat
 @ cd ..
 
 @ cd testCircular
-.\%CONFIG%\m4dTestCircular%DAR%.exe 6  > points_circ.dat 
+.\m4dTestCircular%DAR%.exe 6  > points_circ.dat 
 @ cd ..
 
 @ cd testFWworldline
-.\%CONFIG%\m4dTestFWworldline%DAR%.exe > points_fw.dat
+.\m4dTestFWworldline%DAR%.exe > points_fw.dat
 @ cd ..
 
 @ cd testGeodesic
-.\%CONFIG%\m4dTestGeodesic%DAR%.exe
+.\m4dTestGeodesic%DAR%.exe
 @ cd ..
 
 @ cd testJacobi
-.\%CONFIG%\m4dTestJacobi%DAR%.exe kerr_lens.ini > points_lens.dat
+.\m4dTestJacobi%DAR%.exe kerr_lens.ini > points_lens.dat
 @ cd ..
 
