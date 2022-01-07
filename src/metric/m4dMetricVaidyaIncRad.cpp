@@ -8,7 +8,7 @@
 
 namespace m4d {
 
-MetricVaidyaIncRad::MetricVaidyaIncRad(double p)
+MetricVaidyaIncRad::MetricVaidyaIncRad(double k)
 {
     mMetricName = "VaidyaIncRad";
     setCoordType(enum_coordinate_spherical);
@@ -17,8 +17,12 @@ MetricVaidyaIncRad::MetricVaidyaIncRad(double p)
     mSpeedOfLight = 1.0;
     mGravConstant = 1.0;
 
-    addParam("p", p);
-    mP = p;
+    addParam("k", k);
+    addParam("vl", 0.0);
+    addParam("sigma", 0.5);
+    m_k = k;
+    m_vl = 0.0;
+    m_sigma = 0.5;
 
     mLocTeds.push_back(enum_nat_tetrad_static);
 
@@ -157,18 +161,6 @@ void MetricVaidyaIncRad::localToCoord(const double* pos, const double* ldir, dou
     double m;
     calcMassFunc(pos[0], m);
 
-    /*
-        double A = 1.0;
-        double B = 0.5 * (1.0 - m / r);
-        double C = 1.0;
-        double D = - m / r;
-
-        dir[0] = C * ldir[0] + A * ldir[1];
-        dir[1] = D * ldir[0] + B * ldir[1];
-        dir[2] = ldir[2] / r;
-        dir[3] = ldir[3] / (r * sin(theta));
-    */
-
     // static tetrad
     double w = sqrt(1.0 - 2.0 * m / r);
     dir[0] = (ldir[0] + ldir[1]) / w;
@@ -178,20 +170,30 @@ void MetricVaidyaIncRad::localToCoord(const double* pos, const double* ldir, dou
     dir[3] = ldir[3] / (r * sin(theta));
 }
 
-void MetricVaidyaIncRad::coordToLocal(const double*, const double* cdir, double* ldir, enum_nat_tetrad_type)
+void MetricVaidyaIncRad::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
-    fprintf(stderr, "uups... not implemented yet!\n");
-    // TODO
-    ldir[0] = cdir[0];
+    // fprintf(stderr, "uups...  MetricVaidyaIncRad::coordToLocal() not implemented yet!\n");
+    double r = pos[1];
+    double theta = pos[2];
+
+    double m;
+    calcMassFunc(pos[0], m);
+
+    // static tetrad
+    double w = sqrt(1.0 - 2.0 * m / r);
+    ldir[0] = w * cdir[0] - cdir[1] / w;
+    ldir[1] = cdir[1] / w;
+
+    ldir[2] = cdir[2] * r;
+    ldir[3] = cdir[3] * r * sin(theta);
 }
 
 bool MetricVaidyaIncRad::breakCondition(const double* pos)
 {
-
-    double m, dmdv;
-    calcMassFunc(pos[0], m, dmdv);
+    double m;
+    calcMassFunc(pos[0], m);
     double r = pos[1];
-    if (r <= 2.0 * m) {
+    if (r * r <= (1.0 + M4D_METRIC_EPS) * 4.0 * m * m) {
         return true;
     }
     return false;
@@ -212,8 +214,17 @@ bool MetricVaidyaIncRad::report(const vec4, const vec4, char*& text)
 
 bool MetricVaidyaIncRad::setParam(const char* pName, double val)
 {
-    if (Metric::setParam(pName, val)) {
-        mP = val;
+    Metric::setParam(pName, val);
+    if (strcmp(pName, "k") == 0) {
+        m_k = val;
+        return true;
+    }
+    else if (strcmp(pName, "vl") == 0) {
+        m_vl = val;
+        return true;
+    }
+    else if (strcmp(pName, "sigma") == 0) {
+        m_sigma = val;
         return true;
     }
     return false;
@@ -239,25 +250,30 @@ void MetricVaidyaIncRad::setStandardValues()
 
 void MetricVaidyaIncRad::calcMassFunc(const double v, double& m)
 {
-    if (v < 0.0) {
+    if (v >= m_vl) {
         m = 0.0;
         return;
     }
-    double th = tanh(v);
-    m = 1.0 - mP + mP * th * th;
+
+    double th = tanh(m_sigma * (m_vl - v));
+    m = m_k * pow(m_vl - v, 1.0 / 3.0) * th * th;
 }
 
 void MetricVaidyaIncRad::calcMassFunc(const double v, double& m, double& dmdv)
 {
-    if (v < 0.0) {
+
+    if (v >= m_vl) {
         m = dmdv = 0.0;
         return;
     }
 
-    double th = tanh(v);
-    double ch = cosh(v);
-    m = 1.0 - mP + mP * th * th;
-    dmdv = mP * 2.0 * th / (ch * ch);
+    double th = tanh(m_sigma * (m_vl - v));
+    double ch = cosh(m_sigma * (m_vl - v));
+
+    m = m_k * pow(m_vl - v, 1.0 / 3.0) * th * th;
+
+    dmdv = -m_k / 3.0 * pow(m_vl - v, -2.0 / 3.0) * th * th;
+    dmdv -= m_k * pow(m_vl - v, 1.0 / 3.0) * 2.0 * m_sigma * th / (ch * ch);
 }
 
 } // end namespace m4d

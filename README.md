@@ -150,3 +150,5 @@ First, a few preliminary steps which are necessary to find your metric.
     - coordToLocal
     - breakCondition
 
+For use in GeodesicViewer, you have to add your metric files also in
+'m4d_sources.pri'.

@@ -10,6 +10,9 @@
 
      Detailed discussions about the Vaidya metric can be found in Griffiths,Podolsky.
 
+     The mass function m(v) is taken from Piesnack and Kassner, https://arxiv.org/pdf/2103.08340v2.pdf
+     with a1 = a2 = 0.
+
  * This file is part of the m4d-library.
  */
 #ifndef M4D_METRIC_VAIDYA_INC_RAD_H
@@ -19,13 +22,13 @@
 
 namespace m4d {
 
-// ---------------------------------------------------
-//    class definition:   MetricVaidyaIncRad
-// ---------------------------------------------------
+/**
+ * @brief The MetricVaidyaIncRad class
+ */
 class MetricVaidyaIncRad : public Metric
 {
 public:
-    MetricVaidyaIncRad(double p = 1.0);
+    MetricVaidyaIncRad(double k = 1.0);
     virtual ~MetricVaidyaIncRad();
 
     // --------- public methods -----------
@@ -53,7 +56,9 @@ protected:
 
     // -------- protected attribute ---------
 protected:
-    double mP; // constant factor
+    double m_k; // constant factor
+    double m_vl;
+    double m_sigma;
 };
 
 } // end namespace m4d
