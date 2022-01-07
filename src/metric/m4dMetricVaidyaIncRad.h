@@ -1,39 +1,17 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dMetricVaidyaIncRad.h
+/**
+ * @file    m4dMetricVaidyaIncRad.h
+ * @author  Thomas Mueller
+ *
+ * @brief  Incoming radiation Vaidya metric in spherical coordinates (v,r,theta,phi).
 
-  Copyright (c) 2016  Thomas Mueller
+     The line element is given by
 
+     \f[ds^2 = 2dvdr - \left(1-\frac{2m(v)}{r}\right)dv^2 + r^2(d\theta^2+\sin^2\theta d\phi^2).\f]
 
-   This file is part of the m4d-library.
+     Detailed discussions about the Vaidya metric can be found in Griffiths,Podolsky.
 
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-
-/*!  \class  m4d::MetricVaidyaIncRad
-     \brief  Incoming radiation Vaidya metric in spherical coordinates (v,r,theta,phi).
-
-             The line element is given by
-
-             \f[ds^2 = 2dvdr - \left(1-\frac{2m(v)}{r}\right)dv^2 + r^2(d\theta^2+\sin^2\theta d\phi^2).\f]
-
-             Detailed discussions about the Vaidya metric can be found in Griffiths,Podolsky.
-
-*/
-// -------------------------------------------------------------------------------
-
+ * This file is part of the m4d-library.
+ */
 #ifndef M4D_METRIC_VAIDYA_INC_RAD_H
 #define M4D_METRIC_VAIDYA_INC_RAD_H
 

@@ -1,36 +1,14 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricGlampedakis.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricGlampedakis.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricGlampedakis.h"
 #include <cmath>
 
 namespace m4d {
 
-/*! Standard constructor for the Glampedakis metric.
- *
- */
 MetricGlampedakis::MetricGlampedakis(double mass, double angmom, double epsilon)
 {
     mMetricName = "Glampedakis";
@@ -95,13 +73,9 @@ MetricGlampedakis::~MetricGlampedakis()
 }
 
 #include <iostream>
-//#include <iomanip>      // std::setprecision
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricGlampedakis::calculateMetric(const double* pos)
 {
 
@@ -121,22 +95,10 @@ bool MetricGlampedakis::calculateMetric(const double* pos)
     g_compts[2][2] = gthth;
     g_compts[3][0] = gtph;
     g_compts[3][3] = gphph;
-    /*
-        std::cout.precision(12);
-        std::cout << "Metrik:\n";
-        std::cout << "tt:\t "   << g_compts[0][0] << "\n";
-        std::cout << "tph:\t "  << g_compts[0][3] << "\n";
-        std::cout << "rr:\t "   << g_compts[1][1] << "\n";
-        std::cout << "thth:\t " << g_compts[2][2] << "\n";
-        std::cout << "phph:\t " << g_compts[3][3] << "\n";
-    */
+
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricGlampedakis::calculateChristoffels(const double* pos)
 {
     christoffelcalled++;
@@ -203,36 +165,10 @@ bool MetricGlampedakis::calculateChristoffels(const double* pos)
     christoffel[0][0][1] = -0.5 * gttdr / grr;
     // 002  20
     christoffel[0][0][2] = -0.5 * gttdth / gthth;
-    /*
-        std::cout << "Christoffel:\n";
-        std::cout << "rrr:\t " << christoffel[1][1][1] << "\n";
-        std::cout << "rrth:\t " << christoffel[1][1][2] << "\n";
-        std::cout << "rthr:\t " << christoffel[1][2][1] << "\n";
-        std::cout << "rthth:\t " << christoffel[1][2][2] << "\n";
-        std::cout << "rphph:\t " << christoffel[1][3][3] << "\n";
-        std::cout << "rpht:\t " << christoffel[1][3][0] << "\n";
-        std::cout << "rtph:\t " << christoffel[1][0][3] << "\n";
-        std::cout << "rtt:\t " << christoffel[1][0][0] << "\n";
-        std::cout << "ththr:\t " << christoffel[2][2][1] << "\n";
-        std::cout << "ththth:\t " << christoffel[2][2][2] << "\n";
-        std::cout << "thphph:\t " << christoffel[2][3][3] << "\n";
-        std::cout << "thpht:\t " << christoffel[2][3][0] << "\n";
-        std::cout << "thtph:\t " << christoffel[2][0][3] << "\n";
-        std::cout << "thtt:\t " << christoffel[2][0][0] << "\n";
-        std::cout << "phphr:\t " << christoffel[3][3][1] << "\n";
-        std::cout << "phphth:\t " << christoffel[3][3][2] << "\n";
-        std::cout << "phtr:\t " << christoffel[3][0][1] << "\n";
-        std::cout << "phtth:\t " << christoffel[3][0][2] << "\n";
-        std::cout << "ttr:\t " << christoffel[0][0][1] << "\n";
-        std::cout << "ttth:\t " << christoffel[0][0][2] << "\n";
-    */
+
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricGlampedakis::calculateChrisD(const double* pos)
 {
     chrisDcalled++;
@@ -440,50 +376,7 @@ bool MetricGlampedakis::calculateChrisD(const double* pos)
     chrisD[0][0][2][1] = 0.5 * (gttdth * gththdr - gttdrdth * gthth) / gthth2;
 
     chrisD[0][0][2][2] = 0.5 * (gttdth * gththdth - gttd2th * gthth) / gthth2;
-    /*
 
-        std::cout << "ChrisD:\n";
-        std::cout << "chrisD[1][1][1][1]\t " << chrisD[1][1][1][1] << "\n";
-        std::cout << "chrisD[1][1][1][2]\t " << chrisD[1][1][1][2] << "\n";
-        std::cout << "chrisD[1][1][2][1]\t " << chrisD[1][1][2][1] << "\n";
-        std::cout << "chrisD[1][1][2][2]\t " << chrisD[1][1][2][2] << "\n";
-        std::cout << "chrisD[1][2][1][1]\t " << chrisD[1][2][1][1] << "\n";
-        std::cout << "chrisD[1][2][1][2]\t " << chrisD[1][2][1][2] << "\n";
-        std::cout << "chrisD[1][2][2][1]\t " << chrisD[1][2][2][1] << "\n";
-        std::cout << "chrisD[1][2][2][2]\t " << chrisD[1][2][2][2] << "\n";
-        std::cout << "chrisD[1][3][3][1]\t " << chrisD[1][3][3][1] << "\n";
-        std::cout << "chrisD[1][3][3][2]\t " << chrisD[1][3][3][2] << "\n";
-        std::cout << "chrisD[1][3][0][1]\t " << chrisD[1][3][0][1] << "\n";
-        std::cout << "chrisD[1][3][0][2]\t " << chrisD[1][3][0][2] << "\n";
-        std::cout << "chrisD[1][0][3][1]\t " << chrisD[1][0][3][1] << "\n";
-        std::cout << "chrisD[1][0][3][2]\t " << chrisD[1][0][3][2] << "\n";
-        std::cout << "chrisD[1][0][0][1]\t " << chrisD[1][0][0][1] << "\n";
-        std::cout << "chrisD[1][0][0][2]\t " << chrisD[1][0][0][2] << "\n";
-        std::cout << "chrisD[2][2][1][1]\t " << chrisD[2][2][1][1] << "\n";
-        std::cout << "chrisD[2][2][1][2]\t " << chrisD[2][2][1][2] << "\n";
-        std::cout << "chrisD[2][2][2][1]\t " << chrisD[2][2][2][1] << "\n";
-        std::cout << "chrisD[2][2][2][2]\t " << chrisD[2][2][2][2] << "\n";
-        std::cout << "chrisD[2][3][3][1]\t " << chrisD[2][3][3][1] << "\n";
-        std::cout << "chrisD[2][3][3][2]\t " << chrisD[2][3][3][2] << "\n";
-        std::cout << "chrisD[2][3][0][1]\t " << chrisD[2][3][0][1] << "\n";
-        std::cout << "chrisD[2][3][0][2]\t " << chrisD[2][3][0][2] << "\n";
-        std::cout << "chrisD[2][0][3][1]\t " << chrisD[2][0][3][1] << "\n";
-        std::cout << "chrisD[2][0][3][2]\t " << chrisD[2][0][3][2] << "\n";
-        std::cout << "chrisD[2][0][0][1]\t " << chrisD[2][0][0][1] << "\n";
-        std::cout << "chrisD[2][0][0][2]\t " << chrisD[2][0][0][2] << "\n";
-        std::cout << "chrisD[3][3][1][1]\t " << chrisD[3][3][1][1] << "\n";
-        std::cout << "chrisD[3][3][1][2]\t " << chrisD[3][3][1][2] << "\n";
-        std::cout << "chrisD[3][3][2][1]\t " << chrisD[3][3][2][1] << "\n";
-        std::cout << "chrisD[3][3][2][2]\t " << chrisD[3][3][2][2] << "\n";
-        std::cout << "chrisD[3][0][1][1]\t " << chrisD[3][0][1][1] << "\n";
-        std::cout << "chrisD[3][0][1][2]\t " << chrisD[3][0][1][2] << "\n";
-        std::cout << "chrisD[3][0][2][1]\t " << chrisD[3][0][2][1] << "\n";
-        std::cout << "chrisD[3][0][2][2]\t " << chrisD[3][0][2][2] << "\n";
-        std::cout << "chrisD[0][0][1][1]\t " << chrisD[0][0][1][1] << "\n";
-        std::cout << "chrisD[0][0][1][2]\t " << chrisD[0][0][1][2] << "\n";
-        std::cout << "chrisD[0][0][2][1]\t " << chrisD[0][0][2][1] << "\n";
-        std::cout << "chrisD[0][0][2][2]\t " << chrisD[0][0][2][2] << "\n";
-    */
     return true;
 }
 
@@ -900,13 +793,6 @@ bool MetricGlampedakis::calculateRiemann(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricGlampedakis::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     calcgComps(pos);
@@ -924,24 +810,12 @@ void MetricGlampedakis::localToCoord(const double* pos, const double* ldir, doub
     dir[3] = gam * (ldir[0] * zeta - dlt * w2 * ldir[3]);
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricGlampedakis::coordToLocal(const double*, const double*, double*, enum_nat_tetrad_type)
 {
+    fprintf(stderr, "uups... not implemented yet!\n");
     // TODO
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
- *  \return false : position is valid.
- */
 bool MetricGlampedakis::breakCondition(const double* pos)
 {
     bool br = false;
@@ -961,10 +835,6 @@ bool MetricGlampedakis::breakCondition(const double* pos)
     return br;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'mass' or 'lambda' parameter.
- */
 bool MetricGlampedakis::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -999,8 +869,6 @@ bool MetricGlampedakis::report(const vec4, const vec4, char*& text)
     text = new char[ss.str().length() + 2];
     return CopyString(ss.str().c_str(), text);
 }
-
-// ********************************* protected methods *****************************
 
 // ********************************* Kerr routines *********************************
 void MetricGlampedakis::calcKerr(const double* pos)
@@ -1137,15 +1005,6 @@ void MetricGlampedakis::calcKerrDiff2(const double* pos)
         + rs * a2 * sth
             * (4.0 * cth * sth2 * (sigma2 - r * sigma * sigmadr) + sigmadth * sth3 * (2.0 * r * sigmadr - sigma))
             / sigma3;
-    /*
-        std::cout.precision(12);
-
-        std::cout << "ktt: " << kttd2r << " " << kttd2th << " " << kttdrdth << "\n";
-        std::cout << "ktph: " << ktphd2r << " " << ktphd2th << " " << ktphdrdth << "\n";
-        std::cout << "krr: " << krrd2r << " " << krrd2th << " " << krrdrdth << "\n";
-        std::cout << "kthth: " << kththd2r << " " << kththd2th << " " << kththdrdth << "\n";
-        std::cout << "kphph: " << kphphd2r << " " << kphphd2th << " " << kphphdrdth << "\n";
-    */
 }
 
 // ********************************* Glampedakis routines **************************
@@ -1336,18 +1195,6 @@ void MetricGlampedakis::calcGlampedakisDiff2(const double* pos)
     double kphphdr2 = kphphdr * kphphdr;
     double kphphdth2 = kphphdth * kphphdth;
 
-    /*
-    glttd2r     = hphphd2r * ktph2 + 4.0 * hphphdr * ktph * ktphdr + 2.0 * hphph * (ktphdr2 + ktph * ktphd2r)
-            + httd2r * ktt2 + 4.0 * httdr * ktt * kttdr + 2.0 * htt * (kttdr2 + ktt * kttd2r);
-    glttd2th    = hphphd2th * ktph2 + 4.0 * hphphdth * ktph * ktphdth + 2.0 * hphph * (ktphdth2 + ktph * ktphd2th)
-            + httd2th * ktt2 + 4.0 * httdth * ktt * kttdth + 2.0 * htt * (kttdth2 + ktt * kttd2th);
-    glttdrdth   = hphphdrdth * ktph2 + 2.0 * hphphdr * ktph * ktphdth + 2.0 * hphphdth * ktph * ktphdr
-            + 2.0 * hphph * (ktphdth * ktphdr + ktph * ktphdrdth) + httdrdth * ktt2 + 2.0 * httdr * ktt * kttdth + 2.0 *
-    httdth * ktt * kttdr
-            + 2.0 * htt * (kttdth * kttdr + ktt * kttdrdth);
-
-    */
-
     glttd2r = hphphd2r * ktph2 + 4.0 * hphphdr * ktph * ktphdr + 2.0 * hphph * (ktphdr2 + ktph * ktphd2r)
         + httd2r * ktt2 + 4.0 * httdr * ktt * kttdr + 2.0 * htt * (kttdr2 + ktt * kttd2r);
     glttd2th = hphphd2th * ktph2 + 4.0 * hphphdth * ktph * ktphdth + 2.0 * hphph * (ktphdth2 + ktph * ktphd2th)
@@ -1457,8 +1304,6 @@ void MetricGlampedakis::calcgCompsDiff2(const double* pos)
     gphphdrdth = kphphdrdth + mEpsilon * glphphdrdth;
 }
 
-/*!
- */
 void MetricGlampedakis::setStandardValues()
 {
     mInitPos[0] = 0.0;
@@ -1475,8 +1320,6 @@ void MetricGlampedakis::setStandardValues()
     mCoordNames[3] = std::string("phi");
 }
 
-/*!
- */
 void MetricGlampedakis::initToZero()
 {
     for (size_t i = 0; i < 4; ++i) {

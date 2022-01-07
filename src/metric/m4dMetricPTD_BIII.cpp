@@ -1,37 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricPT-DBIII.cpp
-
-  Copyright (c) 2010-2014  Thomas Mueller, Frank Grave, Felix Beslmeisl
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricPTD_BIII.cpp
+ * @author  Felix Beslmeisl
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricPTD_BIII.h"
 
 namespace m4d {
 
-#define eps 1.0e-6
-
-/*! Standard constructor for the  metric.
- *
- */
 MetricPTD_BIII::MetricPTD_BIII()
 {
     mMetricName = "Petrov_Type_D_BIII_ES_";
@@ -46,17 +22,10 @@ MetricPTD_BIII::MetricPTD_BIII()
     // mLocTeds.push_back(enum_nat_tetrad_static);
 }
 
-/*! Standard destructor for the  metric.
- *
- */
-
 MetricPTD_BIII::~MetricPTD_BIII() {}
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricPTD_BIII::calculateMetric(const double* pos)
 {
     double r = pos[1];
@@ -84,10 +53,6 @@ bool MetricPTD_BIII::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPTD_BIII::calculateChristoffels(const double* pos)
 {
     double r = pos[1];
@@ -165,10 +130,6 @@ bool MetricPTD_BIII::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPTD_BIII::calculateChrisD(const double* pos)
 {
     double r = pos[1];
@@ -439,13 +400,6 @@ bool MetricPTD_BIII::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPTD_BIII::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -458,13 +412,6 @@ void MetricPTD_BIII::localToCoord(const double* pos, const double* ldir, double*
     dir[3] = ldir[3] / sz;
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPTD_BIII::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -477,32 +424,21 @@ void MetricPTD_BIII::coordToLocal(const double* pos, const double* cdir, double*
     ldir[3] = cdir[3] * sz;
 }
 
-/*! Tests break condition.
- *  \param pos  :  position.
- *  \return true  : position z < 0.0
- *  \return false : position is valid.
- */
 bool MetricPTD_BIII::breakCondition(const double* pos)
 {
     bool br = false;
 
-    if (pos[3] * pos[3] <= (0.0 + eps)) {
+    if (pos[3] * pos[3] <= (0.0 + M4D_METRIC_EPS)) {
         br = true;
     }
     return br;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- * No Parameters in this spacetime.
- */
 bool MetricPTD_BIII::setParam(const char*, double)
 {
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricPTD_BIII::report(const vec4 pos, const vec4 cdir, char*& text)
 {
     std::stringstream ss;
@@ -534,11 +470,8 @@ bool MetricPTD_BIII::report(const vec4 pos, const vec4 cdir, char*& text)
     return CopyString(ss.str().c_str(), text);
 }
 
-// *************************** specific  public methods ****************************
-// None
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricPTD_BIII::setStandardValues()
 {
     mInitPos[0] = 0.0;

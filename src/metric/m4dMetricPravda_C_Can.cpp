@@ -1,39 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricPravda_C.cpp
-
-  Copyright (c) 2010-2014  Thomas Mueller, Frank Grave, Felix Beslmeisl
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricPravda_C_CanI.cpp
+ * @author  Felix Beslmeisl
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricPravda_C_Can.h"
 
 namespace m4d {
 
-#define eps 1.0e-9
-
-/*! Standard constructor for the metric.
- *
- * \param  m : mass of the black holes.
- * \param  A : acceleration constant of the black holes.
- */
 MetricPravda_C_Can::MetricPravda_C_Can(double A, double m)
 {
     mMetricName = "Pravda_C-Metric_Canonical_Coords";
@@ -58,17 +32,10 @@ MetricPravda_C_Can::MetricPravda_C_Can(double A, double m)
     // mLocTeds.push_back(enum_nat_tetrad_static);
 }
 
-/*! Standard destructor for the metric.
- *
- */
-
 MetricPravda_C_Can::~MetricPravda_C_Can() {}
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricPravda_C_Can::calculateMetric(const double* pos)
 {
     double tau = pos[0];
@@ -124,10 +91,6 @@ bool MetricPravda_C_Can::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPravda_C_Can::calculateChristoffels(const double* pos)
 {
     double tau = pos[0];
@@ -300,25 +263,12 @@ bool MetricPravda_C_Can::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *   This function is not implemented in this metric.
- *   Derivative terms become too extensive.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPravda_C_Can::calculateChrisD(const double*)
 {
     // fprintf(stderr,"MetricPravda_C_Can::calculateChrisD ( const double* pos ) ... not implemented yet\n");
     return false;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPravda_C_Can::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double tau = pos[0];
@@ -340,13 +290,6 @@ void MetricPravda_C_Can::localToCoord(const double* pos, const double* ldir, dou
     dir[2] = ldir[2] / eta * (rho1);
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPravda_C_Can::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double tau = pos[0];
@@ -368,27 +311,12 @@ void MetricPravda_C_Can::coordToLocal(const double* pos, const double* cdir, dou
     ldir[2] = cdir[2] * eta / rho1 / k;
 }
 
-/*! Tests break condition
- *  \param pos  :  position.
- *
- * Not implemented yet.
- */
 bool MetricPravda_C_Can::breakCondition(const double*)
 {
     bool br = false;
     return br;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
-*
-*  The constraint equation for lightlike and timelike geodesics reads:
-\verbatim
- sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
-\endverbatim
-*  \param  y[]   : pointer to position and direction coordinates.
-*  \param  kappa : timelike (-1.0), lightlike (0.0).
-*  \return double : sum.
-*/
 double MetricPravda_C_Can::testConstraint(const double y[], const double kappa)
 {
     calculateMetric(y);
@@ -401,10 +329,6 @@ double MetricPravda_C_Can::testConstraint(const double y[], const double kappa)
     // return 0;
 }
 
-/*! Set parameter 'pName' to 'val' and calculates the resulting constants \f$Z_i\f$, \f$\alpha^2\f$ and q.
- *
- *
- */
 bool MetricPravda_C_Can::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -425,12 +349,6 @@ bool MetricPravda_C_Can::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Calculates the roots of a polynom of type x^3 + ax^2 + c = 0.
- *
- *\param   a     : coefficient of the quadratic term.
- *\param   c     : y-axes offset
- *\param roots : reference Roots of the polynom sorted roots[2]<roots[0]<roots[1].
- */
 void MetricPravda_C_Can::calculateRoots(vec3& roots, double a, double c)
 {
 
@@ -464,8 +382,6 @@ void MetricPravda_C_Can::calculateRoots(vec3& roots, double a, double c)
     roots[2] = z1;
 }
 
-/*! Generate report.
- */
 bool MetricPravda_C_Can::report(const vec4 pos, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -777,8 +693,7 @@ double MetricPravda_C_Can::lambda_eta(double tau, double zeta, double eta)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricPravda_C_Can::setStandardValues()
 {
     mInitPos[0] = 1.0;

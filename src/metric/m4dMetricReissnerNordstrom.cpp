@@ -1,28 +1,9 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricReissnerNordstrom.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricReissnerNordstrom.cpp
+ * @author  Andreas Wünsch
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricReissnerNordstrom.h"
 
 double dzdr_reissner(double x, void* params)
@@ -41,11 +22,6 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-/*! Standard constructor for the Schwarzschild metric.
- *
- * \param  mass : mass of the black hole.
- * \param  q : charge
- */
 MetricReissnerNordstrom::MetricReissnerNordstrom(double mass, double q)
 {
     mMetricName = "ReissnerNordstrom";
@@ -96,8 +72,6 @@ MetricReissnerNordstrom::MetricReissnerNordstrom(double mass, double q)
     setStandardValues();
 }
 
-/*!
- */
 MetricReissnerNordstrom::~MetricReissnerNordstrom()
 {
     gsl_integration_workspace_free(w);
@@ -105,10 +79,6 @@ MetricReissnerNordstrom::~MetricReissnerNordstrom()
 
 // *********************************** public methods ******************************
 
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricReissnerNordstrom::calculateMetric(const double* pos)
 {
     double r = pos[1];
@@ -144,10 +114,6 @@ bool MetricReissnerNordstrom::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricReissnerNordstrom::calculateChristoffels(const double* pos)
 {
     double r = pos[1];
@@ -239,10 +205,6 @@ bool MetricReissnerNordstrom::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricReissnerNordstrom::calculateChrisD(const double* pos)
 {
     double r = pos[1];
@@ -535,13 +497,6 @@ bool MetricReissnerNordstrom::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricReissnerNordstrom::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -555,13 +510,6 @@ void MetricReissnerNordstrom::localToCoord(const double* pos, const double* ldir
     dir[3] = ldir[3] / (r * sin(theta));
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricReissnerNordstrom::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -575,12 +523,6 @@ void MetricReissnerNordstrom::coordToLocal(const double* pos, const double* cdir
     ldir[3] = cdir[3] * r * sin(theta);
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
- *  \return false : position is valid.
- */
 bool MetricReissnerNordstrom::breakCondition(const double* pos)
 {
     if (pos[1] <= 0.0) {
@@ -595,11 +537,6 @@ bool MetricReissnerNordstrom::breakCondition(const double* pos)
     return false;
 }
 
-/*! Calculate right hand side of the geodesic equation in first order form.
- *
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  dydx[] : pointer to right side of geodesic equation.
- */
 bool MetricReissnerNordstrom::calcDerivs(const double y[], double dydx[])
 {
     dydx[0] = y[4];
@@ -623,16 +560,6 @@ bool MetricReissnerNordstrom::calcDerivs(const double y[], double dydx[])
     return true;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricReissnerNordstrom::testConstraint(const double y[], const double kappa)
 {
     double r = y[1];
@@ -652,11 +579,6 @@ double MetricReissnerNordstrom::testConstraint(const double y[], const double ka
     return sum;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
- *  'charge' represents the charge of the black hole.
- */
 bool MetricReissnerNordstrom::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -675,13 +597,6 @@ bool MetricReissnerNordstrom::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Transform point p to embedding coordinates.
- *
- *  \param p  : point to be transformed.
- *  \param ep : reference to 'embedded' point.
- *  \return true : success.
- *  \return false : otherwise.
- */
 bool MetricReissnerNordstrom::transToEmbedding(vec4 p, vec4& ep)
 {
     vec4 cp;
@@ -699,13 +614,6 @@ bool MetricReissnerNordstrom::transToEmbedding(vec4 p, vec4& ep)
     return false;
 }
 
-/*! Set embedding parameters.
- *
- *  \param  name : embedding parameter name.
- *  \param  val  : embedding parameter value.
- *  \return true  : success.
- *  \return false : parameter not valid.
- */
 bool MetricReissnerNordstrom::setEmbeddingParam(const char* name, double val)
 {
     Metric::setEmbeddingParam(name, val);
@@ -725,10 +633,6 @@ bool MetricReissnerNordstrom::setEmbeddingParam(const char* name, double val)
     return testEmbeddingParams();
 }
 
-/*! Test embedding parameters
- *  \return  true : all parameters are ok
- *  \return  false : at least one parameter had to be adjusted.
- */
 bool MetricReissnerNordstrom::testEmbeddingParams()
 {
     bool allOk = true;
@@ -752,70 +656,6 @@ bool MetricReissnerNordstrom::testEmbeddingParams()
     return allOk;
 }
 
-/*! Generate vertices for the embedding diagram.
- *
- *  \param verts : reference to vector of vertices.
- *  \param indices : reference to vector of indices.
- *  \param numElems : number of elements in a strip.
- *  \param counter  : number of strips.
- *  \return int : number of vertices.
- */
-// int MetricReissnerNordstrom::getEmbeddingVertices(std::vector<vec3> &verts,
-//        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter) {
-//    if (!verts.empty()) {
-//        verts.clear();
-//    }
-
-//    if (!indices.empty()) {
-//        indices.clear();
-//    }
-
-//    testEmbeddingParams();
-//    mEmb_rstep = (mEmb_rmax - mEmb_rmin) / mEmb_r_num;
-//    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
-
-//    numElems = int(mEmb_r_num);
-//    counter  = int(mEmb_phi_num) + 1;
-
-//    int vnum;
-
-//    double x, y, z, r, phi;
-//    for (unsigned int k = 0; k < counter; k++) {
-//        phi = k * mEmb_phistep;
-//        for (unsigned int j = 0; j < numElems; j++) {
-//            r = mEmb_rmin + j * mEmb_rstep;
-//            x = r * cos(phi);
-//            y = r * sin(phi);
-//            if (r >= rp) {
-//                calcEmbeddingZ(r, z);
-//                verts.push_back(vec3(x, y, z));
-
-//                vnum = k * numElems + j;
-
-//                indices.push_back(vnum);
-//                indices.push_back(vnum + numElems);
-//            }
-//        }
-//    }
-
-//    int numVerts = (int)verts.size();
-//    int numInds  = (int)indices.size();
-
-//    if (2 * numVerts == numInds) {
-//        return numVerts;
-//    }
-
-//    return 0;
-//}
-
-/*! Effective potential.
- *  \param pos : initial position.
- *  \param cdir : initial four-direction.
- *  \param type : geodesic type.
- *  \param x : abscissa value.
- *  \param val : reference to effective potential value.
- *  \return true : effective potential exists at x.
- */
 bool MetricReissnerNordstrom::effPotentialValue(
     const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double& val)
 {
@@ -833,13 +673,6 @@ bool MetricReissnerNordstrom::effPotentialValue(
     return true;
 }
 
-/*! Total energy.
- *  \param pos : initial position.
- *  \param cdir : initial four-direction.
- *  \param x : abscissa value.
- *  \param val : reference to total energy value.
- *  \return true : effective potential exists at x.
- */
 bool MetricReissnerNordstrom::totEnergy(const vec4 pos, const vec4 cdir, const double, double& val)
 {
     if (pos[1] > rm - eps && pos[1] < rp + eps) {
@@ -852,9 +685,6 @@ bool MetricReissnerNordstrom::totEnergy(const vec4 pos, const vec4 cdir, const d
     return true;
 }
 
-/*!
- *  \param units : type of physical constants.
- */
 void MetricReissnerNordstrom::usePhysicalUnits(const enum_physical_constants units)
 {
     Metric::usePhysicalUnits(units);
@@ -863,11 +693,6 @@ void MetricReissnerNordstrom::usePhysicalUnits(const enum_physical_constants uni
     calcDiskr();
 }
 
-/*!
- *  \param speed_of_light : value for speed of light.
- *  \param grav_const : value for gravitational constant.
- *  \param diel_perm : value for dielectric permittivity.
- */
 void MetricReissnerNordstrom::setUnits(const double speed_of_light, const double grav_const, const double diel_perm)
 {
     Metric::setUnits(speed_of_light, grav_const, diel_perm);
@@ -876,8 +701,6 @@ void MetricReissnerNordstrom::setUnits(const double speed_of_light, const double
     calcDiskr();
 }
 
-/*! Generate report.
- */
 bool MetricReissnerNordstrom::report(const vec4 pos, const vec4 cdir, char*& text)
 {
     std::stringstream ss;

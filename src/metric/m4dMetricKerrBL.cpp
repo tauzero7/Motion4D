@@ -10,8 +10,6 @@
 
 namespace m4d {
 
-#define eps 1.0e-6
-
 MetricKerrBL::MetricKerrBL(double m, double a)
 {
     mMetricName = "KerrBL";
@@ -746,7 +744,7 @@ bool MetricKerrBL::breakCondition(const double* pos)
     double r = pos[1];
 
     double eh = mass + sqrt(mass * mass - angmom * angmom);
-    if ((r < 0.0) || (r <= (1.0 + eps) * eh)) {
+    if ((r < 0.0) || (r <= (1.0 + M4D_METRIC_EPS) * eh)) {
         br = true;
     }
     return br;
@@ -857,7 +855,7 @@ bool MetricKerrBL::effPotentialValue(
     }
 
     double eh = mass + sqrt(mass * mass - angmom * angmom);
-    if ((pos[1] <= (1.0 + eps) * eh) || (x <= (1.0 + eps) * eh)) {
+    if ((pos[1] <= (1.0 + M4D_METRIC_EPS) * eh) || (x <= (1.0 + M4D_METRIC_EPS) * eh)) {
         return false;
     }
 

@@ -1,37 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricAlcubierreSimple.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricAlcubierreSimple.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of the m4d-library.
+ */
 #include "m4dMetricAlcubierreSimple.h"
 
 namespace m4d {
 
-/*! Standard constructor for the KerrBL metric.
- *
- * \param  R     : size of warp bubble.
- * \param  vs    : velocity of warp bubble.
- */
 MetricAlcubierreSimple::MetricAlcubierreSimple(double R, double dR, double vs)
 {
     mMetricName = "AlcubierreWarpSimple";
@@ -61,10 +37,7 @@ MetricAlcubierreSimple::MetricAlcubierreSimple(double R, double dR, double vs)
 MetricAlcubierreSimple::~MetricAlcubierreSimple() {}
 
 // *********************************** public methods ******************************
-/*! Calculate the covariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricAlcubierreSimple::calculateMetric(const double* pos)
 {
     double c = mSpeedOfLight;
@@ -92,10 +65,6 @@ bool MetricAlcubierreSimple::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricAlcubierreSimple::calculateChristoffels(const double* pos)
 {
     double c = mSpeedOfLight;
@@ -174,10 +143,6 @@ bool MetricAlcubierreSimple::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricAlcubierreSimple::calculateChrisD(const double* pos)
 {
     double ft, fx, fy, fz;
@@ -189,10 +154,6 @@ bool MetricAlcubierreSimple::calculateChrisD(const double* pos)
     return false;
 }
 
-/*! Calculate Riemann tensor R^a_bcd
- * \param pos : pointer to coordinate position where the Riemann tensor have to be evaluated.
- * \return true : successfull
- */
 bool MetricAlcubierreSimple::calculateRiemann(const double* pos)
 {
     double ft, fx, fy, fz;
@@ -204,13 +165,6 @@ bool MetricAlcubierreSimple::calculateRiemann(const double* pos)
     return false;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricAlcubierreSimple::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type)
 {
     double f = calcF(pos);
@@ -232,13 +186,6 @@ void MetricAlcubierreSimple::localToCoord(const double* pos, const double* ldir,
     }
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricAlcubierreSimple::coordToLocal(
     const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type)
 {
@@ -261,11 +208,6 @@ void MetricAlcubierreSimple::coordToLocal(
     }
 }
 
-/*!
- *  \param pos  :  position.
- *  \return true  : radial position r < 0.0 or ...
- *  \return false : position is valid.
- */
 bool MetricAlcubierreSimple::breakCondition(const double*)
 {
     bool br = false;
@@ -273,47 +215,6 @@ bool MetricAlcubierreSimple::breakCondition(const double*)
     return br;
 }
 
-// Calculate right hand side of the geodesic equation in first order form.
-//
-// \param  y[]   : pointer to position and direction coordinates.
-//  \param  dydx[] : pointer to right side of geodesic equation.
-//
-/*
-bool MetricAlcubierreSimple::calcDerivs ( const double y[], double dydx[] )
-{
-    return false;
-    dydx[0] = y[4];
-    dydx[1] = y[5];
-    dydx[2] = y[6];
-    dydx[3] = y[7];
-
-    double f = calcF(y);
-    double f2 = f*f;
-
-    double c = mSpeedOfLight;
-    double edc2 = 1.0/(c*c);
-    //fprintf(stderr,"hier...%f %f\n",y[5]-mvs*y[4],f);
-    double v = mvs;
-    double v2 = v*v;
-    double v3 = v2*v;
-
-    double ft,fx,fy,fz;
-    calcDF(y,ft,fx,fy,fz);
-
-    return true;
-}
-*/
-
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return sum.
- */
 double MetricAlcubierreSimple::testConstraint(const double y[], const double kappa)
 {
     double c = mSpeedOfLight;
@@ -335,7 +236,7 @@ double MetricAlcubierreSimple::testConstraint(const double y[], const double kap
     return sum;
 }
 
-bool MetricAlcubierreSimple::resize(double* y, double kappa, double factor)
+bool MetricAlcubierreSimple::resize(double* y, double, double)
 {
     double a = 1 / fabs(y[4]);
     y[4] *= a;
@@ -345,10 +246,6 @@ bool MetricAlcubierreSimple::resize(double* y, double kappa, double factor)
     return true;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'sigma', 'R', and 'vs' parameters.
- */
 bool MetricAlcubierreSimple::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -364,12 +261,6 @@ bool MetricAlcubierreSimple::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Transform point p to 2+1 coordinates.
- *
- *  \param  p  : point in proper metric coordinates.
- *  \param  cp : reference to transformed point.
- *  \return true : success.
- */
 bool MetricAlcubierreSimple::transToTwoPlusOne(vec4 p, vec4& cp)
 {
     cp = vec4(p[0], p[1], p[2], p[0]);
@@ -391,11 +282,7 @@ bool MetricAlcubierreSimple::report(const vec4, const vec4, char*& text)
     return CopyString(ss.str().c_str(), text);
 }
 
-// *************************** specific  public methods ****************************
-
 // ********************************* protected methods *****************************
-/*!
- */
 void MetricAlcubierreSimple::setStandardValues()
 {
     mInitPos[0] = 0.0;
@@ -412,9 +299,6 @@ void MetricAlcubierreSimple::setStandardValues()
     mCoordNames[3] = std::string("z");
 }
 
-/*! Calculate rs function
- *  \param  pos : pointer to position.
- */
 double MetricAlcubierreSimple::calcRs(const double* pos)
 {
     double t = pos[0];
@@ -490,23 +374,10 @@ void MetricAlcubierreSimple::calcDF(const double* pos, double& ft, double& fx, d
 #endif
 }
 
-/*
-void MetricAlcubierreSimple::calcD2F ( const double* pos, double &ftt, double &ftx, double &fty, double &ftz,
-                              double &fxx, double &fxy, double &fxz, double &fyy,
-                              double &fyz, double &fzz )
-*/
 void MetricAlcubierreSimple::calcD2F(
     const double*, double&, double&, double&, double&, double&, double&, double&, double&, double&, double&)
 {
-    /*
-    double t = pos[0];
-    double x = pos[1];
-    double y = pos[2];
-    double z = pos[3];
-
-    double vs = mvs;
-    double R = mR;
-    */
+    fprintf(stderr, "uups... not implemented yet!\n");
     // TODO
 }
 

@@ -8,8 +8,6 @@
 
 namespace m4d {
 
-#define eps 1.0e-6
-
 Metric::Metric()
 {
     mMetricName = "noName";
@@ -258,12 +256,12 @@ void Metric::getNatDualTetrad(const vec4 pos, vec4& t0, vec4& t1, vec4& t2, vec4
     coordToLocal(pos, cdir3, t3, type);
 }
 
-void Metric::localToCoord(const vec4 &pos, const vec4 &ldir, vec4& cdir, enum_nat_tetrad_type type)
+void Metric::localToCoord(const vec4& pos, const vec4& ldir, vec4& cdir, enum_nat_tetrad_type type)
 {
     localToCoord(pos.data(), ldir.data(), cdir.data(), type);
 }
 
-void Metric::coordToLocal(const vec4 &pos, const vec4 &cdir, vec4& ldir, enum_nat_tetrad_type type)
+void Metric::coordToLocal(const vec4& pos, const vec4& cdir, vec4& ldir, enum_nat_tetrad_type type)
 {
     coordToLocal(pos.data(), cdir.data(), ldir.data(), type);
 }
@@ -427,7 +425,7 @@ double Metric::dielectric_perm()
 bool Metric::localNullDir(const double pm, const double* l3dir, double* l4dir)
 {
     double norm = (l3dir[0] * l3dir[0] + l3dir[1] * l3dir[1] + l3dir[3] * l3dir[1]);
-    if (norm < eps) {
+    if (norm < M4D_METRIC_EPS) {
         fprintf(stderr, "Metric::localNullDir():  can't normalize l3dir!\n");
         return false;
     }

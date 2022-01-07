@@ -18,21 +18,8 @@
    other metrics or integrators in a straight forward manner.</p> <p>A more detailed description of the implemented
    metrics can be found either in the original literature or in the \ref lit_cos "Catalogue of Spacetimes".</p>
 
-
-    <H2>Add own metric</H2>
-    <p>In order to add a metric, one has to do the following:</p>
-    <ol>
-      <li>Save an old metric under the new metric name:<br> e.g. m4dMetricSchwarzschild.* -> m4dMetricNewName.*
-      <li>Write all the necessary methods.
-      <li>Add the new metric header into the m4dMetricList.h file and adjust NUM_METRICS, stl_metric_names, and
-   enum_metric. <li>Add the new standard metric constructor to the method initializeMetric() in the
-   m4dMetricDatabase.cpp file. <li>Add new filenames to the src/metric/Makefile.am  file. <li>autoreconf, configure,
-   make
-    </ol>
-
-
     <H2>libMotion4D License</H2>
-    <p>Copyright &copy; 2009-2014 by Thomas M&uuml;ller and Frank Grave</p><br>
+    <p>Copyright &copy; 2009-2022 by Thomas M&uuml;ller and Frank Grave</p>
     <p>Permission to use, copy, modify, and distribute this software and its documentation under the terms of the GNU
    General Public License is hereby granted. No representations are made about the suitability of this software for any
    purpose. It is provided "as is" without express or implied warranty. See the <a
@@ -40,15 +27,16 @@
 
     <br>
     <H2>Contact</H2>
-    Visualisierungsinstitut der Universit&auml;t Stuttgart<br>
-    Allmandring 19<br>
-    70569 Stuttgart, Germany<br>
-    Email: Thomas.Mueller@vis.uni-stuttgart.de<br><br>
+    Dr. Thomas Müller<br>
+    Haus der Astronomie/Max Planck Institute for Astronomy<br>
+    69117 Heidelberg, Germany<br>
+    Email: tmueller [at] mpia.de<br>
 
-    Universit&auml;t Stuttgart<br>
+    Dr. Frank Grave<br>
+    <i>formerly: Universit&auml;t Stuttgart<br>
     1. Institut für Theoretische Physik<br>
     Pfaffenwaldring 57 // IV<br>
-    70550 Stuttgart, Germany<br>
+    70550 Stuttgart, Germany<br></i>
     <br>
 
     <H2>Books</H2>

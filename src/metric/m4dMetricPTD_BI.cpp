@@ -1,38 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricPT-DBI.cpp
-
-  Copyright (c) 2010-2014  Thomas Mueller, Frank Grave, Felix Beslmeisl
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricPTD_BI.cpp
+ * @author  Felix Beslmeisl
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricPTD_BI.h"
 
 namespace m4d {
 
-#define eps 1.0e-6
-
-/*! Standard constructor for the metric.
- *
- * \param  b : parameter b of the BI metric
- */
 MetricPTD_BI::MetricPTD_BI(double b)
 {
     mMetricName = "Petrov_Type_D_BI_ES";
@@ -53,16 +28,10 @@ MetricPTD_BI::MetricPTD_BI(double b)
     // mLocTeds.push_back(enum_nat_tetrad_static);
 }
 
-/*! Standard destructor for the metric.
- *
- */
 MetricPTD_BI::~MetricPTD_BI() {}
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricPTD_BI::calculateMetric(const double* pos)
 {
     double r = pos[1];
@@ -92,10 +61,6 @@ bool MetricPTD_BI::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPTD_BI::calculateChristoffels(const double* pos)
 {
     double r = pos[1];
@@ -177,10 +142,6 @@ bool MetricPTD_BI::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPTD_BI::calculateChrisD(const double* pos)
 {
     double r = pos[1];
@@ -458,13 +419,6 @@ bool MetricPTD_BI::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPTD_BI::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -477,13 +431,6 @@ void MetricPTD_BI::localToCoord(const double* pos, const double* ldir, double* d
     dir[3] = ldir[3] / w;
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPTD_BI::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -496,26 +443,16 @@ void MetricPTD_BI::coordToLocal(const double* pos, const double* cdir, double* l
     ldir[3] = cdir[3] * w;
 }
 
-/*! Tests break condition
- *  \param pos  :  position.
- *  \return true  : radial position r < 0.0 or r reaches b
- *  \return false : position is valid.
- */
 bool MetricPTD_BI::breakCondition(const double* pos)
 {
     bool br = false;
 
-    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + eps) * Par_b * Par_b)) {
+    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + M4D_METRIC_EPS) * Par_b * Par_b)) {
         br = true;
     }
     return br;
 }
 
-/*! Calculates the constants of Motion.
- *
- *  \param pos : initial position.
- *  \param cdir : initial four-direction.
- */
 void MetricPTD_BI::calcConstantsOfMotion(const vec4 pos, const vec4 cdir)
 {
     double sinp2 = sin(pos[2]);
@@ -528,21 +465,8 @@ void MetricPTD_BI::calcConstantsOfMotion(const vec4 pos, const vec4 cdir)
     m0 = -K / pos[1] / pos[1] - cdir[1] * cdir[1] * pos[1] / (pos[1] - b) - cdir[3] * cdir[3] * (pos[1] - b) / pos[1];
 }
 
-/*! Effective potential.
- *  \param pos : initial position.
- *  \param cdir : initial four-direction.
- *  \param type : geodesic type.
- *  \param x : abscissa value.
- *  \param val : reference to effective potential value.
- *  \return true : effective potential exists at x.
- */
 bool MetricPTD_BI::effPotentialValue(const vec4 pos, const vec4 cdir, enum_geodesic_type, const double x, double& val)
 {
-    /*
-      double kappa = 0.0;
-    if (type==enum_geodesic_timelike)
-      kappa = -mSign;
-    */
     if (x <= 0.0) {
         return false;
     }
@@ -555,27 +479,12 @@ bool MetricPTD_BI::effPotentialValue(const vec4 pos, const vec4 cdir, enum_geode
     return true;
 }
 
-/*! Total energy.
- *  \param pos : initial position.
- *  \param cdir : initial four-direction.
- *  \param x : abscissa value.
- *  \param val : reference to total energy value.
- *  \return true : effective potential exists at x.
- */
 bool MetricPTD_BI::totEnergy(const vec4, const vec4, const double, double& val)
 {
     val = 0.0;
     return true;
 }
 
-/*! Calculates the root of the effective Potential left to r_0 for given constants of motion and m0=0 (lightlike)
- *
- *  \param C02 : constant of motion C0^2
- *  \param K   : constant of motion K
- *  \param r0  : start condition r_0
- *  \return -1 if there is no root left to r_0.
- *
- */
 double MetricPTD_BI::calculateVeffRoot(double C02, double K, double r0)
 {
     double r = 0;
@@ -628,10 +537,6 @@ double MetricPTD_BI::calculateVeffRoot(double C02, double K, double r0)
     return r;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *
- */
 bool MetricPTD_BI::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -641,8 +546,6 @@ bool MetricPTD_BI::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricPTD_BI::report(const vec4 pos, const vec4 cdir, char*& text)
 {
     std::stringstream ss;
@@ -682,11 +585,8 @@ bool MetricPTD_BI::report(const vec4 pos, const vec4 cdir, char*& text)
     return CopyString(ss.str().c_str(), text);
 }
 
-// *************************** specific  public methods ****************************
-// None
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricPTD_BI::setStandardValues()
 {
     mInitPos[0] = 0.0;

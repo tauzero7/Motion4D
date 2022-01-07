@@ -1,39 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricRotDihole.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricRotDihole.cpp
+ * @author  Thomas Mueller
+ *
+ *  This file is part of libMotion4D.
+ */
 #include "m4dMetricRotDihole.h"
 
 namespace m4d {
-#define eps 1.0e-6
 
-/*! Standard constructor for the Kottler metric.
- *
- * \param  mass1 : mass of black hole 1
- * \param  mass2 : mass of black hole 2
- * \param  omega : angular frequency
- */
 MetricRotDihole::MetricRotDihole(double mass1, double mass2, double omega)
 {
     mMetricName = "RotDihole";
@@ -58,10 +32,7 @@ MetricRotDihole::MetricRotDihole(double mass1, double mass2, double omega)
 MetricRotDihole::~MetricRotDihole() {}
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricRotDihole::calculateMetric(const double* pos)
 {
     double U = calc_U(pos);
@@ -86,10 +57,6 @@ bool MetricRotDihole::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricRotDihole::calculateChristoffels(const double* pos)
 {
     double dUdt, dUdx, dUdy, dUdz;
@@ -164,23 +131,12 @@ bool MetricRotDihole::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricRotDihole::calculateChrisD(const double*)
 {
 
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricRotDihole::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double U = calc_U(pos);
@@ -191,13 +147,6 @@ void MetricRotDihole::localToCoord(const double* pos, const double* ldir, double
     dir[3] = ldir[3] / U;
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricRotDihole::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double U = calc_U(pos);
@@ -208,22 +157,12 @@ void MetricRotDihole::coordToLocal(const double* pos, const double* cdir, double
     ldir[3] = cdir[3] * U;
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
- *  \return false : position is valid.
- */
 bool MetricRotDihole::breakCondition(const double*)
 {
     bool br = false;
     return br;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'mass' or 'lambda' parameter.
- */
 bool MetricRotDihole::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -240,8 +179,6 @@ bool MetricRotDihole::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricRotDihole::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -256,8 +193,7 @@ bool MetricRotDihole::report(const vec4, const vec4, char*& text)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricRotDihole::setStandardValues()
 {
     mInitPos[0] = 0.0;

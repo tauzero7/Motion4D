@@ -9,8 +9,6 @@
 
 namespace m4d {
 
-#define eps 1.0e-6
-
 MetricCosmicStringSchwarzschild::MetricCosmicStringSchwarzschild(double mass, double beta)
 {
     mMetricName = "CosmicStringSchwarzschild";
@@ -488,7 +486,7 @@ bool MetricCosmicStringSchwarzschild::breakCondition(const double* pos)
 {
     bool br = false;
 
-    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + eps) * rs * rs)) {
+    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + M4D_METRIC_EPS) * rs * rs)) {
         br = true;
     }
     return br;

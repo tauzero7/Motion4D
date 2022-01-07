@@ -1,56 +1,31 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dMetricKottler.h
+/**
+ * @file    m4dMetricKottler.h
+ * @author  Thomas Mueller
+ *
+ * @brief  Kottler metric in spherical coordinates (t,r,theta,phi).
 
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
+     The line element is given by
 
+     \f[ds^2 = -\left(1-\frac{r_s}{r}-\frac{\Lambda r^2}{3}\right) dt^2 + \frac{dr^2}{1-r_s/r-\Lambda r^2/3} +
+ r^2\left(d\vartheta^2 + \sin(\vartheta)^2 d\varphi^2\right),\f]
 
-   This file is part of the m4d-library.
+     where \f$r_s=2GM/c^2\f$ is the Schwarzschild radius. G is Newton's
+     constant, M is the mass of the black hole, Lambda is the cosmological
+     constant, and c is the speed of light.
 
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
+     Detailed discussions about the Kottler metric can be found
+     in e.g. Phys.Rev.D 76, 043006 (2007) and in the original work by
+     Kottler...
 
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-
-/*!  \class  m4d::MetricKottler
-     \brief  Kottler metric in spherical coordinates (t,r,theta,phi).
-
-             The line element is given by
-
-             \f[ds^2 = -\left(1-\frac{r_s}{r}-\frac{\Lambda r^2}{3}\right) dt^2 + \frac{dr^2}{1-r_s/r-\Lambda r^2/3} + r^2\left(d\vartheta^2 + \sin(\vartheta)^2 d\varphi^2\right),\f]
-
-             where \f$r_s=2GM/c^2\f$ is the Schwarzschild radius. G is Newton's
-             constant, M is the mass of the black hole, Lambda is the cosmological
-             constant, and c is the speed of light.
-
-             Detailed discussions about the Kottler metric can be found
-             in e.g. Phys.Rev.D 76, 043006 (2007) and in the original work by
-             Kottler...
-
-*/
-// -------------------------------------------------------------------------------
-
+ * This file is part of the m4d-library.
+ */
 #ifndef M4D_METRIC_KOTTLER_H
 #define M4D_METRIC_KOTTLER_H
 
 #include "m4dMetric.h"
-#include <gsl/gsl_integration.h>
 #include <gsl/gsl_errno.h>
+#include <gsl/gsl_integration.h>
 
-/*! \brief Parameters for the Kottler metric.
-
-  Is used to numerical calculate the embedding function.
- */
 typedef struct {
     double rs;
     double lambda;
@@ -58,61 +33,58 @@ typedef struct {
 
 namespace m4d {
 
-// ---------------------------------------------------
-//    class definition:   MetricKottler
-// ---------------------------------------------------
-class MetricKottler : public Metric {
+class MetricKottler : public Metric
+{
 public:
     MetricKottler(double mass = 1.0, double lambda = 0.05);
     virtual ~MetricKottler();
 
-// --------- public methods -----------
+    // --------- public methods -----------
 public:
-    virtual bool   calculateMetric(const double* pos);
-    virtual bool   calculateChristoffels(const double* pos);
-    virtual bool   calculateChrisD(const double* pos);
+    virtual bool calculateMetric(const double* pos);
+    virtual bool calculateChristoffels(const double* pos);
+    virtual bool calculateChrisD(const double* pos);
 
-    virtual void   localToCoord(const double* pos, const double* ldir, double* dir,
-                                enum_nat_tetrad_type  type = enum_nat_tetrad_default);
-    virtual void   coordToLocal(const double* pos, const double* cdir, double* ldir,
-                                enum_nat_tetrad_type  type = enum_nat_tetrad_default);
+    virtual void localToCoord(
+        const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
+    virtual void coordToLocal(
+        const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
 
-    virtual bool   breakCondition(const double* pos);
+    virtual bool breakCondition(const double* pos);
 
     virtual double testConstraint(const double y[], const double kappa);
 
-    virtual bool   setParam(const char* pName, double val);
+    virtual bool setParam(const char* pName, double val);
 
-    virtual bool   transToEmbedding(vec4 p, vec4 &ep);
+    virtual bool transToEmbedding(vec4 p, vec4& ep);
 
-    virtual bool   setEmbeddingParam(const char *name, double val);
-    virtual bool   testEmbeddingParams();
-//    virtual int    getEmbeddingVertices(std::vector<vec3> &verts,
-//                                        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter);
+    virtual bool setEmbeddingParam(const char* name, double val);
+    virtual bool testEmbeddingParams();
 
-    virtual void   usePhysicalUnits(const enum_physical_constants  units);
-    virtual void   setUnits(const double speed_of_light, const double grav_const, const double diel_perm);
+    virtual void usePhysicalUnits(const enum_physical_constants units);
+    virtual void setUnits(const double speed_of_light, const double grav_const, const double diel_perm);
 
-    virtual bool   effPotentialValue(const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double &val);
-    virtual bool   totEnergy(const vec4 pos, const vec4 cdir, const double x, double &val);
+    virtual bool effPotentialValue(
+        const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double& val);
+    virtual bool totEnergy(const vec4 pos, const vec4 cdir, const double x, double& val);
 
-    virtual bool   report(const vec4 pos, const vec4 cdir, char*&text);
+    virtual bool report(const vec4 pos, const vec4 cdir, char*& text);
 
-// --------- protected methods -----------
+    // --------- protected methods -----------
 protected:
-    virtual void   setStandardValues();
+    virtual void setStandardValues();
 
-    void   calcCriticalPoints();
-    bool   calcEmbeddingZ(const double r, double &z);
+    void calcCriticalPoints();
+    bool calcEmbeddingZ(const double r, double& z);
 
-// -------- protected attribute ---------
+    // -------- protected attribute ---------
 protected:
-    double  rs;
-    double  mMass;
-    double  mLambda;
+    double rs;
+    double mMass;
+    double mLambda;
 
     // critical points
-    double  r1, rp, rm;
+    double r1, rp, rm;
 
     double mEmb_rmin;
     double mEmb_rmax;
@@ -128,4 +100,3 @@ protected:
 } // end namespace m4d
 
 #endif
-

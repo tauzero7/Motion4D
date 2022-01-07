@@ -1,36 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
- m4dMetricPlaneGravWave.cpp
-
- Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
- This file is part of the m4d-library.
-
- The m4d-library is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- The m4d-library is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
+/**
+ * @file    m4dMetricPlaneGravWave.cpp
+ * @author  Heiko Munz
+ *
+ * This file is part of the m4d-library.
  */
-// -------------------------------------------------------------------------------
-
 #include "m4dMetricPlaneGravWave.h"
 
 namespace m4d {
 
-#define eps 1.0e-6
-
-/*! Standard constructor for the PlaneGravWave metric.
- */
 MetricPlaneGravWave::MetricPlaneGravWave(double longExt, double degree)
 {
     mMetricName = "PlaneGravWave";
@@ -71,10 +48,7 @@ MetricPlaneGravWave::~MetricPlaneGravWave()
 }
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricPlaneGravWave::calculateMetric(const double* pos)
 {
     double c = mSpeedOfLight;
@@ -101,10 +75,6 @@ bool MetricPlaneGravWave::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPlaneGravWave::calculateChristoffels(const double* pos)
 {
     double c = mSpeedOfLight;
@@ -196,10 +166,6 @@ bool MetricPlaneGravWave::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPlaneGravWave::calculateChrisD(const double* pos)
 {
     //	double c = mSpeedOfLight;
@@ -485,13 +451,6 @@ bool MetricPlaneGravWave::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPlaneGravWave::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double c = mSpeedOfLight;
@@ -505,13 +464,6 @@ void MetricPlaneGravWave::localToCoord(const double* pos, const double* ldir, do
     dir[3] = ldir[3] / q;
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPlaneGravWave::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double c = mSpeedOfLight;
@@ -525,11 +477,6 @@ void MetricPlaneGravWave::coordToLocal(const double* pos, const double* cdir, do
     ldir[3] = cdir[3] * q;
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return false : position is always valid.
- */
 bool MetricPlaneGravWave::breakCondition(const double* pos)
 {
     bool br = false;
@@ -537,24 +484,18 @@ bool MetricPlaneGravWave::breakCondition(const double* pos)
     double t = pos[0];
     double x = pos[1];
 
-    if ((c * t - x) >= (1.0 - eps)) {
+    if ((c * t - x) >= (1.0 - M4D_METRIC_EPS)) {
         br = true;
     }
     return br;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *	Set the longitudinal extension 'mLongExt' of the gravitational wave or
- *	the degree 'mDegree' of the Fourier polynomial and reset the state of
- *	'dataCalculated'.
- */
 bool MetricPlaneGravWave::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
     if (strcmp(pName, "long_ext") == 0) {
-        if (val < eps) {
-            mLongExt = eps;
+        if (val < M4D_METRIC_EPS) {
+            mLongExt = M4D_METRIC_EPS;
             dataCalculated = false;
         }
         else {
@@ -597,16 +538,6 @@ bool MetricPlaneGravWave::transToTwoPlusOne(vec4 p, vec4& cp)
     return true;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
- sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricPlaneGravWave::testConstraint(const double y[], const double kappa)
 {
     double c = mSpeedOfLight;
@@ -627,8 +558,6 @@ double MetricPlaneGravWave::testConstraint(const double y[], const double kappa)
     return sum;
 }
 
-/*! Generate report.
- */
 bool MetricPlaneGravWave::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -645,8 +574,7 @@ bool MetricPlaneGravWave::report(const vec4, const vec4, char*& text)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricPlaneGravWave::setStandardValues()
 {
     mInitPos[0] = 0.0;
@@ -663,10 +591,8 @@ void MetricPlaneGravWave::setStandardValues()
     mCoordNames[3] = std::string("z");
 }
 
-// TODO: Methoden getValP usw. noch anschaulicher gestalten.
 // ********************************* specific protected methods *****************************
-/*! Calculate the value of function p(u) at 'pos'.
- */
+
 double MetricPlaneGravWave::getValP(const double* pos)
 {
     double c = mSpeedOfLight;

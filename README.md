@@ -130,13 +130,13 @@ for all libraries.
 
 ## Add new metric
 First, a few preliminary steps which are necessary to find your metric.
-1. Open "m4dMetricList.h" and increase 'NUM_METRICS'.
+1. Open "src/metric/m4dMetricList.h" and increase 'NUM_METRICS'.
    Append an 'enum' entry at the end of the 'enum_metric' list.
    Append an 'include' entry at the end of the '#include's.
-2. Open "m4dMetricList.cpp" and append the name of the new metric at the end
-   of the "stl_metric_names" list.
-3. Open "m4dMetricDatabase.cpp" and append a 'case' entry for your new metric.
-
+2. Open "src/metric/m4dMetricList.cpp" and append the name of the new metric at 
+   the end of the "stl_metric_names" list.
+3. Open "src/metric/m4dMetricDatabase.cpp" and append a 'case' entry for your 
+   new metric in 'initializeMetric()'
 4. You can now start writing your own metric class. 
    For that, have a look e.g. into 'm4dMetricMinkowski' or copy the header and
    source file and rename the class.

@@ -1,39 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricTaubNUT.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricTaubNUT.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricTaubNUT.h"
 
 namespace m4d {
 
-#define eps 1.0e-6
-
-/*! Standard constructor for the Kottler metric.
- *
- * \param  mass : mass of the black hole.
- * \param  l : parameter.
- */
 MetricTaubNUT::MetricTaubNUT(double mass, double l)
 {
     mMetricName = "TaubNUT";
@@ -61,51 +35,12 @@ MetricTaubNUT::MetricTaubNUT(double mass, double l)
 MetricTaubNUT::~MetricTaubNUT() {}
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricTaubNUT::calculateMetric(const double* pos)
 {
     // double r     = pos[1];
     double theta = pos[2];
     double l = mL;
-    // double M = mMass;
-
-    /*
-    double t1 = r*r;
-    double t2 = M*r;
-    double t4 = l*l;
-    double t5 = t1-2.0*t2-t4;
-    double t6 = t1+t4;
-    double t7 = 1/t6;
-    double t8 = t5*t7;
-    double t9 = cos(theta);
-    double t12 = 2.0*t8*l*t9;
-    double t15 = t9*t9;
-    double t16 = t4*t15;
-    double t21 = t4*t4;
-    double t24 = sin(theta);
-    double t25 = t24*t24;
-    double t26 = t1*t1;
-
-        g_compts[0][0] = -t8;
-        g_compts[0][1] = 0.0;
-        g_compts[0][2] = 0.0;
-        g_compts[0][3] = -t12;
-        g_compts[1][0] = 0.0;
-        g_compts[1][1] = t6/t5;
-        g_compts[1][2] = 0.0;
-        g_compts[1][3] = 0.0;
-        g_compts[2][0] = 0.0;
-        g_compts[2][1] = 0.0;
-        g_compts[2][2] = t6;
-        g_compts[2][3] = 0.0;
-        g_compts[3][0] = -t12;
-        g_compts[3][1] = 0.0;
-        g_compts[3][2] = 0.0;
-        g_compts[3][3] = (-4.0*t16*t1+8.0*t16*t2+4.0*t21*t15+t25*t26+2.0*t25*t1*t4+t25*t21)*t7;
-      */
 
     double D, S;
     calcFunctions(pos, D, S);
@@ -130,119 +65,12 @@ bool MetricTaubNUT::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricTaubNUT::calculateChristoffels(const double* pos)
 {
     double r = pos[1];
     double theta = pos[2];
     double M = mMass;
     double l = mL;
-
-    /*
-    double t1 = r*r;
-    double t2 = M*r;
-    double t4 = l*l;
-    double t5 = t1-2.0*t2-t4;
-    double t6 = t1+t4;
-    double t7 = t6*t6;
-    double t10 = t5/t7/t6;
-    double t11 = r*t4;
-    double t13 = M*t1;
-    double t14 = M*t4;
-    double t15 = 2.0*t11+t13-t14;
-    double t17 = 1/t6;
-    double t19 = 1/t5;
-    double t20 = t15*t17*t19;
-    double t21 = cos(theta);
-    double t23 = sin(theta);
-    double t25 = 1/t7;
-    double t26 = 1/t23*t25;
-    double t29 = 2.0*t21*t4*t26*t5;
-    double t31 = t26*t5*l;
-    double t35 = 2.0*t10*t21*l*t15;
-    double t38 = t25*t5*l*t23;
-    double t39 = t17*r;
-    double t40 = t1*r;
-    double t48 = 2.0*(t40-3.0*t13-3.0*t11+t14)*t21*l*t17*t19;
-    double t51 = t21*t21;
-    double t52 = t4*t51;
-    double t57 = t4*t4;
-    double t58 = t57*t51;
-    double t60 = t23*t23;
-    double t61 = t1*t1;
-    double t71 = l*(8.0*t52*t1-8.0*t52*t2-2.0*t58+t60*t61+2.0*t60*t1*t4+t60*t57+2.0*t51*t61)*t26;
-    double t72 = t1*t4;
-    double t74 = t14*r;
-    double t78 = t21*(4.0*t72-4.0*t74-t57+t61)*t26;
-
-        christoffel[0][0][0] = 0.0;
-        christoffel[0][0][1] = t10*t15;
-        christoffel[0][0][2] = 0.0;
-        christoffel[0][0][3] = 0.0;
-        christoffel[0][1][0] = t20;
-        christoffel[0][1][1] = 0.0;
-        christoffel[0][1][2] = 0.0;
-        christoffel[0][1][3] = 0.0;
-        christoffel[0][2][0] = -t29;
-        christoffel[0][2][1] = 0.0;
-        christoffel[0][2][2] = 0.0;
-        christoffel[0][2][3] = t31;
-        christoffel[0][3][0] = 0.0;
-        christoffel[0][3][1] = t35;
-        christoffel[0][3][2] = -t38;
-        christoffel[0][3][3] = 0.0;
-        christoffel[1][0][0] = t20;
-        christoffel[1][0][1] = 0.0;
-        christoffel[1][0][2] = 0.0;
-        christoffel[1][0][3] = 0.0;
-        christoffel[1][1][0] = 0.0;
-        christoffel[1][1][1] = -t20;
-        christoffel[1][1][2] = 0.0;
-        christoffel[1][1][3] = 0.0;
-        christoffel[1][2][0] = 0.0;
-        christoffel[1][2][1] = 0.0;
-        christoffel[1][2][2] = t39;
-        christoffel[1][2][3] = 0.0;
-        christoffel[1][3][0] = -t48;
-        christoffel[1][3][1] = 0.0;
-        christoffel[1][3][2] = 0.0;
-        christoffel[1][3][3] = t39;
-        christoffel[2][0][0] = -t29;
-        christoffel[2][0][1] = 0.0;
-        christoffel[2][0][2] = 0.0;
-        christoffel[2][0][3] = t31;
-        christoffel[2][1][0] = 0.0;
-        christoffel[2][1][1] = 0.0;
-        christoffel[2][1][2] = t39;
-        christoffel[2][1][3] = 0.0;
-        christoffel[2][2][0] = 0.0;
-        christoffel[2][2][1] = -t5*t17*r;
-        christoffel[2][2][2] = 0.0;
-        christoffel[2][2][3] = 0.0;
-        christoffel[2][3][0] = -t71;
-        christoffel[2][3][1] = 0.0;
-        christoffel[2][3][2] = 0.0;
-        christoffel[2][3][3] = t78;
-        christoffel[3][0][0] = 0.0;
-        christoffel[3][0][1] = t35;
-        christoffel[3][0][2] = -t38;
-        christoffel[3][0][3] = 0.0;
-        christoffel[3][1][0] = -t48;
-        christoffel[3][1][1] = 0.0;
-        christoffel[3][1][2] = 0.0;
-        christoffel[3][1][3] = t39;
-        christoffel[3][2][0] = -t71;
-        christoffel[3][2][1] = 0.0;
-        christoffel[3][2][2] = 0.0;
-        christoffel[3][2][3] = t78;
-        christoffel[3][3][0] = 0.0;
-        christoffel[3][3][1] = -t10*(-8.0*t58*r-4.0*t52*t13+4.0*t58*M+t60*t61*r+2.0*t60*t40*t4+t60*r*t57);
-        christoffel[3][3][2] = -t25*t21*t23*(6.0*t72-8.0*t74-3.0*t57+t61);
-        christoffel[3][3][3] = 0.0;
-    */
 
     christoffel[0][0][0] = 0;
     christoffel[0][0][1] = (-2 * r * (-2 * M * r - pow(l, 2) + pow(r, 2)) + (-2 * M + 2 * r) * (pow(l, 2) + pow(r, 2)))
@@ -339,10 +167,6 @@ bool MetricTaubNUT::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricTaubNUT::calculateChrisD(const double* pos)
 {
     double r = pos[1];
@@ -696,13 +520,6 @@ bool MetricTaubNUT::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricTaubNUT::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -716,13 +533,6 @@ void MetricTaubNUT::localToCoord(const double* pos, const double* ldir, double* 
     dir[3] = ldir[3] / (sqrt(sigma) * sin(theta));
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricTaubNUT::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -736,12 +546,6 @@ void MetricTaubNUT::coordToLocal(const double* pos, const double* cdir, double* 
     ldir[3] = sqrt(sigma) * sin(theta) * cdir[3];
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
- *  \return false : position is valid.
- */
 bool MetricTaubNUT::breakCondition(const double* pos)
 {
     bool br = false;
@@ -753,12 +557,6 @@ bool MetricTaubNUT::breakCondition(const double* pos)
     }
     return br;
 }
-
-/*! Calculate right hand side of the geodesic equation in first order form.
- *
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  dydx[] : pointer to right side of geodesic equation.
- */
 
 bool MetricTaubNUT::calcDerivs(const double y[], double dydx[])
 {
@@ -812,16 +610,6 @@ bool MetricTaubNUT::calcDerivs(const double y[], double dydx[])
     return true;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricTaubNUT::testConstraint(const double y[], const double kappa)
 {
     double r = y[1];
@@ -840,10 +628,6 @@ double MetricTaubNUT::testConstraint(const double y[], const double kappa)
     return sum;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'mass' or 'lambda' parameter.
- */
 bool MetricTaubNUT::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -857,14 +641,6 @@ bool MetricTaubNUT::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Effective potential.
- *  \param pos : initial position.
- *  \param cdir : initial four-direction.
- *  \param type : geodesic type.
- *  \param x : abscissa value.
- *  \param val : reference to effective potential value.
- *  \return true : effective potential exists at x.
- */
 bool MetricTaubNUT::effPotentialValue(
     const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double& val)
 {
@@ -884,13 +660,6 @@ bool MetricTaubNUT::effPotentialValue(
     return true;
 }
 
-/*! Total energy.
- *  \param pos : initial position.
- *  \param cdir : initial four-direction.
- *  \param x : abscissa value.
- *  \param val : reference to total energy value.
- *  \return true : effective potential exists at x.
- */
 bool MetricTaubNUT::totEnergy(const vec4 pos, const vec4 cdir, const double, double& val)
 {
     double sigma = (pos[1] * pos[1] + mL * mL);
@@ -902,8 +671,6 @@ bool MetricTaubNUT::totEnergy(const vec4 pos, const vec4 cdir, const double, dou
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricTaubNUT::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -922,8 +689,7 @@ bool MetricTaubNUT::report(const vec4, const vec4, char*& text)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricTaubNUT::setStandardValues()
 {
     mInitPos[0] = 0.0;
@@ -940,15 +706,11 @@ void MetricTaubNUT::setStandardValues()
     mCoordNames[3] = std::string("phi");
 }
 
-/*! Calculate critical radius.
- */
 void MetricTaubNUT::calcCriticalRadius()
 {
     mCritRadius = mMass + sqrt(mMass * mMass + mL * mL);
 }
 
-/*! Calculate radius of photon orbit.
- */
 void MetricTaubNUT::calcPhotonOrbit()
 {
     double w = sqrt(mMass * mMass + mL * mL);

@@ -1,38 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricVaidyaIncRad.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricVaidyaIncRad.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricVaidyaIncRad.h"
 
 namespace m4d {
 
-#define eps 1.0e-6
-
-/*! Standard constructor for the Kottler metric.
- *
- * \param  u : Khalatnikov-Lifshitz parameter.
- */
 MetricVaidyaIncRad::MetricVaidyaIncRad(double p)
 {
     mMetricName = "VaidyaIncRad";
@@ -53,10 +28,6 @@ MetricVaidyaIncRad::MetricVaidyaIncRad(double p)
 MetricVaidyaIncRad::~MetricVaidyaIncRad() {}
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricVaidyaIncRad::calculateMetric(const double* pos)
 {
     double r = pos[1];
@@ -90,10 +61,6 @@ bool MetricVaidyaIncRad::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricVaidyaIncRad::calculateChristoffels(const double* pos)
 {
     double r = pos[1];
@@ -182,13 +149,6 @@ bool MetricVaidyaIncRad::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricVaidyaIncRad::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -218,25 +178,13 @@ void MetricVaidyaIncRad::localToCoord(const double* pos, const double* ldir, dou
     dir[3] = ldir[3] / (r * sin(theta));
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
-void MetricVaidyaIncRad::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+void MetricVaidyaIncRad::coordToLocal(const double*, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
-
+    fprintf(stderr, "uups... not implemented yet!\n");
+    // TODO
     ldir[0] = cdir[0];
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  :
- *  \return false : position is valid.
- */
 bool MetricVaidyaIncRad::breakCondition(const double* pos)
 {
 
@@ -249,8 +197,6 @@ bool MetricVaidyaIncRad::breakCondition(const double* pos)
     return false;
 }
 
-/*! Generate report.
- */
 bool MetricVaidyaIncRad::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -274,8 +220,7 @@ bool MetricVaidyaIncRad::setParam(const char* pName, double val)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricVaidyaIncRad::setStandardValues()
 {
     mInitPos[0] = 0.0;

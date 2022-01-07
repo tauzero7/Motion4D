@@ -13,11 +13,6 @@ namespace m4d {
 
 #define eps 1.0e-6
 
-/*! Standard constructor for the Ernst-Schwarzschild metric.
- *
- * \param  mass : mass of the black hole.
- * \param  B : magnetic field
- */
 MetricKruskal::MetricKruskal(double mass)
 {
     mMetricName = "Kruskal";
@@ -272,7 +267,7 @@ bool MetricKruskal::setParam(const char* pName, double val)
     return true;
 }
 
-bool MetricKruskal::report(const vec4 pos, const vec4 cdir, char*& text)
+bool MetricKruskal::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
     ss << "Report for the  Kruskal metric\n\tcoordinate : (t,r,theta,phi)\n";

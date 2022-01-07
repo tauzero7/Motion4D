@@ -1,37 +1,14 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricSchwarzschildGravWave.cpp
-
-  Copyright (c) 2017  Thomas Mueller
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricSchwarzschildGravWave.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricSchwarzschildGravWave.h"
 #include <cmath>
 
 namespace m4d {
 
-/*! Standard constructor for the SchwarzschildGravWave metric.
- *
- * \param  mass : mass of the black hole.
- */
 MetricSchwarzschildGravWave::MetricSchwarzschildGravWave(double mass)
 {
     mMetricName = "SchwarzschildGravWave";
@@ -57,16 +34,10 @@ MetricSchwarzschildGravWave::MetricSchwarzschildGravWave(double mass)
     setStandardValues();
 }
 
-/*!
- */
 MetricSchwarzschildGravWave::~MetricSchwarzschildGravWave() {}
 
 // *********************************** public methods ******************************
 
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricSchwarzschildGravWave::calculateMetric(const double* pos)
 {
     double r = pos[1];
@@ -221,10 +192,6 @@ void MetricSchwarzschildGravWave::calcPerturbationsAndDiffs(const double* pos)
         + r2 * sth * sth * (Z * Plt + W * Pltt * cot + W * Plt * (-1.0 - cot * cot)) * cst;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricSchwarzschildGravWave::calculateChristoffels(const double* pos)
 {
     double r = pos[1];
@@ -349,26 +316,6 @@ bool MetricSchwarzschildGravWave::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
-
-/*
-bool MetricSchwarzschildGravWave::calculateChrisD(const double* pos) {
-    double r     = pos[1];
-    double theta = pos[2];
-    return true;
-}
-*/
-
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricSchwarzschildGravWave::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     calculateMetric(pos);
@@ -384,13 +331,6 @@ void MetricSchwarzschildGravWave::localToCoord(const double* pos, const double* 
     dir[3] = ldir[3] / d;
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricSchwarzschildGravWave::coordToLocal(
     const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
@@ -407,12 +347,6 @@ void MetricSchwarzschildGravWave::coordToLocal(
     ldir[3] = cdir[3] * d;
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
- *  \return false : position is valid.
- */
 bool MetricSchwarzschildGravWave::breakCondition(const double* pos)
 {
     bool br = false;
@@ -423,17 +357,6 @@ bool MetricSchwarzschildGravWave::breakCondition(const double* pos)
     return br;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  However, take care of the limited double precision.
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricSchwarzschildGravWave::testConstraint(const double y[], const double kappa)
 {
     double dt = y[4];
@@ -452,10 +375,6 @@ double MetricSchwarzschildGravWave::testConstraint(const double y[], const doubl
     return sum;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
- */
 bool MetricSchwarzschildGravWave::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -473,12 +392,7 @@ bool MetricSchwarzschildGravWave::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Generate report.
- * \param pos : initial position.
- * \param cdir : initial coordinate direction.
- * \param text : reference to report text.
- */
-bool MetricSchwarzschildGravWave::report(const vec4 pos, const vec4 cdir, char*& text)
+bool MetricSchwarzschildGravWave::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
     ss << "Report for SchwarzschildGravWave metric\n\tcoordinates : (t,r,theta,phi)\n";
@@ -493,8 +407,7 @@ bool MetricSchwarzschildGravWave::report(const vec4 pos, const vec4 cdir, char*&
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricSchwarzschildGravWave::setStandardValues()
 {
     mInitPos[0] = 0.0;

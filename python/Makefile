@@ -17,7 +17,7 @@ M4D_EXTRA_DIR = $(M4D_SRC_DIR)/extra
 M4D_MATH_DIR = $(M4D_SRC_DIR)/math
 M4D_METRIC_DIR = $(M4D_SRC_DIR)/metric
 M4D_MOTION_DIR = $(M4D_SRC_DIR)/motion
-M4D_LIB_SO = libm4dd.so
+M4D_LIB_SO = libm4d_d.so
 
 
 BUILD_DIR = compiled/

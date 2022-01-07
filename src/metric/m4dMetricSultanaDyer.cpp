@@ -1,36 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dMetricSultanaDyer.cpp
-
-  Copyright (c) 2010-2014  Thomas Mueller
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricSultanaDyer.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricSultanaDyer.h"
 
 namespace m4d {
 
-#define eps 1.0e-6
-
-/*! Standard constructor for the GravWave metric.
- */
 MetricSultanaDyer::MetricSultanaDyer(double mass)
 {
     mMetricName = "SultanaDyerBlackhole";
@@ -54,10 +31,7 @@ MetricSultanaDyer::MetricSultanaDyer(double mass)
 MetricSultanaDyer::~MetricSultanaDyer() {}
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricSultanaDyer::calculateMetric(const double* pos)
 {
     double t = pos[0];
@@ -94,10 +68,6 @@ bool MetricSultanaDyer::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricSultanaDyer::calculateChristoffels(const double* pos)
 {
     double t = pos[0];
@@ -198,10 +168,6 @@ bool MetricSultanaDyer::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricSultanaDyer::calculateChrisD(const double* pos)
 {
     double t = pos[0];
@@ -503,13 +469,6 @@ bool MetricSultanaDyer::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricSultanaDyer::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type)
 {
     double t = pos[0];
@@ -540,13 +499,6 @@ void MetricSultanaDyer::localToCoord(const double* pos, const double* ldir, doub
     }
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricSultanaDyer::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type)
 {
     double t = pos[0];
@@ -577,25 +529,17 @@ void MetricSultanaDyer::coordToLocal(const double* pos, const double* cdir, doub
     }
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return false : position is always valid.
- */
 bool MetricSultanaDyer::breakCondition(const double* pos)
 {
     bool br = false;
 
     double rs = 2.0 * mMass;
-    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + eps) * rs * rs)) {
+    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + M4D_METRIC_EPS) * rs * rs)) {
         br = true;
     }
     return br;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- */
 bool MetricSultanaDyer::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -605,16 +549,6 @@ bool MetricSultanaDyer::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
- sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricSultanaDyer::testConstraint(const double y[], const double kappa)
 {
     double t = y[0];
@@ -632,8 +566,6 @@ double MetricSultanaDyer::testConstraint(const double y[], const double kappa)
     return sum;
 }
 
-/*! Generate report.
- */
 bool MetricSultanaDyer::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -649,8 +581,7 @@ bool MetricSultanaDyer::report(const vec4, const vec4, char*& text)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricSultanaDyer::setStandardValues()
 {
     mInitPos[0] = 1.0;

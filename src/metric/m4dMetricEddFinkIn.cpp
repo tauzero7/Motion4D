@@ -20,8 +20,6 @@ double tau_of_r(double r, void* params)
     return r * r0 / rs * sqrt(rs / r - rs / r0) + r0 * pow(r0 / rs, 0.5) * atan(sqrt(r0 / r - 1.0)) - tau;
 }
 
-#define eps 1.0e-6
-
 MetricEddFinkIn::MetricEddFinkIn(double mass)
 {
     mMetricName = "EddFinkIn";

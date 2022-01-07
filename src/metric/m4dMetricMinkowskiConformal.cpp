@@ -1,34 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricMinkowskiConformal.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricMinkowskiConformal.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricMinkowskiConformal.h"
 
 namespace m4d {
 
-/*! Standard constructor for the Minkowski metric.
- */
 MetricMinkowskiConformal::MetricMinkowskiConformal()
 {
     mMetricName = "MinkowskiConformal";
@@ -46,10 +25,7 @@ MetricMinkowskiConformal::MetricMinkowskiConformal()
 MetricMinkowskiConformal::~MetricMinkowskiConformal() {}
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricMinkowskiConformal::calculateMetric(const double* pos)
 {
     double xi = pos[1];
@@ -78,10 +54,6 @@ bool MetricMinkowskiConformal::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricMinkowskiConformal::calculateChristoffels(const double* pos)
 {
     double xi = pos[1];
@@ -163,10 +135,6 @@ bool MetricMinkowskiConformal::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricMinkowskiConformal::calculateChrisD(const double* pos)
 {
     double xi = pos[1];
@@ -443,13 +411,6 @@ bool MetricMinkowskiConformal::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricMinkowskiConformal::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double xi = pos[1];
@@ -461,13 +422,6 @@ void MetricMinkowskiConformal::localToCoord(const double* pos, const double* ldi
     dir[3] = ldir[3] / sin(xi) / sin(theta);
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricMinkowskiConformal::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double xi = pos[1];
@@ -479,11 +433,6 @@ void MetricMinkowskiConformal::coordToLocal(const double* pos, const double* cdi
     ldir[3] = cdir[3] * sin(xi) * sin(theta);
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return false : position is always valid.
- */
 bool MetricMinkowskiConformal::breakCondition(const double* pos)
 {
     bool b = false;
@@ -500,16 +449,6 @@ bool MetricMinkowskiConformal::breakCondition(const double* pos)
     return b;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricMinkowskiConformal::testConstraint(const double y[], const double kappa)
 {
     // Scale the directions with the speed of light before doubling them !!
@@ -521,12 +460,6 @@ double MetricMinkowskiConformal::testConstraint(const double y[], const double k
     return sum;
 }
 
-/*! Transform point p to 2+1 coordinates.
- *
- *  \param  p  : point in proper metric coordinates.
- *  \param  cp : reference to transformed point.
- *  \return true : success.
- */
 bool MetricMinkowskiConformal::transToTwoPlusOne(vec4 p, vec4& cp)
 {
     vec4 tp;
@@ -535,8 +468,6 @@ bool MetricMinkowskiConformal::transToTwoPlusOne(vec4 p, vec4& cp)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricMinkowskiConformal::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -549,8 +480,7 @@ bool MetricMinkowskiConformal::report(const vec4, const vec4, char*& text)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricMinkowskiConformal::setStandardValues()
 {
     mInitPos[0] = 0.0;

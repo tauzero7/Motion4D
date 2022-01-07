@@ -1,33 +1,12 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricPravda_C.cpp
-
-  Copyright (c) 2010-2014  Thomas Mueller, Frank Grave, Felix Beslmeisl
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricPravda_C.cpp
+ * @author  Felix Beslmeisl
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricPravda_C.h"
 
 namespace m4d {
-
-#define eps 1.0e-9
 
 /*! Standard constructor for the metric.
  *
@@ -53,16 +32,10 @@ MetricPravda_C::MetricPravda_C(double A, double m)
     setStandardValues();
 }
 
-/*! Standard destructor for the metric.
- *
- */
 MetricPravda_C::~MetricPravda_C() {}
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricPravda_C::calculateMetric(const double* pos)
 {
     double x = pos[1];
@@ -98,10 +71,6 @@ bool MetricPravda_C::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPravda_C::calculateChristoffels(const double* pos)
 {
     double x = pos[1];
@@ -199,10 +168,6 @@ bool MetricPravda_C::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPravda_C::calculateChrisD(const double* pos)
 {
     double x = pos[1];
@@ -545,13 +510,6 @@ bool MetricPravda_C::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPravda_C::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double x = pos[1];
@@ -565,13 +523,6 @@ void MetricPravda_C::localToCoord(const double* pos, const double* ldir, double*
     dir[3] = ldir[3] / (sqrt(fabs(-2 * m * A * x * x * x - x * x + 1))) * A * (x + y); // G^-1 /A^2/(x+y)^2  //p
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPravda_C::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double x = pos[1];
@@ -614,27 +565,12 @@ int MetricPravda_C::transToPseudoCart(vec4 p, vec4& cp)
     return 0;
 }
 
-/*! Tests break condition.
- *  \param pos  :  position.
- *
- *  not implemented.
- */
 bool MetricPravda_C::breakCondition(const double*)
 {
     bool br = false;
     return br;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricPravda_C::testConstraint(const double y[], const double kappa)
 {
     calculateMetric(y);
@@ -646,10 +582,6 @@ double MetricPravda_C::testConstraint(const double y[], const double kappa)
     // return 0;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *
- */
 bool MetricPravda_C::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -662,8 +594,6 @@ bool MetricPravda_C::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricPravda_C::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -712,12 +642,7 @@ bool MetricPravda_C::report(const vec4, const vec4, char*& text)
 }
 
 // *************************** specific  public methods ****************************
-/*! Calculates the roots of a polynom of type x^3 + ax^2 + c = 0.
- *
- *\param   a     : coefficient of the quadratic term.
- *\param   c     : y-axes offset
- *\param roots : reference Roots of the polynom sorted ascending.
- */
+
 void MetricPravda_C::calculateRoots(vec3& roots, double a, double c)
 {
 
@@ -751,8 +676,7 @@ void MetricPravda_C::calculateRoots(vec3& roots, double a, double c)
     roots[2] = z3;
 }
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricPravda_C::setStandardValues()
 {
     mInitPos[0] = 0.0;

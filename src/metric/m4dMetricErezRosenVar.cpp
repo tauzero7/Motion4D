@@ -1,28 +1,9 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricErezRosenVar.cpp
-
-  Copyright (c) 2010-2014   Thomas Mueller
-
-
-   double this file is part of the m4d-library.
-
-   double the m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   double the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   double the m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricErezRosenVar.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricErezRosenVar.h"
 
 namespace m4d {
@@ -215,12 +196,8 @@ bool MetricErezRosenVar::calculateChristoffels(const double* pos)
 
 bool MetricErezRosenVar::calculateChrisD(const double*)
 {
-    /*
-    double r     = pos[1];
-    double theta = pos[2];
-
+    fprintf(stderr, "uups... not implemented yet!\n");
     // TODO
-    */
     return true;
 }
 
@@ -241,21 +218,14 @@ void MetricErezRosenVar::localToCoord(const double* pos, const double* ldir, dou
 
 void MetricErezRosenVar::coordToLocal(const double*, const double*, double*, enum_nat_tetrad_type)
 {
-    // double r     = pos[1];
-    // double theta = pos[2];
-
     // TODO
-    // ldir[0] = cdir[0]*L*w;
-    // ldir[1] = cdir[1]*L/w;
-    // ldir[2] = cdir[2]*L*r;
-    // ldir[3] = cdir[3]*r*sin(theta)/L;
 }
 
 bool MetricErezRosenVar::breakCondition(const double*)
 {
     bool br = false;
-    // if ((pos[1]<0.0) || (pos[1]*pos[1]<=(1.0+eps)*4.0*mMass*mMass)) { br=true; }
-    // TOOO
+    fprintf(stderr, "uups... not implemented yet!\n");
+    // TODO
     return br;
 }
 
@@ -313,12 +283,6 @@ bool MetricErezRosenVar::report(const vec4 pos, const vec4, char*& text)
     return CopyString(ss.str().c_str(), text);
 }
 
-/*! Determine the velocity for a closed circular orbit if it exists.
- *   A circular timelike geodesic with respect to r-coordinate does exist
- *   only for r>=3rs (last timelike circular orbit).
- * \param r  Radial coordinate.
- * \param tedType type of tetrad.
- */
 double MetricErezRosenVar::getCircularVelocity(const double r, const enum_nat_tetrad_type)
 {
 

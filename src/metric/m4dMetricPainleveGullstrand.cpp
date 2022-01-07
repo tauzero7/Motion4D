@@ -1,38 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricPainleveGullstrand.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricPainleveGullstrand.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricPainleveGullstrand.h"
 
 namespace m4d {
 
-#define eps 1.0e-6
-
-/*! Standard constructor for the Schwarzschild metric.
- *
- * \param  mass : mass of the black hole.
- */
 MetricPainleveGullstrand::MetricPainleveGullstrand(double mass)
 {
     mMetricName = "PainleveGullstrand";
@@ -55,10 +30,7 @@ MetricPainleveGullstrand::MetricPainleveGullstrand(double mass)
 MetricPainleveGullstrand::~MetricPainleveGullstrand() {}
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricPainleveGullstrand::calculateMetric(const double* pos)
 {
     double r = pos[1];
@@ -94,10 +66,6 @@ bool MetricPainleveGullstrand::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPainleveGullstrand::calculateChristoffels(const double* pos)
 {
     double r = pos[1];
@@ -188,10 +156,6 @@ bool MetricPainleveGullstrand::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPainleveGullstrand::calculateChrisD(const double* pos)
 {
     double r = pos[1];
@@ -480,13 +444,6 @@ bool MetricPainleveGullstrand::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPainleveGullstrand::localToCoord(
     const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type)
 {
@@ -508,13 +465,6 @@ void MetricPainleveGullstrand::localToCoord(
     dir[3] = ldir[3] / (r * sin(theta));
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPainleveGullstrand::coordToLocal(
     const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type)
 {
@@ -536,12 +486,6 @@ void MetricPainleveGullstrand::coordToLocal(
     ldir[3] = cdir[3] * r * sin(theta);
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0.
- *  \return false : position is valid.
- */
 bool MetricPainleveGullstrand::breakCondition(const double* pos)
 {
     bool br = false;
@@ -552,17 +496,6 @@ bool MetricPainleveGullstrand::breakCondition(const double* pos)
     return br;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  However, take care of the limited double precision.
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricPainleveGullstrand::testConstraint(const double y[], const double kappa)
 {
     double r = y[1];
@@ -580,10 +513,6 @@ double MetricPainleveGullstrand::testConstraint(const double y[], const double k
     return sum;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
- */
 bool MetricPainleveGullstrand::setParam(const char* pName, double val)
 {
     if (Metric::setParam(pName, val)) {
@@ -593,8 +522,6 @@ bool MetricPainleveGullstrand::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricPainleveGullstrand::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -610,8 +537,7 @@ bool MetricPainleveGullstrand::report(const vec4, const vec4, char*& text)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricPainleveGullstrand::setStandardValues()
 {
     mInitPos[0] = 0.0;

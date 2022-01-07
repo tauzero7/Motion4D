@@ -1,28 +1,9 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricSchwarzschildWT.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricSchwarzschildWT.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricSchwarzschildWT.h"
 #include <cmath>
 
@@ -30,12 +11,6 @@
 
 namespace m4d {
 
-#define eps 1.0e-6
-
-/*! Standard constructor for the Schwarzschild metric.
- *
- * \param  mass : mass of the black hole.
- */
 MetricSchwarzschildWT::MetricSchwarzschildWT(double mass)
 {
     mMetricName = "SchwarzschildWT";
@@ -56,16 +31,10 @@ MetricSchwarzschildWT::MetricSchwarzschildWT(double mass)
     setStandardValues();
 }
 
-/*!
- */
 MetricSchwarzschildWT::~MetricSchwarzschildWT() {}
 
 // *********************************** public methods ******************************
 
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricSchwarzschildWT::calculateMetric(const double* pos)
 {
     double r = pos[1];
@@ -100,10 +69,6 @@ bool MetricSchwarzschildWT::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricSchwarzschildWT::calculateChristoffels(const double* pos)
 {
     double r = pos[1];
@@ -189,13 +154,6 @@ bool MetricSchwarzschildWT::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricSchwarzschildWT::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -208,13 +166,6 @@ void MetricSchwarzschildWT::localToCoord(const double* pos, const double* ldir, 
     dir[3] = ldir[3] / (r * sin(theta));
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricSchwarzschildWT::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -227,57 +178,16 @@ void MetricSchwarzschildWT::coordToLocal(const double* pos, const double* cdir, 
     ldir[3] = cdir[3] * r * sin(theta);
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
- *  \return false : position is valid.
- */
 bool MetricSchwarzschildWT::breakCondition(const double* pos)
 {
     bool br = false;
 
-    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + eps) * rs * rs)) {
+    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + M4D_METRIC_EPS) * rs * rs)) {
         br = true;
     }
     return br;
 }
 
-/*! Calculate right hand side of the geodesic equation in first order form.
- *
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  dydx[] : pointer to right side of geodesic equation.
- */
-/*
-bool MetricSchwarzschildWT::calcDerivs(const double y[], double dydx[]) {
-   dydx[0] = y[4];
-   dydx[1] = y[5];
-   dydx[2] = y[6];
-   dydx[3] = y[7];
-
-   double r     = y[1];
-   double theta = y[2];
-
-   dydx[4] = -rs / (r * (r - rs)) * y[4] * y[5];
-   dydx[5] = -0.5 * mSpeedOfLight * mSpeedOfLight * rs * (r - rs) / pow(r, 3.0) * y[4] * y[4] + 0.5 * rs / (r * (r -
-rs)) * y[5] * y[5] + (r - rs) * (y[6] * y[6] + sin(theta) * sin(theta) * y[7] * y[7]); dydx[6] = -2.0 / r * y[5] * y[6]
-+ sin(theta) * cos(theta) * y[7] * y[7]; dydx[7] = -2.0 / r * y[5] * y[7] - 2.0 * cos(theta) / sin(theta) * y[6] * y[7];
-
-   return true;
-}
-*/
-
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  However, take care of the limited double precision.
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricSchwarzschildWT::testConstraint(const double y[], const double kappa)
 {
     double r = y[1];
@@ -295,10 +205,6 @@ double MetricSchwarzschildWT::testConstraint(const double y[], const double kapp
     return sum;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
- */
 bool MetricSchwarzschildWT::setParam(const char* pName, double val)
 {
     if (Metric::setParam(pName, val)) {
@@ -310,12 +216,7 @@ bool MetricSchwarzschildWT::setParam(const char* pName, double val)
     return false;
 }
 
-/*! Generate report.
- * \param pos : initial position.
- * \param cdir : initial coordinate direction.
- * \param text : reference to report text.
- */
-bool MetricSchwarzschildWT::report(const vec4 pos, const vec4 cdir, char*& text)
+bool MetricSchwarzschildWT::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
     ss << "Report for Schwarzschild metric\n\tcoordinates : (t,r,theta,phi)\n";
@@ -329,8 +230,7 @@ bool MetricSchwarzschildWT::report(const vec4 pos, const vec4 cdir, char*& text)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricSchwarzschildWT::setStandardValues()
 {
     mInitPos[0] = 0.0;

@@ -1,38 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricPTD_AII.cpp
-
-  Copyright (c) 2010-2014  Thomas Mueller, Frank Grave, Felix Beslmeisl
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricPTD_AII.cpp
+ * @author  Felix Beslmeisl
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricPTD_AII.h"
 
 namespace m4d {
 
-#define eps 1.0e-6
-
-/*! Standard constructor for the metric.
- *
- * \param  b : parameter b of the AII metric
- */
 MetricPTD_AII::MetricPTD_AII(double b)
 {
     mMetricName = "Petrov_Type_D_AII_ES";
@@ -49,17 +24,10 @@ MetricPTD_AII::MetricPTD_AII(double b)
     setStandardValues();
 }
 
-/*! Standard destructor for the metric.
- *
- */
-
 MetricPTD_AII::~MetricPTD_AII() {}
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricPTD_AII::calculateMetric(const double* pos)
 {
     double r = pos[1];
@@ -91,10 +59,6 @@ bool MetricPTD_AII::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPTD_AII::calculateChristoffels(const double* pos)
 {
     double r = pos[1];
@@ -178,10 +142,6 @@ bool MetricPTD_AII::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPTD_AII::calculateChrisD(const double* pos)
 {
     double r = pos[1];
@@ -459,13 +419,6 @@ bool MetricPTD_AII::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPTD_AII::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -478,13 +431,6 @@ void MetricPTD_AII::localToCoord(const double* pos, const double* ldir, double* 
     dir[3] = ldir[3] * w;
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPTD_AII::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -497,31 +443,16 @@ void MetricPTD_AII::coordToLocal(const double* pos, const double* cdir, double* 
     ldir[3] = cdir[3] / w;
 }
 
-/*! Tests break condition.
- *  \param pos  :  position.
- *  \return true  : position z < 0.0 or z reaches b
- *  \return false : position is valid.
- */
 bool MetricPTD_AII::breakCondition(const double* pos)
 {
     bool br = false;
 
-    if ((pos[3] < 0.0) || (pos[3] * pos[3] >= (1.0 - eps) * Par_b * Par_b)) {
+    if ((pos[3] < 0.0) || (pos[3] * pos[3] >= (1.0 - M4D_METRIC_EPS) * Par_b * Par_b)) {
         br = true;
     }
     return br;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricPTD_AII::testConstraint(const double y[], const double kappa)
 {
     double r = y[1];
@@ -540,9 +471,6 @@ double MetricPTD_AII::testConstraint(const double y[], const double kappa)
     return sum;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- */
 bool MetricPTD_AII::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -552,8 +480,6 @@ bool MetricPTD_AII::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricPTD_AII::report(const vec4 pos, const vec4 cdir, char*& text)
 {
     std::stringstream ss;
@@ -589,11 +515,8 @@ bool MetricPTD_AII::report(const vec4 pos, const vec4 cdir, char*& text)
     return CopyString(ss.str().c_str(), text);
 }
 
-// *************************** specific  public methods ****************************
-// None
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricPTD_AII::setStandardValues()
 {
     mInitPos[0] = 0.0;

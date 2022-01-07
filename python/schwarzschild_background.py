@@ -1,8 +1,7 @@
 """
   File:   schwarzschild_background.py
   Author: Thomas Mueller, HdA
-  
-  Description:
+
     Calculate light rays in the Schwarzschild spacetime to show the distortion
     of the Milky Way background.
 """

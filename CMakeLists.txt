@@ -3,7 +3,7 @@
 #
 #   Run cmake-gui to select a generator.
 # -----------------------------------------------------------------------------
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.18)
 project(libmotion4d)
 
 set(CMAKE_VERBOSE_MAKEFILE OFF)
@@ -52,8 +52,6 @@ file( GLOB m4d_source_files ${M4D_ROOT_DIR}/*.h
     ${M4D_METRIC_DIR}/*.cpp ${M4D_METRIC_DIR}/*.h
     ${M4D_MOTION_DIR}/*.cpp ${M4D_MOTION_DIR}/*.h
     )
-list( REMOVE_ITEM m4d_source_files 
-    ${CMAKE_SOURCE_DIR}/${M4D_METRIC_DIR}/m4dMetricAlcubierreAccel.cpp )
 
 
 if (COMPILE_ALL_METRICS) 

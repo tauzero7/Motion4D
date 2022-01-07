@@ -1,35 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dMetricGoedelScaled.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricGoedelScaled.cpp
+ * @author  Frank Grave
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricGoedelScaled.h"
 
 namespace m4d {
-//
-// ---------------------------------------------------
-//    constructur/destructor
-// ---------------------------------------------------
+
 MetricGoedelScaled::MetricGoedelScaled(double rG, double zeta)
 {
     mMetricName = "Goedel scaled";
@@ -55,9 +33,7 @@ MetricGoedelScaled::MetricGoedelScaled(double rG, double zeta)
 MetricGoedelScaled::~MetricGoedelScaled() {}
 
 // *********************************** public methods ******************************
-// ---------------------------------------------------
-//    public::calculateMetric
-// ---------------------------------------------------
+
 bool MetricGoedelScaled::calculateMetric(const double* pos)
 {
     double r_G = mRG;
@@ -91,9 +67,6 @@ bool MetricGoedelScaled::calculateMetric(const double* pos)
     return true;
 }
 
-// ---------------------------------------------------
-//    public::calculateChristoffels
-// ---------------------------------------------------
 bool MetricGoedelScaled::calculateChristoffels(const double* pos)
 {
     double R = pos[1];
@@ -178,9 +151,6 @@ bool MetricGoedelScaled::calculateChristoffels(const double* pos)
     return true;
 }
 
-// ---------------------------------------------------
-//    public::localToCoord
-// ---------------------------------------------------
 void MetricGoedelScaled::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double R = pos[1];
@@ -199,9 +169,6 @@ void MetricGoedelScaled::localToCoord(const double* pos, const double* ldir, dou
     dir[3] = 1.0 / mRG * ldir[3];
 }
 
-// ---------------------------------------------------
-//    public::coordToLocal
-// ---------------------------------------------------
 void MetricGoedelScaled::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double R = pos[1];
@@ -222,17 +189,11 @@ void MetricGoedelScaled::coordToLocal(const double* pos, const double* cdir, dou
     ldir[3] = mRG * cdir[3];
 }
 
-// ---------------------------------------------------
-//    public::breakCondition
-// ---------------------------------------------------
 bool MetricGoedelScaled::breakCondition(const double*)
 {
     return false;
 }
 
-// ---------------------------------------------------
-//    public::setParam
-// ---------------------------------------------------
 bool MetricGoedelScaled::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -246,12 +207,6 @@ bool MetricGoedelScaled::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Transform point p to 2+1 coordinates.
- *
- *  \param  p  : point in proper metric coordinates.
- *  \param  cp : reference to transformed point.
- *  \return true : success.
- */
 bool MetricGoedelScaled::transToTwoPlusOne(vec4 p, vec4& cp)
 {
     vec4 tp;
@@ -260,8 +215,6 @@ bool MetricGoedelScaled::transToTwoPlusOne(vec4 p, vec4& cp)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricGoedelScaled::report(const vec4 pos, const vec4 cdir, char*& text)
 {
     std::stringstream ss;
@@ -289,9 +242,7 @@ bool MetricGoedelScaled::report(const vec4 pos, const vec4 cdir, char*& text)
 }
 
 // ********************************* protected methods *****************************
-// ---------------------------------------------------
-//    protected::setViewerVal
-// ---------------------------------------------------
+
 void MetricGoedelScaled::setStandardValues()
 {
     mInitPos[0] = 0.0;

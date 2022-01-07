@@ -1,35 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dMetricGoedelScaledCart.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricGoedelScaledCart.cpp
+ * @author  Frank Grave
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricGoedelScaledCart.h"
 
 namespace m4d {
 
-// ---------------------------------------------------
-//    constructur/destructor
-// ---------------------------------------------------
 MetricGoedelScaledCart::MetricGoedelScaledCart(double rG, double zeta)
 {
     mMetricName = "Goedel scaled cartesian";
@@ -52,9 +30,7 @@ MetricGoedelScaledCart::MetricGoedelScaledCart(double rG, double zeta)
 MetricGoedelScaledCart::~MetricGoedelScaledCart() {}
 
 // *********************************** public methods ******************************
-// ---------------------------------------------------
-//    public::calculateMetric
-// ---------------------------------------------------
+
 bool MetricGoedelScaledCart::calculateMetric(const double* pos)
 {
     double X = pos[1];
@@ -99,9 +75,6 @@ bool MetricGoedelScaledCart::calculateMetric(const double* pos)
     return true;
 }
 
-// ---------------------------------------------------
-//    public::calculateChristoffels
-// ---------------------------------------------------
 bool MetricGoedelScaledCart::calculateChristoffels(const double* pos)
 {
     double X = pos[1];
@@ -203,9 +176,6 @@ bool MetricGoedelScaledCart::calculateChristoffels(const double* pos)
     return true;
 }
 
-// ---------------------------------------------------
-//    public::localToCoord
-// ---------------------------------------------------
 void MetricGoedelScaledCart::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     // TODO
@@ -240,25 +210,17 @@ void MetricGoedelScaledCart::localToCoord(const double* pos, const double* ldir,
         dir[3] = ldir[3];
     }
 }
-// ---------------------------------------------------
-//    public::coordToLocal
-// ---------------------------------------------------
+
 void MetricGoedelScaledCart::coordToLocal(const double*, const double*, double*, enum_nat_tetrad_type)
 {
     printf("MetricGoedelScaledCart::coordToLocal missing\n");
 }
 
-// ---------------------------------------------------
-//    public::breakCondition
-// ---------------------------------------------------
 bool MetricGoedelScaledCart::breakCondition(const double*)
 {
     return false;
 }
 
-// ---------------------------------------------------
-//    public::setParam
-// ---------------------------------------------------
 bool MetricGoedelScaledCart::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -274,20 +236,12 @@ bool MetricGoedelScaledCart::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Transform point p to 2+1 coordinates.
- *
- *  \param  p  : point in proper metric coordinates.
- *  \param  cp : reference to transformed point.
- *  \return true : success.
- */
 bool MetricGoedelScaledCart::transToTwoPlusOne(vec4 p, vec4& cp)
 {
     cp = vec4(p[0], p[1], p[2], p[0]);
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricGoedelScaledCart::report(const vec4 pos, const vec4 cdir, char*& text)
 {
     std::stringstream ss;
@@ -316,9 +270,7 @@ bool MetricGoedelScaledCart::report(const vec4 pos, const vec4 cdir, char*& text
 }
 
 // ********************************* protected methods *****************************
-// ---------------------------------------------------
-//    protected::setViewerVal
-// ---------------------------------------------------
+
 void MetricGoedelScaledCart::setStandardValues()
 {
     mInitPos[0] = 0.0;

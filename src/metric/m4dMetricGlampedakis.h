@@ -1,45 +1,24 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dMetricHartleThorneGB.h
+/**
+ * @file    m4dMetricGlampedakis.h
+ * @author  Thomas Mueller
+ *
+ * @brief  Hartle-Thorne metric in spherical coordinates (t,r,theta,phi).
 
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
+     The line element is given by
 
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-
-/*!  \class  m4d::MetricGlampedakis
-     \brief  Hartle-Thorne metric in spherical coordinates (t,r,theta,phi).
-
-             The line element is given by
-
-             \f[ds^2 = -dt^2 + .\f]
+     \f[ds^2 = -dt^2 + .\f]
 
 
-             Hartle-Thorne metric following
+     Hartle-Thorne metric following
 
-             Kostas Glampedakis and Stanislav Babak,
-             "Mapping spacetimes with LISA: inspiral of a test body in a ‘quasi-Kerr’ field",
-             Class. Quantum Grav. 23 (2006) 4167–4188
+     Kostas Glampedakis and Stanislav Babak,
+     "Mapping spacetimes with LISA: inspiral of a test body in a ‘quasi-Kerr’ field",
+     Class. Quantum Grav. 23 (2006) 4167–4188
 
-             see also ApJ 753,175 (2012)
-*/
-// -------------------------------------------------------------------------------
+     see also ApJ 753,175 (2012)
 
+ * This file is part of the m4d-library.
+ */
 #ifndef M4D_METRIC_GLAMPEDAKIS_H
 #define M4D_METRIC_GLAMPEDAKIS_H
 
@@ -47,9 +26,6 @@
 
 namespace m4d {
 
-// ---------------------------------------------------
-//    class definition:   MetricGlampedakis
-// ---------------------------------------------------
 class MetricGlampedakis : public Metric
 {
 public:

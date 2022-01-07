@@ -80,7 +80,7 @@ class API_M4D_EXPORT MetricList
 {
 public:
 #ifdef ALL_METRICS_AVAILABLE
-    static const int NUM_METRICS = 59;
+    static const int NUM_METRICS = 60;
 #else
     static const int NUM_METRICS = 7;
 #endif // ALL_METRICS_AVAILABLE

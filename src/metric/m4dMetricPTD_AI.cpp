@@ -1,38 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricPTD_AI.cpp
-
-  Copyright (c) 2010-2014  Thomas Mueller, Frank Grave, Felix Beslmeisl
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricPTD_AI.cpp
+ * @author  Felix Beslmeisl
+ *
+ *  This file is part of the m4d-library.
+ */
 #include "m4dMetricPTD_AI.h"
 
 namespace m4d {
 
-#define eps 1.0e-6
-
-/*! Standard constructor for the metric.
- *
- * \param  b : proportional to the mass of the black hole.
- */
 MetricPTD_AI::MetricPTD_AI(double b)
 {
     mMetricName = "Petrov_Type_D_AI_ES";
@@ -53,16 +28,10 @@ MetricPTD_AI::MetricPTD_AI(double b)
     //  mLocTeds.push_back(enum_nat_tetrad_static);
 }
 
-/*! Standard destructor for the metric.
- *
- */
 MetricPTD_AI::~MetricPTD_AI() {}
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricPTD_AI::calculateMetric(const double* pos)
 {
     double r = pos[1];
@@ -96,10 +65,6 @@ bool MetricPTD_AI::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPTD_AI::calculateChristoffels(const double* pos)
 {
     double r = pos[1];
@@ -182,10 +147,6 @@ bool MetricPTD_AI::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPTD_AI::calculateChrisD(const double* pos)
 {
     double r = pos[1];
@@ -464,13 +425,6 @@ bool MetricPTD_AI::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPTD_AI::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -483,13 +437,6 @@ void MetricPTD_AI::localToCoord(const double* pos, const double* ldir, double* d
     dir[3] = ldir[3] / (r * sin(theta));
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPTD_AI::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -502,27 +449,16 @@ void MetricPTD_AI::coordToLocal(const double* pos, const double* cdir, double* l
     ldir[3] = cdir[3] * r * sin(theta);
 }
 
-/*! Tests break condition.
- *
- *  \param pos  :  position.
- *  \return true  : radial position r < 0.0 or geodesic reaches event horizont.
- *  \return false : position is valid.
- */
 bool MetricPTD_AI::breakCondition(const double* pos)
 {
     bool br = false;
 
-    if ((pos[1] < 0.0) || (pos[1] <= (1.0 + eps) * Par_b)) {
+    if ((pos[1] < 0.0) || (pos[1] <= (1.0 + M4D_METRIC_EPS) * Par_b)) {
         br = true;
     }
     return br;
 }
 
-/*! Calculates the constants of Motion.
- *
- *  \param pos : initial position.
- *  \param cdir : initial four-direction.
- */
 void MetricPTD_AI::calcConstantsOfMotion(const vec4 pos, const vec4 cdir)
 {
     double sinp2 = sin(pos[2]);
@@ -534,21 +470,8 @@ void MetricPTD_AI::calcConstantsOfMotion(const vec4 pos, const vec4 cdir)
     m0 = -K / pos[1] / pos[1] - cdir[1] * cdir[1] * pos[1] / (pos[1] - b) + cdir[0] * cdir[0] * (pos[1] - b) / pos[1];
 }
 
-/*! Effective potential.
- *  \param pos : initial position.
- *  \param cdir : initial four-direction.
- *  \param type : geodesic type.
- *  \param x : abscissa value.
- *  \param val : reference to effective potential value.
- *  \return true : effective potential exists at x.
- */
 bool MetricPTD_AI::effPotentialValue(const vec4 pos, const vec4 cdir, enum_geodesic_type, const double x, double& val)
 {
-    /*
-    double kappa = 0.0;
-    if (type==enum_geodesic_timelike)
-        kappa = -mSign;
-    */
     if (x <= 0.0) {
         return false;
     }
@@ -561,23 +484,12 @@ bool MetricPTD_AI::effPotentialValue(const vec4 pos, const vec4 cdir, enum_geode
     return true;
 }
 
-/*! Total energy.
- *  \param pos : initial position.
- *  \param cdir : initial four-direction.
- *  \param x : abscissa value.
- *  \param val : reference to total energy value.
- *  \return true : effective potential exists at x.
- */
 bool MetricPTD_AI::totEnergy(const vec4, const vec4, const double, double& val)
 {
     val = 0.0;
     return true;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *
- */
 bool MetricPTD_AI::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -587,8 +499,6 @@ bool MetricPTD_AI::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricPTD_AI::report(const vec4 pos, const vec4 cdir, char*& text)
 {
     std::stringstream ss;
@@ -618,11 +528,8 @@ bool MetricPTD_AI::report(const vec4 pos, const vec4 cdir, char*& text)
     return CopyString(ss.str().c_str(), text);
 }
 
-// *************************** specific  public methods ****************************
-// None
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricPTD_AI::setStandardValues()
 {
     mInitPos[0] = 0.0;

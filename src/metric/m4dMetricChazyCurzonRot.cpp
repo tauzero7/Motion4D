@@ -1,37 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricChazyCurzonRot.cpp
-
-  Copyright (c) 2011-2014  Thomas Mueller
-
-
-   double this file is part of the m4d-library.
-
-   double the m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   double the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   double the m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricChazyCurzonRot.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricChazyCurzonRot.h"
 
 namespace m4d {
 
-/*! Standard constructor.
- *
- * \param  mass : mass of the black hole.
- * \param  p
- */
 MetricChazyCurzonRot::MetricChazyCurzonRot(double mass, double p)
 {
     mMetricName = "ChazyCurzonRot";
@@ -55,16 +31,10 @@ MetricChazyCurzonRot::MetricChazyCurzonRot(double mass, double p)
     setStandardValues();
 }
 
-/*!
- */
 MetricChazyCurzonRot::~MetricChazyCurzonRot() {}
 
 // *********************************** public methods ******************************
 
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricChazyCurzonRot::calculateMetric(const double* pos)
 {
     double rho = pos[1];
@@ -105,10 +75,6 @@ bool MetricChazyCurzonRot::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricChazyCurzonRot::calculateChristoffels(const double* pos)
 {
     double rho = pos[1];
@@ -227,23 +193,11 @@ bool MetricChazyCurzonRot::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricChazyCurzonRot::calculateChrisD(const double*)
 {
-
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  tetradType :  type of tetrad.
- */
 void MetricChazyCurzonRot::localToCoord(
     const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type tetradType)
 {
@@ -277,46 +231,17 @@ void MetricChazyCurzonRot::localToCoord(
     fprintf(stderr, "%8.4g %8.4g %8.4g %8.4g\n\n", dir[0], dir[1], dir[2], dir[3]);
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricChazyCurzonRot::coordToLocal(const double*, const double*, double*, enum_nat_tetrad_type)
 {
-
-    //  double w = sqrt(1.0 - 2.0*mMass/r);
-    //  double L = 1.0 + mB*mB*r*r*sin(theta)*sin(theta);
-
-    //  ldir[0] = cdir[0]*L*w;
-    //  ldir[1] = cdir[1]*L/w;
-    //  ldir[2] = cdir[2]*L*r;
-    //  ldir[3] = cdir[3]*r*sin(theta)/L;
+    fprintf(stderr, "uups... not implemented yet!\n");
+    // TODO
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
- *  \return false : position is valid.
- */
 bool MetricChazyCurzonRot::breakCondition(const double*)
 {
     return false;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  double the constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricChazyCurzonRot::testConstraint(const double y[], const double kappa)
 {
     double rho = y[1];
@@ -336,11 +261,6 @@ double MetricChazyCurzonRot::testConstraint(const double y[], const double kappa
     return sum;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
- *  'charge' represents the charge of the black hole.
- */
 bool MetricChazyCurzonRot::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -355,8 +275,6 @@ bool MetricChazyCurzonRot::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricChazyCurzonRot::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -370,8 +288,7 @@ bool MetricChazyCurzonRot::report(const vec4, const vec4, char*& text)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricChazyCurzonRot::setStandardValues()
 {
     mInitPos[0] = 0.0;
@@ -388,8 +305,6 @@ void MetricChazyCurzonRot::setStandardValues()
     mCoordNames[3] = std::string("z");
 }
 
-/*!
- */
 void MetricChazyCurzonRot::calcUkA(const double* pos, double& em2U, double& k, double& A)
 {
     double rho = pos[1];
@@ -402,8 +317,6 @@ void MetricChazyCurzonRot::calcUkA(const double* pos, double& em2U, double& k, d
     A = 2.0 * m_q * mMass * z / r;
 }
 
-/*!
- */
 void MetricChazyCurzonRot::calcDUka(
     const double* pos, double& dUdrho, double& dUdz, double& dkdrho, double& dkdz, double& dAdrho, double& dAdz)
 {

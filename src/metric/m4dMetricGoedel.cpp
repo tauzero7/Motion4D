@@ -1,35 +1,14 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dMetricGoedel.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
+/**
+ * @file    m4dMetricGoedel.cpp
+ * @author  Frank Grave
+ *
+ *  This file is part of the m4d-library.
+ */
 
 #include "m4dMetricGoedel.h"
 
 namespace m4d {
-//
-// ---------------------------------------------------
-//    constructur/destructor
-// ---------------------------------------------------
+
 MetricGoedel::MetricGoedel(double a, double zeta)
 {
     mMetricName = "Goedel";
@@ -55,10 +34,8 @@ MetricGoedel::MetricGoedel(double a, double zeta)
 MetricGoedel::~MetricGoedel() {}
 
 // *********************************** public methods ******************************
-// ---------------------------------------------------
-//    public::calculateMetric
-// ---------------------------------------------------
-bool MetricGoedel ::calculateMetric(const double* pos)
+
+bool MetricGoedel::calculateMetric(const double* pos)
 {
     double a = mA;
     double r = pos[1];
@@ -90,10 +67,7 @@ bool MetricGoedel ::calculateMetric(const double* pos)
     return true;
 }
 
-// ---------------------------------------------------
-//    public::calculateChristoffels
-// ---------------------------------------------------
-bool MetricGoedel ::calculateChristoffels(const double* pos)
+bool MetricGoedel::calculateChristoffels(const double* pos)
 {
     double a = mA;
     double r = pos[1];
@@ -179,10 +153,7 @@ bool MetricGoedel ::calculateChristoffels(const double* pos)
     return true;
 }
 
-// ---------------------------------------------------
-//    public::localToCoord
-// ---------------------------------------------------
-void MetricGoedel ::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
+void MetricGoedel::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double r = pos[1];
     double r2a = r / (2.0 * mA);
@@ -205,10 +176,7 @@ void MetricGoedel ::localToCoord(const double* pos, const double* ldir, double* 
     }
 }
 
-// ---------------------------------------------------
-//    public::coordToLocal
-// ---------------------------------------------------
-void MetricGoedel ::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
+void MetricGoedel::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double r = pos[1];
     // double r2 = r*r;
@@ -235,18 +203,12 @@ void MetricGoedel ::coordToLocal(const double* pos, const double* cdir, double* 
     }
 }
 
-// ---------------------------------------------------
-//    public::breakCondition
-// ---------------------------------------------------
-bool MetricGoedel ::breakCondition(const double*)
+bool MetricGoedel::breakCondition(const double*)
 {
     return false;
 }
 
-// ---------------------------------------------------
-//    public::setParam
-// ---------------------------------------------------
-bool MetricGoedel ::setParam(const char* pName, double val)
+bool MetricGoedel::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
     if (strcmp(pName, "a") == 0) {
@@ -259,12 +221,6 @@ bool MetricGoedel ::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Transform point p to 2+1 coordinates.
- *
- *  \param  p  : point in proper metric coordinates.
- *  \param  cp : reference to transformed point.
- *  \return true : success.
- */
 bool MetricGoedel::transToTwoPlusOne(vec4 p, vec4& cp)
 {
     vec4 tp;
@@ -273,8 +229,6 @@ bool MetricGoedel::transToTwoPlusOne(vec4 p, vec4& cp)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricGoedel::report(const vec4 pos, const vec4 cdir, char*& text)
 {
     std::stringstream ss;
@@ -302,9 +256,6 @@ bool MetricGoedel::report(const vec4 pos, const vec4 cdir, char*& text)
 }
 
 // ********************************* protected methods *****************************
-// ---------------------------------------------------
-//    protected::setViewerVal
-// ---------------------------------------------------
 void MetricGoedel::setStandardValues()
 {
     mInitPos[0] = 0.0;
@@ -321,9 +272,6 @@ void MetricGoedel::setStandardValues()
     mCoordNames[3] = std::string("z");
 }
 
-// ---------------------------------------------------
-//    protected::calcVars
-// ---------------------------------------------------
 void MetricGoedel::calcVars(const double* pos)
 {
     double r = pos[1];

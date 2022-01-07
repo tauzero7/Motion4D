@@ -1,34 +1,15 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricDatabase.cpp
-
-  Copyright (c) 2009-2014-2011  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
+/**
+ * @file    m4dMotionDatabase.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ *
+ */
 
 #include "m4dMotionDatabase.h"
 
 namespace m4d {
 
-/*!
- */
 IntegratorDatabase::IntegratorDatabase()
 {
     init();
@@ -45,30 +26,17 @@ IntegratorDatabase::~IntegratorDatabase()
 }
 
 // *********************************** public methods ******************************
-/*! Get the number of implemented metrics.
- *
- *  \return int: number of implemented metrics.
- */
+
 int IntegratorDatabase::getNumIntegrators()
 {
     return NUM_GEOD_SOLVERS;
 }
 
-/*!  Initialize metric 'num' and return the pointer to it.
- *
- *  \param cMetric : pointer to metric.
- *  \param num     : metric number.
- */
 Geodesic* IntegratorDatabase::getIntegrator(Metric* cMetric, enum_integrator num)
 {
     return initializeIntegrator(cMetric, num);
 }
 
-/*! Initialize metric 'mName' and return the pointer to it.
- *
- *  \param cMetric : pointer to metric.
- *  \param mName   : name of metric.
- */
 Geodesic* IntegratorDatabase::getIntegrator(Metric* cMetric, const char* mName)
 {
     mIntegratorMapItr = mIntegratorNickMap.find(mName);
@@ -83,11 +51,6 @@ Geodesic* IntegratorDatabase::getIntegrator(Metric* cMetric, const char* mName)
     return initializeIntegrator(cMetric, mIntegratorMapItr->second);
 }
 
-/*! Get the name of metric 'num'.
- *
- *  \param num : number of metric.
- *  \return string : name of metric.
- */
 const char* IntegratorDatabase::getIntegratorName(enum_integrator num)
 {
     if (num >= 0 && num < (int)NUM_GEOD_SOLVERS) {
@@ -96,11 +59,6 @@ const char* IntegratorDatabase::getIntegratorName(enum_integrator num)
     return nullptr;
 }
 
-/*! Get the number of the 'mName' metric.
- *
- *  \param mName : name of metric.
- *  \return enum_metric : number of metric.
- */
 enum_integrator IntegratorDatabase::getIntegratorNr(const char* mName)
 {
     mIntegratorMapItr = mIntegratorNickMap.find(mName);
@@ -115,10 +73,6 @@ enum_integrator IntegratorDatabase::getIntegratorNr(const char* mName)
     return mIntegratorMapItr->second;
 }
 
-/*!  Print list of all metrics.
- *
- *  \param fptr : pointer to file.
- */
 void IntegratorDatabase::printIntegratorList(FILE* fptr)
 {
     fprintf(fptr, "  Solver nicknanme            Solver full name\n");
@@ -130,9 +84,6 @@ void IntegratorDatabase::printIntegratorList(FILE* fptr)
 
 // ******************************** protected methods ******************************
 
-/*!  Initialize database: store the metrics in a map.
- *
- */
 void IntegratorDatabase::init()
 {
     for (unsigned int i = 0; i < NUM_GEOD_SOLVERS; i++) {
@@ -144,11 +95,6 @@ void IntegratorDatabase::init()
 // ---------------------------------------------------
 //           Please sort by enum name !!
 // ---------------------------------------------------
-/*! Initialize metric: generate a new instance.
- *
- *  \param cMetric : pointer to metric.
- *  \param num     : enumeration of metric.
- */
 Geodesic* IntegratorDatabase::initializeIntegrator(Metric* cMetric, enum_integrator num)
 {
 

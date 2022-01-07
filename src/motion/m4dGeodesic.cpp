@@ -54,6 +54,7 @@ bool Geodesic::setParam(std::string paramName, bool val)
         mStepsizeControlled = val;
         return true;
     }
+
     return false;
 }
 
@@ -70,7 +71,8 @@ bool Geodesic::setParam(std::string paramName, double value)
         epsilon_rel = value;
         return true;
     }
-    return false;
+
+    return Motion::setParam(paramName, value);
 }
 
 bool Geodesic::setParam(std::string paramName, double v0, double v1, double v2, double v3)

@@ -1,29 +1,8 @@
-// --------------------------------------------------------------------------------
-/*
-    m4dMetricAlcubierreSimple.h
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-
-/*!  \class  m4d::MetricAlcubierreSimple
-     \brief  Alcubierre warp metric in Cartesian coordinates (t,x,y,z).
+/**
+ * @file    m4dMetricAlcubierreSimple.h
+ * @author  Thomas Mueller
+ *
+ * @brief  Alcubierre warp metric in Cartesian coordinates (t,x,y,z).
 
              The line element is given by
 
@@ -45,8 +24,10 @@
 
              The default local tetrad is the comoving one
              (enum_nat_tetrad_default = enum_nat_tetrad_lnrf).
-*/
-// --------------------------------------------------------------------------------
+
+ *
+ *  This file is part of the m4d-library.
+ */
 #ifndef M4D_METRIC_ALCUBIERRE_SIMPLE_H
 #define M4D_METRIC_ALCUBIERRE_SIMPLE_H
 
@@ -60,6 +41,11 @@ namespace m4d {
 class MetricAlcubierreSimple : public Metric
 {
 public:
+    /*! Standard constructor for the Alcubierre metric.
+     *
+     * @param  R  : size of warp bubble.
+     * @param  vs : velocity of warp bubble.
+     */
     MetricAlcubierreSimple(double R = 1.0, double dR = 0.1, double vs = 1.0);
     virtual ~MetricAlcubierreSimple();
 
@@ -77,8 +63,6 @@ public:
         const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type = enum_nat_tetrad_default);
 
     virtual bool breakCondition(const double* pos);
-
-    // virtual bool   calcDerivs             ( const double y[], double dydx[] );
 
     virtual double testConstraint(const double y[], const double kappa);
     virtual bool resize(double* y, double kappa, double factor = DEF_RESIZE_FACTOR);

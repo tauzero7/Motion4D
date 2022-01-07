@@ -1,28 +1,9 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricEinsteinRosenWaveWWB.cpp
-
-  Copyright (c) 2013-2014  Thomas Mueller
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricEinsteinRosenWaveWWB.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "metric/m4dMetricEinsteinRosenWaveWWB.h"
 
 namespace m4d {
@@ -180,304 +161,8 @@ bool MetricEinsteinRosenWaveWWB::calculateChristoffels(const double* pos)
 bool MetricEinsteinRosenWaveWWB::calculateChrisD(const double*)
 {
     return false;
-    /*
-    double t1 = diff(diff(g(t,rho),t),t);
-    double t2 = diff(diff(psi(t,rho),t),t);
-    double t3 = t1-t2;
-    double t4 = diff(diff(g(t,rho),rho),t);
-    double t5 = diff(diff(psi(t,rho),rho),t);
-    double t6 = t4-t5;
-    double t7 = diff(diff(g(t,rho),rho),rho);
-    double t8 = diff(diff(psi(t,rho),rho),rho);
-    double t9 = t7-t8;
-    double t10 = rho*rho;
-    double t11 = t10*t8;
-    double t14 = (1.0+t11)/t10;
-    double t15 = diff(psi(t,rho),t);
-    double t16 = diff(g(t,rho),t);
-    double t18 = 2.0*t15*t16;
-    double t21 = g(t,rho);
-    double t22 = exp(t21);
-    double t23 = t22*t22;
-    double t24 = 1/t23;
-    double t27 = diff(g(t,rho),rho);
-    double t31 = rho*t5;
-    double t37 = diff(psi(t,rho),rho);
-    double t52 = psi(t,rho);
-    double t53 = exp(t52);
-    double t54 = t53*t53;
-    double t55 = t54*t54;
-    double t56 = t15*t15;
-    double t64 = 4.0*t15*t37;
-    double t75 = t37*t37;
-
-    chrisD[0][0][0][0] = t3;
-    chrisD[0][0][0][1] = t6;
-    chrisD[0][0][0][2] = 0.0;
-    chrisD[0][0][0][3] = 0.0;
-    chrisD[0][0][1][0] = t6;
-    chrisD[0][0][1][1] = t9;
-    chrisD[0][0][1][2] = 0.0;
-    chrisD[0][0][1][3] = 0.0;
-    chrisD[0][0][2][0] = 0.0;
-    chrisD[0][0][2][1] = 0.0;
-    chrisD[0][0][2][2] = 0.0;
-    chrisD[0][0][2][3] = 0.0;
-    chrisD[0][0][3][0] = 0.0;
-    chrisD[0][0][3][1] = 0.0;
-    chrisD[0][0][3][2] = 0.0;
-    chrisD[0][0][3][3] = 0.0;
-    chrisD[0][1][0][0] = t6;
-    chrisD[0][1][0][1] = t9;
-    chrisD[0][1][0][2] = 0.0;
-    chrisD[0][1][0][3] = 0.0;
-    chrisD[0][1][1][0] = t3;
-    chrisD[0][1][1][1] = t6;
-    chrisD[0][1][1][2] = 0.0;
-    chrisD[0][1][1][3] = 0.0;
-    chrisD[0][1][2][0] = 0.0;
-    chrisD[0][1][2][1] = 0.0;
-    chrisD[0][1][2][2] = 0.0;
-    chrisD[0][1][2][3] = 0.0;
-    chrisD[0][1][3][0] = 0.0;
-    chrisD[0][1][3][1] = 0.0;
-    chrisD[0][1][3][2] = 0.0;
-    chrisD[0][1][3][3] = 0.0;
-    chrisD[0][2][0][0] = 0.0;
-    chrisD[0][2][0][1] = 0.0;
-    chrisD[0][2][0][2] = 0.0;
-    chrisD[0][2][0][3] = 0.0;
-    chrisD[0][2][1][0] = 0.0;
-    chrisD[0][2][1][1] = 0.0;
-    chrisD[0][2][1][2] = 0.0;
-    chrisD[0][2][1][3] = 0.0;
-    chrisD[0][2][2][0] = -t2;
-    chrisD[0][2][2][1] = -t5;
-    chrisD[0][2][2][2] = 0.0;
-    chrisD[0][2][2][3] = 0.0;
-    chrisD[0][2][3][0] = 0.0;
-    chrisD[0][2][3][1] = 0.0;
-    chrisD[0][2][3][2] = 0.0;
-    chrisD[0][2][3][3] = 0.0;
-    chrisD[0][3][0][0] = 0.0;
-    chrisD[0][3][0][1] = 0.0;
-    chrisD[0][3][0][2] = 0.0;
-    chrisD[0][3][0][3] = 0.0;
-    chrisD[0][3][1][0] = 0.0;
-    chrisD[0][3][1][1] = 0.0;
-    chrisD[0][3][1][2] = 0.0;
-    chrisD[0][3][1][3] = 0.0;
-    chrisD[0][3][2][0] = 0.0;
-    chrisD[0][3][2][1] = 0.0;
-    chrisD[0][3][2][2] = 0.0;
-    chrisD[0][3][2][3] = 0.0;
-    chrisD[0][3][3][0] = t2;
-    chrisD[0][3][3][1] = t5;
-    chrisD[0][3][3][2] = 0.0;
-    chrisD[0][3][3][3] = 0.0;
-    chrisD[1][0][0][0] = t6;
-    chrisD[1][0][0][1] = t9;
-    chrisD[1][0][0][2] = 0.0;
-    chrisD[1][0][0][3] = 0.0;
-    chrisD[1][0][1][0] = t3;
-    chrisD[1][0][1][1] = t6;
-    chrisD[1][0][1][2] = 0.0;
-    chrisD[1][0][1][3] = 0.0;
-    chrisD[1][0][2][0] = 0.0;
-    chrisD[1][0][2][1] = 0.0;
-    chrisD[1][0][2][2] = 0.0;
-    chrisD[1][0][2][3] = 0.0;
-    chrisD[1][0][3][0] = 0.0;
-    chrisD[1][0][3][1] = 0.0;
-    chrisD[1][0][3][2] = 0.0;
-    chrisD[1][0][3][3] = 0.0;
-    chrisD[1][1][0][0] = t3;
-    chrisD[1][1][0][1] = t6;
-    chrisD[1][1][0][2] = 0.0;
-    chrisD[1][1][0][3] = 0.0;
-    chrisD[1][1][1][0] = t6;
-    chrisD[1][1][1][1] = t9;
-    chrisD[1][1][1][2] = 0.0;
-    chrisD[1][1][1][3] = 0.0;
-    chrisD[1][1][2][0] = 0.0;
-    chrisD[1][1][2][1] = 0.0;
-    chrisD[1][1][2][2] = 0.0;
-    chrisD[1][1][2][3] = 0.0;
-    chrisD[1][1][3][0] = 0.0;
-    chrisD[1][1][3][1] = 0.0;
-    chrisD[1][1][3][2] = 0.0;
-    chrisD[1][1][3][3] = 0.0;
-    chrisD[1][2][0][0] = 0.0;
-    chrisD[1][2][0][1] = 0.0;
-    chrisD[1][2][0][2] = 0.0;
-    chrisD[1][2][0][3] = 0.0;
-    chrisD[1][2][1][0] = 0.0;
-    chrisD[1][2][1][1] = 0.0;
-    chrisD[1][2][1][2] = 0.0;
-    chrisD[1][2][1][3] = 0.0;
-    chrisD[1][2][2][0] = -t5;
-    chrisD[1][2][2][1] = -t14;
-    chrisD[1][2][2][2] = 0.0;
-    chrisD[1][2][2][3] = 0.0;
-    chrisD[1][2][3][0] = 0.0;
-    chrisD[1][2][3][1] = 0.0;
-    chrisD[1][2][3][2] = 0.0;
-    chrisD[1][2][3][3] = 0.0;
-    chrisD[1][3][0][0] = 0.0;
-    chrisD[1][3][0][1] = 0.0;
-    chrisD[1][3][0][2] = 0.0;
-    chrisD[1][3][0][3] = 0.0;
-    chrisD[1][3][1][0] = 0.0;
-    chrisD[1][3][1][1] = 0.0;
-    chrisD[1][3][1][2] = 0.0;
-    chrisD[1][3][1][3] = 0.0;
-    chrisD[1][3][2][0] = 0.0;
-    chrisD[1][3][2][1] = 0.0;
-    chrisD[1][3][2][2] = 0.0;
-    chrisD[1][3][2][3] = 0.0;
-    chrisD[1][3][3][0] = t5;
-    chrisD[1][3][3][1] = t8;
-    chrisD[1][3][3][2] = 0.0;
-    chrisD[1][3][3][3] = 0.0;
-    chrisD[2][0][0][0] = 0.0;
-    chrisD[2][0][0][1] = 0.0;
-    chrisD[2][0][0][2] = 0.0;
-    chrisD[2][0][0][3] = 0.0;
-    chrisD[2][0][1][0] = 0.0;
-    chrisD[2][0][1][1] = 0.0;
-    chrisD[2][0][1][2] = 0.0;
-    chrisD[2][0][1][3] = 0.0;
-    chrisD[2][0][2][0] = -t2;
-    chrisD[2][0][2][1] = -t5;
-    chrisD[2][0][2][2] = 0.0;
-    chrisD[2][0][2][3] = 0.0;
-    chrisD[2][0][3][0] = 0.0;
-    chrisD[2][0][3][1] = 0.0;
-    chrisD[2][0][3][2] = 0.0;
-    chrisD[2][0][3][3] = 0.0;
-    chrisD[2][1][0][0] = 0.0;
-    chrisD[2][1][0][1] = 0.0;
-    chrisD[2][1][0][2] = 0.0;
-    chrisD[2][1][0][3] = 0.0;
-    chrisD[2][1][1][0] = 0.0;
-    chrisD[2][1][1][1] = 0.0;
-    chrisD[2][1][1][2] = 0.0;
-    chrisD[2][1][1][3] = 0.0;
-    chrisD[2][1][2][0] = -t5;
-    chrisD[2][1][2][1] = -t14;
-    chrisD[2][1][2][2] = 0.0;
-    chrisD[2][1][2][3] = 0.0;
-    chrisD[2][1][3][0] = 0.0;
-    chrisD[2][1][3][1] = 0.0;
-    chrisD[2][1][3][2] = 0.0;
-    chrisD[2][1][3][3] = 0.0;
-    chrisD[2][2][0][0] = -t10*(-t18+t2)*t24;
-    chrisD[2][2][0][1] = -rho*(-2.0*rho*t15*t27+2.0*t15+t31)*t24;
-    chrisD[2][2][0][2] = 0.0;
-    chrisD[2][2][0][3] = 0.0;
-    chrisD[2][2][1][0] = rho*(2.0*t16-2.0*t16*rho*t37+t31)*t24;
-    chrisD[2][2][1][1] = (2.0*rho*t27-2.0*t10*t27*t37-1.0+2.0*rho*t37+t11)*t24;
-    chrisD[2][2][1][2] = 0.0;
-    chrisD[2][2][1][3] = 0.0;
-    chrisD[2][2][2][0] = 0.0;
-    chrisD[2][2][2][1] = 0.0;
-    chrisD[2][2][2][2] = 0.0;
-    chrisD[2][2][2][3] = 0.0;
-    chrisD[2][2][3][0] = 0.0;
-    chrisD[2][2][3][1] = 0.0;
-    chrisD[2][2][3][2] = 0.0;
-    chrisD[2][2][3][3] = 0.0;
-    chrisD[2][3][0][0] = 0.0;
-    chrisD[2][3][0][1] = 0.0;
-    chrisD[2][3][0][2] = 0.0;
-    chrisD[2][3][0][3] = 0.0;
-    chrisD[2][3][1][0] = 0.0;
-    chrisD[2][3][1][1] = 0.0;
-    chrisD[2][3][1][2] = 0.0;
-    chrisD[2][3][1][3] = 0.0;
-    chrisD[2][3][2][0] = 0.0;
-    chrisD[2][3][2][1] = 0.0;
-    chrisD[2][3][2][2] = 0.0;
-    chrisD[2][3][2][3] = 0.0;
-    chrisD[2][3][3][0] = 0.0;
-    chrisD[2][3][3][1] = 0.0;
-    chrisD[2][3][3][2] = 0.0;
-    chrisD[2][3][3][3] = 0.0;
-    chrisD[3][0][0][0] = 0.0;
-    chrisD[3][0][0][1] = 0.0;
-    chrisD[3][0][0][2] = 0.0;
-    chrisD[3][0][0][3] = 0.0;
-    chrisD[3][0][1][0] = 0.0;
-    chrisD[3][0][1][1] = 0.0;
-    chrisD[3][0][1][2] = 0.0;
-    chrisD[3][0][1][3] = 0.0;
-    chrisD[3][0][2][0] = 0.0;
-    chrisD[3][0][2][1] = 0.0;
-    chrisD[3][0][2][2] = 0.0;
-    chrisD[3][0][2][3] = 0.0;
-    chrisD[3][0][3][0] = t2;
-    chrisD[3][0][3][1] = t5;
-    chrisD[3][0][3][2] = 0.0;
-    chrisD[3][0][3][3] = 0.0;
-    chrisD[3][1][0][0] = 0.0;
-    chrisD[3][1][0][1] = 0.0;
-    chrisD[3][1][0][2] = 0.0;
-    chrisD[3][1][0][3] = 0.0;
-    chrisD[3][1][1][0] = 0.0;
-    chrisD[3][1][1][1] = 0.0;
-    chrisD[3][1][1][2] = 0.0;
-    chrisD[3][1][1][3] = 0.0;
-    chrisD[3][1][2][0] = 0.0;
-    chrisD[3][1][2][1] = 0.0;
-    chrisD[3][1][2][2] = 0.0;
-    chrisD[3][1][2][3] = 0.0;
-    chrisD[3][1][3][0] = t5;
-    chrisD[3][1][3][1] = t8;
-    chrisD[3][1][3][2] = 0.0;
-    chrisD[3][1][3][3] = 0.0;
-    chrisD[3][2][0][0] = 0.0;
-    chrisD[3][2][0][1] = 0.0;
-    chrisD[3][2][0][2] = 0.0;
-    chrisD[3][2][0][3] = 0.0;
-    chrisD[3][2][1][0] = 0.0;
-    chrisD[3][2][1][1] = 0.0;
-    chrisD[3][2][1][2] = 0.0;
-    chrisD[3][2][1][3] = 0.0;
-    chrisD[3][2][2][0] = 0.0;
-    chrisD[3][2][2][1] = 0.0;
-    chrisD[3][2][2][2] = 0.0;
-    chrisD[3][2][2][3] = 0.0;
-    chrisD[3][2][3][0] = 0.0;
-    chrisD[3][2][3][1] = 0.0;
-    chrisD[3][2][3][2] = 0.0;
-    chrisD[3][2][3][3] = 0.0;
-    chrisD[3][3][0][0] = t55*(-t18+4.0*t56+t2)*t24;
-    chrisD[3][3][0][1] = t55*(-2.0*t15*t27+t64+t5)*t24;
-    chrisD[3][3][0][2] = 0.0;
-    chrisD[3][3][0][3] = 0.0;
-    chrisD[3][3][1][0] = -t55*(-2.0*t16*t37+t64+t5)*t24;
-    chrisD[3][3][1][1] = -t55*(-2.0*t27*t37+4.0*t75+t8)*t24;
-    chrisD[3][3][1][2] = 0.0;
-    chrisD[3][3][1][3] = 0.0;
-    chrisD[3][3][2][0] = 0.0;
-    chrisD[3][3][2][1] = 0.0;
-    chrisD[3][3][2][2] = 0.0;
-    chrisD[3][3][2][3] = 0.0;
-    chrisD[3][3][3][0] = 0.0;
-    chrisD[3][3][3][1] = 0.0;
-    chrisD[3][3][3][2] = 0.0;
-    chrisD[3][3][3][3] = 0.0;
-    */
-    return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricEinsteinRosenWaveWWB::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
 
@@ -493,13 +178,6 @@ void MetricEinsteinRosenWaveWWB::localToCoord(const double* pos, const double* l
     dir[3] = exp(-psi) * ldir[3];
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricEinsteinRosenWaveWWB::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double gam, psi;
@@ -514,12 +192,6 @@ void MetricEinsteinRosenWaveWWB::coordToLocal(const double* pos, const double* c
     ldir[3] = exp(psi) * cdir[3];
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
- *  \return false : position is valid.
- */
 bool MetricEinsteinRosenWaveWWB::breakCondition(const double*)
 {
     return false;
@@ -542,10 +214,6 @@ double MetricEinsteinRosenWaveWWB::testConstraint(const double* y, const double 
     return sum;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'mass' or 'lambda' parameter.
- */
 bool MetricEinsteinRosenWaveWWB::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -559,8 +227,6 @@ bool MetricEinsteinRosenWaveWWB::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricEinsteinRosenWaveWWB::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -573,8 +239,6 @@ bool MetricEinsteinRosenWaveWWB::report(const vec4, const vec4, char*& text)
     return CopyString(ss.str().c_str(), text);
 }
 
-/*!
- */
 void MetricEinsteinRosenWaveWWB::setStandardValues()
 {
     mInitPos[0] = 0.0;

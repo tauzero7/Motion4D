@@ -547,7 +547,8 @@ bool MetricMorrisThorne::transToEmbedding(vec4 p, vec4& ep)
 
 bool MetricMorrisThorne::transToCustom(vec4, vec4&)
 {
-    //  TODO
+    fprintf(stderr, "uups... not implemented yet!\n");
+    // TODO
     return false;
 }
 

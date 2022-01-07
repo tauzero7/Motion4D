@@ -1,34 +1,18 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dJacobi.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dJacobi.cpp
+ * @author  Thomas Mueller
+ *
+ * @brief  Jacobi Elliptic functions.
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dJacobi.h"
 #include <cmath>
 
 namespace m4d {
 
-void sncndn(const double u, const double m, const double eps, double &sn, double &cn, double &dn) {
+void sncndn(const double u, const double m, const double eps, double& sn, double& cn, double& dn)
+{
     double a[15];
     double b[15];
     double c[15];
@@ -38,7 +22,8 @@ void sncndn(const double u, const double m, const double eps, double &sn, double
     if (m > 1) {
         mu = 1.0 / m;
         v = u * sqrt(m);
-    } else {
+    }
+    else {
         mu = m;
         v = u;
     }
@@ -71,4 +56,3 @@ void sncndn(const double u, const double m, const double eps, double &sn, double
 }
 
 } // end namespace m4d
-

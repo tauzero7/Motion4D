@@ -1,38 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricSchwarzschildTortoise.cpp
-
-  Copyright (c) 2010-2014  Thomas Mueller
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricSchwarzschildTortoise.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricSchwarzschildTortoise.h"
 
 namespace m4d {
 
-#define eps 1.0e-6
-
-/*! Standard constructor for the Schwarzschild metric.
- *
- * \param  mass : mass of the black hole.
- */
 MetricSchwarzschildTortoise::MetricSchwarzschildTortoise(double mass)
 {
     mMetricName = "SchwarzschildTortoise";
@@ -72,16 +47,10 @@ MetricSchwarzschildTortoise::MetricSchwarzschildTortoise(double mass)
     gsl_set_error_handler_off();
 }
 
-/*!
- */
 MetricSchwarzschildTortoise::~MetricSchwarzschildTortoise() {}
 
 // *********************************** public methods ******************************
 
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricSchwarzschildTortoise::calculateMetric(const double* pos)
 {
     double rho = pos[1];
@@ -120,10 +89,6 @@ bool MetricSchwarzschildTortoise::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricSchwarzschildTortoise::calculateChristoffels(const double* pos)
 {
     double rho = pos[1];
@@ -214,10 +179,6 @@ bool MetricSchwarzschildTortoise::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricSchwarzschildTortoise::calculateChrisD(const double* pos)
 {
     double rho = pos[1];
@@ -504,13 +465,6 @@ bool MetricSchwarzschildTortoise::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of local tetrad.
- */
 void MetricSchwarzschildTortoise::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double rho = pos[1];
@@ -525,13 +479,6 @@ void MetricSchwarzschildTortoise::localToCoord(const double* pos, const double* 
     dir[3] = ldir[3] / (r * sin(theta));
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of local tetrad.
- */
 void MetricSchwarzschildTortoise::coordToLocal(
     const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
@@ -547,53 +494,12 @@ void MetricSchwarzschildTortoise::coordToLocal(
     ldir[3] = cdir[3] * r * sin(theta);
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
- *  \return false : position is valid.
- */
 bool MetricSchwarzschildTortoise::breakCondition(const double*)
 {
     bool br = false;
     return br;
 }
 
-/* Calculate right hand side of the geodesic equation in first order form.
- *
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  dydx[] : pointer to right side of geodesic equation.
- *
-bool MetricSchwarzschildTortoise::calcDerivs ( const double y[], double dydx[] )
-{
-  dydx[0] = y[4];
-  dydx[1] = y[5];
-  dydx[2] = y[6];
-  dydx[3] = y[7];
-
-  double r     = y[1];
-  double theta = y[2];
-
-  dydx[4] = -rs/(r*(r-rs))*y[4]*y[5];
-  dydx[5] = -0.5*mSpeedOfLight*mSpeedOfLight*rs*(r-rs)/pow(r,3.0)*y[4]*y[4] + 0.5*rs/(r*(r-rs))*y[5]*y[5] +
-(r-rs)*(y[6]*y[6]+ sin(theta)*sin(theta)*y[7]*y[7]); dydx[6] = -2.0/r*y[5]*y[6] + sin(theta)*cos(theta)*y[7]*y[7];
-  dydx[7] = -2.0/r*y[5]*y[7] - 2.0*cos(theta)/sin(theta)*y[6]*y[7];
-
-  return true;
-}
-*/
-
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  However, take care of the limited double precision.
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricSchwarzschildTortoise::testConstraint(const double y[], const double kappa)
 {
     double rho = y[1];
@@ -613,16 +519,6 @@ double MetricSchwarzschildTortoise::testConstraint(const double y[], const doubl
     return sum;
 }
 
-/*! Calculate the scalar product between u and v:  g_{ab}u^a v^b.
- *
- *  \param pos  :  pointer to position.
- *  \param u    :  pointer to vector.
- *  \param v    :  pointer to vector.
- *  \param prod :  reference to scalar product.
- *  \param preCalcMetric : calculate metric coefficients before evaluating the scalar product.
- *  \return true  : success.
- *  \return false : position is not valid.
- */
 bool MetricSchwarzschildTortoise::calcProduct(const double* pos, const double* u, const double* v, double& prod, bool)
 {
     prod = 0.0;
@@ -639,10 +535,6 @@ bool MetricSchwarzschildTortoise::calcProduct(const double* pos, const double* u
     return true;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
- */
 bool MetricSchwarzschildTortoise::setParam(const char* pName, double val)
 {
     if (Metric::setParam(pName, val)) {
@@ -652,12 +544,6 @@ bool MetricSchwarzschildTortoise::setParam(const char* pName, double val)
     return true;
 }
 
-/*!  Transform point p to pseudo cartesian coordinates.
- *
- *  \param p  : point to be transformed.
- *  \param cp : reference to customized point.
- *  \return ID of chart
- */
 int MetricSchwarzschildTortoise::transToPseudoCart(vec4 p, vec4& cp)
 {
     double rho = p[1];
@@ -672,13 +558,6 @@ int MetricSchwarzschildTortoise::transToPseudoCart(vec4 p, vec4& cp)
     return 0;
 }
 
-/*! Transform point p to embedding coordinates.
- *
- *  \param p  : point to be transformed.
- *  \param ep : reference to 'embedded' point.
- *  \return true : success.
- *  \return false : otherwise.
- */
 bool MetricSchwarzschildTortoise::transToEmbedding(vec4 p, vec4& ep)
 {
     vec4 cp;
@@ -698,13 +577,6 @@ bool MetricSchwarzschildTortoise::transToEmbedding(vec4 p, vec4& ep)
     return false;
 }
 
-/*! Set embedding parameters.
- *
- *  \param  name : embedding parameter name.
- *  \param  val  : embedding parameter value.
- *  \return true  : success.
- *  \return false : parameter not valid.
- */
 bool MetricSchwarzschildTortoise::setEmbeddingParam(const char* name, double val)
 {
     Metric::setEmbeddingParam(name, val);
@@ -724,10 +596,6 @@ bool MetricSchwarzschildTortoise::setEmbeddingParam(const char* name, double val
     return testEmbeddingParams();
 }
 
-/*! Test embedding parameters
- *  \return  true : all parameters are ok
- *  \return  false : at least one parameter had to be adjusted.
- */
 bool MetricSchwarzschildTortoise::testEmbeddingParams()
 {
     bool allOk = true;
@@ -751,64 +619,6 @@ bool MetricSchwarzschildTortoise::testEmbeddingParams()
     return allOk;
 }
 
-/*! Generate vertices for the embedding diagram.
- *
- *  \param verts : reference to vector of vertices.
- *  \param indices : reference to vector of indices.
- *  \param numElems : number of elements in a strip.
- *  \param counter  : number of strips.
- *  \return int : number of vertices.
- */
-// int MetricSchwarzschildTortoise::getEmbeddingVertices(std::vector<vec3> &verts,
-//        std::vector<int> &indices, unsigned int &numElems, unsigned int &counter) {
-//    if (!verts.empty()) {
-//        verts.clear();
-//    }
-
-//    if (!indices.empty()) {
-//        indices.clear();
-//    }
-
-//    testEmbeddingParams();
-//    mEmb_rstep = (mEmb_rmax - mEmb_rmin) / mEmb_r_num;
-//    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
-
-//    numElems = int(mEmb_r_num);
-//    counter  = int(mEmb_phi_num) + 1;
-
-//    int vnum;
-
-//    double x, y, z, r, phi;
-//    for (unsigned int k = 0; k < counter; k++) {
-//        phi = k * mEmb_phistep;
-//        for (unsigned int j = 0; j < numElems; j++) {
-//            r = mEmb_rmin + j * mEmb_rstep;
-//            x = r * cos(phi);
-//            y = r * sin(phi);
-//            if (r >= rs) {
-//                z = 2.0 * sqrt(rs) * sqrt(fabs(r - rs));
-//                verts.push_back(vec3(x, y, z));
-
-//                vnum = k * numElems + j;
-
-//                indices.push_back(vnum);
-//                indices.push_back(vnum + numElems);
-//            }
-//        }
-//    }
-
-//    int numVerts = (int)verts.size();
-//    int numInds  = (int)indices.size();
-
-//    if (2 * numVerts == numInds) {
-//        return numVerts;
-//    }
-
-//    return 0;
-//}
-
-/*! Generate report.
- */
 bool MetricSchwarzschildTortoise::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -828,8 +638,7 @@ bool MetricSchwarzschildTortoise::report(const vec4, const vec4, char*& text)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricSchwarzschildTortoise::setStandardValues()
 {
     mInitPos[0] = 0.0;
@@ -846,9 +655,6 @@ void MetricSchwarzschildTortoise::setStandardValues()
     mCoordNames[3] = std::string("phi");
 }
 
-/*! Calculate r from rho.
- * \param rho
- */
 double MetricSchwarzschildTortoise::calc_r(const double rho)
 {
     return rs * (1.0 + gsl_sf_lambert_W0(exp(rho / rs - 1.0)));

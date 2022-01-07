@@ -1,28 +1,9 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricJaNeWi.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricJaNeWi.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricJaNeWi.h"
 
 double dzdr_janewi(double x, void* params)
@@ -37,13 +18,7 @@ double dzdr_janewi(double x, void* params)
 }
 
 namespace m4d {
-#define eps 1.0e-6
 
-/*! Standard constructor for the Kottler metric.
- *
- * \param  mass : mass of the black hole.
- * \param  gamma : gamma factor.
- */
 MetricJaNeWi::MetricJaNeWi(double mass, double gamma)
 {
     mMetricName = "JanisNewmanWinicour";
@@ -93,10 +68,7 @@ MetricJaNeWi::~MetricJaNeWi()
 }
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricJaNeWi::calculateMetric(const double* pos)
 {
     double r = pos[1];
@@ -135,10 +107,6 @@ bool MetricJaNeWi::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricJaNeWi::calculateChristoffels(const double* pos)
 {
     double r = pos[1];
@@ -232,10 +200,6 @@ bool MetricJaNeWi::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricJaNeWi::calculateChrisD(const double* pos)
 {
     double r = pos[1];
@@ -525,13 +489,6 @@ bool MetricJaNeWi::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricJaNeWi::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -546,13 +503,6 @@ void MetricJaNeWi::localToCoord(const double* pos, const double* ldir, double* d
     dir[3] = ldir[3] * agm2 / (r * sin(theta));
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricJaNeWi::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -567,26 +517,17 @@ void MetricJaNeWi::coordToLocal(const double* pos, const double* cdir, double* l
     ldir[3] = cdir[3] * r * sin(theta) / agm2;
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
- *  \return false : position is valid.
- */
 bool MetricJaNeWi::breakCondition(const double* pos)
 {
     bool br = false;
 
-    if ((pos[1] < 0.0) || (mGamma * mGamma * pos[1] * pos[1] <= (1.0 + eps) * rs * rs) || pos[1] < mCritPoint) {
+    if ((pos[1] < 0.0) || (mGamma * mGamma * pos[1] * pos[1] <= (1.0 + M4D_METRIC_EPS) * rs * rs)
+        || pos[1] < mCritPoint) {
         br = true;
     }
     return br;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'mass' or 'lambda' parameter.
- */
 bool MetricJaNeWi::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -602,13 +543,6 @@ bool MetricJaNeWi::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Transform point p to embedding coordinates.
- *
- *  \param p  : point to be transformed.
- *  \param ep : reference to 'embedded' point.
- *  \return true : success.
- *  \return false : otherwise.
- */
 bool MetricJaNeWi::transToEmbedding(vec4 p, vec4& ep)
 {
     vec4 cp;
@@ -626,13 +560,6 @@ bool MetricJaNeWi::transToEmbedding(vec4 p, vec4& ep)
     return false;
 }
 
-/*! Set embedding parameters.
- *
- *  \param  name : embedding parameter name.
- *  \param  val  : embedding parameter value.
- *  \return true  : success.
- *  \return false : parameter not valid.
- */
 bool MetricJaNeWi::setEmbeddingParam(const char* name, double val)
 {
     Metric::setEmbeddingParam(name, val);
@@ -652,10 +579,6 @@ bool MetricJaNeWi::setEmbeddingParam(const char* name, double val)
     return testEmbeddingParams();
 }
 
-/*! Test embedding parameters
- *  \return  true : all parameters are ok
- *  \return  false : at least one parameter had to be adjusted.
- */
 bool MetricJaNeWi::testEmbeddingParams()
 {
     bool allOk = true;
@@ -679,70 +602,6 @@ bool MetricJaNeWi::testEmbeddingParams()
     return allOk;
 }
 
-/*! Generate vertices for the embedding diagram.
- *
- *  \param verts : reference to vector of vertices.
- *  \param indices : reference to vector of indices.
- *  \param numElems : number of elements in a strip.
- *  \param counter  : number of strips.
- *  \return int : number of vertices.
- */
-// int MetricJaNeWi::getEmbeddingVertices(std::vector<vec3> &verts,
-//                                       std::vector<int> &indices, unsigned int &numElems, unsigned int &counter) {
-//    if (!verts.empty()) {
-//        verts.clear();
-//    }
-
-//    if (!indices.empty()) {
-//        indices.clear();
-//    }
-
-//    testEmbeddingParams();
-//    mEmb_rstep = (mEmb_rmax - mEmb_rmin) / mEmb_r_num;
-//    mEmb_phistep = 2.0 * M_PI / mEmb_phi_num;
-
-//    numElems = int(mEmb_r_num);
-//    counter  = int(mEmb_phi_num) + 1;
-
-//    int vnum;
-
-//    double x, y, z, r, phi;
-//    for (unsigned int k = 0; k < counter; k++) {
-//        phi = k * mEmb_phistep;
-//        for (unsigned int j = 0; j < numElems; j++) {
-//            r = mEmb_rmin + j * mEmb_rstep;
-//            x = r * cos(phi);
-//            y = r * sin(phi);
-//            if (r >= mCritPoint) {
-//                calcEmbeddingZ(r, z);
-//                verts.push_back(vec3(x, y, z));
-
-//                vnum = k * numElems + j;
-
-//                indices.push_back(vnum);
-//                indices.push_back(vnum + numElems);
-//            }
-//        }
-//    }
-
-//    int numVerts = (int)verts.size();
-//    int numInds  = (int)indices.size();
-
-//    if (2 * numVerts == numInds) {
-//        return numVerts;
-//    }
-
-//    return 0;
-//}
-
-/*! Effective potential.
- *  \param pos : initial position.
- *  \param cdir : initial four-direction.
- *  \param type : geodesic type.
- *  \param x : abscissa value.
- *  \param val : reference to effective potential value.
- *  \return true : effective potential exists at x.
- */
 bool MetricJaNeWi::effPotentialValue(
     const vec4 pos, const vec4 cdir, enum_geodesic_type type, const double x, double& val)
 {
@@ -763,13 +622,6 @@ bool MetricJaNeWi::effPotentialValue(
     return true;
 }
 
-/*! Total energy.
- *  \param pos : initial position.
- *  \param cdir : initial four-direction.
- *  \param x : abscissa value.
- *  \param val : reference to total energy value.
- *  \return true : effective potential exists at x.
- */
 bool MetricJaNeWi::totEnergy(const vec4 pos, const vec4 cdir, const double, double& val)
 {
     if (pos[1] < mCritPoint + 1e-2) {
@@ -782,8 +634,6 @@ bool MetricJaNeWi::totEnergy(const vec4 pos, const vec4 cdir, const double, doub
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricJaNeWi::report(const vec4 pos, const vec4 cdir, char*& text)
 {
     std::stringstream ss;
@@ -817,8 +667,6 @@ bool MetricJaNeWi::report(const vec4 pos, const vec4 cdir, char*& text)
     return CopyString(ss.str().c_str(), text);
 }
 
-/*! Calculate critical point.
- */
 void MetricJaNeWi::calcCriticalPoint()
 {
     double f = 0.5 * (1.0 + mGamma) / mGamma;
@@ -839,12 +687,6 @@ bool MetricJaNeWi::calcEmbeddingZ(const double r, double& z)
     return true;
 }
 
-/*! Determine the velocity for a closed circular orbit if it exists.
- *   A circular timelike geodesic with respect to r-coordinate does exist
- *   only for r>=3rs (last timelike circular orbit).
- * \param r  Radial coordinate.
- * \param tedType type of tetrad.
- */
 double MetricJaNeWi::getCircularVelocity(const double r, const enum_nat_tetrad_type)
 {
     if (r >= rs / 2.0 * ((1.0 / mGamma + 3.0) + sqrt(5.0 * mGamma * mGamma - 1.0) / mGamma)) {
@@ -866,8 +708,6 @@ vec4 MetricJaNeWi::getCircularFourVel(const vec4 pos, const enum_nat_tetrad_type
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
 void MetricJaNeWi::setStandardValues()
 {
     mInitPos[0] = 0.0;

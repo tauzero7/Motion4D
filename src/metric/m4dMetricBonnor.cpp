@@ -1,38 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricBonnor.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricBonnor.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricBonnor.h"
 
 namespace m4d {
 
-#define eps 1.0e-6
-
-/*! Standard constructor.
- *
- * \param  mass : mass of the black hole.
- */
 MetricBonnor::MetricBonnor(double mass, double b)
 {
     mMetricName = "Bonnor";
@@ -54,16 +29,10 @@ MetricBonnor::MetricBonnor(double mass, double b)
     setStandardValues();
 }
 
-/*!
- */
 MetricBonnor::~MetricBonnor() {}
 
 // *********************************** public methods ******************************
 
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricBonnor::calculateMetric(const double* pos)
 {
     double theta = pos[2];
@@ -100,10 +69,6 @@ bool MetricBonnor::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricBonnor::calculateChristoffels(const double* pos)
 {
     double theta = pos[2];
@@ -224,22 +189,11 @@ bool MetricBonnor::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricBonnor::calculateChrisD(const double*)
 {
     return false;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricBonnor::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     calcPotentials(pos);
@@ -251,21 +205,8 @@ void MetricBonnor::localToCoord(const double* pos, const double* ldir, double* d
     dir[3] = ldir[3] * P / (Y * sqrt(Z) * sin(theta));
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricBonnor::coordToLocal(const double*, const double*, double*, enum_nat_tetrad_type) {}
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
- *  \return false : position is valid.
- */
 bool MetricBonnor::breakCondition(const double* pos)
 {
     bool br = false;
@@ -276,37 +217,6 @@ bool MetricBonnor::breakCondition(const double* pos)
     return br;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  double the constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
-/*
-double MetricBonnor::testConstraint ( const double y[], const double kappa )
-{
-    double r     = y[1];
-
-    // Scale the directions with the speed of light before doubling them !!
-    double dt     = y[4];
-    double dr     = y[5];
-    double dphi   = y[6];
-    double dz     = y[7];
-
-
-    return sum;
-}
-*/
-
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
- *  'charge' represents the charge of the black hole.
- */
 bool MetricBonnor::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -320,8 +230,6 @@ bool MetricBonnor::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricBonnor::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -335,8 +243,6 @@ bool MetricBonnor::report(const vec4, const vec4, char*& text)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
 void MetricBonnor::setStandardValues()
 {
     mInitPos[0] = 0.0;

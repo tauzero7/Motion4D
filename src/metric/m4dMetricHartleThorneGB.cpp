@@ -1,37 +1,14 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricHartleThorneGB.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricHartleThorneGB.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricHartleThorneGB.h"
 #include <cmath>
 
 namespace m4d {
 
-/*! Standard constructor for the Kottler metric.
- *
- * \param  u : Khalatnikov-Lifshitz parameter.
- */
 MetricHartleThorneGB::MetricHartleThorneGB(double mass, double angmom, double eta)
 {
     mMetricName = "HartleThorneGB";
@@ -54,10 +31,7 @@ MetricHartleThorneGB::MetricHartleThorneGB(double mass, double angmom, double et
 MetricHartleThorneGB::~MetricHartleThorneGB() {}
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricHartleThorneGB::calculateMetric(const double* pos)
 {
     double M = mMass;
@@ -123,10 +97,6 @@ bool MetricHartleThorneGB::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricHartleThorneGB::calculateChristoffels(const double* pos)
 {
     double M = mMass;
@@ -1016,22 +986,11 @@ bool MetricHartleThorneGB::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricHartleThorneGB::calculateChrisD(const double*)
 {
     return false;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricHartleThorneGB::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     calculateMetric(pos);
@@ -1060,24 +1019,12 @@ void MetricHartleThorneGB::localToCoord(const double* pos, const double* ldir, d
     // fprintf(stderr,"hier: %e\n",prod);
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricHartleThorneGB::coordToLocal(const double*, const double*, double*, enum_nat_tetrad_type)
 {
+    fprintf(stderr, "uups... not implemented yet!\n");
     // TODO
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
- *  \return false : position is valid.
- */
 bool MetricHartleThorneGB::breakCondition(const double* pos)
 {
     bool br = false;
@@ -1102,10 +1049,6 @@ bool MetricHartleThorneGB::breakCondition(const double* pos)
     return br;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'mass' or 'lambda' parameter.
- */
 bool MetricHartleThorneGB::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -1121,8 +1064,6 @@ bool MetricHartleThorneGB::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricHartleThorneGB::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -1252,8 +1193,6 @@ void MetricHartleThorneGB::calcFuncDiff(const double* pos)
     deltadr = 2.0 * r - 2.0 * M;
 }
 
-/*!
- */
 void MetricHartleThorneGB::setStandardValues()
 {
     mInitPos[0] = 0.0;

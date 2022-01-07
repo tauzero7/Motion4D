@@ -1,36 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricMinkRotLattice.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricMinkRotLattice.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricMinkRotLattice.h"
 
 namespace m4d {
 
-/*! Standard constructor for the rotating lattice metric.
- *
- * \param  omega : rotation parameter.
- */
 MetricMinkRotLattice::MetricMinkRotLattice(double omega)
 {
     mMetricName = "RotLattice";
@@ -54,10 +31,6 @@ MetricMinkRotLattice::~MetricMinkRotLattice() {}
 
 // *********************************** public methods ******************************
 
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricMinkRotLattice::calculateMetric(const double* pos)
 {
     double c = mSpeedOfLight;
@@ -88,10 +61,6 @@ bool MetricMinkRotLattice::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricMinkRotLattice::calculateChristoffels(const double* pos)
 {
     double r = pos[1];
@@ -169,13 +138,6 @@ bool MetricMinkRotLattice::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricMinkRotLattice::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type type)
 {
     double r = pos[1];
@@ -197,13 +159,6 @@ void MetricMinkRotLattice::localToCoord(const double* pos, const double* ldir, d
     }
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricMinkRotLattice::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type type)
 {
     double r = pos[1];
@@ -225,12 +180,6 @@ void MetricMinkRotLattice::coordToLocal(const double* pos, const double* cdir, d
     }
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position > c/omega.
- *  \return false : position is valid.
- */
 bool MetricMinkRotLattice::breakCondition(const double* pos)
 {
     if (pos[1] >= fabs(mSpeedOfLight / mOmega)) {
@@ -240,10 +189,6 @@ bool MetricMinkRotLattice::breakCondition(const double* pos)
     return false;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'omega' parameter.
- */
 bool MetricMinkRotLattice::setParam(const char* pName, double val)
 {
     if (Metric::setParam(pName, val)) {
@@ -252,17 +197,6 @@ bool MetricMinkRotLattice::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  However, take care of the limited double precision.
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricMinkRotLattice::testConstraint(const double y[], const double kappa)
 {
     double r = y[1];
@@ -283,8 +217,6 @@ double MetricMinkRotLattice::testConstraint(const double y[], const double kappa
     return sum;
 }
 
-/*! Generate report.
- */
 bool MetricMinkRotLattice::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -297,8 +229,7 @@ bool MetricMinkRotLattice::report(const vec4, const vec4, char*& text)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricMinkRotLattice::setStandardValues()
 {
 

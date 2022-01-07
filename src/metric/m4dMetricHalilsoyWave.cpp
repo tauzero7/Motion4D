@@ -1,36 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-    m4dMetricHalilsoyWave.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricHalilsoyWave.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricHalilsoyWave.h"
 
 namespace m4d {
 
-#define eps 1.0e-6
-
-/*! Standard constructor for the GravWave metric.
- */
 MetricHalilsoyWave::MetricHalilsoyWave(double alpha, double C)
 {
     mMetricName = "HalilsoyWave";
@@ -52,10 +29,7 @@ MetricHalilsoyWave::MetricHalilsoyWave(double alpha, double C)
 MetricHalilsoyWave::~MetricHalilsoyWave() {}
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricHalilsoyWave::calculateMetric(const double* pos)
 {
     double rho = pos[1];
@@ -92,10 +66,6 @@ bool MetricHalilsoyWave::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricHalilsoyWave::calculateChristoffels(const double* pos)
 {
     double rho = pos[1];
@@ -210,22 +180,11 @@ bool MetricHalilsoyWave::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricHalilsoyWave::calculateChrisD(const double*)
 {
     return false;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricHalilsoyWave::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double rho = pos[1];
@@ -238,13 +197,6 @@ void MetricHalilsoyWave::localToCoord(const double* pos, const double* ldir, dou
     dir[3] = -ldir[2] * fA / (rho * sV) + ldir[3] * sV;
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricHalilsoyWave::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double rho = pos[1];
@@ -257,20 +209,12 @@ void MetricHalilsoyWave::coordToLocal(const double* pos, const double* cdir, dou
     ldir[3] = (cdir[3] + fA * cdir[2]) / sV;
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return false : position is always valid.
- */
 bool MetricHalilsoyWave::breakCondition(const double*)
 {
     bool br = false;
     return br;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- */
 bool MetricHalilsoyWave::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -283,16 +227,6 @@ bool MetricHalilsoyWave::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
- sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricHalilsoyWave::testConstraint(const double y[], const double kappa)
 {
     double rho = y[1];
@@ -309,8 +243,6 @@ double MetricHalilsoyWave::testConstraint(const double y[], const double kappa)
     return sum;
 }
 
-/*! Generate report.
- */
 bool MetricHalilsoyWave::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -326,8 +258,7 @@ bool MetricHalilsoyWave::report(const vec4, const vec4, char*& text)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricHalilsoyWave::setStandardValues()
 {
     mInitPos[0] = 0.0;
@@ -345,9 +276,7 @@ void MetricHalilsoyWave::setStandardValues()
 }
 
 // ********************************* specific protected methods *****************************
-/*! Calculate metric functions at current position.
- *  \param pos : current position.
- */
+
 void MetricHalilsoyWave::calcMetricFunc(const double* pos)
 {
     double t = pos[0];
@@ -363,9 +292,6 @@ void MetricHalilsoyWave::calcMetricFunc(const double* pos)
     fK = 0.5 * mC * mC * (rho * rho * (b0 * b0 + b1 * b1) - 2.0 * rho * b0 * b1 * ct * ct);
 }
 
-/*! Calculate derivatives of the metric functions at current position.
- *  \param pos : current position.
- */
 void MetricHalilsoyWave::calcDiffMetricFunc(const double* pos)
 {
     double t = pos[0];

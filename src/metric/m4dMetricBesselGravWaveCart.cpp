@@ -1,37 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricBesselGravWaveCart.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricBesselGravWaveCart.cpp
+ * @author  Heiko Munz
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricBesselGravWaveCart.h"
 
 namespace m4d {
 
-#define eps 1.0e-6
-
-/*! Standard constructor for the BesselGravWave metric.
- *
- */
 MetricBesselGravWaveCart::MetricBesselGravWaveCart(double C)
 {
     mMetricName = "BesselGravWaveCart";
@@ -50,16 +26,10 @@ MetricBesselGravWaveCart::MetricBesselGravWaveCart(double C)
     setStandardValues();
 }
 
-/*!
- */
 MetricBesselGravWaveCart::~MetricBesselGravWaveCart() {}
 
 // *********************************** public methods ******************************
 
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricBesselGravWaveCart::calculateMetric(const double* pos)
 {
     double t = pos[0];
@@ -137,10 +107,6 @@ bool MetricBesselGravWaveCart::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricBesselGravWaveCart::calculateChristoffels(const double* pos)
 {
     double t = pos[0];
@@ -388,10 +354,6 @@ bool MetricBesselGravWaveCart::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! mCalculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricBesselGravWaveCart::calculateChrisD(const double* pos)
 {
     double t = pos[0];
@@ -1539,13 +1501,6 @@ bool MetricBesselGravWaveCart::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricBesselGravWaveCart::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     calcLTcoeffs(pos);
@@ -1556,13 +1511,6 @@ void MetricBesselGravWaveCart::localToCoord(const double* pos, const double* ldi
     dir[3] = ldir[3] / ltZ;
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricBesselGravWaveCart::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     calcLTcoeffs(pos);
@@ -1573,12 +1521,6 @@ void MetricBesselGravWaveCart::coordToLocal(const double* pos, const double* cdi
     ldir[3] = cdir[3] * ltZ;
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r <= eps.
- *  \return false : position is valid.
- */
 bool MetricBesselGravWaveCart::breakCondition(const double*)
 {
     bool br = false;
@@ -1586,17 +1528,6 @@ bool MetricBesselGravWaveCart::breakCondition(const double*)
     return br;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  However, take care of the limited double precision.
- *  \param  Y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricBesselGravWaveCart::testConstraint(const double Y[], const double kappa)
 {
     double cm = 1.0 / mSpeedOfLight;
@@ -1619,38 +1550,9 @@ double MetricBesselGravWaveCart::testConstraint(const double Y[], const double k
     sum += g_compts[0][0] * dt * dt + g_compts[1][1] * dx * dx + g_compts[2][2] * dy * dy
         + 2.0 * g_compts[2][1] * dx * dy + g_compts[3][3] * dz * dz;
 
-    //  if(x == 0.0 && y == 0.0)
-    //  {
-    //    std::cerr << "calculateTetradCompts Grenzfall" << std::endl;
-    //    double e2Cos = exp(2.0*mC*cos(t));
-    //
-    //    sum += -1.0/e2Cos * dt*dt + 1.0/e2Cos * dx*dx + 1.0/e2Cos * dy*dy + e2Cos * dz*dz;
-    //
-    //  }
-    //  else
-    //  {
-    //    double xx = x*x;
-    //    double yy = y*y;
-    //    double rho = sqrt(xx + yy);
-    //    double ct = cos(t);
-    //    double j0 = gsl_sf_bessel_J0(rho);
-    //    double j1 = gsl_sf_bessel_J1(rho);
-    //    double U = mC*j0*ct;
-    //    double K = 0.5*mC*mC*rho * (rho*(j0*j0 + j1*j1) - 2.0*j0*j1*ct*ct);
-    //    double e2K = exp(2.0*K);
-    //    double e2U = exp(2.0*U);
-    //    double e2KU = exp(2.0*(K-U));
-    //
-    //    sum += -e2KU * dt*dt + 1.0/(rho*rho * e2U) * ( (e2K*xx+yy)*dx*dx + (e2K*yy+xx)*dy*dy + 2.0*x*y*(e2K-1.0)*dx*dy
-    //    ) + e2U*dz*dz;
-    //  }
-
     return sum;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- */
 bool MetricBesselGravWaveCart::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -1662,12 +1564,6 @@ bool MetricBesselGravWaveCart::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Transform point p to 2+1 coordinates.
- *
- *  \param  p  : point in proper metric coordinates.
- *  \param  cp : reference to transformed point.
- *  \return true : success.
- */
 bool MetricBesselGravWaveCart::transToTwoPlusOne(vec4 p, vec4& cp)
 {
     vec4 tp;
@@ -1676,8 +1572,6 @@ bool MetricBesselGravWaveCart::transToTwoPlusOne(vec4 p, vec4& cp)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricBesselGravWaveCart::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -1693,8 +1587,7 @@ bool MetricBesselGravWaveCart::report(const vec4, const vec4, char*& text)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricBesselGravWaveCart::setStandardValues()
 {
     mInitPos[0] = 0.0;
@@ -1711,10 +1604,6 @@ void MetricBesselGravWaveCart::setStandardValues()
     mCoordNames[3] = std::string("z");
 }
 
-/*! Calculate local tetrad coefficients at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 void MetricBesselGravWaveCart::calcLTcoeffs(const double* pos)
 {
     double t = pos[0];

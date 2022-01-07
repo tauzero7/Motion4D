@@ -1,39 +1,13 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricPTD_C.cpp
-
-  Copyright (c) 2010-2014  Thomas Mueller, Frank Grave, Felix Beslmeisl
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricPTD_C.cpp
+ * @author  Felix Beslmeisl
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricPTD_C.h"
 
 namespace m4d {
 
-#define eps 1.0e-6
-
-/*! Standard constructor for the metric.
- *
- * \param  a : parameter "a" for the metric
- * \param  b : parameter "b" for the metric
- */
 MetricPTD_C::MetricPTD_C(double a, double b)
 {
     mMetricName = "Petrov_Type_D_C_ES";
@@ -52,16 +26,10 @@ MetricPTD_C::MetricPTD_C(double a, double b)
     setStandardValues();
 }
 
-/*! Standard destructor for the metric.
- *
- */
 MetricPTD_C::~MetricPTD_C() {}
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricPTD_C::calculateMetric(const double* pos)
 {
     double x = pos[2];
@@ -95,10 +63,6 @@ bool MetricPTD_C::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPTD_C::calculateChristoffels(const double* pos)
 {
     double x = pos[2];
@@ -197,10 +161,6 @@ bool MetricPTD_C::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricPTD_C::calculateChrisD(const double* pos)
 {
     double x = pos[2];
@@ -617,13 +577,6 @@ bool MetricPTD_C::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPTD_C::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double x = pos[2];
@@ -637,13 +590,6 @@ void MetricPTD_C::localToCoord(const double* pos, const double* ldir, double* di
     dir[3] = ldir[3] * ((x + y) * sqrt(fabs(-y * y * y - y * a + b)));
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricPTD_C::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double x = pos[2];
@@ -657,10 +603,6 @@ void MetricPTD_C::coordToLocal(const double* pos, const double* cdir, double* ld
     ldir[3] = cdir[3] / ((x + y) * sqrt(fabs(-y * y * y - y * a + b)));
 }
 
-/*! Transform point p to custom coordinats.
- *
- * Deleted.
- */
 int MetricPTD_C::transToPseudoCart(vec4 p, vec4& cp)
 {
     cp[0] = p[0];
@@ -670,41 +612,12 @@ int MetricPTD_C::transToPseudoCart(vec4 p, vec4& cp)
     return 0;
 }
 
-/*! Tests break condition
- *  \param pos  :  position.
- *
- * not implemented.
- */
 bool MetricPTD_C::breakCondition(const double*)
 {
     bool br = false;
-    /*
-      double x = pos[2];
-      double y = pos[3];
-      double a = Par_a;
-      double b = Par_b;
-    */
-    /* if (abs(x+y)<eps) { return true; }
-
-     double t = x;
-     if (abs(t*t*t+a*t+b)<eps)  { return true; }
-     t= -y;
-     if (abs(t*t*t+a*t+b)<eps)  { return true; }
-    */
-
     return br;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricPTD_C::testConstraint(const double y[], const double kappa)
 {
     calculateMetric(y);
@@ -716,10 +629,6 @@ double MetricPTD_C::testConstraint(const double y[], const double kappa)
     // return 0;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *
- */
 bool MetricPTD_C::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -732,8 +641,6 @@ bool MetricPTD_C::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricPTD_C::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -776,9 +683,7 @@ bool MetricPTD_C::report(const vec4, const vec4, char*& text)
 }
 
 // *************************** specific  public methods ****************************
-/*! Returns the sign of real number.
- *
- */
+
 double sgn(double value)
 {
     if (value > 0) {
@@ -790,12 +695,6 @@ double sgn(double value)
     return 0;
 }
 
-/*! Calculates the roots of a polynom of type x^3 - px + q = 0.
- *
- *\param   p     : coefficient of the linear term.
- *\param   q     : y-axes offset
- *\param roots : reference to Roots of the polynom sorted ascending.
- */
 void MetricPTD_C::calculateRoots(vec3& roots, double p, double q)
 {
     double d = q * q / 4.0 - p * p * p / 27.0;
@@ -849,8 +748,7 @@ void MetricPTD_C::calculateRoots(vec3& roots, double p, double q)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
+
 void MetricPTD_C::setStandardValues()
 {
     mInitPos[0] = 0.0;

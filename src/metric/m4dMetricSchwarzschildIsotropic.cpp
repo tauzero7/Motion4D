@@ -9,8 +9,6 @@
 
 namespace m4d {
 
-#define eps 1.0e-6
-
 MetricSchwarzschildIsotropic::MetricSchwarzschildIsotropic(double mass)
 {
     mMetricName = "SchwarzschildIsotropic";
@@ -568,7 +566,7 @@ bool MetricSchwarzschildIsotropic::breakCondition(const double* pos)
     bool br = false;
 
     double rho = calc_rho(pos);
-    if (1.0 - rho_s / rho < eps) {
+    if (1.0 - rho_s / rho < M4D_METRIC_EPS) {
         br = true;
     }
     return br;

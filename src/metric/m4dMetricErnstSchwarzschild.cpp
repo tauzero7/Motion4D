@@ -1,39 +1,14 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricErnstSchwarzschild.cpp
-
-  Copyright (c) 2010  Thomas Mueller
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
+/**
+ * @file    m4dMetricErnstSchwarzschild.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 
 #include "m4dMetricErnstSchwarzschild.h"
 
 namespace m4d {
 
-#define eps 1.0e-6
-
-/*! Standard constructor for the Ernst-Schwarzschild metric.
- *
- * \param  mass : mass of the black hole.
- * \param  B : magnetic field
- */
 MetricErnstSchwarzschild::MetricErnstSchwarzschild(double mass, double B)
 {
     mMetricName = "ErnstSchwarzschild";
@@ -54,16 +29,10 @@ MetricErnstSchwarzschild::MetricErnstSchwarzschild(double mass, double B)
     setStandardValues();
 }
 
-/*!
- */
 MetricErnstSchwarzschild::~MetricErnstSchwarzschild() {}
 
 // *********************************** public methods ******************************
 
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricErnstSchwarzschild::calculateMetric(const double* pos)
 {
     double r = pos[1];
@@ -106,10 +75,6 @@ bool MetricErnstSchwarzschild::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricErnstSchwarzschild::calculateChristoffels(const double* pos)
 {
     double r = pos[1];
@@ -219,10 +184,6 @@ bool MetricErnstSchwarzschild::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricErnstSchwarzschild::calculateChrisD(const double* pos)
 {
     double r = pos[1];
@@ -548,13 +509,6 @@ bool MetricErnstSchwarzschild::calculateChrisD(const double* pos)
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricErnstSchwarzschild::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -569,13 +523,6 @@ void MetricErnstSchwarzschild::localToCoord(const double* pos, const double* ldi
     dir[3] = ldir[3] * L / (r * sin(theta));
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricErnstSchwarzschild::coordToLocal(const double* pos, const double* cdir, double* ldir, enum_nat_tetrad_type)
 {
     double r = pos[1];
@@ -590,32 +537,16 @@ void MetricErnstSchwarzschild::coordToLocal(const double* pos, const double* cdi
     ldir[3] = cdir[3] * r * sin(theta) / L;
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
- *  \return false : position is valid.
- */
 bool MetricErnstSchwarzschild::breakCondition(const double* pos)
 {
     bool br = false;
-    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + eps) * 4.0 * mMass * mMass)) {
+    if ((pos[1] < 0.0) || (pos[1] * pos[1] <= (1.0 + M4D_METRIC_EPS) * 4.0 * mMass * mMass)) {
         br = true;
     }
 
     return br;
 }
 
-/*! Tests whether the constraint equation is fulfilled.
- *
- *  The constraint equation for lightlike and timelike geodesics reads:
- \verbatim
-     sum = g_{\mu\nu} dot(x)^{\mu} dot(x)^{\nu} - kappa c^2 = 0.
- \endverbatim
- *  \param  y[]   : pointer to position and direction coordinates.
- *  \param  kappa : timelike (-1.0), lightlike (0.0).
- *  \return double : sum.
- */
 double MetricErnstSchwarzschild::testConstraint(const double y[], const double kappa)
 {
     double r = y[1];
@@ -636,11 +567,6 @@ double MetricErnstSchwarzschild::testConstraint(const double y[], const double k
     return sum;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *  Set 'mass' parameter and adjust Schwarzschild radius  rs=2GM/c^2.
- *  'charge' represents the charge of the black hole.
- */
 bool MetricErnstSchwarzschild::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -655,8 +581,6 @@ bool MetricErnstSchwarzschild::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricErnstSchwarzschild::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -671,8 +595,6 @@ bool MetricErnstSchwarzschild::report(const vec4, const vec4, char*& text)
 }
 
 // ********************************* protected methods *****************************
-/*!
- */
 void MetricErnstSchwarzschild::setStandardValues()
 {
     mInitPos[0] = 0.0;

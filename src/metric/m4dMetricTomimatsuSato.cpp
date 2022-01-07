@@ -1,36 +1,14 @@
-// -------------------------------------------------------------------------------
-/*
-   m4dMetricTomimatsuSato.cpp
-
-  Copyright (c) 2009-2014  Thomas Mueller, Frank Grave
-
-
-   This file is part of the m4d-library.
-
-   The m4d-library is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   The m4d-library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the m4d-library.  If not, see <http://www.gnu.org/licenses/>.
-
-*/
-// -------------------------------------------------------------------------------
-
+/**
+ * @file    m4dMetricTomimatsuSato.cpp
+ * @author  Thomas Mueller
+ *
+ * This file is part of the m4d-library.
+ */
 #include "m4dMetricTomimatsuSato.h"
 #include <cmath>
 
 namespace m4d {
 
-/*! Standard constructor for the TomimatsuSato metric.
- *
- */
 MetricTomimatsuSato::MetricTomimatsuSato(double k0, double p0, double q0)
 {
     mMetricName = "TomimatsuSato";
@@ -79,10 +57,7 @@ MetricTomimatsuSato::~MetricTomimatsuSato()
 #include <iostream>
 
 // *********************************** public methods ******************************
-/*! Calculate the contravariant metric components at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
+
 bool MetricTomimatsuSato::calculateMetric(const double* pos)
 {
 
@@ -106,10 +81,6 @@ bool MetricTomimatsuSato::calculateMetric(const double* pos)
     return true;
 }
 
-/*! Calculate the Christoffel symbols of the second kind at position 'pos'.
- *
- *  \param pos : pointer to position.
- */
 bool MetricTomimatsuSato::calculateChristoffels(const double* pos)
 {
     christoffelcalled++;
@@ -204,10 +175,6 @@ bool MetricTomimatsuSato::calculateChristoffels(const double* pos)
     return true;
 }
 
-/*! Calculate Jacobi matrix.
- *
- *  \param pos : pointer to position.
- */
 bool MetricTomimatsuSato::calculateChrisD(const double* pos)
 {
     chrisDcalled++;
@@ -410,60 +377,9 @@ bool MetricTomimatsuSato::calculateChrisD(const double* pos)
 
     chrisD[0][0][2][2] = -0.5 * (-g44dy * g22dy + g44d2y * g22) / g222;
 
-    /*
-        std::cout.precision(10);
-        std::cout << "ChrisD:\n";
-        std::cout << "chrisD[1][1][1][1]\t " << chrisD[1][1][1][1] << "\n";
-        std::cout << "chrisD[1][1][1][2]\t " << chrisD[1][1][1][2] << "\n";
-        std::cout << "chrisD[1][1][2][1]\t " << chrisD[1][1][2][1] << "\n";
-        std::cout << "chrisD[1][1][2][2]\t " << chrisD[1][1][2][2] << "\n";
-        std::cout << "chrisD[1][2][1][1]\t " << chrisD[1][2][1][1] << "\n";
-        std::cout << "chrisD[1][2][1][2]\t " << chrisD[1][2][1][2] << "\n";
-        std::cout << "chrisD[1][2][2][1]\t " << chrisD[1][2][2][1] << "\n";
-        std::cout << "chrisD[1][2][2][2]\t " << chrisD[1][2][2][2] << "\n";
-        std::cout << "chrisD[1][3][3][1]\t " << chrisD[1][3][3][1] << "\n";
-        std::cout << "chrisD[1][3][3][2]\t " << chrisD[1][3][3][2] << "\n";
-        std::cout << "chrisD[1][3][0][1]\t " << chrisD[1][3][0][1] << "\n";
-        std::cout << "chrisD[1][3][0][2]\t " << chrisD[1][3][0][2] << "\n";
-        std::cout << "chrisD[1][0][3][1]\t " << chrisD[1][0][3][1] << "\n";
-        std::cout << "chrisD[1][0][3][2]\t " << chrisD[1][0][3][2] << "\n";
-        std::cout << "chrisD[1][0][0][1]\t " << chrisD[1][0][0][1] << "\n";
-        std::cout << "chrisD[1][0][0][2]\t " << chrisD[1][0][0][2] << "\n";
-        std::cout << "chrisD[2][2][1][1]\t " << chrisD[2][2][1][1] << "\n";
-        std::cout << "chrisD[2][2][1][2]\t " << chrisD[2][2][1][2] << "\n";
-        std::cout << "chrisD[2][2][2][1]\t " << chrisD[2][2][2][1] << "\n";
-        std::cout << "chrisD[2][2][2][2]\t " << chrisD[2][2][2][2] << "\n";
-        std::cout << "chrisD[2][3][3][1]\t " << chrisD[2][3][3][1] << "\n";
-        std::cout << "chrisD[2][3][3][2]\t " << chrisD[2][3][3][2] << "\n";
-        std::cout << "chrisD[2][3][0][1]\t " << chrisD[2][3][0][1] << "\n";
-        std::cout << "chrisD[2][3][0][2]\t " << chrisD[2][3][0][2] << "\n";
-        std::cout << "chrisD[2][0][3][1]\t " << chrisD[2][0][3][1] << "\n";
-        std::cout << "chrisD[2][0][3][2]\t " << chrisD[2][0][3][2] << "\n";
-        std::cout << "chrisD[2][0][0][1]\t " << chrisD[2][0][0][1] << "\n";
-        std::cout << "chrisD[2][0][0][2]\t " << chrisD[2][0][0][2] << "\n";
-        std::cout << "chrisD[3][3][1][1]\t " << chrisD[3][3][1][1] << "\n";
-        std::cout << "chrisD[3][3][1][2]\t " << chrisD[3][3][1][2] << "\n";
-        std::cout << "chrisD[3][3][2][1]\t " << chrisD[3][3][2][1] << "\n";
-        std::cout << "chrisD[3][3][2][2]\t " << chrisD[3][3][2][2] << "\n";
-        std::cout << "chrisD[3][0][1][1]\t " << chrisD[3][0][1][1] << "\n";
-        std::cout << "chrisD[3][0][1][2]\t " << chrisD[3][0][1][2] << "\n";
-        std::cout << "chrisD[3][0][2][1]\t " << chrisD[3][0][2][1] << "\n";
-        std::cout << "chrisD[3][0][2][2]\t " << chrisD[3][0][2][2] << "\n";
-        std::cout << "chrisD[0][0][1][1]\t " << chrisD[0][0][1][1] << "\n";
-        std::cout << "chrisD[0][0][1][2]\t " << chrisD[0][0][1][2] << "\n";
-        std::cout << "chrisD[0][0][2][1]\t " << chrisD[0][0][2][1] << "\n";
-        std::cout << "chrisD[0][0][2][2]\t " << chrisD[0][0][2][2] << "\n";
-    */
     return true;
 }
 
-/*! Transform local 4-direction to coordinate 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  ldir :  pointer to local direction array.
- *  \param  dir  :  pointer to calculated coordinate direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricTomimatsuSato::localToCoord(const double* pos, const double* ldir, double* dir, enum_nat_tetrad_type)
 {
     calcTomimatsuSato(pos);
@@ -482,24 +398,12 @@ void MetricTomimatsuSato::localToCoord(const double* pos, const double* ldir, do
     dir[3] = gam * (ldir[0] * zeta - dlt * w2 * ldir[3]);
 }
 
-/*! Transform coordinate 4-direction to local 4-direction.
- *
- *  \param  pos  :  pointer to position array.
- *  \param  cdir :  pointer to coordinate direction.
- *  \param  ldir :  pointer to calculated local direction array.
- *  \param  type :  type of tetrad.
- */
 void MetricTomimatsuSato::coordToLocal(const double*, const double*, double*, enum_nat_tetrad_type)
 {
+    fprintf(stderr, "uups... not implemented yet!\n");
     // TODO
 }
 
-/*! Test break condition.
- *
- *  \param pos    : pointer to position array.
- *  \return true  : radial position r < 0.0 or  r^2<=(1.0+eps)*rs^2.
- *  \return false : position is valid.
- */
 bool MetricTomimatsuSato::breakCondition(const double* pos)
 {
     bool br = false;
@@ -521,10 +425,6 @@ bool MetricTomimatsuSato::breakCondition(const double* pos)
     return br;
 }
 
-/*! Set parameter 'pName' to 'val'.
- *
- *
- */
 bool MetricTomimatsuSato::setParam(const char* pName, double val)
 {
     Metric::setParam(pName, val);
@@ -550,8 +450,6 @@ bool MetricTomimatsuSato::setParam(const char* pName, double val)
     return true;
 }
 
-/*! Generate report.
- */
 bool MetricTomimatsuSato::report(const vec4, const vec4, char*& text)
 {
     std::stringstream ss;
@@ -567,8 +465,6 @@ bool MetricTomimatsuSato::report(const vec4, const vec4, char*& text)
     text = new char[ss.str().length() + 2];
     return CopyString(ss.str().c_str(), text);
 }
-
-// ********************************* protected methods *****************************
 
 // ********************************* TomimatsuSato routines **************************
 void MetricTomimatsuSato::calcTomimatsuSato(const double* pos)
@@ -610,15 +506,6 @@ void MetricTomimatsuSato::calcTomimatsuSato(const double* pos)
     g11 = k2 / f * g * x2my2 / x2mo;
     g22 = k2 / f * g * x2my2 / omy2;
     g33 = k2 / f * x2mo * omy2 - f * omega2;
-    /*
-        std::cout.precision(10);
-        std::cout << " k: " << k << " p: " << p << " q: " << q << " k2: " << k2 <<  " p2: " << p2 <<  " q2: " << q2 <<
-       "\n"; std::cout << " x: " << x << " y = " << y << " x2mo = " << x2mo << " x2my2 = " << x2my2 <<  "\n"; std::cout
-       << " A: " << A << " mu = " << mu << " nu = " << nu << " sigma = " << sigma << " tau = " << tau << " omega =  " <<
-       omega << "\n"; std::cout << "\nf: " << f << " g = " << g << "\n"; std::cout << " g44: " << g44 << " g34 = " <<
-       g34 << " g11 = " << g11 << " g22 = " << g22 << " g33 = " << g33 << "\n\n\n";
-
-    */
 }
 
 void MetricTomimatsuSato::calcTomimatsuSatoDiff(const double* pos)
@@ -690,20 +577,6 @@ void MetricTomimatsuSato::calcTomimatsuSatoDiff(const double* pos)
         - 2.0 * f * omega * omegadx;
     g33dy = -k2 * (fdy * (x2 - x2 * y2 - 1.0 + y2) + 2.0 * f * y * x2mo) / f / f - fdy * omega2
         - 2.0 * f * omega * omegady;
-
-    /*
-        std::cout.precision(10);
-        std::cout << " A: dx = " << Adx << " dy = " << Ady << "\n";
-        std::cout << " f: dx = " << fdx << " dy = " << fdy << "\n";
-        std::cout << " g: dx = " << gdx << " dy = " << gdy << "\n";
-        std::cout << " omega: dx = " << omegadx << " dy = " << omegady << "\n";
-        std::cout << " g44: dx = " << g44dx << " dy = " << g44dy << "\n";
-        std::cout << " g34: dx = " << g34dx << " dy = " << g34dy << "\n";
-        std::cout << " g11: dx = " << g11dx << " dy = " << g11dy << "\n";
-        std::cout << " g22: dx = " << g22dx << " dy = " << g22dy << "\n";
-        std::cout << " g33: dx = " << g33dx << " dy = " << g33dy << "\n";
-
-    */
 }
 
 void MetricTomimatsuSato::calcTomimatsuSatoDiff2(const double* pos)
@@ -874,28 +747,8 @@ void MetricTomimatsuSato::calcTomimatsuSatoDiff2(const double* pos)
                 + (x2mo * (2.0 * y * fdx - omy2 * fdxdy) - 2.0 * omy2 * x * fdy) / (f * f) - 4.0 * x * y / f)
         - fdxdy * omega2
         - 2.0 * (omega * (fdx * omegady + fdy * omegadx) + f * (omegadx * omegady + omega * omegadxdy));
-
-    /*
-        std::cout.precision(10);
-        std::cout << " mu: d2x = " << mud2x << " d2y = " << mud2y << "\n";
-        std::cout << " sigma: d2x = " << sigmad2x << " d2y = " << sigmad2y << "\n";
-        std::cout << " nud2x = " << nud2x << "\n";
-        std::cout << " tau: d2y = " << taud2y << " dxdy = " << taudxdy << "\n";
-
-        std::cout << " A: d2x = " << Ad2x << " d2y = " << Ad2y << " dxdy = " << Adxdy << "\n";
-        std::cout << " f: d2x = " << fd2x << " d2y = " << fd2y << " dxdy = " << fdxdy << "\n";
-        std::cout << " g: d2x = " << gd2x << " d2y = " << gd2y << " dxdy = " << gdxdy << "\n";
-        std::cout << " omega: d2x = " << omegad2x << " d2y = " << omegad2y << " dxdy = " << omegadxdy << "\n";
-
-        std::cout << " g11: d2x = " << g11d2x << " d2y = " << g11d2y << " dxdy = " << g11dxdy << "\n";
-        std::cout << " g22: d2x = " << g22d2x << " d2y = " << g22d2y << " dxdy = " << g22dxdy << "\n";
-        std::cout << " g33: d2x = " << g33d2x << " d2y = " << g33d2y << " dxdy = " << g33dxdy << "\n";
-    */
-    // std::cout << " g34: d2x = " << g34d2x << " d2y = " << g34d2y << " dxdy = " << g34dxdy << "\n";
 }
 
-/*!
- */
 void MetricTomimatsuSato::setStandardValues()
 {
     mInitPos[0] = 0.0;
@@ -912,8 +765,6 @@ void MetricTomimatsuSato::setStandardValues()
     mCoordNames[3] = std::string("phi");
 }
 
-/*!
- */
 void MetricTomimatsuSato::initToZero()
 {
     for (size_t i = 0; i < 4; ++i) {
